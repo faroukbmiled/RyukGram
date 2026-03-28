@@ -1,0 +1,94 @@
+name: 🐛 Bug Report
+description: "Notice something isn't working quite right? Help improve the tweak by reporting issues that you experience."
+title: 'bug: '
+labels:
+  - bug
+assignees:
+  - SoCuul
+body:
+  - type: markdown
+    attributes:
+      value: |
+        <br>
+        
+        >[!TIP]
+        > If you are looking for support with the tweak, make sure to visit the [SCInsta discussions page](https://github.com/SoCuul/SCInsta/discussions) to get help.
+  - type: checkboxes
+    id: before-start
+    attributes:
+      label: Before creating a bug report...
+      description: 'Please make sure you have done the following steps:'
+      options:
+        - label: >-
+            I have read through the
+            [FAQ](https://github.com/SoCuul/SCInsta/wiki/FAQ)
+          required: true
+        - label: I have made sure this issue has not already been reported previously
+          required: true
+        - label: >-
+            I have made sure this issue is present in the latest version of
+            SCInsta
+          required: true
+        - label: >-
+            I am confident that this bug presents unintended behaviour within
+            the tweak
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the problem
+      placeholder: >-
+        Provide as much information about the issue you are experiencing as
+        possible!
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal Reproduction
+      description: Provide steps and relevant information to reproduce the problem
+      placeholder: >-
+        If possible, providing screenshots & videos are extremely helpful when
+        trying to fix an issue
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: '---'
+  - type: input
+    id: info-scinsta-version
+    attributes:
+      label: SCInsta Version
+      description: This can be found at the bottom of the tweak settings
+      placeholder: e.g. v0.7.0
+    validations:
+      required: true
+  - type: input
+    id: info-instagram-version
+    attributes:
+      label: Instagram Version
+      description: This can be found as well at the bottom of the tweak settings
+      placeholder: e.g. 382.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: info-install-type
+    attributes:
+      label: Install Type
+      description: The method used to use to install SCInsta
+      options:
+        - Sideloaded
+        - TrollStore
+        - Jailbroken (Rootless)
+        - Jailbroken (Rootful)
+    validations:
+      required: true
+  - type: textarea
+    id: info-device-info
+    attributes:
+      label: Device Info
+      description: Details about the phone running the tweak
+      value: |-
+        Model: [e.g. iPhone 15 Pro]
+        iOS Version: [e.g. 18.4]

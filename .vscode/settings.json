@@ -1,0 +1,19 @@
+{
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.trimAutoWhitespace": true,
+    "editor.formatOnSave": false,
+    "files.associations": {
+        "*.x": "logos",
+        "*.xi": "logos",
+        "*.xm": "logos",
+        "*.xmi": "logos",
+        "*.m": "objective-c",
+        "*.h": "objective-c"
+    },
+
+    "search.exclude": {
+        "modules/": true,
+        "dumps/": true
+    }
+}

@@ -1,0 +1,10 @@
+Package: com.socuul.scinsta
+Name: SCInsta
+Version: 1.1.2
+Architecture: iphoneos-arm
+Description: A feature-rich tweak for Instagram on iOS!
+Homepage: https://github.com/SoCuul/SCInsta
+Maintainer: SoCuul
+Author: SoCuul
+Section: Tweaks
+Depends: mobilesubstrate

@@ -1,0 +1,39 @@
+name: ✨ Feature Request
+description: Have an idea for a new feature/enhancement? Let us know!
+title: 'feat: '
+labels:
+  - enhancement
+assignees:
+  - SoCuul
+body:
+  - type: checkboxes
+    id: before-start
+    attributes:
+      label: Before creating a feature request...
+      description: 'Please make sure you have done the following steps:'
+      options:
+        - label: >-
+            I have read through the
+            [FAQ](https://github.com/SoCuul/SCInsta/wiki/FAQ)
+          required: true
+        - label: I have made sure this feature has not already been already suggested
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the problem or missing functionality
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: If you have a solution in mind, please describe it
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: Have you considered any alternative solutions or workarounds?

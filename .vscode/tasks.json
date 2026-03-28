@@ -1,0 +1,59 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile tweak and deploy to LiveContainer",
+            "type": "shell",
+            "command": "./build-dev.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "icon": {
+                "color": "terminal.ansiCyan",
+                "id": "run-all"
+            }
+        },
+        {
+            "label": "Build SCInsta and deploy with IPA",
+            "type": "shell",
+            "command": "./build-dev.sh true",
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "icon": {
+                "id": "package"
+            }
+        },
+        {
+            "label": "Launch pymobiledevice3 device tunnel (for quick dev builds)",
+            "type": "shell",
+            "command": "sudo pymobiledevice3 remote tunneld",
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "icon": {
+                "color": "terminal.ansiYellow",
+                "id": "debug-connected"
+            }
+        }
+    ]
+  }
+  

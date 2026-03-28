@@ -1,0 +1,35 @@
+#import "../../Utils.h"
+#import "../../InstagramHeaders.h"
+
+%hook IGStoryTextEntryControlsOverlayView
+- (void)didMoveToSuperview {
+    %orig;
+
+    if ([SCIUtils getBoolPref:@"enable_hidden_texteffectsstyles"]) {
+    
+        // Clear previous option values
+        [self.animationTypes removeAllObjects];
+        [self.effectTypes removeAllObjects];
+
+        // Generate new animation values
+        // * Animation effects <= 9 are invalid
+        // * Animations past the maximum count (changing each app update) will crash the app when selected
+        for (int i = 10; i <= 76; i++) {
+            [self.animationTypes addObject:@(i)];
+        }
+
+        // Generate new effect values
+        // * Effects past the maximum count (changing each app update) will gracefully just do nothing
+        for (int i = 0; i <= 84; i++) {
+            [self.effectTypes addObject:@(i)];
+        }
+
+        // Refresh option picker
+        if ([self respondsToSelector:@selector(reloadData)]) {
+            NSLog(@"[SCInsta] Enable all text effects: Reloading data...");
+            [self reloadData];
+        }
+
+    }
+}
+%end

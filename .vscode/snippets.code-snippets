@@ -1,0 +1,27 @@
+{
+    "SCIUtils: Bool Pref": {
+		"prefix": "scibool",
+		"body": [
+            "if ([SCIUtils getBoolPref:@\"${1:key}\"]) $0"
+		]
+	},
+    "SCIUtils: String Pref": {
+		"prefix": "scistring",
+		"body": [
+            "if ([[SCIUtils getStringPref:@\"${1:key}\"] isEqualToString:@\"${2:string}\"]) $0"
+		]
+	},
+
+	"SCIUtils: Log": {
+		"prefix": "scilog",
+		"body": [
+            "SCILog($0);"
+		]
+	},
+	"SCIUtils: Log Id": {
+		"prefix": "scilogid",
+		"body": [
+            "SCILogId(@\"${1:prefix}\", $0);"
+		]
+	}
+}
