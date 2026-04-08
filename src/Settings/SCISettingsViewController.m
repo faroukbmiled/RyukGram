@@ -2,11 +2,15 @@
 
 static char rowStaticRef[] = "row";
 
-@interface SCISettingsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SCISettingsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSArray *sections;
 @property (nonatomic) BOOL reduceMargin;
+
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, copy) NSArray<NSDictionary *> *searchResults;
+@property (nonatomic) BOOL isRoot;
 
 @end
 
@@ -20,6 +24,7 @@ static char rowStaticRef[] = "row";
     if (self) {
         self.title = title;
         self.reduceMargin = reduceMargin;
+        self.isRoot = reduceMargin; // root call uses reduceMargin=YES
         
         // Exclude development cells from release builds
         NSMutableArray *mutableSections = [sections mutableCopy];
@@ -64,6 +69,83 @@ static char rowStaticRef[] = "row";
     self.tableView.delegate = self;
 
     [self.view addSubview:self.tableView];
+
+    if (self.isRoot) {
+        UISearchController *sc = [[UISearchController alloc] initWithSearchResultsController:nil];
+        sc.searchResultsUpdater = self;
+        sc.obscuresBackgroundDuringPresentation = NO;
+        sc.searchBar.placeholder = @"Search settings";
+        self.navigationItem.searchController = sc;
+        self.navigationItem.hidesSearchBarWhenScrolling = NO;
+        self.searchController = sc;
+    }
+}
+
+#pragma mark - Search
+
+- (BOOL)isSearching {
+    return self.searchController.isActive && self.searchController.searchBar.text.length > 0;
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *q = searchController.searchBar.text ?: @"";
+    if (q.length == 0) {
+        self.searchResults = @[];
+    } else {
+        NSMutableArray *out = [NSMutableArray array];
+        [self collectMatchingFromSections:self.sections breadcrumb:@"" query:q into:out];
+        self.searchResults = out;
+    }
+    [self.tableView reloadData];
+}
+
+- (void)collectMatchingFromSections:(NSArray *)sections
+                         breadcrumb:(NSString *)breadcrumb
+                              query:(NSString *)q
+                               into:(NSMutableArray *)out
+{
+    for (id sectionObj in sections) {
+        if (![sectionObj isKindOfClass:[NSDictionary class]]) continue;
+        NSDictionary *section = sectionObj;
+        NSString *header = section[@"header"] ?: @"";
+        NSArray *rows = section[@"rows"];
+        for (id rowObj in rows) {
+            if (![rowObj isKindOfClass:[SCISetting class]]) continue;
+            SCISetting *row = rowObj;
+
+            NSString *titleHay = row.title ?: @"";
+            NSString *subHay   = row.subtitle ?: @"";
+            BOOL matches = [titleHay rangeOfString:q options:NSCaseInsensitiveSearch].location != NSNotFound
+                        || [subHay   rangeOfString:q options:NSCaseInsensitiveSearch].location != NSNotFound;
+
+            if (matches) {
+                NSMutableString *crumb = [NSMutableString string];
+                if (breadcrumb.length) [crumb appendString:breadcrumb];
+                if (header.length) {
+                    if (crumb.length) [crumb appendString:@" › "];
+                    [crumb appendString:header];
+                }
+                [out addObject:@{ @"setting": row, @"breadcrumb": crumb ?: @"" }];
+            }
+
+            if (row.navSections) {
+                NSString *child = breadcrumb.length
+                    ? [NSString stringWithFormat:@"%@ › %@", breadcrumb, row.title ?: @""]
+                    : (row.title ?: @"");
+                [self collectMatchingFromSections:row.navSections breadcrumb:child query:q into:out];
+            }
+        }
+    }
+}
+
+- (SCISetting *)settingForIndexPath:(NSIndexPath *)indexPath breadcrumbOut:(NSString **)outCrumb {
+    if ([self isSearching]) {
+        if (indexPath.row >= (NSInteger)self.searchResults.count) return nil;
+        NSDictionary *entry = self.searchResults[indexPath.row];
+        if (outCrumb) *outCrumb = entry[@"breadcrumb"];
+        return entry[@"setting"];
+    }
+    return self.sections[indexPath.section][@"rows"][indexPath.row];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -89,17 +171,19 @@ static char rowStaticRef[] = "row";
 // MARK: - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SCISetting *row = self.sections[indexPath.section][@"rows"][indexPath.row];
+    NSString *searchBreadcrumb = nil;
+    SCISetting *row = [self settingForIndexPath:indexPath breadcrumbOut:&searchBreadcrumb];
     if (!row) return nil;
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     UIListContentConfiguration *cellContentConfig = cell.defaultContentConfiguration;
     
     cellContentConfig.text = row.title;
-    
-    // Subtitle
-    if (row.subtitle.length) {
-        cellContentConfig.secondaryText = row.subtitle;
+
+    // While searching, show the breadcrumb path instead of the row subtitle.
+    NSString *displaySubtitle = [self isSearching] && searchBreadcrumb.length ? searchBreadcrumb : row.subtitle;
+    if (displaySubtitle.length) {
+        cellContentConfig.secondaryText = displaySubtitle;
         cellContentConfig.textToSecondaryTextVerticalPadding = 4.5;
     }
     
@@ -209,25 +293,32 @@ static char rowStaticRef[] = "row";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if ([self isSearching]) return self.searchResults.count;
     return [self.sections[section][@"rows"] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if ([self isSearching]) {
+        NSUInteger n = self.searchResults.count;
+        return n ? [NSString stringWithFormat:@"%lu result%@", (unsigned long)n, n == 1 ? @"" : @"s"] : @"No results";
+    }
     return self.sections[section][@"header"];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if ([self isSearching]) return nil;
     return self.sections[section][@"footer"];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if ([self isSearching]) return 1;
     return self.sections.count;
 }
 
 // MARK: - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SCISetting *row = self.sections[indexPath.section][@"rows"][indexPath.row];
+    SCISetting *row = [self settingForIndexPath:indexPath breadcrumbOut:NULL];
     if (!row) return;
 
     if (row.type == SCITableCellLink) {

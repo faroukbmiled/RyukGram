@@ -155,6 +155,7 @@ static void sciDownloadDMVisualMessage(UIViewController *dmVC) {
     }
 }
 
+
 // download handler — works for both stories and DM visual messages
 %new - (void)sciDownloadTapped:(UIButton *)sender {
     UIImpactFeedbackGenerator *haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
@@ -279,5 +280,33 @@ static void sciDownloadDMVisualMessage(UIViewController *dmVC) {
     } @catch (NSException *e) {
         [SCIUtils showErrorHUDWithDescription:[NSString stringWithFormat:@"Error: %@", e.reason]];
     }
+}
+
+%end
+
+// Mirror IG's chrome alpha onto our injected seen + download buttons so they
+// fade in sync during hold/zoom. Walks up from a fading sibling to find the
+// IGStoryFullscreenOverlayView and updates its tagged subviews.
+static void sciSyncStoryButtonsAlpha(UIView *self_, CGFloat alpha) {
+    Class overlayCls = NSClassFromString(@"IGStoryFullscreenOverlayView");
+    if (!overlayCls) return;
+    UIView *cur = self_;
+    while (cur) {
+        for (UIView *sib in cur.superview.subviews) {
+            if (![sib isKindOfClass:overlayCls]) continue;
+            UIView *seen = [sib viewWithTag:1339];
+            UIView *dl   = [sib viewWithTag:1340];
+            if (seen) seen.alpha = alpha;
+            if (dl)   dl.alpha   = alpha;
+            return;
+        }
+        cur = cur.superview;
+    }
+}
+
+%hook IGStoryFullscreenHeaderView
+- (void)setAlpha:(CGFloat)alpha {
+    %orig;
+    sciSyncStoryButtonsAlpha((UIView *)self, alpha);
 }
 %end

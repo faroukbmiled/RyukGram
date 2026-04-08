@@ -28,6 +28,13 @@ static NSMutableArray *sciPendingUpdates = nil;
 // Server message ID -> timestamp the reason=2 (delete-for-you) was observed.
 static NSMutableDictionary<NSString *, NSDate *> *sciDeleteForYouKeys = nil;
 static NSMutableSet *sciPreservedIds = nil;
+// Server message ID -> content class name for messages we recognize as
+// reaction/action-log bookkeeping (e.g. "X liked a message" thread entries).
+// Populated by hooking the data model class init. Used to skip preserving
+// these IDs when their remove arrives.
+static NSMutableDictionary<NSString *, NSString *> *sciMessageContentClasses = nil;
+#define SCI_CONTENT_CLASSES_MAX 4000
+#define SCI_PENDING_MAX 50
 
 #define SCI_PRESERVED_IDS_KEY @"SCIPreservedMsgIds"
 #define SCI_PRESERVED_MAX 200
@@ -53,6 +60,34 @@ void sciClearPreservedIds() {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:SCI_PRESERVED_IDS_KEY];
 }
 
+static NSMutableDictionary<NSString *, NSString *> *sciGetContentClasses() {
+    if (!sciMessageContentClasses) sciMessageContentClasses = [NSMutableDictionary dictionary];
+    return sciMessageContentClasses;
+}
+
+static void sciTrackInsertedMessage(NSString *sid, NSString *className) {
+    if (!sid.length || !className.length) return;
+    NSMutableDictionary *map = sciGetContentClasses();
+    map[sid] = className;
+    if (map.count > SCI_CONTENT_CLASSES_MAX) {
+        // Drop ~10% oldest by simply removing arbitrary keys
+        NSArray *keys = [map allKeys];
+        for (NSUInteger i = 0; i < keys.count / 10; i++) [map removeObjectForKey:keys[i]];
+    }
+}
+
+// Returns YES if the message at this server ID is known to be reaction-related
+// (action log entry, reaction record, etc.) — i.e. should never be preserved.
+static BOOL sciIsReactionRelatedMessage(NSString *sid) {
+    if (!sid.length) return NO;
+    NSString *className = sciGetContentClasses()[sid];
+    if (!className.length) return NO;
+    return [className containsString:@"Reaction"] ||
+           [className containsString:@"ActionLog"] ||
+           [className containsString:@"reaction"] ||
+           [className containsString:@"actionLog"];
+}
+
 // ============ ALLOC TRACKING ============
 
 static id (*orig_msgUpdate_alloc)(id self, SEL _cmd);
@@ -62,12 +97,13 @@ static id new_msgUpdate_alloc(id self, SEL _cmd) {
         if (!sciPendingUpdates) sciPendingUpdates = [NSMutableArray array];
         @synchronized(sciPendingUpdates) {
             [sciPendingUpdates addObject:instance];
-            while (sciPendingUpdates.count > 10)
+            while (sciPendingUpdates.count > SCI_PENDING_MAX)
                 [sciPendingUpdates removeObjectAtIndex:0];
         }
     }
     return instance;
 }
+
 
 // ============ REMOTE UNSEND DETECTION ============
 
@@ -92,13 +128,17 @@ static void sciPruneStaleDeleteForYouKeys() {
     }
 }
 
-static BOOL sciConsumeRemoteUnsend() {
-    if (!sciPendingUpdates) return NO;
+// Walks every pending IGDirectMessageUpdate, preserves the IDs of any reason=0
+// remove that isn't a delete-for-you follow-up, and returns the set of preserved
+// IDs. The caller decides whether to actually block + show a toast based on
+// whether those IDs match real (rendered) messages.
+static NSSet<NSString *> *sciConsumePendingPreserves() {
+    NSMutableSet<NSString *> *preserved = [NSMutableSet set];
+    if (!sciPendingUpdates) return preserved;
     if (!sciDeleteForYouKeys) sciDeleteForYouKeys = [NSMutableDictionary dictionary];
 
     sciPruneStaleDeleteForYouKeys();
 
-    BOOL shouldBlock = NO;
     @synchronized(sciPendingUpdates) {
         for (id update in [sciPendingUpdates copy]) {
             @try {
@@ -114,8 +154,7 @@ static BOOL sciConsumeRemoteUnsend() {
                     reason = *(long long *)((char *)(__bridge void *)update + off);
                 }
 
-                // Delete-for-you initiator: remember the keys for the upcoming
-                // reason=0 follow-up so we don't block it.
+                // Delete-for-you initiator — remember keys for the follow-up.
                 if (reason == 2) {
                     NSDate *now = [NSDate date];
                     for (id key in keys) {
@@ -125,44 +164,53 @@ static BOOL sciConsumeRemoteUnsend() {
                     continue;
                 }
 
-                if (reason == 0 && !sciLocalDeleteInProgress) {
-                    // If every key matches a recent delete-for-you, this is the
-                    // expected follow-up — let it through.
-                    BOOL allMatched = YES;
-                    for (id key in keys) {
-                        NSString *sid = sciExtractServerId(key);
-                        if (!sid || !sciDeleteForYouKeys[sid]) { allMatched = NO; break; }
-                    }
-                    if (allMatched) {
-                        for (id key in keys) {
-                            NSString *sid = sciExtractServerId(key);
-                            if (sid) [sciDeleteForYouKeys removeObjectForKey:sid];
-                        }
-                        continue;
-                    }
+                if (reason != 0 || sciLocalDeleteInProgress) continue;
 
-                    // Otherwise this is a genuine remote unsend — preserve the
-                    // affected message IDs and block the entire apply call.
+                // If every key matches a recent delete-for-you, drop the
+                // tracking entries and let it through (it's the follow-up).
+                BOOL allMatched = YES;
+                for (id key in keys) {
+                    NSString *sid = sciExtractServerId(key);
+                    if (!sid || !sciDeleteForYouKeys[sid]) { allMatched = NO; break; }
+                }
+                if (allMatched) {
                     for (id key in keys) {
                         NSString *sid = sciExtractServerId(key);
-                        if (sid) [sciGetPreservedIds() addObject:sid];
+                        if (sid) [sciDeleteForYouKeys removeObjectForKey:sid];
                     }
-                    sciSavePreservedIds();
-                    shouldBlock = YES;
-                    break;
+                    continue;
+                }
+
+                // Real remove — preserve only keys whose content class isn't a
+                // known reaction / action-log entry. Reaction events also fire
+                // reason=0 removes for the action-log record they create.
+                for (id key in keys) {
+                    NSString *sid = sciExtractServerId(key);
+                    if (!sid) continue;
+                    if (sciIsReactionRelatedMessage(sid)) continue;
+                    [sciGetPreservedIds() addObject:sid];
+                    [preserved addObject:sid];
                 }
             } @catch(id e) {}
         }
         [sciPendingUpdates removeAllObjects];
     }
-    return shouldBlock;
+    if (preserved.count > 0) sciSavePreservedIds();
+    return preserved;
 }
 
 // ============ CACHE UPDATE HOOK ============
 
 static void (*orig_applyUpdates)(id self, SEL _cmd, id updates, id completion, id userAccess);
 static void new_applyUpdates(id self, SEL _cmd, id updates, id completion, id userAccess) {
-    if (sciKeepDeletedEnabled() && sciConsumeRemoteUnsend()) {
+    if (!sciKeepDeletedEnabled()) {
+        orig_applyUpdates(self, _cmd, updates, completion, userAccess);
+        return;
+    }
+
+    NSSet<NSString *> *preserved = sciConsumePendingPreserves();
+
+    if (preserved.count > 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             // Refresh visible cells so newly preserved messages show the
             // "Unsent" indicator immediately without waiting for a scroll.
@@ -371,14 +419,51 @@ static void new_cellLayoutSubviews(id self, SEL _cmd) {
     sciUpdateCellIndicator(self);
 }
 
+// ============ ACTION LOG TRACKING ============
+//
+// IGDirectThreadActionLog is the local data-model class for "X liked a
+// message" thread entries. IG instantiates one whenever an action log row
+// is created — reaction add/remove, theme change, etc. We hook its full
+// init, grab the message ID via the messageId getter, and store the class
+// name in our content-class map. Later when a remove for that ID arrives,
+// the consume path recognizes it as bookkeeping and skips preserving it.
+static id (*orig_actionLogFullInit)(id, SEL, id, id, id, id, id, BOOL, BOOL, id);
+static id new_actionLogFullInit(id self, SEL _cmd,
+                                 id message, id title, id textAttributes, id textParts,
+                                 id actionLogType, BOOL collapsible, BOOL hidden, id genAIMetadata) {
+    id result = orig_actionLogFullInit(self, _cmd, message, title, textAttributes, textParts,
+                                        actionLogType, collapsible, hidden, genAIMetadata);
+    @try {
+        SEL midSel = @selector(messageId);
+        if ([result respondsToSelector:midSel]) {
+            id mid = ((id(*)(id, SEL))objc_msgSend)(result, midSel);
+            if ([mid isKindOfClass:[NSString class]]) {
+                sciTrackInsertedMessage(mid, @"IGDirectThreadActionLog");
+            }
+        }
+    } @catch(id e) {}
+    return result;
+}
+
 // ============ RUNTIME HOOKS ============
 
 %ctor {
+    // Action log entries (e.g. "X liked a message") — record their message IDs
+    // when IG creates them so we can later recognize a remove for those IDs as
+    // action-log bookkeeping rather than a real unsend.
+    Class actionLogCls = NSClassFromString(@"IGDirectThreadActionLog");
+    if (actionLogCls) {
+        SEL fullInit = NSSelectorFromString(@"initWithMessage:title:textAttributes:textParts:actionLogType:collapsible:hidden:genAIMetadata:");
+        if (class_getInstanceMethod(actionLogCls, fullInit))
+            MSHookMessageEx(actionLogCls, fullInit, (IMP)new_actionLogFullInit, (IMP *)&orig_actionLogFullInit);
+    }
+
     Class msgUpdateClass = NSClassFromString(@"IGDirectMessageUpdate");
     if (msgUpdateClass) {
         MSHookMessageEx(object_getClass(msgUpdateClass), @selector(alloc),
                         (IMP)new_msgUpdate_alloc, (IMP *)&orig_msgUpdate_alloc);
     }
+
 
     Class cacheClass = NSClassFromString(@"IGDirectCacheUpdatesApplicator");
     if (cacheClass) {

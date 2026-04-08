@@ -22,6 +22,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Hide ads
 - Hide Meta AI
 - Copy description
+- Profile copy button **\***
 - Do not save recent searches
 - Use detailed (native) color picker
 - Enable liquid glass buttons
@@ -85,6 +86,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Manually mark messages as seen (button or toggle mode) **\***
 - Auto mark seen on send (marks messages as read when you send any message) **\***
 - Auto mark seen on typing (marks messages as read the moment you start typing, even when typing status is hidden) **\***
+- Mark seen on story like **\***
 - Send audio as file — send audio files as voice messages from the DM plus menu **\***
 - Download voice messages — adds a Download option to the long-press menu on voice messages, saves as M4A via share sheet **\***
 - Disable typing status
@@ -122,6 +124,14 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Confirm posting comment
 - Confirm changing direct message theme
 - Confirm sticker interaction
+
+### Tweak settings **\***
+- Search bar in the main settings page — recursively finds any setting across nested pages with a breadcrumb to its location
+
+### Backup & Restore **\***
+- Export RyukGram settings as a JSON file or scannable QR code
+- Import settings from a file in Files or a QR code from your photo library
+- Searchable, collapsible, editable preview before saving or applying
 
 ### Optimization
 - Automatically clears unneeded cache folders, reducing the size of your Instagram installation

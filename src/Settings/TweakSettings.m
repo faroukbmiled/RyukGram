@@ -1,4 +1,5 @@
 #import "TweakSettings.h"
+#import "SCISettingsBackup.h"
 
 @implementation SCITweakSettings
 
@@ -18,7 +19,7 @@
         @{
             @"header": @"",
             @"rows": @[
-                [SCISetting linkCellWithTitle:@"Donate" subtitle:@"Consider donating to support this tweak's development!" icon:[SCISymbol symbolWithName:@"heart.circle.fill" color:[UIColor systemPinkColor] size:20.0] url:@"https://ko-fi.com/SoCuul"]
+                [SCISetting linkCellWithTitle:@"RyukGram on GitHub" subtitle:[NSString stringWithFormat:@"%@ — view source, report issues, see releases", SCIVersionString] imageUrl:@"https://github.com/faroukbmiled.png" url:@"https://github.com/faroukbmiled/RyukGram"]
             ]
         },
         @{
@@ -33,6 +34,7 @@
                                                 [SCISetting switchCellWithTitle:@"Hide ads" subtitle:@"Removes all ads from the Instagram app" defaultsKey:@"hide_ads"],
                                                 [SCISetting switchCellWithTitle:@"Hide Meta AI" subtitle:@"Hides the meta ai buttons/functionality within the app" defaultsKey:@"hide_meta_ai"],
                                                 [SCISetting switchCellWithTitle:@"Copy description" subtitle:@"Copy description text fields by long-pressing on them" defaultsKey:@"copy_description"],
+                                                [SCISetting switchCellWithTitle:@"Profile copy button" subtitle:@"Adds a button next to the burger menu on profiles to copy username, name or bio" defaultsKey:@"profile_copy_button"],
                                                 [SCISetting switchCellWithTitle:@"Do not save recent searches" subtitle:@"Search bars will no longer save your recent searches" defaultsKey:@"no_recent_searches"],
                                                 [SCISetting switchCellWithTitle:@"Use detailed color picker" subtitle:@"Long press on the eyedropper tool in stories to customize the text color more precisely" defaultsKey:@"detailed_color_picker"],
                                                 [SCISetting switchCellWithTitle:@"Enable liquid glass buttons" subtitle:@"Enables experimental liquid glass buttons within the app" defaultsKey:@"liquid_glass_buttons" requiresRestart:YES],
@@ -181,6 +183,7 @@
                                                 [SCISetting switchCellWithTitle:@"Disable screenshot detection" subtitle:@"Removes the screenshot-prevention features for visual messages in DMs" defaultsKey:@"remove_screenshot_alert"],
                                                 [SCISetting switchCellWithTitle:@"Disable story seen receipt" subtitle:@"Hides the notification for others when you view their story" defaultsKey:@"no_seen_receipt"],
                                                 [SCISetting switchCellWithTitle:@"Keep stories visually unseen" subtitle:@"Prevents stories from visually marking as seen in the tray (keeps colorful ring)" defaultsKey:@"no_seen_visual"],
+                                                [SCISetting switchCellWithTitle:@"Mark seen on story like" subtitle:@"Marks a story as seen the moment you tap the heart, even with seen blocking on" defaultsKey:@"seen_on_story_like"],
                                                 [SCISetting switchCellWithTitle:@"Stop story auto-advance" subtitle:@"Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" defaultsKey:@"stop_story_auto_advance"],
                                                 [SCISetting switchCellWithTitle:@"Disable instants creation" subtitle:@"Hides the functionality to create/send instants" defaultsKey:@"disable_instants_creation" requiresRestart:YES]
                                             ]
@@ -236,6 +239,26 @@
         @{
             @"header": @"",
             @"rows": @[
+                [SCISetting navigationCellWithTitle:@"Backup & Restore"
+                                           subtitle:@""
+                                               icon:[SCISymbol symbolWithName:@"arrow.up.arrow.down.square"]
+                                        navSections:@[@{
+                                            @"header": @"",
+                                            @"footer": @"Export your RyukGram settings to a JSON file or QR code, and import them later from Files or a photo. Importing resets all settings to defaults before applying the imported values, and shows a preview before anything changes.",
+                                            @"rows": @[
+                                                [SCISetting buttonCellWithTitle:@"Export settings"
+                                                                       subtitle:@"Save as a file or scannable QR code"
+                                                                           icon:[SCISymbol symbolWithName:@"square.and.arrow.up"]
+                                                                         action:^(void) { [SCISettingsBackup presentExport]; }
+                                                ],
+                                                [SCISetting buttonCellWithTitle:@"Import settings"
+                                                                       subtitle:@"From a file or QR code in your library"
+                                                                           icon:[SCISymbol symbolWithName:@"square.and.arrow.down"]
+                                                                         action:^(void) { [SCISettingsBackup presentImport]; }
+                                                ]
+                                            ]
+                                        }]
+                ],
                 // [SCISetting navigationCellWithTitle:@"Experimental"
                 //                            subtitle:@""
                 //                                icon:[SCISymbol symbolWithName:@"testtube.2"]
@@ -315,7 +338,8 @@
             @"rows": @[
                 [SCISetting linkCellWithTitle:@"Original Developer" subtitle:@"SoCuul (SCInsta)" imageUrl:@"https://i.imgur.com/c9CbytZ.png" url:@"https://github.com/SoCuul/SCInsta"],
                 [SCISetting linkCellWithTitle:@"Modded by" subtitle:@"Ryuk" imageUrl:@"https://github.com/faroukbmiled.png" url:@"https://github.com/faroukbmiled"],
-                [SCISetting linkCellWithTitle:@"View Repo" subtitle:@"View the source code on GitHub" imageUrl:@"https://i.imgur.com/BBUNzeP.png" url:@"https://github.com/faroukbmiled/RyukGram"]
+                [SCISetting linkCellWithTitle:@"View Repo" subtitle:@"View the source code on GitHub" imageUrl:@"https://i.imgur.com/BBUNzeP.png" url:@"https://github.com/faroukbmiled/RyukGram"],
+                [SCISetting linkCellWithTitle:@"Donate to SCInsta dev" subtitle:@"Support SoCuul" icon:[SCISymbol symbolWithName:@"heart.circle.fill" color:[UIColor systemPinkColor] size:20.0] url:@"https://ko-fi.com/SoCuul"]
             ],
             @"footer": [NSString stringWithFormat:@"RyukGram %@\n\nInstagram v%@\n\nBased on SCInsta by SoCuul", SCIVersionString, [SCIUtils IGVersionString]]
         }
