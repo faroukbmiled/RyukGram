@@ -2,6 +2,7 @@
 #import "../../Utils.h"
 
 #define SCI_STORY_EXCL_KEY @"excluded_story_users"
+#define SCI_STORY_INCL_KEY @"included_story_users"
 
 @implementation SCIExcludedStoryUsers
 
@@ -9,15 +10,22 @@
     return [SCIUtils getBoolPref:@"enable_story_user_exclusions"];
 }
 
++ (BOOL)isBlockSelectedMode {
+    return [[SCIUtils getStringPref:@"story_blocking_mode"] isEqualToString:@"block_selected"];
+}
+
++ (NSString *)activeKey {
+    return [self isBlockSelectedMode] ? SCI_STORY_INCL_KEY : SCI_STORY_EXCL_KEY;
+}
+
 + (NSArray<NSDictionary *> *)allEntries {
-    NSArray *raw = [[NSUserDefaults standardUserDefaults] arrayForKey:SCI_STORY_EXCL_KEY];
-    return raw ?: @[];
+    return [[NSUserDefaults standardUserDefaults] arrayForKey:[self activeKey]] ?: @[];
 }
 
 + (NSUInteger)count { return [self allEntries].count; }
 
 + (void)saveAll:(NSArray *)entries {
-    [[NSUserDefaults standardUserDefaults] setObject:entries forKey:SCI_STORY_EXCL_KEY];
+    [[NSUserDefaults standardUserDefaults] setObject:entries forKey:[self activeKey]];
 }
 
 + (NSDictionary *)entryForPK:(NSString *)pk {
@@ -28,9 +36,14 @@
     return nil;
 }
 
++ (BOOL)isInList:(NSString *)pk {
+    return [self entryForPK:pk] != nil;
+}
+
 + (BOOL)isUserPKExcluded:(NSString *)pk {
     if (![self isFeatureEnabled]) return NO;
-    return [self entryForPK:pk] != nil;
+    BOOL inList = [self isInList:pk];
+    return [self isBlockSelectedMode] ? !inList : inList;
 }
 
 + (void)addOrUpdateEntry:(NSDictionary *)entry {

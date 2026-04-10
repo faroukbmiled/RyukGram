@@ -55,19 +55,25 @@ BOOL sciIsStoryAudioEnabled(void) {
     return sciIGAudioEnabled();
 }
 
+static BOOL sciKVORegistered = NO;
+
 void sciInitStoryAudioState(void) {
+    if (sciKVORegistered) return;
     if (!sciVolumeObserver) sciVolumeObserver = [_SciVolumeObserver new];
     @try {
         [[AVAudioSession sharedInstance] addObserver:sciVolumeObserver
                                          forKeyPath:@"outputVolume"
                                             options:NSKeyValueObservingOptionNew
                                             context:NULL];
+        sciKVORegistered = YES;
     } @catch (__unused id e) {}
 }
 
 void sciResetStoryAudioState(void) {
+    if (!sciKVORegistered) return;
     @try {
         [[AVAudioSession sharedInstance] removeObserver:sciVolumeObserver forKeyPath:@"outputVolume"];
+        sciKVORegistered = NO;
     } @catch (__unused id e) {}
 }
 

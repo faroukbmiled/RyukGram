@@ -18,7 +18,7 @@ static NSString *sciThreadIdForVC(id vc) {
 // - Enables unlimited views of DM visual messages
 
 BOOL dmSeenToggleEnabled = NO;
-static BOOL sciSeenAutoBypass = NO;
+static NSInteger sciSeenAutoBypassCount = 0;
 __weak IGDirectThreadViewController *sciActiveThreadVC = nil;
 
 static BOOL sciIsSeenToggleMode() {
@@ -36,10 +36,10 @@ BOOL sciAutoTypingEnabled() {
 }
 
 void sciDoAutoSeen(IGDirectThreadViewController *threadVC) {
-    sciSeenAutoBypass = YES;
+    sciSeenAutoBypassCount++;
     [threadVC markLastMessageAsSeen];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        sciSeenAutoBypass = NO;
+        sciSeenAutoBypassCount--;
     });
 }
 
@@ -79,9 +79,13 @@ static void sciRefreshNavBarItems(UIView *anchor) {
     [(id)anchor performSelector:@selector(setRightBarButtonItems:) withObject:cur];
 }
 
+static NSDictionary *sciEntryFromThreadVC(UIViewController *vc);
+
 // Long-press menu shared by the seen button and the un-exclude button.
 static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIWindow *window) {
+    BOOL inList = threadId && [SCIExcludedThreads isInList:threadId];
     BOOL excluded = threadId && [SCIExcludedThreads isThreadIdExcluded:threadId];
+    BOOL blockSelected = [SCIExcludedThreads isBlockSelectedMode];
     BOOL seenFeatureOn = [SCIUtils getBoolPref:@"remove_lastseen"];
 
     NSMutableArray<UIMenuElement *> *items = [NSMutableArray array];
@@ -117,25 +121,35 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
         [items addObject:seenAction];
     }
 
-    NSString *toggleTitle = excluded ? @"Un-exclude chat" : @"Exclude chat";
-    UIImage *toggleImg = [UIImage systemImageNamed:excluded ? @"eye.fill" : @"eye.slash"];
+    NSString *addLabel = blockSelected ? @"Add to block list" : @"Exclude chat";
+    NSString *removeLabel = blockSelected ? @"Remove from block list" : @"Un-exclude chat";
+    NSString *toggleTitle = inList ? removeLabel : addLabel;
+    UIImage *toggleImg = [UIImage systemImageNamed:inList ? @"eye.fill" : @"eye.slash"];
     __weak UIView *weakAnchor = anchor;
     UIAction *toggle = [UIAction actionWithTitle:toggleTitle image:toggleImg identifier:nil
                                          handler:^(__kindof UIAction *_) {
         if (!threadId) return;
-        if (excluded) {
+        if (inList) {
             [SCIExcludedThreads removeThreadId:threadId];
-            [SCIUtils showToastForDuration:2.0 title:@"Un-excluded"];
+            [SCIUtils showToastForDuration:2.0 title:blockSelected ? @"Unblocked" : @"Un-excluded"];
+            // In block_selected, removing = normal behavior → mark seen
+            if (blockSelected) {
+                UIViewController *nearestVC = [SCIUtils nearestViewControllerForView:weakAnchor];
+                if ([nearestVC isKindOfClass:%c(IGDirectThreadViewController)])
+                    [(IGDirectThreadViewController *)nearestVC markLastMessageAsSeen];
+            }
         } else {
-            [SCIExcludedThreads addOrUpdateEntry:@{ @"threadId": threadId,
-                                                    @"threadName": @"",
-                                                    @"isGroup": @NO,
-                                                    @"users": @[] }];
-            [SCIUtils showToastForDuration:2.0 title:@"Excluded"];
-            // Immediately mark seen since exclusion means normal behavior.
-            UIViewController *nearestVC = [SCIUtils nearestViewControllerForView:weakAnchor];
-            if ([nearestVC isKindOfClass:%c(IGDirectThreadViewController)])
-                [(IGDirectThreadViewController *)nearestVC markLastMessageAsSeen];
+            UIViewController *anchorVC = [SCIUtils nearestViewControllerForView:anchor];
+            NSDictionary *entry = sciEntryFromThreadVC(anchorVC);
+            if (!entry) entry = @{ @"threadId": threadId, @"threadName": @"", @"isGroup": @NO, @"users": @[] };
+            [SCIExcludedThreads addOrUpdateEntry:entry];
+            [SCIUtils showToastForDuration:2.0 title:blockSelected ? @"Blocked" : @"Excluded"];
+            // In block_all, excluding = normal behavior → mark seen
+            if (!blockSelected) {
+                UIViewController *nearestVC = [SCIUtils nearestViewControllerForView:weakAnchor];
+                if ([nearestVC isKindOfClass:%c(IGDirectThreadViewController)])
+                    [(IGDirectThreadViewController *)nearestVC markLastMessageAsSeen];
+            }
         }
         sciRefreshNavBarItems(weakAnchor);
     }];
@@ -159,21 +173,74 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
     return [UIMenu menuWithTitle:@"" children:items];
 }
 
+// Extract thread info from an IGDirectThreadViewController
+static NSDictionary *sciEntryFromThreadVC(UIViewController *vc) {
+    if (!vc) return nil;
+    NSString *tid = sciThreadIdForVC(vc);
+    if (!tid) return nil;
+    NSString *name = @"";
+    NSMutableArray *users = [NSMutableArray array];
+    @try {
+        // Try to get thread title from navigation item
+        name = vc.navigationItem.title ?: @"";
+        // Try to get the thread object for user info
+        id thread = [vc valueForKey:@"thread"];
+        if (thread) {
+            id threadUsers = [thread valueForKey:@"users"];
+            if ([threadUsers isKindOfClass:[NSArray class]]) {
+                for (id u in (NSArray *)threadUsers) {
+                    NSMutableDictionary *d = [NSMutableDictionary dictionary];
+                    @try {
+                        id pk = [u valueForKey:@"pk"];
+                        id un = [u valueForKey:@"username"];
+                        id fn = [u valueForKey:@"fullName"];
+                        if (pk) d[@"pk"] = [NSString stringWithFormat:@"%@", pk];
+                        if (un) d[@"username"] = [NSString stringWithFormat:@"%@", un];
+                        if (fn) d[@"fullName"] = [NSString stringWithFormat:@"%@", fn];
+                    } @catch (__unused id e) {}
+                    if (d.count) [users addObject:d];
+                }
+            }
+        }
+    } @catch (__unused id e) {}
+    return @{ @"threadId": tid, @"threadName": name, @"isGroup": @NO, @"users": users };
+}
+
 %hook IGTallNavigationBarView
+
+%new - (void)sciAddToListHandler:(UIBarButtonItem *)sender {
+    UIViewController *nearestVC = [SCIUtils nearestViewControllerForView:self];
+    NSDictionary *entry = sciEntryFromThreadVC(nearestVC);
+    if (!entry) return;
+    UIAlertController *alert = [UIAlertController
+        alertControllerWithTitle:@"Add to block list?"
+                         message:@"Read receipts will be blocked for this chat."
+                  preferredStyle:UIAlertControllerStyleAlert];
+    __weak typeof(self) weakSelf = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_) {
+        [SCIExcludedThreads addOrUpdateEntry:entry];
+        [SCIUtils showToastForDuration:2.0 title:@"Added to block list"];
+        sciRefreshNavBarItems(weakSelf);
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [nearestVC presentViewController:alert animated:YES completion:nil];
+}
 
 %new - (void)sciUnexcludeButtonHandler:(UIBarButtonItem *)sender {
     UIViewController *nearestVC = [SCIUtils nearestViewControllerForView:self];
     NSString *tid = sciThreadIdForVC(nearestVC);
     if (!tid) return;
 
+    BOOL bs = [SCIExcludedThreads isBlockSelectedMode];
+    NSString *alertTitle = bs ? @"Remove from block list?" : @"Un-exclude chat?";
+    NSString *alertMsg = bs ? @"Read receipts will no longer be blocked for this chat."
+                            : @"This chat will resume normal read-receipt behavior.";
     UIAlertController *alert = [UIAlertController
-        alertControllerWithTitle:@"Remove from exclusion?"
-                         message:@"This chat will resume normal read-receipt behavior."
-                  preferredStyle:UIAlertControllerStyleAlert];
+        alertControllerWithTitle:alertTitle message:alertMsg preferredStyle:UIAlertControllerStyleAlert];
     __weak typeof(self) weakSelf = self;
     [alert addAction:[UIAlertAction actionWithTitle:@"Remove" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
         [SCIExcludedThreads removeThreadId:tid];
-        [SCIUtils showToastForDuration:2.0 title:@"Removed from exclusion"];
+        [SCIUtils showToastForDuration:2.0 title:@"Removed"];
         sciRefreshNavBarItems(weakSelf);
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
@@ -198,6 +265,7 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
     UIViewController *navNearestVC = [SCIUtils nearestViewControllerForView:self];
     NSString *navThreadId = sciThreadIdForVC(navNearestVC);
     BOOL navExcluded = navThreadId && [SCIExcludedThreads isThreadIdExcluded:navThreadId];
+    BOOL navInList = navThreadId && [SCIExcludedThreads isInList:navThreadId];
 
     if ([SCIUtils getBoolPref:@"remove_lastseen"] && !navExcluded) {
         UIBarButtonItem *seenButton = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"eye"] style:UIBarButtonItemStylePlain target:self action:@selector(seenButtonHandler:)];
@@ -208,18 +276,26 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
         [new_items addObject:seenButton];
     }
 
-    // Excluded chats hide the seen button — surface an un-exclude affordance instead.
-    if ([SCIUtils getBoolPref:@"remove_lastseen"] && navExcluded &&
-        [SCIUtils getBoolPref:@"unexclude_inbox_button"]) {
-        UIBarButtonItem *unexBtn = [[UIBarButtonItem alloc]
-            initWithImage:[UIImage systemImageNamed:@"eye.slash.fill"]
+    // In block_all: show remove button for listed (excluded) chats
+    // In block_selected: show remove button for listed chats, or add button for non-listed chats
+    BOOL blockSelected = [SCIExcludedThreads isBlockSelectedMode];
+    BOOL showListButton = [SCIUtils getBoolPref:@"remove_lastseen"] && [SCIUtils getBoolPref:@"chat_quick_list_button"];
+    // block_all + in list: show remove button (no seen button shown for excluded chats)
+    // block_selected + NOT in list: show add-to-list button
+    // block_selected + in list: DON'T show (seen button already visible with long-press menu)
+    BOOL showRemoveBtn = !blockSelected && navInList && navExcluded;
+    BOOL showAddBtn = blockSelected && !navInList;
+    if (showListButton && (showRemoveBtn || showAddBtn)) {
+        SEL action = showRemoveBtn ? @selector(sciUnexcludeButtonHandler:) : @selector(sciAddToListHandler:);
+        UIBarButtonItem *listBtn = [[UIBarButtonItem alloc]
+            initWithImage:[UIImage systemImageNamed:showRemoveBtn ? @"eye.slash.fill" : @"eye.slash"]
                     style:UIBarButtonItemStylePlain
                    target:self
-                   action:@selector(sciUnexcludeButtonHandler:)];
-        unexBtn.accessibilityIdentifier = @"sci-unex-btn";
-        unexBtn.tintColor = SCIUtils.SCIColor_Primary;
-        unexBtn.menu = sciBuildThreadActionsMenu(self, navThreadId, self.window);
-        [new_items addObject:unexBtn];
+                   action:action];
+        listBtn.accessibilityIdentifier = @"sci-unex-btn";
+        listBtn.tintColor = showRemoveBtn ? SCIUtils.SCIColor_Primary : UIColor.labelColor;
+        listBtn.menu = sciBuildThreadActionsMenu(self, navThreadId, self.window);
+        [new_items addObject:listBtn];
     }
 
     if ([SCIUtils getBoolPref:@"unlimited_replay"] && !navExcluded) {
@@ -277,7 +353,7 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
     if ([SCIUtils getBoolPref:@"remove_lastseen"]) {
         if ([SCIExcludedThreads isActiveThreadExcluded]) return %orig; // excluded → behave normally
         if (sciIsSeenToggleMode() && dmSeenToggleEnabled) return %orig;
-        if (sciSeenAutoBypass) return %orig;
+        if (sciSeenAutoBypassCount > 0) return %orig;
         return false;
     }
     return %orig;

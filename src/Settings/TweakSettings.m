@@ -209,11 +209,12 @@
                                             ]
                                         },
                                         @{
-                                            @"header": @"Excluded users",
-                                            @"footer": @"Excluded users' stories behave normally — your view shows up in their viewer list. Add via the long-press menu on the eye button while viewing a story, or via the 3-dot menu on the story header.",
+                                            @"header": @"Story user list",
+                                            @"footer": @"Block all: all stories blocked — listed users are exceptions.\nBlock selected: only listed users are blocked — everything else is normal.\nBoth lists are saved independently.",
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:@"Enable story user exclusions" subtitle:@"Master toggle. When off, exclusions are ignored" defaultsKey:@"enable_story_user_exclusions"],
-                                                [SCISetting switchCellWithTitle:@"Show un-exclude eye on excluded users" subtitle:@"When viewing an excluded user's story, the eye button appears so you can un-exclude with one tap. Off = use the 3-dot menu only" defaultsKey:@"story_excluded_show_unexclude_eye"],
+                                                [SCISetting switchCellWithTitle:@"Enable story user list" subtitle:@"Master toggle. When off, the list is ignored" defaultsKey:@"enable_story_user_exclusions"],
+                                                [SCISetting menuCellWithTitle:@"Blocking mode" subtitle:@"Which stories get seen-receipt blocking" menu:[self menus][@"story_blocking_mode"]],
+                                                [SCISetting switchCellWithTitle:@"Quick list button in stories" subtitle:@"Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" defaultsKey:@"story_excluded_show_unexclude_eye"],
                                                 ({
                                                     SCISetting *s = [SCISetting buttonCellWithTitle:@"Manage list"
                                                                        subtitle:@"Search, sort, swipe to remove"
@@ -279,8 +280,7 @@
                                                                                 [SCISetting menuCellWithTitle:@"Read receipt mode" subtitle:@"How the seen button behaves" menu:[self menus][@"seen_mode"]],
                                                                                 [SCISetting switchCellWithTitle:@"Auto mark seen on interact" subtitle:@"Locally marks messages as seen when you send any message" defaultsKey:@"seen_auto_on_interact"],
                                                                                 [SCISetting switchCellWithTitle:@"Auto mark seen on typing" subtitle:@"Marks messages as seen the moment you start typing in a DM (works even when typing status is hidden)" defaultsKey:@"seen_auto_on_typing"],
-                                                                                [SCISetting switchCellWithTitle:@"Un-exclude button in excluded chats" subtitle:@"Show a small eye button in excluded chats to remove them from the exclusion list (with confirmation). Long-press it for more options." defaultsKey:@"unexclude_inbox_button"],
-                                                                            ]
+                                                                                                                                                            ]
                                                                         }]
                                                 ],
                                                 [SCISetting switchCellWithTitle:@"Disable typing status" subtitle:@"Prevents the typing indicator from being shown to others when you're typing in DMs" defaultsKey:@"disable_typing_status"],
@@ -288,11 +288,22 @@
                                             ]
                                         },
                                         @{
-                                            @"header": @"Excluded chats",
-                                            @"footer": @"Excluded chats and groups behave normally — read-receipt blocking, manual seen button, auto-seen on send/typing are all skipped for them. Long-press a chat in the inbox to add or remove it.",
+                                            @"header": @"Chat list",
+                                            @"footer": @"Block all: all chats blocked — listed chats are exceptions.\nBlock selected: only listed chats are blocked — everything else is normal.\nBoth lists are saved independently. Long-press a chat in the inbox to add or remove.",
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:@"Enable chat exclusions" subtitle:@"Master toggle. When off, the inbox menu item disappears and exclusions are ignored" defaultsKey:@"enable_chat_exclusions"],
-                                                [SCISetting switchCellWithTitle:@"Default: also exclude keep-deleted" subtitle:@"Excluded chats also bypass keep-deleted-messages by default. Each chat can override this in the list" defaultsKey:@"exclusions_default_keep_deleted"],
+                                                [SCISetting switchCellWithTitle:@"Enable chat list" subtitle:@"Master toggle. When off, the list is ignored" defaultsKey:@"enable_chat_exclusions"],
+                                                [SCISetting menuCellWithTitle:@"Blocking mode" subtitle:@"Which chats get read-receipt blocking" menu:[self menus][@"chat_blocking_mode"]],
+                                                ({
+    SCISetting *s = [SCISetting switchCellWithTitle:@"" subtitle:@"" defaultsKey:@"exclusions_default_keep_deleted"];
+    s.dynamicTitle = ^{
+        BOOL bs = [[SCIUtils getStringPref:@"chat_blocking_mode"] isEqualToString:@"block_selected"];
+        return bs ? @"Block keep-deleted for unlisted chats"
+                  : @"Block keep-deleted for excluded chats";
+    };
+    s.subtitle = @"Each chat can override this in the list";
+    s;
+}),
+                                                [SCISetting switchCellWithTitle:@"Quick list button in chats" subtitle:@"Shows a button in DM threads to add/remove chats from the list. Long-press for more options" defaultsKey:@"chat_quick_list_button"],
                                                 ({
                                                     SCISetting *s = [SCISetting buttonCellWithTitle:@"Manage list"
                                                                        subtitle:@"Search, sort, swipe to remove or toggle keep-deleted"
@@ -523,6 +534,32 @@
 
 + (NSDictionary *)menus {
     return @{
+        @"chat_blocking_mode": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:@"Block all"
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"chat_blocking_mode", @"value": @"block_all" }
+            ],
+            [UICommand commandWithTitle:@"Block selected"
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"chat_blocking_mode", @"value": @"block_selected" }
+            ]
+        ]],
+
+        @"story_blocking_mode": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:@"Block all"
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"story_blocking_mode", @"value": @"block_all" }
+            ],
+            [UICommand commandWithTitle:@"Block selected"
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"story_blocking_mode", @"value": @"block_selected" }
+            ]
+        ]],
+
         @"story_seen_mode": [UIMenu menuWithChildren:@[
             [UICommand commandWithTitle:@"Button"
                                     image:nil

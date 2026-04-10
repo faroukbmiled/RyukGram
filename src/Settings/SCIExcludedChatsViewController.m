@@ -154,7 +154,9 @@
         }];
     }
     self.filtered = all;
-    self.title = [NSString stringWithFormat:@"Chats (%lu)", (unsigned long)self.filtered.count];
+    BOOL bs = [SCIExcludedThreads isBlockSelectedMode];
+    NSString *label = bs ? @"Included chats" : @"Excluded chats";
+    self.title = [NSString stringWithFormat:@"%@ (%lu)", label, (unsigned long)self.filtered.count];
     [self.tableView reloadData];
 }
 

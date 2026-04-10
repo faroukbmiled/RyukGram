@@ -98,7 +98,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Mark seen on story like **\***
 - Advance to next story when marking as seen — tapping the eye button auto-skips to the next story **\***
 - Advance on story like — liking a story auto-skips to the next one **\***
-- Per-chat read-receipt exclusions — long-press any DM chat to exclude it from all read-receipt features. Excluded chats behave like a vanilla install (manual seen button, auto seen on send/typing, visual message blocking, view-once override are all skipped). Settings page lists excluded chats with search, sort, swipe-to-remove, and a per-entry override to also bypass keep-deleted-messages **\***
+- Per-chat read-receipt list with blocking mode — "Block all" (exclude list) or "Block selected only" (include list). Long-press any DM chat to add/remove. Settings page with search, sort, multi-select, and per-entry keep-deleted override **\***
 - Send audio as file — send audio files as voice messages from the DM plus menu **\***
 - Download voice messages — adds a Download option to the long-press menu on voice messages, saves as M4A via share sheet **\***
 - Disable typing status
@@ -109,7 +109,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Keep stories visually unseen — keeps the colorful ring in the tray after viewing **\***
 - Manual mark story as seen — button on story overlay to selectively mark stories as seen (button or toggle mode) **\***
 - Long-press the story seen button for quick actions **\***
-- Per-user story seen-receipt exclusions — exclude specific users so their stories behave normally. Manage via 3-dot menu, eye button long-press, or settings list **\***
+- Per-user story seen-receipt list with blocking mode — "Block all" (exclude list) or "Block selected only" (include list). Manage via 3-dot menu, eye button long-press, or settings list **\***
 - Story audio mute/unmute toggle — button on the story overlay and 3-dot menu to toggle audio **\***
 - Stop story auto-advance — stories won't auto-skip when the timer ends **\***
 - Story download button — download directly from the story overlay **\***

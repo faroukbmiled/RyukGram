@@ -6,8 +6,10 @@
 @interface SCIExcludedStoryUsers : NSObject
 
 + (BOOL)isFeatureEnabled;
++ (BOOL)isBlockSelectedMode;
 
 + (BOOL)isUserPKExcluded:(NSString *)pk;
++ (BOOL)isInList:(NSString *)pk;
 + (NSDictionary *)entryForPK:(NSString *)pk;
 + (NSArray<NSDictionary *> *)allEntries;
 + (NSUInteger)count;

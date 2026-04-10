@@ -215,27 +215,30 @@ NSArray *sciMaybeAppendStoryExcludeMenuItem(NSArray *items) {
     NSString *username = ownerInfo[@"username"] ?: @"";
     NSString *fullName = ownerInfo[@"fullName"] ?: @"";
     // Bypass master toggle so the 3-dot fallback always shows
-    BOOL excluded = NO;
-    for (NSDictionary *e in [SCIExcludedStoryUsers allEntries]) {
-        if ([e[@"pk"] isEqualToString:pk]) { excluded = YES; break; }
-    }
+    BOOL inList = [SCIExcludedStoryUsers isInList:pk];
+    BOOL blockSelected = [SCIExcludedStoryUsers isBlockSelectedMode];
 
     Class menuItemCls = NSClassFromString(@"IGDSMenuItem");
     if (!menuItemCls) return items;
 
-    NSString *title = excluded ? @"Un-exclude story seen" : @"Exclude story seen";
+    NSString *addLabel = blockSelected ? @"Add to block list" : @"Exclude story seen";
+    NSString *removeLabel = blockSelected ? @"Remove from block list" : @"Un-exclude story seen";
+    NSString *title = inList ? removeLabel : addLabel;
 
     __weak UIViewController *weakVC = sciActiveStoryViewerVC;
     void (^handler)(void) = ^{
-        if (excluded) {
+        if (inList) {
             [SCIExcludedStoryUsers removePK:pk];
-            [SCIUtils showToastForDuration:2.0 title:@"Un-excluded"];
+            [SCIUtils showToastForDuration:2.0 title:blockSelected ? @"Unblocked" : @"Un-excluded"];
+            // Removing in block_selected = normal behavior → mark seen
+            if (blockSelected) sciTriggerStoryMarkSeen(weakVC);
         } else {
             [SCIExcludedStoryUsers addOrUpdateEntry:@{
                 @"pk": pk, @"username": username, @"fullName": fullName
             }];
-            [SCIUtils showToastForDuration:2.0 title:@"Excluded"];
-            sciTriggerStoryMarkSeen(weakVC);
+            [SCIUtils showToastForDuration:2.0 title:blockSelected ? @"Blocked" : @"Excluded"];
+            // Adding in block_all = normal behavior → mark seen
+            if (!blockSelected) sciTriggerStoryMarkSeen(weakVC);
         }
         sciRefreshAllVisibleOverlays(weakVC);
     };

@@ -122,7 +122,9 @@
         }];
     }
     self.filtered = all;
-    self.title = [NSString stringWithFormat:@"Story users (%lu)", (unsigned long)self.filtered.count];
+    BOOL bs = [SCIExcludedStoryUsers isBlockSelectedMode];
+    NSString *label = bs ? @"Included users" : @"Excluded users";
+    self.title = [NSString stringWithFormat:@"%@ (%lu)", label, (unsigned long)self.filtered.count];
     [self.tableView reloadData];
 }
 

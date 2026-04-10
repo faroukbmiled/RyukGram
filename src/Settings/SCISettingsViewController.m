@@ -386,7 +386,8 @@ static char rowStaticRef[] = "row";
     NSLog(@"Menu changed: %@", command.propertyList[@"value"]);
     
     [self reloadCellForView:command.sender animated:YES];
-    
+    [self.tableView reloadData];
+
     if (properties[@"requiresRestart"]) {
         [SCIUtils showRestartConfirmation];
     }

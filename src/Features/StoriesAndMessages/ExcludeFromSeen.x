@@ -72,12 +72,15 @@ static id new_ctxMenuCfg(id self, SEL _cmd, id indexPath) {
 
     UIContextMenuActionProvider wrapped = ^UIMenu *(NSArray<UIMenuElement *> *suggested) {
         UIMenu *base = origProvider ? origProvider(suggested) : [UIMenu menuWithChildren:suggested];
-        BOOL excluded = [SCIExcludedThreads isThreadIdExcluded:tid];
-        NSString *title = excluded ? @"Un-exclude chat" : @"Exclude chat";
-        UIImage *img = [UIImage systemImageNamed:excluded ? @"eye.fill" : @"eye.slash"];
+        BOOL inList = [SCIExcludedThreads isInList:tid];
+        BOOL blockSelected = [SCIExcludedThreads isBlockSelectedMode];
+        NSString *addLabel = blockSelected ? @"Add to block list" : @"Exclude chat";
+        NSString *removeLabel = blockSelected ? @"Remove from block list" : @"Un-exclude chat";
+        NSString *title = inList ? removeLabel : addLabel;
+        UIImage *img = [UIImage systemImageNamed:inList ? @"eye.fill" : @"eye.slash"];
         UIAction *toggle = [UIAction actionWithTitle:title image:img identifier:nil
                                              handler:^(__kindof UIAction *_) {
-            if (excluded) {
+            if (inList) {
                 [SCIExcludedThreads removeThreadId:tid];
             } else {
                 [SCIExcludedThreads addOrUpdateEntry:entry];
@@ -123,20 +126,9 @@ static id new_ctxMenuCfg(id self, SEL _cmd, id indexPath) {
 %end
 
 %ctor {
+    Class cls = NSClassFromString(@"IGDirectInboxViewController");
+    if (!cls) return;
     SEL sel = NSSelectorFromString(@"networkingCoordinator_contextMenuConfigurationForThreadCellAtIndexPath:");
-    unsigned int n = 0;
-    Class *all = objc_copyClassList(&n);
-    for (unsigned int i = 0; i < n; i++) {
-        unsigned int mn = 0;
-        Method *ms = class_copyMethodList(all[i], &mn);
-        BOOL has = NO;
-        for (unsigned int j = 0; j < mn; j++) {
-            if (sel_isEqual(method_getName(ms[j]), sel)) { has = YES; break; }
-        }
-        if (ms) free(ms);
-        if (has) {
-            MSHookMessageEx(all[i], sel, (IMP)new_ctxMenuCfg, (IMP *)&orig_ctxMenuCfg);
-        }
-    }
-    if (all) free(all);
+    if (class_getInstanceMethod(cls, sel))
+        MSHookMessageEx(cls, sel, (IMP)new_ctxMenuCfg, (IMP *)&orig_ctxMenuCfg);
 }

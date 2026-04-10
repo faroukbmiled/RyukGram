@@ -2,6 +2,7 @@
 #import "../../Utils.h"
 
 #define SCI_EXCL_KEY @"excluded_threads"
+#define SCI_INCL_KEY @"included_threads"
 
 @implementation SCIExcludedThreads
 
@@ -11,17 +12,22 @@ static NSString *sciActiveTid = nil;
     return [SCIUtils getBoolPref:@"enable_chat_exclusions"];
 }
 
-+ (NSArray<NSDictionary *> *)allEntries {
-    NSArray *raw = [[NSUserDefaults standardUserDefaults] arrayForKey:SCI_EXCL_KEY];
-    return raw ?: @[];
++ (BOOL)isBlockSelectedMode {
+    return [[SCIUtils getStringPref:@"chat_blocking_mode"] isEqualToString:@"block_selected"];
 }
 
-+ (NSUInteger)count {
-    return [self allEntries].count;
++ (NSString *)activeKey {
+    return [self isBlockSelectedMode] ? SCI_INCL_KEY : SCI_EXCL_KEY;
 }
+
++ (NSArray<NSDictionary *> *)allEntries {
+    return [[NSUserDefaults standardUserDefaults] arrayForKey:[self activeKey]] ?: @[];
+}
+
++ (NSUInteger)count { return [self allEntries].count; }
 
 + (void)saveAll:(NSArray *)entries {
-    [[NSUserDefaults standardUserDefaults] setObject:entries forKey:SCI_EXCL_KEY];
+    [[NSUserDefaults standardUserDefaults] setObject:entries forKey:[self activeKey]];
 }
 
 + (NSDictionary *)entryForThreadId:(NSString *)threadId {
@@ -32,14 +38,32 @@ static NSString *sciActiveTid = nil;
     return nil;
 }
 
++ (BOOL)isInList:(NSString *)threadId {
+    return [self entryForThreadId:threadId] != nil;
+}
+
 + (BOOL)isThreadIdExcluded:(NSString *)threadId {
     if (![self isFeatureEnabled]) return NO;
-    return [self entryForThreadId:threadId] != nil;
+    BOOL inList = [self isInList:threadId];
+    return [self isBlockSelectedMode] ? !inList : inList;
 }
 
 + (BOOL)shouldKeepDeletedBeBlockedForThreadId:(NSString *)threadId {
     if (![self isFeatureEnabled]) return NO;
     NSDictionary *e = [self entryForThreadId:threadId];
+
+    if ([self isBlockSelectedMode]) {
+        // block_selected: listed chats are blocked
+        // NOT in list → normal chat → block keep-deleted if default pref is on
+        // IN list → blocked chat → keep-deleted should work (not blocked) unless overridden
+        if (!e) return [SCIUtils getBoolPref:@"exclusions_default_keep_deleted"];
+        SCIKeepDeletedOverride mode = [e[@"keepDeletedOverride"] integerValue];
+        if (mode == SCIKeepDeletedOverrideExcluded) return YES;
+        if (mode == SCIKeepDeletedOverrideIncluded) return NO;
+        return NO; // default: keep-deleted works in blocked chats
+    }
+
+    // block_all: listed chats are excluded (behave normally)
     if (!e) return NO;
     SCIKeepDeletedOverride mode = [e[@"keepDeletedOverride"] integerValue];
     if (mode == SCIKeepDeletedOverrideExcluded) return YES;
@@ -57,7 +81,6 @@ static NSString *sciActiveTid = nil;
     }
     NSMutableDictionary *merged = [entry mutableCopy];
     if (existingIdx >= 0) {
-        // Preserve existing addedAt + override
         NSDictionary *old = all[existingIdx];
         if (old[@"addedAt"]) merged[@"addedAt"] = old[@"addedAt"];
         if (old[@"keepDeletedOverride"]) merged[@"keepDeletedOverride"] = old[@"keepDeletedOverride"];

@@ -179,19 +179,34 @@ static void sciDownloadDMVisualMessage(UIViewController *dmVC) {
 
 // Rebuilds the eye button (tag 1339) based on current owner + prefs. Idempotent.
 %new - (void)sciRefreshSeenButton {
-    if (![SCIUtils getBoolPref:@"no_seen_receipt"]) return;
-    if ([SCIExcludedThreads isActiveThreadExcluded]) return;
+    BOOL seenBlockingOn = [SCIUtils getBoolPref:@"no_seen_receipt"];
+    BOOL storyBlockSelected = [SCIExcludedStoryUsers isBlockSelectedMode];
+    // In block_selected mode, show the eye for list management even if global toggle is off
+    if (!seenBlockingOn && !storyBlockSelected) return;
+    // Skip for DM visual messages inside an excluded thread
+    NSString *activeTid = [SCIExcludedThreads activeThreadId];
+    if (activeTid && [SCIExcludedThreads isInList:activeTid] && ![SCIExcludedThreads isBlockSelectedMode]) return;
 
     NSDictionary *ownerInfo = sciOwnerInfoForView(self);
     NSString *ownerPK = ownerInfo[@"pk"] ?: @"";
-    BOOL ownerExcluded = ownerInfo && [SCIExcludedStoryUsers isUserPKExcluded:ownerPK];
-    BOOL hideForExcludedOwner = ownerExcluded && ![SCIUtils getBoolPref:@"story_excluded_show_unexclude_eye"];
+    BOOL ownerInList = ownerPK.length && [SCIExcludedStoryUsers isInList:ownerPK];
+    // block_all + in list: show remove icon (excluded user, behaves normally)
+    // block_selected + in list: show normal eye (blocked user, needs mark-seen)
+    // block_selected + not in list: show add icon
+    BOOL showExcludeIcon = ownerInList && !storyBlockSelected;
+    BOOL showAddIcon = storyBlockSelected && !ownerInList;
+    BOOL listBtnPref = [SCIUtils getBoolPref:@"story_excluded_show_unexclude_eye"];
+    BOOL hideForListedOwner = (showExcludeIcon || showAddIcon) && !listBtnPref;
     BOOL toggleMode = [[SCIUtils getStringPref:@"story_seen_mode"] isEqualToString:@"toggle"];
 
     NSString *symName;
     UIColor *tint;
-    if (ownerExcluded) {
+    if (showExcludeIcon) {
+        // block_all + in list: remove-from-exclude icon
         symName = @"eye.slash.fill"; tint = SCIUtils.SCIColor_Primary;
+    } else if (storyBlockSelected && !ownerInList) {
+        // block_selected + not in list: add-to-block icon
+        symName = @"eye.slash"; tint = [UIColor whiteColor];
     } else if (toggleMode) {
         symName = sciStorySeenToggleEnabled ? @"eye.fill" : @"eye";
         tint = sciStorySeenToggleEnabled ? SCIUtils.SCIColor_Primary : [UIColor whiteColor];
@@ -201,7 +216,7 @@ static void sciDownloadDMVisualMessage(UIViewController *dmVC) {
 
     UIButton *existing = (UIButton *)[self viewWithTag:1339];
 
-    if (hideForExcludedOwner) {
+    if (hideForListedOwner) {
         [existing removeFromSuperview];
         return;
     }
@@ -320,18 +335,49 @@ static void sciDownloadDMVisualMessage(UIViewController *dmVC) {
 
 %new - (void)sciSeenButtonTapped:(UIButton *)sender {
     NSDictionary *ownerInfo = sciOwnerInfoForView(self);
-    BOOL excluded = ownerInfo && [SCIExcludedStoryUsers isUserPKExcluded:ownerInfo[@"pk"]];
+    NSString *ownerPK = ownerInfo[@"pk"];
+    BOOL inList = ownerPK && [SCIExcludedStoryUsers isInList:ownerPK];
+    BOOL bs = [SCIExcludedStoryUsers isBlockSelectedMode];
 
-    // Excluded owner: tap to un-exclude
-    if (excluded) {
+    // Block selected + not in list: tap to ADD to block list (with confirmation)
+    if (bs && !inList && ownerPK) {
         UIViewController *host = [SCIUtils nearestViewControllerForView:self];
         UIAlertController *alert = [UIAlertController
-            alertControllerWithTitle:@"Un-exclude story seen?"
-                             message:[NSString stringWithFormat:@"@%@ will resume normal story-seen blocking.", ownerInfo[@"username"] ?: @""]
+            alertControllerWithTitle:@"Add to block list?"
+                             message:[NSString stringWithFormat:@"Story seen receipts will be blocked for @%@.", ownerInfo[@"username"] ?: @""]
                       preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"Un-exclude" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
-            [SCIExcludedStoryUsers removePK:ownerInfo[@"pk"]];
-            [SCIUtils showToastForDuration:2.0 title:@"Un-excluded"];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_) {
+            [SCIExcludedStoryUsers addOrUpdateEntry:@{
+                @"pk": ownerPK,
+                @"username": ownerInfo[@"username"] ?: @"",
+                @"fullName": ownerInfo[@"fullName"] ?: @""
+            }];
+            [SCIUtils showToastForDuration:2.0 title:@"Added to block list"];
+            sciRefreshAllVisibleOverlays(sciActiveStoryViewerVC);
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [host presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+
+    // Block selected + in list: blocked story, tap = mark seen (long-press to remove)
+    if (bs && inList) {
+        ((void(*)(id, SEL, id))objc_msgSend)(self, @selector(sciMarkSeenTapped:), sender);
+        return;
+    }
+
+    // Block all + in list: tap to remove from exclude list
+    if (inList) {
+        UIViewController *host = [SCIUtils nearestViewControllerForView:self];
+        NSString *alertTitle = bs ? @"Remove from block list?" : @"Un-exclude story seen?";
+        NSString *alertMsg = bs ? [NSString stringWithFormat:@"@%@ will no longer have seen receipts blocked.", ownerInfo[@"username"] ?: @""]
+                                : [NSString stringWithFormat:@"@%@ will resume normal story-seen blocking.", ownerInfo[@"username"] ?: @""];
+        UIAlertController *alert = [UIAlertController
+            alertControllerWithTitle:alertTitle message:alertMsg preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:bs ? @"Unblock" : @"Un-exclude" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
+            [SCIExcludedStoryUsers removePK:ownerPK];
+            [SCIUtils showToastForDuration:2.0 title:bs ? @"Unblocked" : @"Un-excluded"];
+            if (bs) sciTriggerStoryMarkSeen(sciActiveStoryViewerVC);
             sciRefreshAllVisibleOverlays(sciActiveStoryViewerVC);
         }]];
         [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
@@ -368,22 +414,26 @@ static void sciDownloadDMVisualMessage(UIViewController *dmVC) {
     NSString *pk = ownerInfo[@"pk"];
     NSString *username = ownerInfo[@"username"] ?: @"";
     NSString *fullName = ownerInfo[@"fullName"] ?: @"";
-    BOOL excluded = pk && [SCIExcludedStoryUsers isUserPKExcluded:pk];
+    BOOL inList = pk && [SCIExcludedStoryUsers isInList:pk];
+    BOOL blockSelected = [SCIExcludedStoryUsers isBlockSelectedMode];
 
     UIAlertController *sheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [sheet addAction:[UIAlertAction actionWithTitle:@"Mark seen" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_) {
         ((void(*)(id, SEL, id))objc_msgSend)(self, @selector(sciMarkSeenTapped:), btn);
     }]];
     if (pk) {
-        NSString *t = excluded ? @"Un-exclude story seen" : @"Exclude story seen";
-        [sheet addAction:[UIAlertAction actionWithTitle:t style:excluded ? UIAlertActionStyleDestructive : UIAlertActionStyleDefault handler:^(UIAlertAction *_) {
-            if (excluded) {
+        NSString *addLabel = blockSelected ? @"Add to block list" : @"Exclude story seen";
+        NSString *removeLabel = blockSelected ? @"Remove from block list" : @"Un-exclude story seen";
+        NSString *t = inList ? removeLabel : addLabel;
+        [sheet addAction:[UIAlertAction actionWithTitle:t style:inList ? UIAlertActionStyleDestructive : UIAlertActionStyleDefault handler:^(UIAlertAction *_) {
+            if (inList) {
                 [SCIExcludedStoryUsers removePK:pk];
-                [SCIUtils showToastForDuration:2.0 title:@"Un-excluded"];
+                [SCIUtils showToastForDuration:2.0 title:blockSelected ? @"Unblocked" : @"Un-excluded"];
+                if (blockSelected) sciTriggerStoryMarkSeen(sciActiveStoryViewerVC);
             } else {
                 [SCIExcludedStoryUsers addOrUpdateEntry:@{ @"pk": pk, @"username": username, @"fullName": fullName }];
-                [SCIUtils showToastForDuration:2.0 title:@"Excluded"];
-                sciTriggerStoryMarkSeen(sciActiveStoryViewerVC);
+                [SCIUtils showToastForDuration:2.0 title:blockSelected ? @"Blocked" : @"Excluded"];
+                if (!blockSelected) sciTriggerStoryMarkSeen(sciActiveStoryViewerVC);
             }
             sciRefreshAllVisibleOverlays(sciActiveStoryViewerVC);
         }]];

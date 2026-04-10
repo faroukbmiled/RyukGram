@@ -28,7 +28,7 @@
 }
 %end
 
-static BOOL sciReelRefreshInFlight = NO;
+static BOOL sciReelRefreshBypassing = NO;
 
 %hook IGSundialFeedViewController
 - (void)_refreshReelsWithParamsForNetworkRequest:(NSInteger)arg1 userDidPullToRefresh:(BOOL)arg2 {
@@ -38,7 +38,7 @@ static BOOL sciReelRefreshInFlight = NO;
         return;
     }
 
-    if (![(UIViewController *)self isViewLoaded] || sciReelRefreshInFlight || ![SCIUtils getBoolPref:@"refresh_reel_confirm"]) {
+    if (![(UIViewController *)self isViewLoaded] || sciReelRefreshBypassing || ![SCIUtils getBoolPref:@"refresh_reel_confirm"]) {
         %orig(arg1, arg2);
         return;
     }
@@ -60,10 +60,10 @@ static BOOL sciReelRefreshInFlight = NO;
     __weak id weakSelf = self;
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Refresh" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_) {
-        sciReelRefreshInFlight = YES;
+        sciReelRefreshBypassing = YES;
         SEL rSel = @selector(_refreshReelsWithParamsForNetworkRequest:userDidPullToRefresh:);
         ((void(*)(id,SEL,NSInteger,BOOL))objc_msgSend)(weakSelf, rSel, arg1, arg2);
-        sciReelRefreshInFlight = NO;
+        sciReelRefreshBypassing = NO;
     }]];
 
     UIViewController *presenter = (UIViewController *)self;

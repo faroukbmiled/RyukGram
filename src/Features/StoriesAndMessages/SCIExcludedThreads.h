@@ -14,8 +14,10 @@ typedef NS_ENUM(NSInteger, SCIKeepDeletedOverride) {
 @interface SCIExcludedThreads : NSObject
 
 + (BOOL)isFeatureEnabled;
++ (BOOL)isBlockSelectedMode; // YES = only listed chats get blocked
 
 + (BOOL)isThreadIdExcluded:(NSString *)threadId;
++ (BOOL)isInList:(NSString *)threadId; // raw list check, ignores mode
 + (BOOL)shouldKeepDeletedBeBlockedForThreadId:(NSString *)threadId;
 + (NSDictionary *)entryForThreadId:(NSString *)threadId;
 + (NSArray<NSDictionary *> *)allEntries;
