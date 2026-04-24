@@ -253,7 +253,7 @@ If you find a string that still renders in English on a translated build, open a
 
 |                                             |                                             |
 |:-------------------------------------------:|:-------------------------------------------:|
-| <img src="https://i.imgur.com/uPMcugZ.png"> | <img src="https://i.imgur.com/ctIiL7i.png"> |
+| <img src="https://i.imgur.com/uPMcugZ.png"> | <img src="https://i.imgur.com/RUlsg4k.jpeg"> |
 
 # Building from source
 ### Prerequisites
