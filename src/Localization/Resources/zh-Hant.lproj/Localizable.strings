@@ -318,7 +318,7 @@
 "Route saves into a dedicated album in Photos instead of the camera roll root" = "將儲存路徑導向專用相簿，而非相機膠卷根目錄";
 "Save action" = "儲存動作";
 "Save to RyukGram album" = "儲存至 RyukGram 相簿";
-"Saving" = "儲存中";
+"Saving" = "下載與儲存";
 "Show a confirmation dialog before starting a download" = "開始下載前顯示確認對話框";
 "What happens after the gesture downloads" = "手勢下載後的動作";
 "When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library." = "啟用 \"儲存至 RyukGram 相簿\" 時，下載及分享選單中的 \"儲存至照片\" 將導向你照片庫中的專用 \"RyukGram\" 相簿。";
