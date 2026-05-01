@@ -6,16 +6,38 @@
 #import "../../SCIChrome.h"
 #import "../../ActionButton/SCIActionButton.h"
 #import "../../ActionButton/SCIMediaActions.h"
-#import <objc/runtime.h>
-#import <objc/message.h>
 
 static const NSInteger kReelActionBtnTag = 1337;
+static char kReelActionDefaultKey;
+
+static inline BOOL SCIReelsActionEnabled(void) {
+	id value = [NSUserDefaults.standardUserDefaults objectForKey:@"reels_action_button"];
+	return value ? [value boolValue] : YES;
+}
+
+static inline NSString *SCIReelDefaultAction(void) {
+	NSString *action = [SCIUtils getStringPref:@"reels_action_default"];
+	return action.length ? action : @"menu";
+}
+
+static inline NSString *SCIReelActionSymbol(void) {
+	return [SCIReelDefaultAction() isEqualToString:@"download_photos"] ? @"arrow.down.circle" : @"ellipsis.circle";
+}
+
+static void sciUpdateReelActionIcon(SCIChromeButton *button) {
+	if (!button) return;
+
+	UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:24 weight:UIImageSymbolWeightSemibold];
+	UIImage *image = [UIImage systemImageNamed:SCIReelActionSymbol() withConfiguration:config];
+	button.iconView.image = [image imageWithTintColor:UIColor.whiteColor renderingMode:UIImageRenderingModeAlwaysOriginal];
+}
 
 static UIView *sciFindSuperviewOfClass(UIView *view, NSString *className) {
 	Class cls = NSClassFromString(className);
 	if (!view || !cls) return nil;
 
 	UIView *current = view.superview;
+
 	for (int depth = 0; current && depth < 20; depth++) {
 		if ([current isKindOfClass:cls]) return current;
 		current = current.superview;
@@ -64,12 +86,8 @@ static id sciCurrentCarouselChildMedia(UIView *carouselCell, id parentMedia) {
 
 	Ivar fracIvar = class_getInstanceVariable(carouselCell.class, "_currentFractionalIndex");
 	if (fracIvar) {
-		double fracIndex = *(double *)((char *)(__bridge void *)carouselCell + ivar_getOffset(fracIvar));
-		NSInteger roundedIndex = (NSInteger)round(fracIndex);
-
-		if (roundedIndex > currentIndex) {
-			currentIndex = roundedIndex;
-		}
+		NSInteger roundedIndex = (NSInteger)round(*(double *)((char *)(__bridge void *)carouselCell + ivar_getOffset(fracIvar)));
+		if (roundedIndex > currentIndex) currentIndex = roundedIndex;
 	}
 
 	Ivar cvIvar = class_getInstanceVariable(carouselCell.class, "_collectionView");
@@ -79,10 +97,7 @@ static id sciCurrentCarouselChildMedia(UIView *carouselCell, id parentMedia) {
 
 		if (collectionView && pageWidth > 0.0) {
 			NSInteger collectionIndex = (NSInteger)round(collectionView.contentOffset.x / pageWidth);
-
-			if (collectionIndex > currentIndex) {
-				currentIndex = collectionIndex;
-			}
+			if (collectionIndex > currentIndex) currentIndex = collectionIndex;
 		}
 	}
 
@@ -121,46 +136,67 @@ static id sciReelsMediaProvider(UIView *sourceView) {
 
 - (void)didMoveToSuperview {
 	%orig;
+	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciReloadReelActionButton));
+}
 
-	if (![SCIUtils getBoolPref:@"reels_action_button"] || !self.superview) return;
+- (void)layoutSubviews {
+	%orig;
+	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciReloadReelActionButton));
+}
 
-	SCIChromeButton *btn = (SCIChromeButton *)[self viewWithTag:kReelActionBtnTag];
-	if (![btn isKindOfClass:SCIChromeButton.class]) btn = nil;
+%new
+- (void)sciReloadReelActionButton {
+	if (!self.superview) return;
 
-	if (!btn) {
-		UIImageSymbolConfiguration *symbolConfig = [UIImageSymbolConfiguration configurationWithPointSize:24 weight:UIImageSymbolWeightSemibold];
-		UIImage *baseImage = [UIImage systemImageNamed:@"ellipsis.circle" withConfiguration:symbolConfig];
-		UIImage *iconImage = [baseImage imageWithTintColor:UIColor.whiteColor renderingMode:UIImageRenderingModeAlwaysOriginal];
+	SCIChromeButton *button = (SCIChromeButton *)[self viewWithTag:kReelActionBtnTag];
+	if (![button isKindOfClass:SCIChromeButton.class]) button = nil;
 
-		btn = [[SCIChromeButton alloc] initWithSymbol:@"" pointSize:0 diameter:40];
-		btn.tag = kReelActionBtnTag;
-		btn.bubbleColor = UIColor.clearColor;
-		btn.iconView.image = iconImage;
-		btn.adjustsImageWhenHighlighted = NO;
+	if (!SCIReelsActionEnabled()) {
+		[button removeFromSuperview];
+		return;
+	}
+
+	NSString *currentAction = SCIReelDefaultAction();
+	NSString *configuredAction = objc_getAssociatedObject(button, &kReelActionDefaultKey);
+
+	if (button && configuredAction && ![configuredAction isEqualToString:currentAction]) {
+		[button removeFromSuperview];
+		button = nil;
+	}
+
+	if (!button) {
+		button = [[SCIChromeButton alloc] initWithSymbol:@"" pointSize:0 diameter:40];
+		button.tag = kReelActionBtnTag;
+		button.bubbleColor = UIColor.clearColor;
+		button.adjustsImageWhenHighlighted = NO;
 
 		UIButtonConfiguration *config = [UIButtonConfiguration plainButtonConfiguration];
 		config.cornerStyle = UIButtonConfigurationCornerStyleCapsule;
 		config.background.backgroundColor = UIColor.clearColor;
 		config.contentInsets = NSDirectionalEdgeInsetsZero;
-		btn.configuration = config;
+		button.configuration = config;
 
 		self.clipsToBounds = NO;
-		[self addSubview:btn];
+		[self addSubview:button];
 
 		[NSLayoutConstraint activateConstraints:@[
-			[btn.centerXAnchor constraintEqualToAnchor:self.centerXAnchor],
-			[btn.bottomAnchor constraintEqualToAnchor:self.topAnchor constant:-10],
-			[btn.widthAnchor constraintEqualToConstant:40],
-			[btn.heightAnchor constraintEqualToConstant:40]
+			[button.centerXAnchor constraintEqualToAnchor:self.centerXAnchor],
+			[button.bottomAnchor constraintEqualToAnchor:self.topAnchor constant:-10.0],
+			[button.widthAnchor constraintEqualToConstant:40.0],
+			[button.heightAnchor constraintEqualToConstant:40.0]
 		]];
+
+		[SCIActionButton configureButton:button
+								 context:SCIActionContextReels
+								 prefKey:@"reels_action_default"
+						   mediaProvider:^id (UIView *sourceView) {
+			return sciReelsMediaProvider(sourceView);
+		}];
+
+		objc_setAssociatedObject(button, &kReelActionDefaultKey, currentAction, OBJC_ASSOCIATION_COPY_NONATOMIC);
 	}
 
-	[SCIActionButton configureButton:btn
-							 context:SCIActionContextReels
-							 prefKey:@"reels_action_default"
-					   mediaProvider:^id (UIView *sourceView) {
-		return sciReelsMediaProvider(sourceView);
-	}];
+	sciUpdateReelActionIcon(button);
 }
 
 %end
