@@ -1,13 +1,20 @@
 #import "Download.h"
 #import "../PhotoAlbum.h"
+#import "../Utils.h"
 #import <Photos/Photos.h>
 
-static inline UIImage *SCIIcon(NSString *name, CGFloat size, UIImageSymbolWeight weight) {
-	return [UIImage systemImageNamed:name withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:size weight:weight]];
+static const CGFloat kPillWidth = 220.0;
+static const CGFloat kPillHeight = 60.0;
+static const CGFloat kIconPlateSize = 30.0;
+static const CGFloat kIconSize = 17.0;
+
+static inline float SCIClamp(float v) {
+	return MAX(0.0f, MIN(v, 1.0f));
 }
 
-static inline float SCIClampProgress(float progress) {
-	return MAX(0.0f, MIN(progress, 1.0f));
+static inline UIImage *SCIIcon(NSString *name) {
+	UIImageSymbolConfiguration *cfg = [UIImageSymbolConfiguration configurationWithPointSize:kIconSize weight:UIImageSymbolWeightSemibold];
+	return [UIImage systemImageNamed:name withConfiguration:cfg];
 }
 
 @interface SCIDownloadSlot : NSObject
@@ -23,10 +30,12 @@ static inline float SCIClampProgress(float progress) {
 
 @interface SCIDownloadPillView ()
 @property (nonatomic, strong) NSMutableArray<SCIDownloadSlot *> *slots;
-@property (nonatomic, strong) UIStackView *textStack;
 @property (nonatomic, strong) UIVisualEffectView *blurView;
 @property (nonatomic, strong) UIView *tintView;
 @property (nonatomic, strong) UIView *iconPlateView;
+@property (nonatomic, strong) UIView *rightSpacerView;
+@property (nonatomic, strong) UIStackView *rowStack;
+@property (nonatomic, strong) UIStackView *textStack;
 @end
 
 @implementation SCIDownloadPillView
@@ -34,141 +43,145 @@ static inline float SCIClampProgress(float progress) {
 + (instancetype)shared {
 	static SCIDownloadPillView *shared;
 	static dispatch_once_t once;
-	dispatch_once(&once, ^{
-		shared = [[SCIDownloadPillView alloc] init];
-	});
+	dispatch_once(&once, ^{ shared = [SCIDownloadPillView new]; });
 	return shared;
 }
 
 - (instancetype)init {
 	self = [super initWithFrame:CGRectZero];
 	if (!self) return nil;
-
-	_slots = [NSMutableArray array];
-
+	_slots = NSMutableArray.array;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_sciAppDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_sciAppDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-
 	self.alpha = 0.0;
 	self.clipsToBounds = NO;
 	self.translatesAutoresizingMaskIntoConstraints = NO;
-	self.layer.cornerRadius = 14.0;
+	self.layer.cornerRadius = 17.0;
 	self.layer.cornerCurve = kCACornerCurveContinuous;
-	self.layer.borderWidth = 0.6;
-	self.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.10].CGColor;
 	self.layer.shadowColor = UIColor.blackColor.CGColor;
-	self.layer.shadowOpacity = 0.16;
+	self.layer.shadowOpacity = 0.12;
 	self.layer.shadowRadius = 12.0;
 	self.layer.shadowOffset = CGSizeMake(0.0, 5.0);
 
-	_blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleSystemThinMaterialDark]];
+	_blurView = [[UIVisualEffectView alloc] initWithEffect:nil];
 	_blurView.translatesAutoresizingMaskIntoConstraints = NO;
 	_blurView.clipsToBounds = YES;
-	_blurView.layer.cornerRadius = 14.0;
+	_blurView.layer.cornerRadius = 17.0;
 	_blurView.layer.cornerCurve = kCACornerCurveContinuous;
+	_blurView.layer.borderWidth = 0.6;
 	[self addSubview:_blurView];
 
-	_tintView = [UIView new];
+	_tintView = UIView.new;
 	_tintView.translatesAutoresizingMaskIntoConstraints = NO;
-	_tintView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.035];
 	[_blurView.contentView addSubview:_tintView];
 
-	_iconPlateView = [UIView new];
+	_iconPlateView = UIView.new;
 	_iconPlateView.translatesAutoresizingMaskIntoConstraints = NO;
-	_iconPlateView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.08];
-	_iconPlateView.layer.cornerRadius = 15.0;
+	_iconPlateView.layer.cornerRadius = kIconPlateSize / 2.0;
 	_iconPlateView.layer.cornerCurve = kCACornerCurveContinuous;
-	[_blurView.contentView addSubview:_iconPlateView];
 
-	_iconView = [UIImageView new];
+	_iconView = UIImageView.new;
 	_iconView.translatesAutoresizingMaskIntoConstraints = NO;
-	_iconView.tintColor = UIColor.whiteColor;
 	_iconView.contentMode = UIViewContentModeScaleAspectFit;
-	_iconView.image = SCIIcon(@"arrow.down.circle.fill", 16.0, UIImageSymbolWeightSemibold);
+	_iconView.image = SCIIcon(@"arrow.down.circle.fill");
 	[_iconPlateView addSubview:_iconView];
 
-	_textLabel = [UILabel new];
+	_textLabel = UILabel.new;
 	_textLabel.text = SCILocalized(@"Downloading...");
-	_textLabel.textColor = UIColor.whiteColor;
-	_textLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightSemibold];
+	_textLabel.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightSemibold];
 	_textLabel.textAlignment = NSTextAlignmentCenter;
-	_textLabel.numberOfLines = 1;
 	_textLabel.adjustsFontSizeToFitWidth = YES;
-	_textLabel.minimumScaleFactor = 0.80;
+	_textLabel.minimumScaleFactor = 0.78;
 
-	_subtitleLabel = [UILabel new];
+	_subtitleLabel = UILabel.new;
 	_subtitleLabel.text = SCILocalized(@"Tap to cancel");
-	_subtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.68];
-	_subtitleLabel.font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
+	_subtitleLabel.font = [UIFont systemFontOfSize:10.8 weight:UIFontWeightMedium];
 	_subtitleLabel.textAlignment = NSTextAlignmentCenter;
-	_subtitleLabel.numberOfLines = 1;
 	_subtitleLabel.adjustsFontSizeToFitWidth = YES;
-	_subtitleLabel.minimumScaleFactor = 0.80;
+	_subtitleLabel.minimumScaleFactor = 0.78;
 
 	_textStack = [[UIStackView alloc] initWithArrangedSubviews:@[_textLabel, _subtitleLabel]];
 	_textStack.axis = UILayoutConstraintAxisVertical;
-	_textStack.alignment = UIStackViewAlignmentFill;
-	_textStack.distribution = UIStackViewDistributionFill;
+	_textStack.alignment = UIStackViewAlignmentCenter;
 	_textStack.spacing = 0.0;
 	_textStack.translatesAutoresizingMaskIntoConstraints = NO;
-	[_blurView.contentView addSubview:_textStack];
+
+	_rightSpacerView = UIView.new;
+	_rightSpacerView.translatesAutoresizingMaskIntoConstraints = NO;
+
+	_rowStack = [[UIStackView alloc] initWithArrangedSubviews:@[_iconPlateView, _textStack, _rightSpacerView]];
+	_rowStack.axis = UILayoutConstraintAxisHorizontal;
+	_rowStack.alignment = UIStackViewAlignmentCenter;
+	_rowStack.spacing = 7.0;
+	_rowStack.translatesAutoresizingMaskIntoConstraints = NO;
+	[_blurView.contentView addSubview:_rowStack];
 
 	_progressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
 	_progressBar.translatesAutoresizingMaskIntoConstraints = NO;
-	_progressBar.progressTintColor = UIColor.systemBlueColor;
-	_progressBar.trackTintColor = [UIColor colorWithWhite:1.0 alpha:0.10];
 	_progressBar.clipsToBounds = YES;
 	_progressBar.layer.cornerRadius = 1.25;
 	_progressBar.layer.masksToBounds = YES;
 	[_blurView.contentView addSubview:_progressBar];
 
 	[self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)]];
+	[self sciApplyStyle];
 
 	[NSLayoutConstraint activateConstraints:@[
 		[_blurView.topAnchor constraintEqualToAnchor:self.topAnchor],
 		[_blurView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
 		[_blurView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
 		[_blurView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-
 		[_tintView.topAnchor constraintEqualToAnchor:_blurView.contentView.topAnchor],
 		[_tintView.bottomAnchor constraintEqualToAnchor:_blurView.contentView.bottomAnchor],
 		[_tintView.leadingAnchor constraintEqualToAnchor:_blurView.contentView.leadingAnchor],
 		[_tintView.trailingAnchor constraintEqualToAnchor:_blurView.contentView.trailingAnchor],
-
-		[_iconPlateView.leadingAnchor constraintEqualToAnchor:_blurView.contentView.leadingAnchor constant:11.0],
-		[_iconPlateView.centerYAnchor constraintEqualToAnchor:_blurView.contentView.centerYAnchor constant:-2.0],
-		[_iconPlateView.widthAnchor constraintEqualToConstant:30.0],
-		[_iconPlateView.heightAnchor constraintEqualToConstant:30.0],
-
+		[_iconPlateView.widthAnchor constraintEqualToConstant:kIconPlateSize],
+		[_iconPlateView.heightAnchor constraintEqualToConstant:kIconPlateSize],
+		[_rightSpacerView.widthAnchor constraintEqualToAnchor:_iconPlateView.widthAnchor],
+		[_rightSpacerView.heightAnchor constraintEqualToConstant:1.0],
 		[_iconView.centerXAnchor constraintEqualToAnchor:_iconPlateView.centerXAnchor],
 		[_iconView.centerYAnchor constraintEqualToAnchor:_iconPlateView.centerYAnchor],
-		[_iconView.widthAnchor constraintEqualToConstant:16.0],
-		[_iconView.heightAnchor constraintEqualToConstant:16.0],
-
-		[_textStack.centerXAnchor constraintEqualToAnchor:_blurView.contentView.centerXAnchor],
-		[_textStack.centerYAnchor constraintEqualToAnchor:_blurView.contentView.centerYAnchor constant:-2.0],
-		[_textStack.leadingAnchor constraintGreaterThanOrEqualToAnchor:_iconPlateView.trailingAnchor constant:8.0],
-		[_textStack.trailingAnchor constraintLessThanOrEqualToAnchor:_blurView.contentView.trailingAnchor constant:-12.0],
-
-		[_progressBar.leadingAnchor constraintEqualToAnchor:_blurView.contentView.leadingAnchor constant:14.0],
-		[_progressBar.trailingAnchor constraintEqualToAnchor:_blurView.contentView.trailingAnchor constant:-14.0],
+		[_iconView.widthAnchor constraintEqualToConstant:kIconSize],
+		[_iconView.heightAnchor constraintEqualToConstant:kIconSize],
+		[_rowStack.leadingAnchor constraintEqualToAnchor:_blurView.contentView.leadingAnchor constant:10.0],
+		[_rowStack.trailingAnchor constraintEqualToAnchor:_blurView.contentView.trailingAnchor constant:-10.0],
+		[_rowStack.topAnchor constraintEqualToAnchor:_blurView.contentView.topAnchor constant:8.0],
+		[_rowStack.bottomAnchor constraintEqualToAnchor:_progressBar.topAnchor constant:-6.0],
+		[_progressBar.leadingAnchor constraintEqualToAnchor:_blurView.contentView.leadingAnchor constant:10.0],
+		[_progressBar.trailingAnchor constraintEqualToAnchor:_blurView.contentView.trailingAnchor constant:-10.0],
 		[_progressBar.bottomAnchor constraintEqualToAnchor:_blurView.contentView.bottomAnchor constant:-7.0],
 		[_progressBar.heightAnchor constraintEqualToConstant:2.5],
-
-		[self.heightAnchor constraintEqualToConstant:56.0]
+		[self.heightAnchor constraintEqualToConstant:kPillHeight]
 	]];
-
 	return self;
 }
 
-- (void)_setIcon:(NSString *)name tint:(UIColor *)tint plate:(UIColor *)plate {
-	self.iconView.image = SCIIcon(name, 16.0, UIImageSymbolWeightSemibold);
-	self.iconView.tintColor = tint;
-	self.iconPlateView.backgroundColor = plate;
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+	[super traitCollectionDidChange:previousTraitCollection];
+	[self sciApplyStyle];
 }
 
-- (void)_resetVisualState {
-	[self _setIcon:@"arrow.down.circle.fill" tint:UIColor.whiteColor plate:[UIColor colorWithWhite:1.0 alpha:0.08]];
+- (void)sciApplyStyle {
+	BOOL dark = self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark;
+	self.blurView.effect = [UIBlurEffect effectWithStyle:(dark ? UIBlurEffectStyleSystemUltraThinMaterialDark : UIBlurEffectStyleSystemUltraThinMaterialLight)];
+	self.blurView.layer.borderColor = (dark ? [UIColor colorWithWhite:1.0 alpha:0.12] : [UIColor colorWithWhite:0.0 alpha:0.08]).CGColor;
+	self.tintView.backgroundColor = dark ? [UIColor colorWithWhite:1.0 alpha:0.025] : [UIColor colorWithWhite:1.0 alpha:0.08];
+	self.iconPlateView.backgroundColor = dark ? [UIColor colorWithWhite:1.0 alpha:0.09] : [UIColor colorWithWhite:0.0 alpha:0.05];
+	self.textLabel.textColor = dark ? UIColor.whiteColor : [UIColor colorWithWhite:0.05 alpha:1.0];
+	self.subtitleLabel.textColor = dark ? [UIColor colorWithWhite:1.0 alpha:0.68] : [UIColor colorWithWhite:0.0 alpha:0.50];
+	self.iconView.tintColor = dark ? UIColor.whiteColor : [UIColor colorWithWhite:0.08 alpha:1.0];
+	self.progressBar.progressTintColor = dark ? UIColor.whiteColor : [UIColor colorWithWhite:0.08 alpha:0.86];
+	self.progressBar.trackTintColor = dark ? [UIColor colorWithWhite:1.0 alpha:0.14] : [UIColor colorWithWhite:0.0 alpha:0.10];
+}
+
+- (void)sciSetIcon:(NSString *)name color:(UIColor *)color {
+	self.iconView.image = SCIIcon(name);
+	self.iconView.tintColor = color ?: self.iconView.tintColor;
+}
+
+- (void)resetState {
+	[self sciApplyStyle];
+	[self sciSetIcon:@"arrow.down.circle.fill" color:nil];
 	self.textLabel.text = SCILocalized(@"Downloading...");
 	self.subtitleLabel.text = SCILocalized(@"Tap to cancel");
 	self.subtitleLabel.hidden = NO;
@@ -179,33 +192,23 @@ static inline float SCIClampProgress(float progress) {
 - (void)handleTap {
 	SCIDownloadSlot *slot = self.slots.lastObject;
 	void (^callback)(void) = slot ? slot.onCancel : self.onCancel;
-
 	if (slot) slot.onCancel = nil;
 	else self.onCancel = nil;
-
 	if (callback) callback();
-}
-
-- (void)resetState {
-	[self _resetVisualState];
 }
 
 - (void)showInView:(UIView *)view {
 	[self removeFromSuperview];
-
 	self.alpha = 0.0;
 	self.transform = CGAffineTransformMakeScale(0.96, 0.96);
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 	[view addSubview:self];
-
 	[NSLayoutConstraint activateConstraints:@[
 		[self.topAnchor constraintEqualToAnchor:view.safeAreaLayoutGuide.topAnchor constant:8.0],
 		[self.centerXAnchor constraintEqualToAnchor:view.centerXAnchor],
-		[self.widthAnchor constraintGreaterThanOrEqualToConstant:205.0],
-		[self.widthAnchor constraintLessThanOrEqualToConstant:285.0]
+		[self.widthAnchor constraintEqualToConstant:kPillWidth]
 	]];
-
-	[UIView animateWithDuration:0.28 delay:0.0 usingSpringWithDamping:0.86 initialSpringVelocity:0.45 options:UIViewAnimationOptionCurveEaseOut animations:^{
+	[UIView animateWithDuration:0.22 delay:0.0 usingSpringWithDamping:0.88 initialSpringVelocity:0.45 options:UIViewAnimationOptionCurveEaseOut animations:^{
 		self.alpha = 1.0;
 		self.transform = CGAffineTransformIdentity;
 	} completion:nil];
@@ -215,12 +218,10 @@ static inline float SCIClampProgress(float progress) {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (self.slots.count > 0) return;
 		if (self.alpha <= 0.01 && !self.superview) return;
-
 		self.onCancel = nil;
-
-		[UIView animateWithDuration:0.22 animations:^{
+		[UIView animateWithDuration:0.18 animations:^{
 			self.alpha = 0.0;
-			self.transform = CGAffineTransformMakeScale(0.92, 0.92);
+			self.transform = CGAffineTransformMakeScale(0.94, 0.94);
 		} completion:^(__unused BOOL finished) {
 			[self removeFromSuperview];
 			self.transform = CGAffineTransformIdentity;
@@ -236,7 +237,7 @@ static inline float SCIClampProgress(float progress) {
 
 - (void)setProgress:(float)progress {
 	self.progressBar.hidden = NO;
-	[self.progressBar setProgress:SCIClampProgress(progress) animated:YES];
+	[self.progressBar setProgress:SCIClamp(progress) animated:YES];
 }
 
 - (void)setText:(NSString *)text {
@@ -249,7 +250,7 @@ static inline float SCIClampProgress(float progress) {
 }
 
 - (void)showSuccess:(NSString *)text {
-	[self _setIcon:@"checkmark.circle.fill" tint:UIColor.systemGreenColor plate:[UIColor.systemGreenColor colorWithAlphaComponent:0.18]];
+	[self sciSetIcon:@"checkmark.circle.fill" color:UIColor.systemGreenColor];
 	self.textLabel.text = text ?: SCILocalized(@"Done");
 	self.subtitleLabel.hidden = YES;
 	self.progressBar.hidden = YES;
@@ -257,7 +258,7 @@ static inline float SCIClampProgress(float progress) {
 }
 
 - (void)showError:(NSString *)text {
-	[self _setIcon:@"xmark.circle.fill" tint:UIColor.systemRedColor plate:[UIColor.systemRedColor colorWithAlphaComponent:0.18]];
+	[self sciSetIcon:@"xmark.circle.fill" color:UIColor.systemRedColor];
 	self.textLabel.text = text ?: SCILocalized(@"Failed");
 	self.subtitleLabel.hidden = YES;
 	self.progressBar.hidden = YES;
@@ -266,79 +267,65 @@ static inline float SCIClampProgress(float progress) {
 
 - (void)showBulkProgress:(NSUInteger)completed total:(NSUInteger)total {
 	NSUInteger safeTotal = MAX(total, 1);
-
 	self.textLabel.text = [NSString stringWithFormat:@"Downloading %lu of %lu", (unsigned long)MIN(completed + 1, safeTotal), (unsigned long)safeTotal];
 	self.subtitleLabel.text = SCILocalized(@"Tap to cancel");
 	self.subtitleLabel.hidden = NO;
 	self.progressBar.hidden = NO;
-
-	[self.progressBar setProgress:SCIClampProgress((float)completed / (float)safeTotal) animated:YES];
+	[self.progressBar setProgress:SCIClamp((float)completed / (float)safeTotal) animated:YES];
 }
 
-- (void)_onMain:(dispatch_block_t)block {
+- (void)sciOnMain:(dispatch_block_t)block {
 	if (!block) return;
-	if (NSThread.isMainThread) block();
-	else dispatch_async(dispatch_get_main_queue(), block);
+	NSThread.isMainThread ? block() : dispatch_async(dispatch_get_main_queue(), block);
 }
 
-- (SCIDownloadSlot *)_slotForId:(NSString *)ticketId {
-	if (!ticketId.length) return nil;
-
+- (SCIDownloadSlot *)sciSlotForId:(NSString *)ticketId {
 	for (SCIDownloadSlot *slot in self.slots) {
 		if ([slot.ticketId isEqualToString:ticketId]) return slot;
 	}
-
 	return nil;
 }
 
-- (void)_renderTop {
+- (void)sciRenderTop {
 	SCIDownloadSlot *top = self.slots.lastObject;
 	if (!top) return;
-
-	[self _setIcon:@"arrow.down.circle.fill" tint:UIColor.whiteColor plate:[UIColor colorWithWhite:1.0 alpha:0.08]];
+	[self sciApplyStyle];
+	[self sciSetIcon:@"arrow.down.circle.fill" color:nil];
 	self.textLabel.text = top.title ?: SCILocalized(@"Downloading...");
 	self.subtitleLabel.hidden = NO;
 	self.subtitleLabel.text = self.slots.count > 1 ? [NSString stringWithFormat:@"%lu active • tap to cancel", (unsigned long)self.slots.count] : SCILocalized(@"Tap to cancel");
 	self.progressBar.hidden = NO;
-
-	[self.progressBar setProgress:SCIClampProgress(top.progress) animated:YES];
+	[self.progressBar setProgress:SCIClamp(top.progress) animated:YES];
 }
 
 - (NSString *)beginTicketWithTitle:(NSString *)title onCancel:(void (^)(void))cancel {
 	NSString *ticketId = NSUUID.UUID.UUIDString;
 	void (^cancelCopy)(void) = [cancel copy];
-
-	[self _onMain:^{
-		SCIDownloadSlot *slot = [SCIDownloadSlot new];
+	[self sciOnMain:^{
+		SCIDownloadSlot *slot = SCIDownloadSlot.new;
 		slot.ticketId = ticketId;
 		slot.title = title ?: SCILocalized(@"Downloading...");
 		slot.progress = 0.0f;
 		slot.onCancel = cancelCopy;
-
 		[self.slots addObject:slot];
-
 		self.alpha = 1.0;
 		self.transform = CGAffineTransformIdentity;
-
 		if (!self.superview) {
 			UIWindow *window = UIApplication.sharedApplication.keyWindow;
 			UIView *host = window ?: topMostController().view;
 			if (host) [self showInView:host];
 		}
-
-		[self _renderTop];
+		[self sciRenderTop];
 	}];
-
 	return ticketId;
 }
 
 - (void)_sciAppDidBecomeActive {
-	[self _onMain:^{
+	[self sciOnMain:^{
 		if (self.slots.count > 0) {
-			[self _renderTop];
+			[self sciRenderTop];
 			return;
 		}
-
 		if (self.superview || self.alpha > 0.01) {
 			self.alpha = 0.0;
 			self.transform = CGAffineTransformIdentity;
@@ -348,7 +335,7 @@ static inline float SCIClampProgress(float progress) {
 }
 
 - (void)_sciAppDidEnterBackground {
-	[self _onMain:^{
+	[self sciOnMain:^{
 		for (SCIDownloadSlot *slot in self.slots.copy) {
 			void (^callback)(void) = slot.onCancel;
 			slot.onCancel = nil;
@@ -362,60 +349,54 @@ static inline float SCIClampProgress(float progress) {
 }
 
 - (void)updateTicket:(NSString *)ticketId progress:(float)progress {
-	[self _onMain:^{
-		SCIDownloadSlot *slot = [self _slotForId:ticketId];
+	[self sciOnMain:^{
+		SCIDownloadSlot *slot = [self sciSlotForId:ticketId];
 		if (!slot || slot.finished) return;
-
-		slot.progress = SCIClampProgress(progress);
+		slot.progress = SCIClamp(progress);
 		if (self.slots.lastObject == slot) [self.progressBar setProgress:slot.progress animated:YES];
 	}];
 }
 
 - (void)updateTicket:(NSString *)ticketId text:(NSString *)text {
-	[self _onMain:^{
-		SCIDownloadSlot *slot = [self _slotForId:ticketId];
+	[self sciOnMain:^{
+		SCIDownloadSlot *slot = [self sciSlotForId:ticketId];
 		if (!slot || slot.finished) return;
-
 		if (text.length) slot.title = text;
 		if (self.slots.lastObject == slot) self.textLabel.text = slot.title;
 	}];
 }
 
-- (void)_removeSlot:(SCIDownloadSlot *)slot finalText:(NSString *)finalText finalIcon:(NSString *)finalIcon iconColor:(UIColor *)iconColor {
+- (void)sciRemoveSlot:(SCIDownloadSlot *)slot finalText:(NSString *)finalText finalIcon:(NSString *)finalIcon iconColor:(UIColor *)iconColor {
 	if (!slot || slot.finished) return;
-
 	slot.finished = YES;
 	slot.onCancel = nil;
 	[self.slots removeObject:slot];
-
 	if (self.slots.count > 0) {
-		[self _renderTop];
+		[self sciRenderTop];
 		return;
 	}
-
-	[self _setIcon:finalIcon tint:iconColor plate:[iconColor colorWithAlphaComponent:0.18]];
+	[self sciSetIcon:finalIcon color:iconColor];
 	self.textLabel.text = finalText;
 	self.subtitleLabel.hidden = YES;
 	self.progressBar.hidden = YES;
-
-	[self dismissAfterDelay:1.2];
+	[self dismissAfterDelay:1.1];
 }
 
 - (void)finishTicket:(NSString *)ticketId successMessage:(NSString *)message {
-	[self _onMain:^{
-		[self _removeSlot:[self _slotForId:ticketId] finalText:message ?: SCILocalized(@"Done") finalIcon:@"checkmark.circle.fill" iconColor:UIColor.systemGreenColor];
+	[self sciOnMain:^{
+		[self sciRemoveSlot:[self sciSlotForId:ticketId] finalText:message ?: SCILocalized(@"Done") finalIcon:@"checkmark.circle.fill" iconColor:UIColor.systemGreenColor];
 	}];
 }
 
 - (void)finishTicket:(NSString *)ticketId errorMessage:(NSString *)message {
-	[self _onMain:^{
-		[self _removeSlot:[self _slotForId:ticketId] finalText:message ?: SCILocalized(@"Failed") finalIcon:@"xmark.circle.fill" iconColor:UIColor.systemRedColor];
+	[self sciOnMain:^{
+		[self sciRemoveSlot:[self sciSlotForId:ticketId] finalText:message ?: SCILocalized(@"Failed") finalIcon:@"xmark.circle.fill" iconColor:UIColor.systemRedColor];
 	}];
 }
 
 - (void)finishTicket:(NSString *)ticketId cancelled:(NSString *)message {
-	[self _onMain:^{
-		[self _removeSlot:[self _slotForId:ticketId] finalText:message ?: SCILocalized(@"Cancelled") finalIcon:@"xmark.circle.fill" iconColor:UIColor.systemOrangeColor];
+	[self sciOnMain:^{
+		[self sciRemoveSlot:[self sciSlotForId:ticketId] finalText:message ?: SCILocalized(@"Cancelled") finalIcon:@"xmark.circle.fill" iconColor:UIColor.systemOrangeColor];
 	}];
 }
 
@@ -425,25 +406,21 @@ static inline float SCIClampProgress(float progress) {
 
 - (instancetype)initWithAction:(DownloadAction)action showProgress:(BOOL)showProgress {
 	self = [super init];
-
 	if (self) {
 		_action = action;
 		_showProgress = showProgress;
 		self.downloadManager = [[SCIDownloadManager alloc] initWithDelegate:self];
 	}
-
 	return self;
 }
 
 - (void)downloadFileWithURL:(NSURL *)url fileExtension:(NSString *)fileExtension hudLabel:(NSString *)hudLabel {
 	SCIDownloadPillView *pill = SCIDownloadPillView.shared;
 	self.pill = pill;
-
 	__weak typeof(self) weakSelf = self;
 	self.ticketId = [pill beginTicketWithTitle:hudLabel ?: SCILocalized(@"Downloading...") onCancel:^{
 		[weakSelf.downloadManager cancelDownload];
 	}];
-
 	NSLog(@"[SCInsta] Download: Will start download for url \"%@\" with file extension: \".%@\"", url, fileExtension);
 	[self.downloadManager downloadFileWithURL:url fileExtension:fileExtension];
 }
@@ -459,15 +436,13 @@ static inline float SCIClampProgress(float progress) {
 
 - (void)downloadDidProgress:(float)progress {
 	if (!self.showProgress) return;
-
-	float safeProgress = SCIClampProgress(progress);
+	float safeProgress = SCIClamp(progress);
 	[self.pill updateTicket:self.ticketId progress:safeProgress];
 	[self.pill updateTicket:self.ticketId text:[NSString stringWithFormat:@"Downloading %d%%", (int)(safeProgress * 100.0f)]];
 }
 
 - (void)downloadDidFinishWithError:(NSError *)error {
 	if (!error || error.code == NSURLErrorCancelled) return;
-
 	NSLog(@"[SCInsta] Download: Download failed with error: \"%@\"", error);
 	[self.pill finishTicket:self.ticketId errorMessage:SCILocalized(@"Download failed")];
 }
@@ -475,20 +450,14 @@ static inline float SCIClampProgress(float progress) {
 - (void)downloadDidFinishWithFileURL:(NSURL *)fileURL {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		NSLog(@"[SCInsta] Download: Finished with url: \"%@\"", fileURL.absoluteString);
-
-		if (self.action != saveToPhotos) {
-			[self.pill finishTicket:self.ticketId successMessage:SCILocalized(@"Done")];
-		}
-
+		if (self.action != saveToPhotos) [self.pill finishTicket:self.ticketId successMessage:SCILocalized(@"Done")];
 		switch (self.action) {
 			case share:
 				[SCIUtils showShareVC:fileURL];
 				break;
-
 			case quickLook:
 				[SCIUtils showQuickLookVC:@[fileURL]];
 				break;
-
 			case saveToPhotos:
 				[self saveFileToPhotos:fileURL];
 				break;
@@ -507,12 +476,10 @@ static inline float SCIClampProgress(float progress) {
 		}
 
 		BOOL useAlbum = [SCIUtils getBoolPref:@"save_to_ryukgram_album"];
-
-		void (^onDone)(BOOL, NSError *) = ^(BOOL success, NSError *error) {
+		void (^done)(BOOL, NSError *) = ^(BOOL success, NSError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				if (success) {
-					[self.pill finishTicket:self.ticketId successMessage:useAlbum ? SCILocalized(@"Saved to RyukGram") : SCILocalized(@"Saved to Photos")];
-				} else {
+				if (success) [self.pill finishTicket:self.ticketId successMessage:useAlbum ? SCILocalized(@"Saved to RyukGram") : SCILocalized(@"Saved to Photos")];
+				else {
 					NSLog(@"[SCInsta] Download: Save to Photos failed: %@", error);
 					[self.pill finishTicket:self.ticketId errorMessage:SCILocalized(@"Failed to save")];
 				}
@@ -520,21 +487,19 @@ static inline float SCIClampProgress(float progress) {
 		};
 
 		if (useAlbum) {
-			[SCIPhotoAlbum saveFileToAlbum:fileURL completion:onDone];
+			[SCIPhotoAlbum saveFileToAlbum:fileURL completion:done];
 			return;
 		}
 
 		[[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-			NSString *extension = fileURL.pathExtension.lowercaseString;
-			BOOL isVideo = [@[@"mp4", @"mov", @"m4v"] containsObject:extension];
-
+			NSString *ext = fileURL.pathExtension.lowercaseString;
+			BOOL isVideo = [@[@"mp4", @"mov", @"m4v"] containsObject:ext];
 			PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
-			PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
+			PHAssetResourceCreationOptions *options = PHAssetResourceCreationOptions.new;
 			options.shouldMoveFile = YES;
-
 			[request addResourceWithType:(isVideo ? PHAssetResourceTypeVideo : PHAssetResourceTypePhoto) fileURL:fileURL options:options];
 			request.creationDate = NSDate.date;
-		} completionHandler:onDone];
+		} completionHandler:done];
 	}];
 }
 
