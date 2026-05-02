@@ -20,12 +20,22 @@ extern "C" NSDictionary *sciOwnerInfoForView(UIView *view);
 extern "C" void sciShowStoryMentions(UIViewController *, UIView *);
 
 static char kStoryActionObservedKey;
+static char kStoryActionDefaultKey;
 static char kStoryReelItemsProviderKey;
 static void *kStoryActionHighlightContext = &kStoryActionHighlightContext;
 
 static inline BOOL SCIStoryActionEnabled(void) {
 	id value = [NSUserDefaults.standardUserDefaults objectForKey:@"stories_action_button"];
 	return value ? [value boolValue] : YES;
+}
+
+static inline NSString *SCIStoryDefaultAction(void) {
+	NSString *action = [SCIUtils getStringPref:@"stories_action_default"];
+	return action.length ? action : @"menu";
+}
+
+static inline NSString *SCIStoryActionSymbol(void) {
+	return [SCIStoryDefaultAction() isEqualToString:@"download_photos"] ? @"arrow.down.to.line.circle.fill" : @"ellipsis.circle";
 }
 
 static inline SCIChromeButton *SCIStoryButton(NSString *symbol, CGFloat pointSize, CGFloat diameter, NSInteger tag) {
@@ -112,6 +122,29 @@ static NSArray *sciStoryReelItemsForSource(UIView *sourceView) {
 	return nil;
 }
 
+static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
+	if (!button) return;
+
+	SCIActionMediaProvider provider = ^id (UIView *sourceView) {
+		sciPauseStoryPlayback(sourceView);
+
+		id item = sciGetCurrentStoryItem(sourceView);
+		if ([item isKindOfClass:NSClassFromString(@"IGMedia")]) return item;
+
+		id extracted = sciExtractMediaFromItem(item);
+		return extracted ?: (id)kCFNull;
+	};
+
+	[SCIActionButton configureButton:button
+							 context:SCIActionContextStories
+							 prefKey:@"stories_action_default"
+					   mediaProvider:provider];
+
+	objc_setAssociatedObject(button, &kStoryReelItemsProviderKey, ^NSArray *(UIView *sourceView) {
+		return sciStoryReelItemsForSource(sourceView);
+	}, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
 // MARK: - Overlay hook
 
 %group StoryOverlayGroup
@@ -159,10 +192,11 @@ static NSArray *sciStoryReelItemsForSource(UIView *sourceView) {
 	if (!self.superview) return;
 
 	// --- Action button (tag 1340) ---
+	// Rebuilt here only when installing or when the default action changes.
 	SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
 
 	if (SCIStoryActionEnabled()) {
-		SCIChromeButton *button = SCIStoryButton(@"ellipsis.circle", 18.0, 36.0, SCI_STORY_ACTION_TAG);
+		SCIChromeButton *button = SCIStoryButton(SCIStoryActionSymbol(), 18.0, 36.0, SCI_STORY_ACTION_TAG);
 		[self addSubview:button];
 
 		[NSLayoutConstraint activateConstraints:@[
@@ -172,28 +206,13 @@ static NSArray *sciStoryReelItemsForSource(UIView *sourceView) {
 			[button.heightAnchor constraintEqualToConstant:36.0]
 		]];
 
-		SCIActionMediaProvider provider = ^id (UIView *sourceView) {
-			sciPauseStoryPlayback(sourceView);
-
-			id item = sciGetCurrentStoryItem(sourceView);
-			if ([item isKindOfClass:NSClassFromString(@"IGMedia")]) return item;
-
-			id extracted = sciExtractMediaFromItem(item);
-			return extracted ?: (id)kCFNull;
-		};
-
-		[SCIActionButton configureButton:button
-								 context:SCIActionContextStories
-								 prefKey:@"stories_action_default"
-						   mediaProvider:provider];
+		SCIConfigureStoryActionButton(button);
 
 		// Resume playback when the native UIMenu dismisses.
 		[button addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew context:kStoryActionHighlightContext];
-		objc_setAssociatedObject(button, &kStoryActionObservedKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
-		objc_setAssociatedObject(button, &kStoryReelItemsProviderKey, ^NSArray *(UIView *sourceView) {
-			return sciStoryReelItemsForSource(sourceView);
-		}, OBJC_ASSOCIATION_COPY_NONATOMIC);
+		objc_setAssociatedObject(button, &kStoryActionObservedKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		objc_setAssociatedObject(button, &kStoryActionDefaultKey, SCIStoryDefaultAction(), OBJC_ASSOCIATION_COPY_NONATOMIC);
 	}
 
 	// --- Audio toggle (tag 1341) ---
@@ -236,6 +255,46 @@ static NSArray *sciStoryReelItemsForSource(UIView *sourceView) {
 
 	BOOL highlighted = [change[NSKeyValueChangeNewKey] boolValue];
 	if (!highlighted) sciResumeStoryPlayback(self);
+}
+
+// MARK: - Action button refresh
+
+%new
+- (void)sciRefreshStoryActionButton {
+	if (!SCIStoryActionEnabled()) {
+		SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
+		SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
+		return;
+	}
+
+	SCIChromeButton *button = (SCIChromeButton *)[self viewWithTag:SCI_STORY_ACTION_TAG];
+
+	if (![button isKindOfClass:SCIChromeButton.class]) {
+		((void(*)(id, SEL))objc_msgSend)(self, @selector(sciInstallStoryOverlayButtons));
+		return;
+	}
+
+	NSString *currentAction = SCIStoryDefaultAction();
+	NSString *oldAction = objc_getAssociatedObject(button, &kStoryActionDefaultKey);
+
+	if (!oldAction || ![oldAction isEqualToString:currentAction]) {
+		SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
+		SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
+
+		((void(*)(id, SEL))objc_msgSend)(self, @selector(sciInstallStoryOverlayButtons));
+
+		if ([SCIUtils getBoolPref:@"no_seen_receipt"]) {
+			((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshSeenButton));
+		}
+
+		return;
+	}
+
+	NSString *symbol = SCIStoryActionSymbol();
+
+	if (![button.symbolName isEqualToString:symbol]) {
+		button.symbolName = symbol;
+	}
 }
 
 // MARK: - Audio toggle
@@ -327,10 +386,19 @@ static NSArray *sciStoryReelItemsForSource(UIView *sourceView) {
 	}
 }
 
-// MARK: - Owner / audio refresh on layout
+// MARK: - Owner / audio / action refresh on layout
 
 - (void)layoutSubviews {
 	%orig;
+
+	if (sciOverlayIsInDMContext(self)) {
+		SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
+		SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
+		SCIRemoveStoryButton(self, SCI_STORY_AUDIO_TAG, self);
+		return;
+	}
+
+	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshStoryActionButton));
 
 	static char kLastPKKey;
 	static char kLastExcludedKey;
