@@ -1,6 +1,6 @@
 // Feed action button — hooks IGUFIInteractionCountsView.
-// Media lives on sibling cells (IGFeedItemPhotoCell, IGModernFeedVideoCell)
-// in the same collection view section, NOT on the UFI cell itself.
+// Media lives on sibling cells in the same collection view section,
+// not directly on the UFI cell itself.
 
 #import "../../InstagramHeaders.h"
 #import "../../Utils.h"
@@ -12,246 +12,278 @@
 
 static const NSInteger kFeedActionBtnTag = 13370;
 static const void *kFeedPageIndexKey = &kFeedPageIndexKey;
+static char kFeedActionConfiguredKey;
 
-// Read _currentMediaPK from IGFeedItemUFICell.
-static NSString *sciFeedCurrentMediaPK(UIView *button) {
-    UIResponder *r = button;
-    Class ufiCls = NSClassFromString(@"IGFeedItemUFICell");
-    while (r && !(ufiCls && [r isKindOfClass:ufiCls])) r = [r nextResponder];
-    if (!r) return nil;
-    Ivar iv = class_getInstanceVariable(object_getClass(r), "_currentMediaPK");
-    if (!iv) return nil;
-    id val = object_getIvar(r, iv);
-    return [val isKindOfClass:[NSString class]] ? val : nil;
+static inline BOOL SCIFeedActionEnabled(void) {
+	id value = [NSUserDefaults.standardUserDefaults objectForKey:@"feed_action_button"];
+	return value ? [value boolValue] : YES;
+}
+
+static inline NSString *SCIFeedDefaultAction(void) {
+	NSString *action = [SCIUtils getStringPref:@"feed_action_default"];
+	return action.length ? action : @"menu";
+}
+
+static inline NSString *SCIFeedActionSymbol(void) {
+	return [SCIFeedDefaultAction() isEqualToString:@"download_photos"] ? @"arrow.down.circle" : @"ellipsis.circle";
+}
+
+static void sciUpdateFeedActionIcon(SCIChromeButton *button) {
+	if (!button) return;
+
+	NSString *symbol = SCIFeedActionSymbol();
+
+	if (![button.symbolName isEqualToString:symbol]) {
+		button.symbolName = symbol;
+	}
+
+	button.iconTint = UIColor.labelColor;
+	button.bubbleColor = UIColor.clearColor;
+}
+
+static BOOL sciFindFeedUFIContext(UIView *view, UICollectionViewCell **outUFICell, UICollectionView **outCollectionView) {
+	UICollectionViewCell *ufiCell = nil;
+	UICollectionView *collectionView = nil;
+
+	for (UIView *current = view; current; current = current.superview) {
+		if (!ufiCell &&
+			[current isKindOfClass:UICollectionViewCell.class] &&
+			[NSStringFromClass(current.class) containsString:@"UFI"]) {
+			ufiCell = (UICollectionViewCell *)current;
+		}
+
+		if ([current isKindOfClass:UICollectionView.class]) {
+			collectionView = (UICollectionView *)current;
+			break;
+		}
+	}
+
+	if (outUFICell) *outUFICell = ufiCell;
+	if (outCollectionView) *outCollectionView = collectionView;
+
+	return ufiCell && collectionView;
 }
 
 // Current carousel page index. Returns -1 if not found.
 static NSInteger sciFeedCarouselPageIndex(UIView *button) {
-    // Walk up to collection view
-    UIView *v = button;
-    UICollectionViewCell *ufiCell = nil;
-    UICollectionView *cv = nil;
-    while (v) {
-        if (!ufiCell && [v isKindOfClass:[UICollectionViewCell class]]
-            && [NSStringFromClass([v class]) containsString:@"UFI"]) {
-            ufiCell = (UICollectionViewCell *)v;
-        }
-        if ([v isKindOfClass:[UICollectionView class]]) {
-            cv = (UICollectionView *)v;
-            break;
-        }
-        v = v.superview;
-    }
-    if (!ufiCell || !cv) return -1;
+	UICollectionViewCell *ufiCell = nil;
+	UICollectionView *collectionView = nil;
 
-    NSIndexPath *ufiPath = [cv indexPathForCell:ufiCell];
-    if (!ufiPath) return -1;
-    NSInteger section = ufiPath.section;
+	if (!sciFindFeedUFIContext(button, &ufiCell, &collectionView)) return -1;
 
-    // Find IGFeedItemPageCell in same section
-    for (UICollectionViewCell *cell in cv.visibleCells) {
-        NSIndexPath *path = [cv indexPathForCell:cell];
-        if (!path || path.section != section) continue;
-        NSString *cls = NSStringFromClass([cell class]);
-        if (![cls containsString:@"Page"]) continue;
+	NSIndexPath *ufiPath = [collectionView indexPathForCell:ufiCell];
+	if (!ufiPath) return -1;
 
-        // BFS for IGPageMediaView
-        Class pmvCls = NSClassFromString(@"IGPageMediaView");
-        if (pmvCls) {
-            NSMutableArray *queue = [NSMutableArray arrayWithObject:cell];
-            int scanned = 0;
-            UIView *pmv = nil;
-            while (queue.count && scanned < 50) {
-                UIView *cur = queue.firstObject; [queue removeObjectAtIndex:0]; scanned++;
-                if ([cur isKindOfClass:pmvCls]) { pmv = cur; break; }
-                for (UIView *s in cur.subviews) [queue addObject:s];
-            }
-            if (pmv && [pmv respondsToSelector:@selector(currentMediaItem)] && [pmv respondsToSelector:@selector(items)]) {
-                @try {
-                    id current = ((id(*)(id,SEL))objc_msgSend)(pmv, @selector(currentMediaItem));
-                    NSArray *items = ((id(*)(id,SEL))objc_msgSend)(pmv, @selector(items));
-                    if (current && items.count) {
-                        NSUInteger idx = [items indexOfObjectIdenticalTo:current];
-                        if (idx != NSNotFound) return (NSInteger)idx;
-                    }
-                } @catch (__unused id e) {}
-            }
-        }
+	Class pageMediaClass = NSClassFromString(@"IGPageMediaView");
 
-        // Fallback: _currentIndex ivar on the page cell
-        Ivar idxIvar = class_getInstanceVariable([cell class], "_currentIndex");
-        if (!idxIvar) idxIvar = class_getInstanceVariable([cell class], "_currentPage");
-        if (!idxIvar) idxIvar = class_getInstanceVariable([cell class], "_currentMediaIndex");
-        if (idxIvar) {
-            ptrdiff_t offset = ivar_getOffset(idxIvar);
-            NSInteger idx = *(NSInteger *)((char *)(__bridge void *)cell + offset);
-            return idx;
-        }
+	for (UICollectionViewCell *cell in collectionView.visibleCells) {
+		NSIndexPath *path = [collectionView indexPathForCell:cell];
+		if (!path || path.section != ufiPath.section) continue;
 
-        // Fallback: compute page from scroll view content offset
-        {
-            NSMutableArray *sq = [NSMutableArray arrayWithObject:cell];
-            int sc = 0;
-            while (sq.count && sc < 100) {
-                UIView *cur = sq.firstObject; [sq removeObjectAtIndex:0]; sc++;
-                if ([cur isKindOfClass:[UIScrollView class]] && cur != cv) {
-                    UIScrollView *sv = (UIScrollView *)cur;
-                    CGFloat pageW = sv.bounds.size.width;
-                    // Horizontal paging scroll view
-                    if (pageW > 100 && sv.contentSize.width > pageW * 1.5) {
-                        NSInteger idx = (NSInteger)round(sv.contentOffset.x / pageW);
-                        return idx;
-                    }
-                }
-                for (UIView *s in cur.subviews) [sq addObject:s];
-            }
-        }
-    }
-    return -1;
-}
+		NSString *className = NSStringFromClass(cell.class);
+		if (![className containsString:@"Page"]) continue;
 
-// Resolve current carousel child using page index.
-static id sciFeedResolveCarouselChild(id parentMedia, UIView *button) {
-    if (!parentMedia) return nil;
-    if (![SCIMediaActions isCarouselMedia:parentMedia]) return parentMedia;
+		if (pageMediaClass) {
+			NSMutableArray *queue = [NSMutableArray arrayWithObject:cell];
 
-    NSInteger idx = sciFeedCarouselPageIndex(button);
-    NSArray *children = [SCIMediaActions carouselChildrenForMedia:parentMedia];
-    if (idx >= 0 && (NSUInteger)idx < children.count) {
-        return children[idx];
-    }
-    return parentMedia;
+			for (NSInteger scanned = 0; queue.count && scanned < 50; scanned++) {
+				UIView *current = queue.firstObject;
+				[queue removeObjectAtIndex:0];
+
+				if ([current isKindOfClass:pageMediaClass] &&
+					[current respondsToSelector:@selector(currentMediaItem)] &&
+					[current respondsToSelector:@selector(items)]) {
+					@try {
+						id currentItem = ((id(*)(id, SEL))objc_msgSend)(current, @selector(currentMediaItem));
+						NSArray *items = ((id(*)(id, SEL))objc_msgSend)(current, @selector(items));
+
+						if (currentItem && items.count) {
+							NSUInteger index = [items indexOfObjectIdenticalTo:currentItem];
+							if (index != NSNotFound) return (NSInteger)index;
+						}
+					} @catch (__unused id e) {}
+				}
+
+				for (UIView *subview in current.subviews) {
+					[queue addObject:subview];
+				}
+			}
+		}
+
+		for (NSString *ivarName in @[@"_currentIndex", @"_currentPage", @"_currentMediaIndex"]) {
+			Ivar ivar = class_getInstanceVariable(cell.class, ivarName.UTF8String);
+
+			if (ivar) {
+				return *(NSInteger *)((char *)(__bridge void *)cell + ivar_getOffset(ivar));
+			}
+		}
+
+		NSMutableArray *queue = [NSMutableArray arrayWithObject:cell];
+
+		for (NSInteger scanned = 0; queue.count && scanned < 80; scanned++) {
+			UIView *current = queue.firstObject;
+			[queue removeObjectAtIndex:0];
+
+			if ([current isKindOfClass:UIScrollView.class] && current != collectionView) {
+				UIScrollView *scrollView = (UIScrollView *)current;
+				CGFloat pageWidth = scrollView.bounds.size.width;
+
+				if (pageWidth > 100.0 && scrollView.contentSize.width > pageWidth * 1.5) {
+					return (NSInteger)round(scrollView.contentOffset.x / pageWidth);
+				}
+			}
+
+			for (UIView *subview in current.subviews) {
+				[queue addObject:subview];
+			}
+		}
+	}
+
+	return -1;
 }
 
 // Extract IGMedia from sibling cells in the same collection view section.
 static IGMedia *sciFeedMediaFromButton(UIView *button) {
-    if (!button) return nil;
-    Class mediaClass = NSClassFromString(@"IGMedia");
-    if (!mediaClass) return nil;
+	if (!button || !button.window) return nil;
 
-    // Walk up to find UFI cell and collection view
-    UIView *v = button;
-    UICollectionViewCell *ufiCell = nil;
-    UICollectionView *cv = nil;
+	Class mediaClass = NSClassFromString(@"IGMedia");
+	if (!mediaClass) return nil;
 
-    while (v) {
-        if (!ufiCell && [v isKindOfClass:[UICollectionViewCell class]]
-            && [NSStringFromClass([v class]) containsString:@"UFI"]) {
-            ufiCell = (UICollectionViewCell *)v;
-        }
-        if ([v isKindOfClass:[UICollectionView class]]) {
-            cv = (UICollectionView *)v;
-            break;
-        }
-        v = v.superview;
-    }
+	UICollectionViewCell *ufiCell = nil;
+	UICollectionView *collectionView = nil;
 
-    if (!ufiCell || !cv) return nil;
+	if (!sciFindFeedUFIContext(button, &ufiCell, &collectionView)) return nil;
 
-    // Get section
-    NSIndexPath *ufiPath = [cv indexPathForCell:ufiCell];
-    if (!ufiPath) return nil;
-    NSInteger section = ufiPath.section;
+	NSIndexPath *ufiPath = [collectionView indexPathForCell:ufiCell];
+	if (!ufiPath) return nil;
 
-    // Search sibling cells for IGMedia
-    for (UICollectionViewCell *cell in cv.visibleCells) {
-        NSIndexPath *path = [cv indexPathForCell:cell];
-        if (!path || path.section != section) continue;
-        if (cell == ufiCell) continue;
+	for (UICollectionViewCell *cell in collectionView.visibleCells) {
+		NSIndexPath *path = [collectionView indexPathForCell:cell];
+		if (!path || path.section != ufiPath.section || cell == ufiCell) continue;
 
-        // Filter to media cell classes
-        NSString *cls = NSStringFromClass([cell class]);
-        if (![cls containsString:@"Photo"] && ![cls containsString:@"Video"]
-            && ![cls containsString:@"Media"] && ![cls containsString:@"Page"]) continue;
+		NSString *className = NSStringFromClass(cell.class);
+		if (![className containsString:@"Photo"] &&
+			![className containsString:@"Video"] &&
+			![className containsString:@"Media"] &&
+			![className containsString:@"Page"]) {
+			continue;
+		}
 
-        // Scan ivars for IGMedia
-        unsigned int count = 0;
-        Class c = object_getClass(cell);
-        while (c && c != [UICollectionViewCell class]) {
-            Ivar *ivars = class_copyIvarList(c, &count);
-            for (unsigned int i = 0; i < count; i++) {
-                const char *type = ivar_getTypeEncoding(ivars[i]);
-                if (!type || type[0] != '@') continue;
-                @try {
-                    id val = object_getIvar(cell, ivars[i]);
-                    if (val && [val isKindOfClass:mediaClass]) {
-                        free(ivars);
-                        return (IGMedia *)val;
-                    }
-                    // Try .media selector on wrapper objects
-                    if (val && [val respondsToSelector:@selector(media)]) {
-                        id m = ((id(*)(id,SEL))objc_msgSend)(val, @selector(media));
-                        if (m && [m isKindOfClass:mediaClass]) {
-                            free(ivars);
-                            return (IGMedia *)m;
-                        }
-                    }
-                } @catch (__unused id e) {}
-            }
-            if (ivars) free(ivars);
-            c = class_getSuperclass(c);
-        }
+		if ([cell respondsToSelector:@selector(mediaCellFeedItem)]) {
+			@try {
+				id media = ((id(*)(id, SEL))objc_msgSend)(cell, @selector(mediaCellFeedItem));
+				if (media && [media isKindOfClass:mediaClass]) return (IGMedia *)media;
+			} @catch (__unused id e) {}
+		}
 
-        // Try mediaCellFeedItem (video cells)
-        if ([cell respondsToSelector:@selector(mediaCellFeedItem)]) {
-            @try {
-                id m = ((id(*)(id,SEL))objc_msgSend)(cell, @selector(mediaCellFeedItem));
-                if (m && [m isKindOfClass:mediaClass]) {
-                    return (IGMedia *)m;
-                }
-            } @catch (__unused id e) {}
-        }
-    }
+		for (Class cls = object_getClass(cell); cls && cls != UICollectionViewCell.class; cls = class_getSuperclass(cls)) {
+			unsigned int count = 0;
+			Ivar *ivars = class_copyIvarList(cls, &count);
 
-    return nil;
+			for (unsigned int i = 0; i < count; i++) {
+				const char *type = ivar_getTypeEncoding(ivars[i]);
+				if (!type || type[0] != '@') continue;
+
+				@try {
+					id value = object_getIvar(cell, ivars[i]);
+
+					if (value && [value isKindOfClass:mediaClass]) {
+						if (ivars) free(ivars);
+						return (IGMedia *)value;
+					}
+
+					if (value && [value respondsToSelector:@selector(media)]) {
+						id media = ((id(*)(id, SEL))objc_msgSend)(value, @selector(media));
+
+						if (media && [media isKindOfClass:mediaClass]) {
+							if (ivars) free(ivars);
+							return (IGMedia *)media;
+						}
+					}
+				} @catch (__unused id e) {}
+			}
+
+			if (ivars) free(ivars);
+		}
+	}
+
+	return nil;
+}
+
+static void sciResetFeedActionButton(SCIChromeButton *button) {
+	[button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+	button.menu = nil;
+	button.showsMenuAsPrimaryAction = NO;
+}
+
+static void sciConfigureFeedActionButton(SCIChromeButton *button) {
+	sciResetFeedActionButton(button);
+
+	[SCIActionButton configureButton:button
+							 context:SCIActionContextFeed
+							 prefKey:@"feed_action_default"
+					   mediaProvider:^id (UIView *sourceView) {
+		id parentMedia = sciFeedMediaFromButton(sourceView);
+		if (!parentMedia) return nil;
+
+		if ([SCIMediaActions isCarouselMedia:parentMedia]) {
+			NSInteger index = sciFeedCarouselPageIndex(sourceView);
+			NSArray *children = [SCIMediaActions carouselChildrenForMedia:parentMedia];
+
+			if (index >= 0 && (NSUInteger)index < children.count) {
+				objc_setAssociatedObject(sourceView, kFeedPageIndexKey, @(index), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+				return children[index];
+			}
+		}
+
+		return parentMedia;
+	}];
 }
 
 %hook IGUFIInteractionCountsView
 
 - (void)updateUFIWithButtonsConfig:(id)config interactionCountProvider:(id)provider {
-    %orig;
+	%orig;
 
-    if (![SCIUtils getBoolPref:@"feed_action_button"]) return;
+	SCIChromeButton *button = (SCIChromeButton *)[self viewWithTag:kFeedActionBtnTag];
 
-    SCIChromeButton *btn = (SCIChromeButton *)[self viewWithTag:kFeedActionBtnTag];
-    if (![btn isKindOfClass:[SCIChromeButton class]]) btn = nil;
-    if (!btn) {
-        btn = [[SCIChromeButton alloc] initWithSymbol:@"ellipsis.circle" pointSize:21 diameter:36];
-        btn.tag = kFeedActionBtnTag;
-        btn.iconTint = [UIColor labelColor];
-        btn.bubbleColor = [UIColor clearColor];
-        [self addSubview:btn];
+	if (![button isKindOfClass:SCIChromeButton.class]) {
+		button = nil;
+	}
 
-        // Position: right side, left of bookmark. Shifted up 4pt to
-        // align with the native like/comment/share icons.
-        [NSLayoutConstraint activateConstraints:@[
-            [btn.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-44],
-            [btn.centerYAnchor constraintEqualToAnchor:self.centerYAnchor constant:-6],
-            [btn.widthAnchor constraintEqualToConstant:36],
-            [btn.heightAnchor constraintEqualToConstant:36],
-        ]];
-    }
+	if (!SCIFeedActionEnabled()) {
+		[button removeFromSuperview];
+		return;
+	}
 
-    // Reconfigure with fresh media provider.
-    [SCIActionButton configureButton:btn
-                             context:SCIActionContextFeed
-                             prefKey:@"feed_action_default"
-                       mediaProvider:^id (UIView *sourceView) {
-        id parentMedia = sciFeedMediaFromButton(sourceView);
-        if (!parentMedia) return nil;
+	if (!button) {
+		button = [[SCIChromeButton alloc] initWithSymbol:SCIFeedActionSymbol() pointSize:21.0 diameter:36.0];
+		button.tag = kFeedActionBtnTag;
+		button.iconTint = UIColor.labelColor;
+		button.bubbleColor = UIColor.clearColor;
+		button.adjustsImageWhenHighlighted = NO;
 
-        if ([SCIMediaActions isCarouselMedia:parentMedia]) {
-            NSInteger idx = sciFeedCarouselPageIndex(sourceView);
-            NSArray *children = [SCIMediaActions carouselChildrenForMedia:parentMedia];
-            if (idx >= 0 && (NSUInteger)idx < children.count) {
-                // Stash page index for the menu builder to find the parent.
-                objc_setAssociatedObject(sourceView, kFeedPageIndexKey,
-                    @(idx), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                return children[idx];
-            }
-        }
-        return parentMedia;
-    }];
+		[self addSubview:button];
+
+		// Position: right side, left of bookmark. Shifted up to align
+		// with native like/comment/share icons.
+		[NSLayoutConstraint activateConstraints:@[
+			[button.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-44.0],
+			[button.centerYAnchor constraintEqualToAnchor:self.centerYAnchor constant:-6.0],
+			[button.widthAnchor constraintEqualToConstant:36.0],
+			[button.heightAnchor constraintEqualToConstant:36.0]
+		]];
+	}
+
+	NSString *action = SCIFeedDefaultAction();
+	NSString *configuredAction = objc_getAssociatedObject(button, &kFeedActionConfiguredKey);
+
+	if (!configuredAction || ![configuredAction isEqualToString:action]) {
+		sciConfigureFeedActionButton(button);
+		objc_setAssociatedObject(button, &kFeedActionConfiguredKey, action, OBJC_ASSOCIATION_COPY_NONATOMIC);
+	}
+
+	sciUpdateFeedActionIcon(button);
 }
 
 %end

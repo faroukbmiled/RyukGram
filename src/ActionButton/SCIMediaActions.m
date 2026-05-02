@@ -38,16 +38,27 @@ static NSString *sciSanitizeFilenameComponent(NSString *s) {
 
 // IGAPIStorableObject's backing dict.
 static NSDictionary *sciMediaFieldCache(id obj) {
-    if (!obj) return nil;
-    static Ivar fcIvar = NULL;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        Class c = NSClassFromString(@"IGAPIStorableObject");
-        if (c) fcIvar = class_getInstanceVariable(c, "_fieldCache");
-    });
-    if (!fcIvar) return nil;
-    id v = object_getIvar(obj, fcIvar);
-    return [v isKindOfClass:[NSDictionary class]] ? v : nil;
+	if (!obj) return nil;
+
+	if ([obj isKindOfClass:NSDictionary.class]) {
+		return (NSDictionary *)obj;
+	}
+
+	Class storableClass = NSClassFromString(@"IGAPIStorableObject");
+	if (storableClass && ![obj isKindOfClass:storableClass]) {
+		return nil;
+	}
+
+	Ivar ivar = class_getInstanceVariable(object_getClass(obj), "_fieldCache");
+	if (!ivar) ivar = class_getInstanceVariable([obj class], "_fieldCache");
+	if (!ivar) return nil;
+
+	@try {
+		id value = object_getIvar(obj, ivar);
+		return [value isKindOfClass:NSDictionary.class] ? value : nil;
+	} @catch (__unused id e) {
+		return nil;
+	}
 }
 
 static NSString *sciUsernameForMedia(id media) {
@@ -92,20 +103,34 @@ static id sciIvar(id obj, const char *name) {
 
 // Read from IGAPIStorableObject._fieldCache (KVC returns NSNull for many keys).
 static id sciFieldCache(id obj, NSString *key) {
-    if (!obj || !key) return nil;
-    static Ivar fcIvar = NULL;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        Class c = NSClassFromString(@"IGAPIStorableObject");
-        if (c) fcIvar = class_getInstanceVariable(c, "_fieldCache");
-    });
-    if (!fcIvar) return nil;
-    id fc = nil;
-    @try { fc = object_getIvar(obj, fcIvar); } @catch (__unused id e) { return nil; }
-    if (![fc isKindOfClass:[NSDictionary class]]) return nil;
-    id val = ((NSDictionary *)fc)[key];
-    if (!val || [val isKindOfClass:[NSNull class]]) return nil;
-    return val;
+	if (!obj || !key.length) return nil;
+
+	NSDictionary *dict = nil;
+
+	if ([obj isKindOfClass:NSDictionary.class]) {
+		dict = (NSDictionary *)obj;
+	} else {
+		Class storableClass = NSClassFromString(@"IGAPIStorableObject");
+
+		if (storableClass && ![obj isKindOfClass:storableClass]) {
+			return nil;
+		}
+
+		Ivar ivar = class_getInstanceVariable(object_getClass(obj), "_fieldCache");
+		if (!ivar) ivar = class_getInstanceVariable([obj class], "_fieldCache");
+		if (!ivar) return nil;
+
+		@try {
+			id value = object_getIvar(obj, ivar);
+			if ([value isKindOfClass:NSDictionary.class]) dict = value;
+		} @catch (__unused id e) {
+			return nil;
+		}
+	}
+
+	id value = dict[key];
+	if (!value || [value isKindOfClass:NSNull.class]) return nil;
+	return value;
 }
 
 // Fresh download delegate (one active download at a time).
