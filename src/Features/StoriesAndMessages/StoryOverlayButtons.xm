@@ -261,40 +261,31 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 
 %new
 - (void)sciRefreshStoryActionButton {
+	SCIChromeButton *button = (SCIChromeButton *)[self viewWithTag:SCI_STORY_ACTION_TAG];
 	if (!SCIStoryActionEnabled()) {
-		SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
-		SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
+		if (button) {
+			SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
+			SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
+		}
 		return;
 	}
-
-	SCIChromeButton *button = (SCIChromeButton *)[self viewWithTag:SCI_STORY_ACTION_TAG];
-
 	if (![button isKindOfClass:SCIChromeButton.class]) {
 		((void(*)(id, SEL))objc_msgSend)(self, @selector(sciInstallStoryOverlayButtons));
 		return;
 	}
-
 	NSString *currentAction = SCIStoryDefaultAction();
 	NSString *oldAction = objc_getAssociatedObject(button, &kStoryActionDefaultKey);
-
-	if (!oldAction || ![oldAction isEqualToString:currentAction]) {
-		SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
-		SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
-
-		((void(*)(id, SEL))objc_msgSend)(self, @selector(sciInstallStoryOverlayButtons));
-
-		if ([SCIUtils getBoolPref:@"no_seen_receipt"]) {
-			((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshSeenButton));
+	if (oldAction && [oldAction isEqualToString:currentAction]) {
+		NSString *symbol = SCIStoryActionSymbol();
+		if (![button.symbolName isEqualToString:symbol]) {
+			button.symbolName = symbol;
 		}
-
 		return;
 	}
-
-	NSString *symbol = SCIStoryActionSymbol();
-
-	if (![button.symbolName isEqualToString:symbol]) {
-		button.symbolName = symbol;
-	}
+	SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
+	SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
+	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciInstallStoryOverlayButtons));
+	if ([SCIUtils getBoolPref:@"no_seen_receipt"]) {((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshSeenButton));}
 }
 
 // MARK: - Audio toggle
