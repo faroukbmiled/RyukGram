@@ -1,5 +1,6 @@
 #import "SCILinksSheet.h"
 #import "../Localization/SCILocalization.h"
+#import "../Tweak.h"
 #import "../Utils.h"
 
 @implementation SCILinksSheet
@@ -101,7 +102,7 @@
 }
 
 - (void)openGitHub {
-    NSURL *url = [NSURL URLWithString:@"https://github.com/faroukbmiled/RyukGram"];
+    NSURL *url = [NSURL URLWithString:SCIRepoURL];
     [self dismissViewControllerAnimated:YES completion:^{
         if (url) [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     }];

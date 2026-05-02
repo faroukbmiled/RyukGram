@@ -1,0 +1,1197 @@
+/*
+ *  RyukGram — Localizable.strings  (Tradução para Português Brasileiro)
+ *  -------------------------------------------------------------------------
+ */
+
+//////////////////////////////////////////////////////////////////////////////
+//               CHROME — TOP BAR, LANGUAGE PICKER, FIRST-RUN               //
+//////////////////////////////////////////////////////////////////////////////
+
+"settings.firstrun.message" = "No futuro: Segure pressionado as três linhas no canto superior direito da sua página de perfil para reabrir as configurações do RyukGram.";
+"settings.firstrun.ok" = "Entendi!";
+"settings.firstrun.title" = "Informações das Configurações RyukGram";
+"settings.language.english_only" = "O RyukGram atualmente vem apenas em inglês. Outros idiomas estão configurados e aguardando traduções — ajude a traduzir para o seu idioma seguindo o guia no README.";
+"settings.language.help_translate" = "Ajude a traduzir";
+"settings.language.ok" = "OK";
+"settings.language.system" = "Padrão do sistema";
+"settings.language.title" = "Idioma";
+"settings.results.many" = "%lu resultados";
+"settings.results.none" = "Nenhum resultado";
+"settings.results.one" = "%lu resultado";
+"settings.search.placeholder" = "Buscar configurações";
+"settings.title" = "Configurações do RyukGram";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                 GERAL                                    //
+//////////////////////////////////////////////////////////////////////////////
+
+"Action button icon" = "Ícone do botão de ação";
+"Action buttons" = "Botões de ação";
+"Adds a copy option to the comment long-press menu" = "Adiciona uma opção de copiar ao menu de pressionar e segurar nos comentários";
+"Adds download and copy options to GIF comments" = "Adiciona opções de download e cópia para comentários em GIF";
+"Auto-reveals sensitive media" = "Revela automaticamente mídia sensível";
+"Anonymous live viewing" = "Visualização anônima de lives";
+"Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "Bloqueia a contagem de visualizações para que o transmissor não veja você — você também não verá a contagem de visualizações";
+"Browser" = "Navegador";
+"Comments" = "Comentários";
+"Copy comment text" = "Copiar texto do comentário";
+"Copy description" = "Copiar descrição";
+"Copy description text fields by long-pressing on them" = "Copie campos de texto de descrição pressionando-os e segurando";
+"Date format" = "Formato de data";
+"Disable app haptics" = "Desativar resposta tátil do app";
+"Disables haptics/vibrations within the app" = "Desativa respostas táteis/vibrações dentro do aplicativo";
+"Do not save recent searches" = "Não salvar buscas recentes";
+"Download GIF comments" = "Baixar comentários em GIF";
+"Embed domain" = "Domínio de incorporação";
+"Embed domain: %@" = "Domínio de incorporação: %@";
+"Enable liquid glass buttons" = "Ativar botões de vidro líquido";
+"Enable liquid glass surfaces" = "Ativar superfícies de vidro líquido";
+"Enable teen app icons" = "Ativar ícones de app estilo teen";
+"Enables experimental liquid glass buttons" = "Ativa botões experimentais de vidro líquido";
+"Enables liquid glass tab bar, floating navigation, and other UI elements" = "Ativa barra de abas de vidro líquido, navegação flutuante e outros elementos da interface";
+"Experimental features" = "Recursos experimentais";
+"Focus/distractions" = "Foco/distrações";
+"General" = "Geral";
+"Hide ads" = "Ocultar anúncios";
+"Hide explore posts grid" = "Ocultar grade de posts do explorar";
+"Hide friends map" = "Ocultar mapa de amigos";
+"Hide Meta AI" = "Ocultar Meta AI";
+"Hide metrics" = "Ocultar métricas";
+"Hide notes tray" = "Ocultar bandeja de notas";
+"Hide trending searches" = "Ocultar buscas em alta";
+"Hide UI on capture" = "Ocultar interface na captura";
+"Hides all suggested users for you to follow, outside your feed" = "Oculta todos os usuários sugeridos para você seguir, fora do seu feed";
+"Hides like/comment/share counts on posts and reels" = "Oculta as contagens de curtidas/comentários/compartilhamentos em posts e reels";
+"Hides the friends map icon in the notes tray" = "Oculta o ícone do mapa de amigos na bandeja de notas";
+"Hides the grid of suggested posts on the explore/search tab" = "Oculta a grade de posts sugeridos na aba explorar/busca";
+"Hides the meta ai buttons/functionality within the app" = "Oculta os botões/funcionalidade do Meta AI dentro do app";
+"Hides the notes tray in the DM inbox" = "Oculta a bandeja de notas na caixa de entrada de DMs";
+"Hides the suggested broadcast channels in direct messages" = "Oculta os canais de transmissão sugeridos nas mensagens diretas";
+"Hides the trending searches under the explore search bar" = "Oculta as buscas em alta abaixo da barra de busca do explorar";
+"Hold down on the Instagram logo to change the app icon" = "Segure o logo do Instagram para mudar o ícone do app";
+"Live" = "Ao vivo";
+"Long press on the eyedropper tool in stories to customize the text color more precisely" = "Pressione e segure o conta-gotas nos stories para personalizar a cor do texto com mais precisão";
+"Long-press the heart button in a live to hide or show the comments" = "Pressione e segure o botão de coração em uma live para ocultar ou mostrar os comentários";
+"Long-press the search tab to open a copied Instagram link" = "Pressione e segure a aba de busca para abrir um link do Instagram copiado";
+"No suggested chats" = "Sem chats sugeridos";
+"No suggested users" = "Sem usuários sugeridos";
+"Notes" = "Notas";
+"Open app icon picker" = "Abrir seletor de ícone do app";
+"Open link from clipboard" = "Abrir link da área de transferência";
+"Open links in external browser" = "Abrir links no navegador externo";
+"Opens links in Safari instead of Instagram's in-app browser" = "Abre links no Safari em vez do navegador interno do Instagram";
+"Privacy" = "Privacidade";
+"Redacts RyukGram buttons from screenshots, screen recordings, and mirroring" = "Oculta botões do RyukGram em capturas de tela, gravações de tela e espelhamento";
+"Removes all ads from the Instagram app" = "Remove todos os anúncios do aplicativo Instagram";
+"Removes igsh, utm_source, and other tracking parameters from shared links" = "Remove igsh, utm_source e outros parâmetros de rastreamento de links compartilhados";
+"Removes Instagram tracking wrappers (l.instagram.com) and UTM/fbclid params from URLs" = "Remove redirecionamentos de rastreamento do Instagram (l.instagram.com) e parâmetros UTM/fbclid de URLs";
+"Replace domain in shared links" = "Substituir domínio em links compartilhados";
+"Replace IG's relative timestamps (\"3d ago\") with a custom format. Toggle which surfaces it applies to inside the picker." = "Substitui os carimbos de data/hora relativos do IG (\"há 3 dias\") por um formato personalizado. Alterne em quais superfícies ele se aplica dentro do seletor.";
+"Rewrites copied/shared links to use an embed-friendly domain for previews in Discord, Telegram, etc." = "Reescreve links copiados/compartilhados para usar um domínio amigável para pré-visualizações no Discord, Telegram, etc.";
+"Search bars will no longer save your recent searches" = "As barras de busca não salvarão mais suas buscas recentes";
+"Sharing" = "Compartilhamento";
+"Skip sensitive content covers" = "Pular avisos de conteúdo sensível";
+"Strip tracking from links" = "Remover rastreamento de links";
+"Strip tracking params" = "Remover parâmetros de rastreamento";
+"Toggle live comments" = "Alternar comentários ao vivo";
+"Use detailed color picker" = "Usar seletor de cores detalhado";
+"Custom music sticker color" = "Cor personalizada do sticker de música";
+"Long-press the color wheel on a music or lyric sticker to pick any solid or gradient color" = "Mantenha pressionada a roda de cores em um sticker de música ou letras para escolher qualquer cor sólida ou em gradiente";
+"Allow video in photo sticker" = "Permitir vídeo no sticker de foto";
+"Lets the photo sticker picker show videos too, not just photos" = "Permite que o seletor de stickers de foto mostre vídeos também, não só fotos";
+"Solid color" = "Cor sólida";
+"Gradient color" = "Cor em gradiente";
+"Start" = "Início";
+"End" = "Fim";
+"Used across feed, stories, reels and DMs" = "Usado em feed, stories, reels e DMs";
+
+//////////////////////////////////////////////////////////////////////////////
+//                               FORMATO DE DATA                            //
+//////////////////////////////////////////////////////////////////////////////
+
+"Alternate" = "Alternativo";
+"Always ask" = "Sempre perguntar";
+"Balanced" = "Equilibrado";
+"Block all" = "Bloquear todos";
+"Block selected" = "Bloquear selecionados";
+"Button" = "Botão";
+"Classic" = "Clássico";
+"Date format — %@" = "Formato de data — %@";
+"Default" = "Padrão";
+"Disabled" = "Desativado";
+"Download and share" = "Baixar e compartilhar";
+"Download to Photos" = "Baixar para Fotos";
+"Enabled" = "Ativado";
+"Expand" = "Expandir";
+"Explore" = "Explorar";
+"Fast" = "Rápido";
+"Feed" = "Feed";
+"High" = "Alta";
+"Inbox" = "Caixa de Entrada";
+"Low" = "Baixa";
+"Max" = "Máx";
+"Medium" = "Média";
+"Mute/Unmute" = "Mudo/Som";
+"Open menu" = "Abrir menu";
+"Pause/Play" = "Pausar/Reproduzir";
+"Profile" = "Perfil";
+"Quality" = "Qualidade";
+"Reels" = "Reels";
+"Requires restart" = "Requer reiniciar";
+"Save to Photos" = "Salvar no Fotos";
+"Share sheet" = "Folha de compartilhamento";
+"Standard" = "Padrão";
+"Toggle" = "Alternar";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                   FEED                                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Action button" = "Botão de ação";
+"Adds 'View profile picture' and 'View cover' to story tray long-press menus" = "Adiciona 'Ver foto de perfil' e 'Ver capa' aos menus de pressionar e segurar na bandeja de stories";
+"Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Adiciona um botão de ação do RyukGram sob cada post do feed com opções de baixar/compartilhar/copiar/expandir/repostar. O toque abre o menu por padrão; altere o comportamento do toque abaixo.";
+"Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "Controla quando e como o feed atualiza. A atualização em segundo plano ocorre ao retornar ao app após ~10 minutos. A atualização do botão Início ocorre ao tocar na aba Início quando já estiver nela.";
+"Default tap action" = "Ação de toque padrão";
+"Disable background refresh" = "Desativar atualização em segundo plano";
+"Disable home button refresh" = "Desativar atualização pelo botão Início";
+"Disable home button scroll" = "Desativar rolagem pelo botão Início";
+"Disable video autoplay" = "Desativar reprodução automática de vídeos";
+"Hide" = "Ocultar";
+"Hide entire feed" = "Ocultar feed inteiro";
+"Hide repost button" = "Ocultar botão de repost";
+"Hide stories tray" = "Ocultar bandeja de stories";
+"Hide suggested stories" = "Ocultar stories sugeridos";
+"Hides suggested accounts" = "Oculta contas sugeridas";
+"Hides suggested reels" = "Oculta reels sugeridos";
+"Hides suggested threads posts" = "Oculta posts sugeridos do Threads";
+"Hides the repost button on feed posts" = "Oculta o botão de repost nos posts do feed";
+"Hides the story tray at the top" = "Oculta a bandeja de stories no topo";
+"Inserts a button row below like/comment/share on each post" = "Insere uma linha de botões abaixo de curtir/comentar/compartilhar em cada post";
+"Long press on media to expand in full-screen viewer" = "Pressione e segure na mídia para expandir no visualizador em tela cheia";
+"Media" = "Mídia";
+"Media zoom" = "Zoom na mídia";
+"No suggested for you" = "Sem sugeridos para você";
+"No suggested posts" = "Sem posts sugeridos";
+"No suggested reels" = "Sem reels sugeridos";
+"No suggested threads" = "Sem Threads sugeridos";
+"Prevents feed from reloading when returning from background" = "Impede que o feed seja recarregado ao retornar do segundo plano";
+"Prevents videos from playing automatically" = "Impede que vídeos sejam reproduzidos automaticamente";
+"Refresh" = "Atualizar";
+"Removes all content from your home feed" = "Remove todo o conteúdo do seu feed inicial";
+"Removes suggested accounts from the stories tray" = "Remove contas sugeridas da bandeja de stories";
+"Removes suggested posts" = "Remove posts sugeridos";
+"Scroll to top without refreshing when tapping Home" = "Rolar para o topo sem atualizar ao tocar em Início";
+"Show action button" = "Mostrar botão de ação";
+"Show date" = "Mostrar data";
+"Adds the date as a small header at the top of the action menu" = "Adiciona a data como um pequeno cabeçalho no topo do menu de ações";
+"Stories tray" = "Bandeja de stories";
+"Tapping Home does nothing when already on feed" = "Tocar em Início não faz nada quando já estiver no feed";
+"Tray long-press actions" = "Ações de pressionar e segurar na bandeja";
+"What happens on a single tap. Long-press always opens the full menu" = "O que acontece com um único toque. Pressionar e segurar sempre abre o menu completo";
+
+"Composer doesn't accept GIFs" = "O compositor não aceita GIFs";
+"Copy GIF link" = "Copiar link do GIF";
+"Custom GIF in comments" = "GIF personalizado em comentários";
+"Failed to build GIF model" = "Falha ao montar modelo do GIF";
+"GIF link copied" = "Link do GIF copiado";
+"Invalid Giphy URL" = "URL do Giphy inválida";
+"Long-press the GIF button to paste any Giphy URL" = "Pressione e segure o botão de GIF para colar qualquer URL do Giphy";
+"Paste Giphy Link" = "Colar link do Giphy";
+"Paste a giphy.com URL or media ID" = "Cole uma URL do giphy.com ou ID de mídia";
+"Send" = "Enviar";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                  REELS                                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Adiciona um botão de ação do RyukGram acima da barra lateral do reel com opções de ver capa/baixar/compartilhar/copiar/expandir/repostar. O toque abre o menu por padrão; altere o comportamento do toque abaixo.";
+"Always show progress scrubber" = "Sempre mostrar barra de progresso";
+"Auto-scroll reels" = "Rolar reels automaticamente";
+"Change what happens when you tap on a reel" = "Alterar o que acontece quando você toca em um reel";
+"Confirm reel refresh" = "Confirmar atualização de reels";
+"Disable auto-unmuting reels" = "Desativar desativação automática de mudo em reels";
+"Disable scrolling reels" = "Desativar rolagem de reels";
+"Disable tab button refresh" = "Desativar atualização pelo botão da aba";
+"Doom scrolling limit" = "Limite de rolagem infinita (Doom scrolling)";
+"Forces the progress bar to appear on every reel" = "Força a barra de progresso a aparecer em cada reel";
+"Hide friends avatars" = "Ocultar avatares de amigos";
+"Hide reels header" = "Ocultar cabeçalho dos reels";
+"Hide social context overlay" = "Ocultar sobreposição de contexto social";
+"Hides the avatar bubbles next to the Friends tab in reels" = "Oculta as bolhas de avatar ao lado da aba Amigos nos reels";
+"Hides the floating overlay showing who reposted or commented on reels" = "Oculta a sobreposição flutuante que mostra quem repostou ou comentou nos reels";
+"Hides the repost button on the reels sidebar" = "Oculta o botão de repost na barra lateral dos reels";
+"Hides the top navigation bar when watching reels" = "Oculta a barra de navegação superior ao assistir reels";
+"Hiding" = "Ocultando";
+"IG default" = "Padrão do IG";
+"IG default: native behavior. RyukGram: re-advances after swiping back." = "Padrão do IG: comportamento nativo. RyukGram: avança novamente após deslizar de volta.";
+"Limits" = "Limites";
+"Limits the amount of reels available to scroll at any given time, and prevents refreshing" = "Limita a quantidade de reels disponíveis para rolar em um dado momento e impede a atualização";
+"Only loads %@ %@" = "Carrega apenas %@ %@";
+"Places a button above the like/comment/share column on each reel" = "Coloca um botão acima da coluna curtir/comentar/compartilhar em cada reel";
+"Prevent doom scrolling" = "Prevenir rolagem infinita (Doom scrolling)";
+"Prevents reels from being scrolled to the next video" = "Impede que os reels sejam rolados para o próximo vídeo";
+"Prevents reels from unmuting when the volume/silent button is pressed" = "Impede que o mudo dos reels seja desativado quando o botão de volume/silencioso é pressionado";
+"RyukGram" = "RyukGram";
+"Shows an alert when you trigger a reels refresh" = "Mostra um alerta quando você aciona uma atualização de reels";
+"Shows buttons to reveal and auto-fill the password on locked reels" = "Mostra botões para revelar e preencher automaticamente a senha em reels bloqueados";
+"Tap Controls" = "Controles de Toque";
+"Tap to mute on photo reels" = "Tocar para silenciar em reels de fotos";
+"Tapping the Reels tab while on reels does nothing" = "Tocar na aba Reels enquanto já estiver nos reels não faz nada";
+"Unlock password-locked reels" = "Desbloquear reels protegidos por senha";
+"When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "Quando o modo de pausa está ativado, tocar em reels de fotos alterna o áudio em vez do gesto nativo de pausa";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                 PERFIL                                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Adds a button next to the burger menu on profiles to copy username, name or bio" = "Adiciona um botão próximo ao menu hambúrguer nos perfis para copiar nome de usuário, nome ou bio";
+"Adds a view option to the highlight long-press menu to open the cover in full-screen" = "Adiciona uma opção de visualizar ao menu de pressionar e segurar nos destaques para abrir a capa em tela cheia";
+"Copy note on long press" = "Copiar nota ao pressionar e segurar";
+"Fake follower count" = "Contagem falsa de seguidores";
+"Fake following count" = "Contagem falsa de seguindo";
+"Fake post count" = "Contagem falsa de posts";
+"Fake profile stats" = "Estatísticas de perfil falsas";
+"Fake verified badge" = "Selo de verificado falso";
+"Follow indicator" = "Indicador de quem segue";
+"Follower count" = "Contagem de seguidores";
+"Following count" = "Contagem de seguindo";
+"Long press a profile picture to open it in full-screen with zoom, share, and save" = "Pressione e segure uma foto de perfil para abri-la em tela cheia com zoom, compartilhamento e salvamento";
+"Long press the note bubble on a profile to copy the text" = "Pressione e segure a bolha de nota em um perfil para copiar o texto";
+"Long press to download directly (ignored when zoom is on)" = "Pressione e segure para baixar diretamente (ignorado quando o zoom está ativado)";
+"Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "Gestos de pressionar e segurar em elementos do perfil — mantidos separados dos botões de ação por recurso.";
+"Only affects your own profile header. Other users see the real numbers." = "Afeta apenas o cabeçalho do seu próprio perfil. Outros usuários verão os números reais.";
+"Post count" = "Contagem de posts";
+"Profile copy button" = "Botão de cópia de perfil";
+"Save profile picture" = "Salvar foto de perfil";
+"Show a checkmark next to your name on your own profile" = "Mostrar um selo de verificação ao lado do seu nome no seu próprio perfil";
+"Shows whether the profile user follows you" = "Mostra se o usuário do perfil segue você";
+"Tap to set" = "Toque para definir";
+"View highlight cover" = "Ver capa do destaque";
+"Zoom profile photo" = "Zoom na foto de perfil";
+
+//////////////////////////////////////////////////////////////////////////////
+//                            SALVAMENTO E DOWNLOADS                        //
+//////////////////////////////////////////////////////////////////////////////
+
+"Confirm before download" = "Confirmar antes de baixar";
+"Deprecated. The RyukGram action button (configured per feature in Feed/Reels/Stories) is the new way to download media. Enable this master toggle only if you prefer the old multi-finger long-press directly on the media." = "Obsoleto. O botão de ação do RyukGram (configurado por recurso no Feed/Reels/Stories) é a nova forma de baixar mídias. Ative esta chave principal apenas se preferir o antigo gesto de pressionar e segurar com múltiplos dedos diretamente na mídia.";
+"Downloads" = "Downloads";
+"Downloads with %@ %@" = "Downloads com %@ %@";
+"Enable long-press gesture" = "Ativar gesto de pressionar e segurar";
+"Finger count for long-press" = "Quantidade de dedos para pressionar e segurar";
+"Legacy long-press gesture" = "Gesto de pressionar e segurar antigo";
+"Long-press hold time" = "Tempo de pressão para segurar";
+"Master toggle for the deprecated gesture workflow (off by default)" = "Chave principal para o fluxo de gestos obsoleto (desativado por padrão)";
+"Press finger(s) for %@ %@" = "Pressione o(s) dedo(s) por %@ %@";
+"Route saves into a dedicated album in Photos instead of the camera roll root" = "Encaminha salvamentos para um álbum dedicado no Fotos em vez da raiz do rolo da câmera";
+"Save action" = "Ação de salvar";
+"Save to RyukGram album" = "Salvar no álbum RyukGram";
+"Saving" = "Salvando";
+"Show a confirmation dialog before starting a download" = "Mostrar um diálogo de confirmação antes de iniciar um download";
+"What happens after the gesture downloads" = "O que acontece após o download pelo gesto";
+"When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library." = "Quando \"Salvar no álbum RyukGram\" está ativado, downloads e escolhas de \"Salvar no Fotos\" são encaminhados para um álbum dedicado \"RyukGram\" na sua biblioteca do Fotos.";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                 STORIES                                  //
+//////////////////////////////////////////////////////////////////////////////
+
+"Adds a RyukGram action button next to the eye button on stories with download/share/copy/expand/repost/view-mentions entries. Tap opens the menu by default; change the tap behavior below." = "Adiciona um botão de ação do RyukGram ao lado do botão de olho nos stories com opções de baixar/compartilhar/copiar/expandir/repostar/ver menções. O toque abre o menu por padrão; altere o comportamento do toque abaixo.";
+"Adds a speaker button to the story overlay to unmute/mute audio. Also available in the 3-dot menu" = "Adiciona um botão de alto-falante à sobreposição do story para ativar/desativar o áudio. Também disponível no menu de 3 pontos";
+"Advance on story like" = "Avançar ao curtir story";
+"Advance on story reply" = "Avançar ao responder story";
+"Advance when marking as seen" = "Avançar ao marcar como visto";
+"Audio" = "Áudio";
+"Block all: all stories blocked — listed users are exceptions.\nBlock selected: only listed users are blocked — everything else is normal.\nBoth lists are saved independently." = "Bloquear todos: todos os stories bloqueados — usuários listados são exceções.\nBloquear selecionados: apenas usuários listados são bloqueados — tudo o mais é normal.\nAmbas as listas são salvas independentemente.";
+"Blocking mode" = "Modo de bloqueio";
+"Button = single-tap mark seen. Toggle = tap toggles story read receipts on/off (eye fills blue when on)" = "Botão = toque único marca como visto. Alternar = toque alterna recibos de visualização (o olho fica azul quando ativado)";
+"Disable instants creation" = "Desativar criação de instants";
+"Disable story seen receipt" = "Desativar recibo de visualização de story";
+"Enable story user list" = "Ativar lista de usuários de story";
+"Hides the functionality to create/send instants" = "Oculta a funcionalidade de criar/enviar instants";
+"Hides the notification for others when you view their story" = "Oculta a notificação para os outros quando você visualiza o story deles";
+"Inserts a button next to the seen/eye button on story overlays" = "Insere um botão ao lado do botão de visto/olho nas sobreposições de stories";
+"Keep stories visually seen locally" = "Manter stories visualmente vistos localmente";
+"Liking a story automatically advances to the next one after a short delay" = "Curtir um story avança automaticamente para o próximo após um breve atraso";
+"Manage list" = "Gerenciar lista";
+"Manage list (%lu)" = "Gerenciar lista (%lu)";
+"Manual seen button mode" = "Modo de botão de visto manual";
+"Mark seen on story like" = "Marcar como visto ao curtir";
+"Mark seen on story reply" = "Marcar como visto ao responder";
+"Marks a story as seen the moment you tap the heart, even with seen blocking on" = "Marca um story como visto no momento em que você toca no coração, mesmo com o bloqueio de visto ativado";
+"Marks a story as seen when you send a reply or emoji reaction, even with seen blocking on" = "Marca um story como visto quando você envia uma resposta ou reação de emoji, mesmo com o bloqueio de visto ativado";
+"Marks stories as seen locally (grey ring) while still blocking the seen receipt on the server" = "Marca stories como vistos localmente (círculo cinza) enquanto ainda bloqueia o recibo de visualização no servidor";
+"Master toggle. When off, the list is ignored" = "Chave principal. Quando desativada, a lista é ignorada";
+"Other" = "Outros";
+"Playback" = "Reprodução";
+"Quick list button in stories" = "Botão de lista rápida nos stories";
+"Search, sort, swipe to remove" = "Buscar, ordenar, deslizar para remover";
+"Seen receipts" = "Recibos de visualização";
+"Sending a reply or emoji reaction automatically advances to the next story" = "Enviar uma resposta ou reação de emoji avança automaticamente para o próximo story";
+"Show mentioned users in eye button and story menu" = "Mostrar usuários mencionados no botão de olho e no menu do story";
+"Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "Mostra um botão de olho nos stories para adicionar/remover usuários da lista. Desativado = use apenas o menu de 3 pontos ou pressionar e segurar";
+"Stickers" = "Figurinhas";
+"Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "Veja os resultados de enquetes/testes/sliders antes de interagir — você ainda pode tocar para votar normalmente. 'Forçar antigas' traz as figurinhas Teste e Revelar de volta ao editor de stories.";
+"Peek at poll/quiz/slider results on reels before interacting — you can still tap to vote normally." = "Veja os resultados de enquetes/testes/sliders nos reels antes de interagir — você ainda pode tocar para votar normalmente.";
+"Force legacy stickers in tray" = "Forçar figurinhas antigas na bandeja";
+"Adds Quiz and Reveal stickers back to the picker" = "Adiciona as figurinhas Teste e Revelar de volta ao seletor";
+"Bypass Reveal sticker" = "Ignorar figurinha Revelar";
+"Skip the DM-to-reveal step on stories with a Reveal sticker" = "Pula a etapa de enviar mensagem para revelar stories com figurinha Revelar";
+"Show quiz answer" = "Mostrar resposta do teste";
+"Circle the correct option on quiz stickers, or the leading option on polls" = "Circula a opção correta em figurinhas de teste, ou a opção líder em enquetes";
+"Show poll vote counts" = "Mostrar contagem de votos da enquete";
+"Show vote tallies on poll options and slider count/average before you vote" = "Mostra as contagens de votos nas opções da enquete e contagem/média do slider antes de você votar";
+"Stop story auto-advance" = "Parar avanço automático de stories";
+"Stories" = "Stories";
+"Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" = "Os stories não saltarão automaticamente para o próximo quando o tempo acabar. Toque para avançar manualmente";
+"Story audio toggle" = "Alternar áudio do story";
+"Story user list" = "Lista de usuários de story";
+"Tapping the eye button to mark a story as seen advances to the next story automatically" = "Tocar no botão de olho para marcar um story como visto avança para o próximo story automaticamente";
+"View story mentions" = "Ver menções do story";
+"Which stories get seen-receipt blocking" = "Quais stories recebem bloqueio de recibo de visualização";
+
+//////////////////////////////////////////////////////////////////////////////
+//                         MENSAGENS — RECIBOS DE LEITURA                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Adds a button to DM threads to mark messages as seen" = "Adiciona um botão às conversas de DM para marcar mensagens como vistas";
+"Auto mark seen on interact" = "Marcar visto auto. ao interagir";
+"Auto mark seen on typing" = "Marcar visto auto. ao digitar";
+"Control when messages are marked as seen" = "Controlar quando as mensagens são marcadas como vistas";
+"How the seen button behaves" = "Como o botão de visto se comporta";
+"Manually mark messages as seen" = "Marcar mensagens como vistas manualmente";
+"Marks messages as seen when you send any message" = "Marca mensagens como vistas quando você envia qualquer mensagem";
+"Marks messages as seen when you start typing" = "Marca mensagens como vistas quando você começa a digitar";
+"Read receipt mode" = "Modo de recibo de leitura";
+"Read receipts" = "Recibos de leitura";
+
+//////////////////////////////////////////////////////////////////////////////
+//                         MENSAGENS — MANTER APAGADAS                      //
+//////////////////////////////////////////////////////////////////////////////
+
+"Activity" = "Atividade";
+"Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "Adiciona uma opção de 'Baixar' ao menu de pressionar e segurar nas mensagens de voz para salvá-las como áudio M4A";
+"Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram" = "Adiciona uma opção de 'Enviar Arquivo' ao menu mais (+) nas DMs. Tipos de arquivos suportados podem ser limitados pelo Instagram";
+"Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages" = "Adiciona uma opção de 'Arquivo de Áudio' ao menu mais (+) nas DMs para enviar arquivos de áudio como mensagens de voz";
+"Adds copy text, download GIF/audio to the note long-press menu" = "Adiciona copiar texto, baixar GIF/áudio ao menu de pressionar e segurar na nota";
+"Block all: all chats blocked — listed chats are exceptions.\nBlock selected: only listed chats are blocked — everything else is normal.\nBoth lists are saved independently. Long-press a chat in the inbox to add or remove." = "Bloquear todos: todos os chats bloqueados — chats listados são exceções.\nBloquear selecionados: apenas chats listados são bloqueados — tudo o mais é normal.\nAmbas as listas são salvas independentemente. Pressione e segure um chat na caixa de entrada para adicionar ou remover.";
+"Block keep-deleted for excluded chats" = "Bloquear manter-apagadas para chats excluídos";
+"Block keep-deleted for unlisted chats" = "Bloquear manter-apagadas para chats não listados";
+"Chat list" = "Lista de chats";
+"Confirmation dialog before clearing preserved messages" = "Diálogo de confirmação antes de limpar mensagens preservadas";
+"Copies note text directly on long press without opening the menu" = "Copia o texto da nota diretamente ao pressionar e segurar sem abrir o menu";
+"Copy text on hold" = "Copiar texto ao segurar";
+"Custom emojis and background/text colors" = "Emojis personalizados e cores de fundo/texto";
+"Custom note themes" = "Temas de notas personalizados";
+"Disable vanish mode swipe" = "Desativar deslizar para modo temporário";
+"Disable screenshot detection" = "Desativar detecção de captura de tela";
+"Disable typing status" = "Desativar status de digitando";
+"Disable view-once limitations" = "Desativar limitações de visualização única";
+"Download voice messages" = "Baixar mensagens de voz";
+"Enable chat list" = "Ativar lista de chats";
+"Enable note theming" = "Ativar temas de notas";
+"Enables the notes theme picker" = "Ativa o seletor de temas de notas";
+"Files" = "Arquivos";
+"Full last active date" = "Data completa de última atividade";
+"Hide reels blend button" = "Ocultar botão de blend de reels";
+"Hide send to group chat" = "Ocultar enviar para chat em grupo";
+"Hide video call button" = "Ocultar botão de chamada de vídeo";
+"Hide voice call button" = "Ocultar botão de chamada de voz";
+"Hides the blend button in DMs" = "Oculta o botão de blend nas DMs";
+"Removes the create/send to group chat row when sharing to multiple recipients" = "Remove a linha de criar/enviar para chat em grupo ao compartilhar com vários destinatários";
+"Hides typing indicator from others" = "Oculta o indicador de digitando para os outros";
+"Indicate unsent messages" = "Indicar mensagens não enviadas";
+"Keep deleted messages" = "Manter mensagens apagadas";
+"Makes view-once messages behave like normal visual messages (loopable/pauseable)" = "Faz mensagens de visualização única se comportarem como mensagens visuais normais (podem ser repetidas/pausadas)";
+"Note actions" = "Ações de nota";
+"Preserve messages that others unsend" = "Preservar mensagens que outros cancelarem o envio";
+"Preserves messages that others unsend" = "Preserva mensagens que outros cancelarem o envio";
+"Prevents accidental swipe-up activation of vanish mode" = "Evita ativação acidental do modo temporário ao deslizar para cima";
+"Quick list button in chats" = "Botão de lista rápida nos chats";
+"Removes the audio call button from DM thread header" = "Remove o botão de chamada de áudio do cabeçalho da conversa de DM";
+"Removes the screenshot-prevention features for visual messages in DMs" = "Remove os recursos de prevenção de captura de tela para mensagens visuais nas DMs";
+"Removes the video call button from DM thread header" = "Remove o botão de chamada de vídeo do cabeçalho da conversa de DM";
+"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled" = "Repita mensagens visuais sem expirar. Alterne no menu do botão de olho, ou como um botão independente quando o botão de olho estiver desativado";
+"Search, sort, swipe to remove or toggle keep-deleted" = "Buscar, ordenar, deslizar para remover ou alternar manter-apagadas";
+"Send audio as file" = "Enviar áudio como arquivo";
+"Send files (experimental)" = "Enviar arquivos (experimental)";
+"Show full date instead of \"Active 2h ago\"" = "Mostrar data completa em vez de \"Ativo há 2h\"";
+"Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "Mostra um botão nas conversas de DM para adicionar/remover chats da lista. Pressione e segure para mais opções";
+"Shows a notification pill when a message is unsent" = "Mostra uma notificação suspensa quando uma mensagem tem o envio cancelado";
+"Shows an \"Unsent\" label on preserved messages" = "Mostra uma etiqueta \"Não enviada\" em mensagens preservadas";
+"Unlimited replay of visual messages" = "Repetição ilimitada de mensagens visuais";
+"Unsent message notification" = "Notificação de mensagem não enviada";
+"Voice messages" = "Mensagens de voz";
+"Warn before clearing on refresh" = "Avisar antes de limpar ao atualizar";
+"Which chats get read-receipt blocking" = "Quais chats recebem bloqueio de recibo de leitura";
+"⚠️ Pull-to-refresh in the DMs tab clears all preserved messages. Enable the warning below to get a confirmation dialog." = "⚠️ Deslizar para atualizar na aba de DMs limpa todas as mensagens preservadas. Ative o aviso abaixo para receber um diálogo de confirmação.";
+
+//////////////////////////////////////////////////////////////////////////////
+//                               MENSAGENS                                  //
+//////////////////////////////////////////////////////////////////////////////
+
+"Messages" = "Mensagens";
+"Threads" = "Threads";
+
+//////////////////////////////////////////////////////////////////////////////
+//                            MESSAGES — INSTANTS                           //
+// Settings → Messages → Instants section                                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Adds a gallery button to the instants camera so you can send a photo from your album" = "Adiciona um botão de galeria à câmera de instants para enviar uma foto do seu álbum";
+"Instants" = "Instants";
+"Send from gallery" = "Enviar da galeria";
+"Use" = "Usar";
+"Tweaks for the QuickSnap / Instants camera surface." = "Ajustes para a câmera do QuickSnap / Instants.";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                NAVEGAÇÃO                                 //
+//////////////////////////////////////////////////////////////////////////////
+
+"Also hide the bottom tab bar — only the inbox is visible" = "Também ocultar a barra de abas inferior — apenas a caixa de entrada fica visível";
+"Hide create tab" = "Ocultar aba de criar";
+"Hide explore tab" = "Ocultar aba explorar";
+"Hide feed tab" = "Ocultar aba do feed";
+"Hide messages tab" = "Ocultar aba de mensagens";
+"Hide reels tab" = "Ocultar aba do reels";
+"Hide tab bar" = "Ocultar barra de abas";
+"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "Oculta todas as abas exceto a caixa de entrada de DM + perfil e força o início na caixa de entrada. O atalho de configurações muda para o pressionar e segurar na aba da caixa de entrada.";
+"Hides the create tab on the bottom navigation bar" = "Oculta a aba de criar na barra de navegação inferior";
+"Hides the direct messages tab on the bottom navigation bar" = "Oculta a aba de mensagens diretas na barra de navegação inferior";
+"Hides the explore/search tab on the bottom navigation bar" = "Oculta a aba de explorar/busca na barra de navegação inferior";
+"Hides the feed/home tab on the bottom navigation bar" = "Oculta a aba de feed/início na barra de navegação inferior";
+"Hides the reels tab on the bottom navigation bar" = "Oculta a aba de reels na barra de navegação inferior";
+"Hiding tabs" = "Ocultando abas";
+"Icon order" = "Ordem dos ícones";
+"Launch tab" = "Aba de inicialização";
+"Lets you swipe to switch between navigation bar tabs" = "Permite deslizar para alternar entre as abas da barra de navegação";
+"Messages only" = "Apenas mensagens";
+"Messages-only mode" = "Modo apenas-mensagens";
+"Navigation" = "Navegação";
+"Swipe between tabs" = "Deslizar entre abas";
+"Tab the app opens to. Ignored when Messages-only is on" = "Aba em que o app abre. Ignorado quando o modo Apenas-mensagens está ativado";
+"The order of the icons on the bottom navigation bar" = "A ordem dos ícones na barra de navegação inferior";
+"Turn IG into a DM-only client" = "Transformar o IG em um cliente apenas de DMs";
+
+//////////////////////////////////////////////////////////////////////////////
+//                           CONFIRMAR AÇÕES                                //
+//////////////////////////////////////////////////////////////////////////////
+
+"Confirm actions" = "Confirmar ações";
+"Confirm video call" = "Confirmar chamada de vídeo";
+"Confirm voice call" = "Confirmar chamada de voz";
+"Confirm changing theme" = "Confirmar mudança de tema";
+"Confirm follow" = "Confirmar seguir";
+"Confirm follow requests" = "Confirmar solicitações para seguir";
+"Confirm like: Posts" = "Confirmar curtida: Posts";
+"Confirm like: Reels" = "Confirmar curtida: Reels";
+"Confirm posting comment" = "Confirmar publicação de comentário";
+"Confirm repost" = "Confirmar repost";
+"Confirm send to group chat" = "Confirmar envio para chat em grupo";
+"Send to group chat?" = "Enviar para chat em grupo?";
+"Shows an alert before creating/sending to a group chat from the share sheet" = "Mostra um alerta antes de criar/enviar para um chat em grupo a partir da folha de compartilhamento";
+"Confirm vanish mode" = "Confirmar modo temporário";
+"Confirm sticker interaction (stories)" = "Confirmar interação com figurinha (stories)";
+"Confirm sticker interaction (highlights)" = "Confirmar interação com figurinha (destaques)";
+"Reaction stickers only" = "Apenas figurinhas de reação";
+"All" = "Todas";
+"Confirm story emoji reaction" = "Confirmar reação de emoji no story";
+"Confirm story like" = "Confirmar curtida no story";
+"Confirm unfollow" = "Confirmar deixar de seguir";
+"Confirm voice messages" = "Confirmar mensagens de voz";
+"Shows an alert before sending an emoji reaction on a story" = "Mostra um alerta antes de enviar uma reação de emoji em um story";
+"Shows an alert to confirm before sending a voice message" = "Mostra um alerta para confirmar antes de enviar uma mensagem de voz";
+"Shows an alert to confirm before toggling vanish mode" = "Mostra um alerta para confirmar antes de alternar o modo temporário";
+"Shows an alert when you accept/decline a follow request" = "Mostra um alerta quando você aceita/recusa uma solicitação para seguir";
+"Shows an alert when you change a chat theme to confirm" = "Mostra um alerta quando você muda um tema de chat para confirmar";
+"Shows an alert when you tap a sticker on someone's story" = "Mostra um alerta quando você toca em uma figurinha no story de alguém";
+"Shows an alert when you tap a sticker inside a highlight" = "Mostra um alerta quando você toca em uma figurinha dentro de um destaque";
+"Shows an alert when you click the video call button to confirm before calling" = "Mostra um alerta quando você clica no botão de chamada de vídeo para confirmar antes de ligar";
+"Shows an alert when you click the voice call button to confirm before calling" = "Mostra um alerta quando você clica no botão de chamada de voz para confirmar antes de ligar";
+"Shows an alert when you click the follow button to confirm the follow" = "Mostra um alerta quando você clica no botão de seguir para confirmar o seguimento";
+"Shows an alert when you click the like button on posts to confirm the like" = "Mostra um alerta quando você clica no botão de curtir em posts para confirmar a curtida";
+"Shows an alert when you click the like button on reels to confirm the like" = "Mostra um alerta quando você clica no botão de curtir em reels para confirmar a curtida";
+"Shows an alert when you click the like button on stories to confirm the like" = "Mostra um alerta quando você clica no botão de curtir em stories para confirmar a curtida";
+"Shows an alert when you click the post comment button to confirm" = "Mostra um alerta quando você clica no botão de publicar comentário para confirmar";
+"Shows an alert when you click the repost button to confirm before resposting" = "Mostra um alerta quando você clica no botão de repost para confirmar antes de repostar";
+"Shows an alert when you click the unfollow button to confirm" = "Mostra um alerta quando você clica no botão de deixar de seguir para confirmar";
+
+//////////////////////////////////////////////////////////////////////////////
+//                           BACKUP E RESTAURAÇÃO                           //
+//////////////////////////////////////////////////////////////////////////////
+
+"Backup & Restore" = "Backup e Restauração";
+
+"Clear selected data" = "Limpar dados selecionados";
+"Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page." = "Exporte ou importe configurações do RyukGram, listas de exclusão e dados do Analisador de Perfil. Escolha qualquer combinação em cada página.";
+"Import" = "Importar";
+"Load from a JSON file" = "Carregar de um arquivo JSON";
+"Save to a JSON file" = "Salvar em um arquivo JSON";
+//////////////////////////////////////////////////////////////////////////////
+//                                AVANÇADO                                  //
+//////////////////////////////////////////////////////////////////////////////
+
+"Advanced" = "Avançado";
+"Auto-clear cache" = "Limpar cache automaticamente";
+"Automatically opens settings when the app launches" = "Abre as configurações automaticamente quando o app inicia";
+"Cache" = "Cache";
+"Cache cleared" = "Cache limpo";
+"Calculating cache size…" = "Calculando tamanho do cache…";
+"Clear" = "Limpar";
+"Clear cache" = "Limpar cache";
+"Clear cache (%@)" = "Limpar cache (%@)";
+"Clear cache?" = "Limpar cache?";
+"Clearing cache…" = "Limpando cache…";
+"Clearing still scans on demand." = "A limpeza ainda escaneia sob demanda.";
+"Daily" = "Diariamente";
+"Disable safe mode" = "Desativar modo de segurança";
+"Enable tweak settings quick-access" = "Ativar acesso rápido às configurações do tweak";
+"Free %@ of Instagram cache. A restart is recommended." = "Libera %@ de cache do Instagram. Recomenda-se reiniciar.";
+"Freed %@. Restart to apply." = "Liberado %@. Reinicie para aplicar.";
+"Hold on the home tab to open RyukGram settings" = "Segure na aba Início para abrir as configurações do RyukGram";
+"Instagram" = "Instagram";
+"Monthly" = "Mensalmente";
+"Nothing to clear" = "Nada para limpar";
+"Off skips the size scan when Advanced opens." = "Desativado pula o escaneamento de tamanho quando o Avançado abre.";
+"Pause playback when opening settings" = "Pausar reprodução ao abrir configurações";
+"Preserve messages database" = "Preservar banco de dados de mensagens";
+"Pauses any playing video/audio when settings opens" = "Pausa qualquer vídeo/áudio em reprodução quando as configurações abrem";
+"Prevents Instagram from resetting settings after crashes (at your own risk)" = "Impede que o Instagram resete as configurações após travamentos (por sua conta e risco)";
+"Remove Instagram's cached images, videos, and temporary files." = "Remove imagens, vídeos e arquivos temporários em cache do Instagram.";
+"Reset onboarding state" = "Resetar estado de boas-vindas";
+"Run a silent cache clear on launch when the interval has elapsed." = "Executa uma limpeza de cache silenciosa na inicialização quando o intervalo expirar.";
+"Show cache size" = "Mostrar tamanho do cache";
+"Skip the messages database when clearing — keeps DMs, drafts, and saved messages." = "Pular o banco de dados de mensagens ao limpar — mantém DMs, rascunhos e mensagens salvas.";
+"Show tweak settings on app launch" = "Mostrar configurações do tweak ao iniciar o app";
+"Weekly" = "Semanalmente";
+
+//////////////////////////////////////////////////////////////////////////////
+//                         AVANÇADO EXPERIMENTAL                            //
+//////////////////////////////////////////////////////////////////////////////
+
+"Actions" = "Ações";
+"Advanced experimental features" = "Recursos experimentais avançados";
+"All experimental toggles will be turned off. Instagram will restart." = "Todas as chaves experimentais serão desligadas. O Instagram irá reiniciar.";
+"Direct Notes — Audio reply" = "Notas de DM — Resposta em áudio";
+"Direct Notes — Avatar reply" = "Notas de DM — Resposta com avatar";
+"Direct Notes — Friend Map" = "Notas de DM — Mapa de Amigos";
+"Direct Notes — GIFs & stickers reply" = "Notas de DM — Resposta com GIFs e figurinhas";
+"Direct Notes — Photo reply" = "Notas de DM — Resposta com foto";
+"Disabled after repeated crashes." = "Desativado após travamentos repetidos.";
+"Enables GIF/sticker replies" = "Ativa respostas com GIF/figurinhas";
+"Enables photo replies" = "Ativa respostas com foto";
+"Enables the audio-note reply type" = "Ativa o tipo de resposta por nota de áudio";
+"Enables the avatar reply type" = "Ativa o tipo de resposta por avatar";
+"Experimental flags reset" = "Sinalizadores experimentais resetados";
+"Flip what you want on, then tap Apply to restart. Some flags may not work on every account or IG version. Flags auto-reset if IG crashes on launch 3 times." = "Ative o que desejar e toque em Aplicar para reiniciar. Alguns sinalizadores podem não funcionar em todas as contas ou versões do IG. Eles resetam automaticamente se o IG travar 3 vezes ao iniciar.";
+"Forces Prism-gated experiments on" = "Força a ativação de experimentos restritos ao Prism";
+"Forces the Homecoming home surface / nav on" = "Força a ativação da interface/navegação Homecoming";
+"Forces the QuickSnap / Instants surface on in feed, inbox, stories, and notes tray" = "Força a interface QuickSnap / Instants no feed, caixa de entrada, stories e bandeja de notas";
+"Got it" = "Entendi";
+"Heads up" = "Atenção";
+"Hidden Instagram experiments" = "Experimentos ocultos do Instagram";
+"Hidden Instagram experiments (in Advanced)" = "Experimentos ocultos do Instagram (em Avançado)";
+"Homecoming" = "Homecoming";
+"Notes & QuickSnap" = "Notas e QuickSnap";
+"Prism design system" = "Sistema de design Prism";
+"QuickSnap (Instants)" = "QuickSnap (Instants)";
+"Reset all experimental flags" = "Resetar todos os sinalizadores experimentais";
+"Reset experimental flags?" = "Resetar sinalizadores experimentais?";
+"Restart Instagram to apply changes" = "Reinicie o Instagram para aplicar as mudanças";
+"Shows the friend map entry in Direct Notes" = "Mostra a entrada do mapa de amigos nas Notas de DM";
+"Surfaces" = "Superfícies";
+"These toggles flip hidden Instagram experiments on. Some features may not work on every account or IG version. If IG keeps crashing on launch, the flags auto-reset after 3 failed starts." = "Estas chaves ativam experimentos ocultos do Instagram. Alguns recursos podem não funcionar em todas as contas ou versões do IG. Se o IG continuar travando ao iniciar, os sinalizadores resetam após 3 falhas.";
+"Toggle hidden Instagram experiments. Some may not work on every account or IG version." = "Alternar experimentos ocultos do Instagram. Alguns podem não funcionar em todas as contas ou versões do IG.";
+"Turn every experimental toggle off" = "Desligar todas as chaves experimentais";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                  DEBUG                                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Button Cell" = "Célula de Botão";
+"Change the value on the right" = "Alterar o valor à direita";
+"Could not delete: %@" = "Não foi possível deletar: %@";
+"Debug" = "Depuração";
+"Delete an imported override and fall back to the shipped strings" = "Deletar uma sobreposição importada e voltar para as strings originais";
+"Deleted %@ override. Restart to apply." = "Sobreposição %@ deletada. Reinicie para aplicar.";
+"Enable FLEX gesture" = "Ativar gesto FLEX";
+"Export English strings" = "Exportar strings em inglês";
+"Hold 5 fingers on the screen to open FLEX" = "Segure 5 dedos na tela para abrir o FLEX";
+"I have %@%@" = "Eu tenho %@%@";
+"Import a .strings file for a language" = "Importar um arquivo .strings para um idioma";
+"Import a .strings file to update a translation. Pick a language, select the file, restart." = "Importe um arquivo .strings para atualizar uma tradução. Escolha um idioma, selecione o arquivo, reinicie.";
+"Link Cell" = "Célula de Link";
+"Localization" = "Localização";
+"Menu Cell" = "Célula de Menu";
+"Navigation Cell" = "Célula de Navegação";
+"No imported localization files to reset." = "Nenhum arquivo de localização importado para resetar.";
+"No overrides" = "Sem sobreposições";
+"Open FLEX on app focus" = "Abrir FLEX ao focar no app";
+"Open FLEX on app launch" = "Abrir FLEX ao iniciar o app";
+"Opens FLEX when the app is focused" = "Abre o FLEX quando o app ganha foco";
+"Opens FLEX when the app launches" = "Abre o FLEX quando o app inicia";
+"Pick a language to delete the imported file" = "Escolha um idioma para deletar o arquivo importado";
+"Reset localization" = "Resetar localização";
+"Share the base English .strings file for translating" = "Compartilhar o arquivo .strings base em inglês para tradução";
+"Static Cell" = "Célula Estática";
+"Stepper cell" = "Célula Stepper";
+"Switch Cell" = "Célula Switch";
+"Switch Cell (Restart)" = "Célula Switch (Reiniciar)";
+"Tap the switch" = "Toque na chave";
+"These features rely on hidden Instagram flags and may not work on all accounts or versions." = "Estes recursos dependem de sinalizadores ocultos do Instagram e podem não funcionar em todas as contas ou versões.";
+"Update localization file" = "Atualizar arquivo de localização";
+"Using icon" = "Usando ícone";
+"Using image" = "Usando imagem";
+
+//////////////////////////////////////////////////////////////////////////////
+//                        DOWNLOADS E AÇÕES DE MÍDIA                        //
+//////////////////////////////////////////////////////////////////////////////
+
+"%@ settings" = "Configurações de %@";
+"Cancelled" = "Cancelado";
+"Copied %lu URLs" = "Copiadas %lu URLs";
+"Copied caption" = "Legenda copiada";
+"Copied download URL" = "URL de download copiada";
+"Copy all URLs" = "Copiar todas as URLs";
+"Copy caption" = "Copiar legenda";
+"Copy download URL" = "Copiar URL de download";
+"Could not extract any URLs" = "Não foi possível extrair nenhuma URL";
+"Could not extract media URL" = "Não foi possível extrair a URL da mídia";
+"Could not extract photo URL" = "Não foi possível extrair a URL da foto";
+"Could not extract video URL" = "Não foi possível extrair a URL do vídeo";
+"Done" = "Concluído";
+"Download all (%lu)" = "Baixar todos (%lu)";
+"Download all stories and share?" = "Baixar todos os stories e compartilhar?";
+"Download all to Photos" = "Baixar tudo para o Fotos";
+"Download and share all" = "Baixar e compartilhar tudo";
+"Download and share?" = "Baixar e compartilhar?";
+"Download failed" = "Download falhou";
+"Downloaded %lu items" = "Baixados %lu itens";
+"Downloading %@..." = "Baixando %@...";
+"Downloading..." = "Baixando...";
+"Failed to save" = "Falha ao salvar";
+"HD download complete" = "Download em HD concluído";
+"Mute audio" = "Silenciar áudio";
+"No caption on this post" = "Sem legenda neste post";
+"No carousel children" = "Nenhum item no carrossel";
+"No cover image" = "Sem imagem de capa";
+"No files downloaded" = "Nenhum arquivo baixado";
+"No media" = "Sem mídia";
+"No media to expand" = "Sem mídia para expandir";
+"No media to show" = "Sem mídia para mostrar";
+"No media URL" = "Sem URL de mídia";
+"No URLs" = "Sem URLs";
+"No URLs found" = "Nenhuma URL encontrada";
+"No video URL" = "Sem URL de vídeo";
+"Not a carousel" = "Não é um carrossel";
+"Nothing to save" = "Nada para salvar";
+"Nothing to share" = "Nada para compartilhar";
+"Opening creator..." = "Abrindo criador...";
+"Photo library access denied" = "Acesso à biblioteca de fotos negado";
+"Photos access denied" = "Acesso ao Fotos negado";
+"Preparing repost..." = "Preparando repost...";
+"Repost" = "Repostar";
+"Repost unavailable" = "Repostagem indisponível";
+"Save all stories to Photos?" = "Salvar todos os stories no Fotos?";
+"Save failed" = "Falha ao salvar";
+"Save to Photos?" = "Salvar no Fotos?";
+"Saved %lu items" = "Salvos %lu itens";
+"Saved to Photos" = "Salvo no Fotos";
+"Saved to RyukGram" = "Salvo no RyukGram";
+"Tap to cancel" = "Toque para cancelar";
+"Unmute audio" = "Ativar som";
+"View cover" = "Ver capa";
+"View mentions" = "Ver menções";
+
+//////////////////////////////////////////////////////////////////////////////
+//                      STORIES E MENSAGENS (RECURSOS)                      //
+//////////////////////////////////////////////////////////////////////////////
+
+"A message was unsent" = "Uma mensagem teve o envio cancelado";
+"%@ unsent a message" = "%@ cancelou o envio de uma mensagem";
+"%@ unsent a message from %@" = "%1$@ cancelou o envio de uma mensagem de %2$@";
+"Message from %@ was unsent" = "Uma mensagem de %@ teve o envio cancelado";
+"Add" = "Adicionar";
+"Add to block list" = "Adicionar à lista de bloqueio";
+"Add to block list?" = "Adicionar à lista de bloqueio?";
+"Added to block list" = "Adicionado à lista de bloqueio";
+"Added to exclude list" = "Adicionado à lista de exclusão";
+"Audio not loaded yet. Play the message first and try again." = "Áudio ainda não carregado. Reproduza a mensagem primeiro e tente novamente.";
+"Audio sent" = "Áudio enviado";
+"Audio/Video from Files" = "Áudio/Vídeo dos Arquivos";
+"Blocked" = "Bloqueado";
+"Cancel" = "Cancelar";
+"Clear preserved messages?" = "Limpar mensagens preservadas?";
+"Refreshing the DMs tab will clear %lu preserved unsent message. This cannot be undone." = "Atualizar a aba de mensagens vai apagar %lu mensagem preservada. Não pode ser desfeito.";
+"Refreshing the DMs tab will clear %lu preserved unsent messages. This cannot be undone." = "Atualizar a aba de mensagens vai apagar %lu mensagens preservadas. Não pode ser desfeito.";
+"Converting..." = "Convertendo...";
+"Copy text" = "Copiar texto";
+"Could not find media" = "Mídia não encontrada";
+"Could not find story media" = "Mídia do story não encontrada";
+"Could not get audio data. Try again after refreshing the chat." = "Não foi possível obter os dados de áudio. Tente novamente após atualizar o chat.";
+"Could not get video URL" = "Não foi possível obter a URL do vídeo";
+"Disable read receipts" = "Desativar recibos de leitura";
+"Disappearing media" = "Mídia temporária";
+"Done!" = "Pronto!";
+"Download audio" = "Baixar áudio";
+"Downloading audio..." = "Baixando áudio...";
+"Enable read receipts" = "Ativar recibos de leitura";
+"Error: %@" = "Erro: %@";
+"Exclude chat" = "Excluir chat";
+"Exclude from seen" = "Excluir de visto";
+"Exclude story seen" = "Excluir visto de story";
+"Excluded" = "Excluído";
+"Extracting audio..." = "Extraindo áudio...";
+"Failed to encode GIF" = "Falha ao codificar GIF";
+"FFmpeg conversion failed" = "Conversão pelo FFmpeg falhou";
+"File sending not supported" = "Envio de arquivo não suportado";
+"Format not supported without FFmpegKit" = "Formato não suportado sem o FFmpegKit";
+"Follow" = "Seguir";
+"Following" = "Seguindo";
+"Inserts a button on disappearing media overlays" = "Insere um botão nas sobreposições de mídia temporária";
+"Inserts a speaker button to mute/unmute disappearing media" = "Insere um botão de alto-falante para silenciar/ativar som em mídias temporárias";
+"Inserts an eye button to mark the current disappearing media as viewed" = "Insere um botão de olho para marcar a mídia temporária atual como visualizada";
+"Mark as viewed" = "Marcar como visualizada";
+"Mark messages as seen" = "Marcar mensagens como vistas";
+"Mark seen" = "Marcar visto";
+"Marked as seen" = "Marcada como vista";
+"Marked as viewed" = "Marcada como visualizada";
+"Marked messages as seen" = "Mensagens marcadas como vistas";
+"Mentions" = "Menções";
+"Message sender not found" = "Remetente da mensagem não encontrado";
+"Messages settings" = "Configurações de mensagens";
+"Audio URL not available" = "URL de áudio não disponível";
+"Mute story audio" = "Silenciar áudio do story";
+"No audio URL found. Try again after refreshing the chat." = "Nenhuma URL de áudio encontrada. Tente novamente após atualizar o chat.";
+"No mentions in this story" = "Sem menções neste story";
+"No thread key" = "Sem chave da conversa";
+"No voice send method found" = "Nenhum método de envio de voz encontrado";
+"no audio track could be read" = "nenhuma faixa de áudio pôde ser lida";
+"Note not found" = "Nota não encontrada";
+"Note text copied" = "Texto da nota copiado";
+"Open GitHub" = "Abrir GitHub";
+"Read receipts disabled" = "Recibos de leitura desativados";
+"Read receipts enabled" = "Recibos de leitura ativados";
+"Read receipts will be blocked for this chat." = "Os recibos de leitura serão bloqueados para este chat.";
+"Read receipts will no longer be blocked for this chat." = "Os recibos de leitura não serão mais bloqueados para este chat.";
+"Remove" = "Remover";
+"Remove from block list" = "Remover da lista de bloqueio";
+"Remove from block list?" = "Remover da lista de bloqueio?";
+"Remove from exclude list" = "Remover da lista de exclusão";
+"Removed" = "Removido";
+"Removed from list" = "Removido da lista";
+"Save GIF" = "Salvar GIF";
+"Selection too short (min 0.5s)" = "Seleção muito curta (mín 0,5s)";
+"Send anyway" = "Enviar assim mesmo";
+"Send Audio" = "Enviar Áudio";
+"Send failed: %@" = "Falha ao enviar: %@";
+"Send service not found" = "Serviço de envio não encontrado";
+"Show audio toggle" = "Mostrar alternância de áudio";
+"Show mark-as-viewed button" = "Mostrar botão de marcar como visto";
+"Story read receipts disabled" = "Recibos de visualização de story desativados";
+"Story read receipts enabled" = "Recibos de visualização de story ativados";
+"This chat will resume normal read-receipt behavior." = "Este chat voltará ao comportamento normal de recibos de leitura.";
+"This file" = "Este arquivo";
+"Total: %@" = "Total: %@";
+"%@ can't be converted" = "%@ não pode ser convertido";
+"iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "As APIs de áudio do iOS não conseguiram processar este arquivo%@%@\n\nVocê pode tentar enviá-lo ao Instagram como está — o servidor do IG pode aceitá-lo, ou pode falhar silenciosamente.\n\nPara solicitar suporte nativo, abra uma issue:";
+"Un-exclude chat" = "Remover exclusão do chat";
+"Un-exclude chat?" = "Remover exclusão do chat?";
+"Un-exclude story seen" = "Remover exclusão de visto de story";
+"Un-excluded" = "Não excluído";
+"Unblocked" = "Desbloqueado";
+"Unlimited replay enabled" = "Repetição ilimitada ativada";
+"Unmute story audio" = "Ativar som do story";
+"Unsent" = "Não enviada";
+"Upload Audio" = "Enviar Áudio";
+"VC not found" = "Chamada de vídeo não encontrada";
+"Video from Library" = "Vídeo da Biblioteca";
+"Visual messages will expire" = "Mensagens visuais expirarão";
+"Visual messages: expiring" = "Mensagens visuais: expirando";
+"Visual messages: unlimited replay" = "Mensagens visuais: repetição ilimitada";
+"Will sync when leaving stories" = "Sincronizará ao sair dos stories";
+
+//////////////////////////////////////////////////////////////////////////////
+//                             RECURSOS GERAIS                              //
+//////////////////////////////////////////////////////////////////////////////
+
+"Add location" = "Adicionar localização";
+"Add preset" = "Adicionar predefinição";
+"Change location" = "Alterar localização";
+"Click the Apply button after this to see the emoji" = "Clique no botão Aplicar após isso para ver o emoji";
+"Clipboard is not an Instagram URL" = "A área de transferência não contém uma URL do Instagram";
+"Comments hidden" = "Comentários ocultos";
+"Comments shown" = "Comentários exibidos";
+"Copied text to clipboard" = "Texto copiado para a área de transferência";
+"Copy" = "Copiar";
+"Copy all" = "Copiar todos";
+"Copy bio" = "Copiar bio";
+"Copy from profile" = "Copiar do perfil";
+"Copy name" = "Copiar nome";
+"Could not find cover image" = "Não foi possível encontrar a imagem de capa";
+"Current: %@" = "Atual: %@";
+"Disable" = "Desativar";
+"Download GIF" = "Baixar GIF";
+"Dropped pin" = "Pin solto";
+"Enable" = "Ativar";
+"Enable Location Services for Instagram in Settings to use your current location." = "Ative os Serviços de Localização para o Instagram nas Configurações para usar sua localização atual.";
+"Enter Emoji Text" = "Digite o texto do emoji";
+"Fake location" = "Localização falsa";
+"Location access denied" = "Acesso à localização negado";
+"Location Services off" = "Serviços de Localização desligados";
+"Name" = "Nome";
+"Nothing to copy" = "Nada para copiar";
+"Open Settings" = "Abrir Configurações";
+"Pick location" = "Escolher localização";
+"Save" = "Salvar";
+"Save preset" = "Salvar predefinição";
+"Saved locations" = "Localizações salvas";
+"Select color" = "Selecionar cor";
+"Set location" = "Definir localização";
+"Settings…" = "Configurações…";
+"Turn Location Services on in Settings → Privacy to use your current location." = "Ative os Serviços de Localização em Configurações → Privacidade para usar sua localização atual.";
+"Type emoji..." = "Digite o emoji...";
+
+"Theme" = "Tema";
+"Appearance" = "Aparência";
+"Light" = "Claro";
+"Dark" = "Escuro";
+"OLED" = "OLED";
+"Off, Light, Dark, or OLED" = "Desativado, Claro, Escuro ou OLED";
+"Force theme" = "Forçar tema";
+"When off, follow iOS system appearance" = "Quando desativado, segue a aparência do sistema iOS";
+"\"Force theme\" overrides iOS appearance; leave it off to follow the system." = "\"Forçar tema\" sobrepõe a aparência do iOS; deixe desativado para seguir o sistema.";
+"OLED chat theme" = "Tema de chat OLED";
+"Pure black DM thread + incoming bubbles" = "Conversa de DM e balões recebidos em preto puro";
+"Keyboard theme" = "Tema do teclado";
+"Override the keyboard appearance when typing" = "Sobrepor a aparência do teclado ao digitar";
+"Apply & restart" = "Aplicar e reiniciar";
+"Restart Instagram to apply your theme changes" = "Reinicie o Instagram para aplicar as mudanças de tema";
+"Reset theme" = "Redefinir tema";
+"Turn every theme option off and restart" = "Desativar todas as opções de tema e reiniciar";
+
+//////////////////////////////////////////////////////////////////////////////
+//                            ANALISADOR DE PERFIL                          //
+//////////////////////////////////////////////////////////////////////////////
+
+"%lu followers · %lu following" = "%lu seguidores · %lu seguindo";
+"%lu of %lu" = "%lu de %lu";
+"Analysis complete" = "Análise completa";
+"Analysis failed" = "Análise falhou";
+"Another analysis is already running" = "Outra análise já está em execução";
+"Available after your next scan" = "Disponível após seu próximo escaneamento";
+"Cancelled" = "Cancelado";
+"Categories" = "Categorias";
+"Couldn't fetch profile information" = "Não foi possível obter informações do perfil";
+"Fetching followers (%lu/%ld)…" = "Buscando seguidores (%lu/%ld)…";
+"Fetching following (%lu/%ld)…" = "Buscando seguindo (%lu/%ld)…";
+"Fetching profile info…" = "Buscando informações do perfil…";
+"First scan: %@" = "Primeiro escaneamento: %@";
+"Follower count exceeds %ld — analysis disabled to avoid rate limits." = "Contagem de seguidores excede %ld — análise desativada para evitar limites de taxa.";
+"Gained since last scan" = "Ganhos desde o último escaneamento";
+"Last scan: %@" = "Último escaneamento: %@";
+"Lost followers" = "Seguidores perdidos";
+"Mutual followers" = "Seguidores mútuos";
+"Name: %@ → %@" = "Nome: %@ → %@";
+"New followers" = "Novos seguidores";
+"No results" = "Sem resultados";
+"No active Instagram session found" = "Nenhuma sessão ativa do Instagram encontrada";
+"No scan yet" = "Nenhum escaneamento ainda";
+"Not following you back" = "Não seguem você de volta";
+"OK" = "OK";
+"Updated %@ (%ld keys). Restart to apply." = "Atualizado %@ (%ld chaves). Reinicie para aplicar.";
+"Restart now" = "Reiniciar agora";
+"File is empty or not a valid .strings file." = "O arquivo está vazio ou não é um arquivo .strings válido.";
+"Error" = "Erro";
+"Could not write file." = "Não foi possível gravar o arquivo.";
+"Private account" = "Conta privada";
+"Profile Analyzer" = "Analisador de Perfil";
+"Profile picture changed" = "Foto de perfil alterada";
+"Profile updates" = "Atualizações de perfil";
+
+"Request failed" = "Solicitação falhou";
+"Reset analyzer data?" = "Resetar dados do analisador?";
+"Run analysis" = "Executar análise";
+"Run your first analysis" = "Executar sua primeira análise";
+"Search username or name" = "Buscar nome de usuário ou nome";
+"Since last scan" = "Desde o último escaneamento";
+"Starting…" = "Iniciando…";
+"They follow you, you don't follow back" = "Eles seguem você, você não segue de volta";
+"Too many followers" = "Seguidores demais";
+"Too many followers to analyze" = "Seguidores demais para analisar";
+"Unfollow" = "Deixar de seguir";
+"Unfollow @%@?" = "Deixar de seguir @%@?";
+"Unfollowed you since last scan" = "Deixaram de seguir você desde o último escaneamento";
+"Username, name or picture changes" = "Mudanças de nome de usuário, nome ou foto";
+"Username: @%@ → @%@" = "Nome de usuário: @%@ → @%@";
+"We refuse to run when the follower count exceeds %ld to avoid Instagram rate limits." = "Recusamos executar quando a contagem de seguidores excede %ld para evitar limites de taxa do Instagram.";
+"You both follow each other" = "Vocês se seguem mutuamente";
+"You don't follow back" = "Você não segue de volta";
+"You follow them, they don't follow back" = "Você segue eles, eles não seguem de volta";
+"You started following" = "Você começou a seguir";
+"You unfollowed" = "Você deixou de seguir";
+
+"%@ %lu accounts? The first %ld will be processed to avoid rate limits." = "%@ %lu contas? As primeiras %ld serão processadas para evitar limites de taxa.";
+"%@ %lu accounts? This runs sequentially with a short pause between each." = "%@ %lu contas? Isso é executado sequencialmente com uma breve pausa entre cada.";
+"%lu account(s) · %lu snapshot(s) · tap to inspect" = "%lu conta(s) · %lu captura(s) · toque para inspecionar";
+"%lu accounts followed" = "%lu contas seguidas";
+"%lu accounts unfollowed" = "%lu contas deixaram de ser seguidas";
+"%lu entries across %lu lists · tap to inspect" = "%lu entradas em %lu listas · toque para inspecionar";
+"%lu preferences · tap to inspect" = "%lu preferências · toque para inspecionar";
+"(empty)" = "(vazio)";
+"(no analyzer data)" = "(sem dados do analisador)";
+"(no lists)" = "(sem listas)";
+"About Profile Analyzer" = "Sobre o Analisador de Perfil";
+"All preferences (%lu)" = "Todas as preferências (%lu)";
+"Apply imported data?" = "Aplicar dados importados?";
+"Batch follow" = "Seguir em massa";
+"Batch follow finished" = "Seguimento em massa finalizado";
+"Batch unfollow" = "Deixar de seguir em massa";
+"Batch unfollow finished" = "Deixar de seguir em massa finalizado";
+"Continue" = "Continuar";
+"Current snapshot" = "Captura atual";
+"Embed domains" = "Domínios de incorporação";
+"Excluded lists" = "Listas excluídas";
+"Excluded story users" = "Usuários de story excluídos";
+"Existing values for the selected scope will be replaced. The app may need to restart for some changes to take effect." = "Os valores existentes para o escopo selecionado serão substituídos. O app pode precisar reiniciar para que algumas mudanças façam efeito.";
+"Export" = "Exportar";
+"File has no importable sections." = "O arquivo não tem seções importáveis.";
+"File is not a valid RyukGram export." = "O arquivo não é uma exportação válida do RyukGram.";
+"Filter" = "Filtrar";
+"First scan: we collect your followers and following lists and save them locally." = "Primeiro escaneamento: coletamos suas listas de seguidores e seguindo e as salvamos localmente.";
+"Follow %lu" = "Seguir %lu";
+"Followers" = "Seguidores";
+"Following… %lu / %lu" = "Seguindo… %lu / %lu";
+"Full name" = "Nome completo";
+"Heads up: this feature is in beta and hits Instagram's private API. Running it back-to-back or right after heavy follow/unfollow activity can trigger a short rate-limit. Use it sparingly and at your own risk." = "Atenção: este recurso está em beta e acessa a API privada do Instagram. Executá-lo repetidamente ou logo após atividades intensas de seguir/deixar de seguir pode acionar um limite temporário. Use com moderação e por sua conta e risco.";
+"Import complete" = "Importação completa";
+"Include" = "Incluir";
+"Included story users" = "Usuários de story incluídos";
+"Inspect the full payload" = "Inspecionar os dados completos";
+"Keep scan history" = "Manter histórico de escaneamento";
+"Large accounts are blocked: analysis is disabled above 13,000 followers to avoid Instagram rate-limiting the whole app." = "Contas grandes são bloqueadas: a análise é desativada acima de 13.000 seguidores para evitar que o Instagram limite o app inteiro.";
+"Not verified only" = "Apenas não verificados";
+"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "Nada é enviado para a rede — tudo permanece neste dispositivo e pode ser apagado pelo ícone de lixeira.";
+"Nothing was applied." = "Nada foi aplicado.";
+"Posts" = "Posts";
+"Preferences" = "Preferências";
+"Previous snapshot" = "Captura anterior";
+"Private only" = "Apenas privados";
+"Profile Analyzer data" = "Dados do Analisador de Perfil";
+"Raw" = "Bruto";
+"Raw JSON" = "JSON Bruto";
+"Reset analyzer data" = "Resetar dados do analisador";
+"Reset complete" = "Reset completo";
+"Reset selected data?" = "Resetar dados selecionados?";
+"Second scan onward: each scan compares against the last, so we can show gained/lost followers, your own follow/unfollow moves, and profile updates." = "Do segundo escaneamento em diante: cada busca compara com a última, assim podemos mostrar seguidores ganhos/perdidos, suas próprias ações de seguir/deixar de seguir e atualizações de perfil.";
+"Select all" = "Selecionar todos";
+"Selected data will be cleared. Tap any row to see what's stored." = "Os dados selecionados serão apagados. Toque em qualquer linha para ver o que está armazenado.";
+"Settings" = "Configurações";
+"Sort" = "Ordenar";
+"This can't be undone." = "Isso não pode ser desfeito.";
+"Tick what to apply. Tap any row to inspect. Sections not in the file are disabled." = "Marque o que deseja aplicar. Toque em qualquer linha para inspecionar. Seções que não estão no arquivo estão desativadas.";
+"Tick what to include. Tap any row to inspect its contents." = "Marque o que deseja incluir. Toque em qualquer linha para inspecionar seu conteúdo.";
+"Unfollow %lu" = "Deixar de seguir %lu";
+"Unfollowing… %lu / %lu" = "Deixando de seguir… %lu / %lu";
+"Username A → Z" = "Nome de usuário A → Z";
+"Username Z → A" = "Nome de usuário Z → A";
+"Verified only" = "Apenas verificados";
+"When on, scans compare against your first scan so new/lost followers and profile updates don't disappear between scans." = "Quando ativado, os escaneamentos comparam com sua primeira busca, assim novos seguidores/perdidos e atualizações de perfil não desaparecem entre buscas.";
+
+//////////////////////////////////////////////////////////////////////////////
+//                        CONFIGURAÇÕES — VISTAS E DIÁLOGOS                 //
+//////////////////////////////////////////////////////////////////////////////
+
+"Add chat" = "Adicionar chat";
+"Add custom domain" = "Adicionar domínio personalizado";
+"Add preset…" = "Adicionar predefinição…";
+"Add to list?" = "Adicionar à lista?";
+"Add user" = "Adicionar usuário";
+"Apply" = "Aplicar";
+"Apply to" = "Aplicar a";
+"Chats" = "Chats";
+"Colored" = "Colorido";
+"Could not read file." = "Não foi possível ler o arquivo.";
+"Could not resolve user ID" = "Não foi possível resolver o ID do usuário";
+"Could not write temporary file." = "Não foi possível gravar o arquivo temporário.";
+"Current location" = "Localização atual";
+"Custom" = "Personalizado";
+"Date Format" = "Formato de Data";
+"Delete" = "Deletar";
+"Enable fake location" = "Ativar localização falsa";
+"Enter username" = "Digite o nome de usuário";
+"Enter username of the DM thread" = "Digite o nome de usuário da conversa de DM";
+"Excluded chats" = "Chats excluídos";
+"Excluded users" = "Usuários excluídos";
+"Follow default" = "Seguir padrão";
+"Force OFF (allow unsends)" = "Forçar DESLIGADO (permitir cancelamentos)";
+"Force ON (preserve unsends)" = "Forçar LIGADO (preservar cancelamentos)";
+"Format" = "Formato";
+"Import failed" = "Importação falhou";
+"Included chats" = "Chats incluídos";
+"Included users" = "Usuários incluídos";
+"KD: default" = "KD: padrão";
+"KD: ON" = "KD: LIGADO";
+"Keep-deleted" = "Manter-apagadas";
+"Keep-deleted override" = "Sobreposição de manter-apagadas";
+"Name (A–Z)" = "Nome (A–Z)";
+"No DM thread found with @%@" = "Nenhuma conversa de DM encontrada com @%@";
+"Off" = "Desligado";
+"On" = "Ligado";
+"Presets" = "Predefinições";
+"Recently added" = "Adicionados recentemente";
+"Remove from list" = "Remover da lista";
+"Remove Selected" = "Remover Selecionados";
+"Reset" = "Resetar";
+"Saved presets are reusable. Tap a preset to make it the active location." = "Predefinições salvas são reutilizáveis. Toque em uma para torná-la a localização ativa.";
+"Search" = "Buscar";
+"Search address or place" = "Buscar endereço ou lugar";
+"Search by name or username" = "Buscar por nome ou usuário";
+"Search by username or name" = "Buscar por usuário ou nome";
+"Select" = "Selecionar";
+"Select location on map" = "Selecionar localização no mapa";
+"Set current location" = "Definir localização atual";
+"Set keep-deleted override" = "Definir sobreposição de manter-apagadas";
+"Settings exported" = "Configurações exportadas";
+"Show map button" = "Mostrar botão de mapa";
+"Show seconds" = "Mostrar segundos";
+"Sort by" = "Ordenar por";
+"Story users" = "Usuários de story";
+"Toggle each NSDate formatter IG uses. Different surfaces (feed, comments, stories, DMs) go through different methods — enable the ones you want the custom format applied to." = "Alterne cada formatador de data (NSDate) que o IG usa. Diferentes superfícies (feed, comentários, stories, DMs) passam por diferentes métodos — ative os que deseja aplicar o formato personalizado.";
+"Use this location" = "Usar esta localização";
+"User '%@' not found" = "Usuário '%@' não encontrado";
+"Username (A–Z)" = "Nome de usuário (A–Z)";
+"When on, all CoreLocation requests inside Instagram return the location below. Toggle the map button to show or hide the quick toggle on the Friends Map view." = "Quando ativado, todas as requisições de localização dentro do Instagram retornarão a localização abaixo. Alterne o botão do mapa para mostrar ou ocultar o botão rápido na visualização do Mapa de Amigos.";
+
+//////////////////////////////////////////////////////////////////////////////
+//                               REELS (RECURSOS)                           //
+//////////////////////////////////////////////////////////////////////////////
+
+"Copied!" = "Copiado!";
+"No password found" = "Nenhuma senha encontrada";
+"No text field found" = "Nenhum campo de texto encontrado";
+"Password" = "Senha";
+"Refresh Reels?" = "Atualizar Reels?";
+
+//////////////////////////////////////////////////////////////////////////////
+//                               PERFIL (RECURSOS)                          //
+//////////////////////////////////////////////////////////////////////////////
+
+"Doesn't follow you" = "Não segue você";
+"Follows you" = "Segue você";
+"Note copied" = "Nota copiada";
+
+//////////////////////////////////////////////////////////////////////////////
+//                                   DIVERSOS                               //
+//////////////////////////////////////////////////////////////////////////////
+
+"720p • progressive • fastest" = "720p • progressivo • mais rápido";
+"Are you sure?" = "Você tem certeza?";
+"Bundle" = "Pacote (Bundle)";
+"Copy audio URL" = "Copiar URL do áudio";
+"Copy quality info" = "Copiar info. de qualidade";
+"Copy video URL" = "Copiar URL do vídeo";
+"Could not access reel media" = "Não foi possível acessar a mídia do reel";
+"Could not access reel photo" = "Não foi possível acessar a foto do reel";
+"Could not extract photo url from post" = "Não foi possível extrair a URL da foto do post";
+"Could not extract photo url from reel" = "Não foi possível extrair a URL da foto do reel";
+"Could not extract photo url from story" = "Não foi possível extrair a URL da foto do story";
+"Could not extract video url from post" = "Não foi possível extrair a URL do vídeo do post";
+"Could not extract video url from reel" = "Não foi possível extrair a URL do vídeo do reel";
+"Could not extract video url from story" = "Não foi possível extrair a URL do vídeo do story";
+"Download Quality" = "Qualidade do Download";
+"Extras" = "Extras";
+"FFmpegKit Debug" = "Depuração FFmpegKit";
+"Later" = "Depois";
+"No!" = "Não!";
+"OK" = "OK";
+"Restart" = "Reiniciar";
+"Restart required" = "Reinicialização necessária";
+"username" = "nome de usuário";
+"Yes" = "Sim";
+"You must restart the app to apply this change" = "Você deve reiniciar o app para aplicar esta mudança";
+
+//////////////////////////////////////////////////////////////////////////////
+//                               SOBRE / CRÉDITOS                           //
+//////////////////////////////////////////////////////////////////////////////
+
+"%@ — GitHub & Telegram" = "%@ — GitHub e Telegram";
+"About" = "Sobre";
+"Arabic translation" = "Tradução para Árabe";
+"Chinese (Traditional and Simplified) translation" = "Tradução para chinês (tradicional e simplificado)";
+"Credits" = "Créditos";
+"Developers" = "Desenvolvedores";
+"Donate to SoCuul" = "Doar para SoCuul";
+"installed" = "instalado";
+"Korean translation" = "Tradução para Coreano";
+"Portuguese (Brazil) translation" = "Tradução para português (Brasil)";
+"Turkish translation" = "Tradução para o turco";
+"Code contributions" = "Contribuições de código";
+"latest" = "mais recente";
+"Links" = "Links";
+"No releases" = "Sem lançamentos";
+"Original SCInsta developer" = "Desenvolvedor original do SCInsta";
+"Release notes" = "Notas de lançamento";
+"Releases" = "Lançamentos";
+"Report an issue" = "Relatar um problema";
+"Russian translation" = "Tradução para Russo";
+"RyukGram developer" = "Desenvolvedor do RyukGram";
+"Join Telegram channel" = "Entrar no canal do Telegram";
+"Source code" = "Código fonte";
+"View on GitHub" = "Ver no GitHub";
+"Spanish translation" = "Tradução para Espanhol";
+"Support the original developer" = "Apoiar o desenvolvedor original";
+"Telegram channel" = "Canal no Telegram";
+"Testing and feature suggestions" = "Testes e sugestões de recursos";
+"Tweak settings" = "Configurações do tweak";
+"Version" = "Versão";
+"Version, credits, and links" = "Versão, créditos e links";
+"What's new in RyukGram" = "O que há de novo no RyukGram";
+
+//////////////////////////////////////////////////////////////////////////////
+//                             DOWNLOADS EM HD                              //
+//////////////////////////////////////////////////////////////////////////////
+
+"720p • progressive • silent" = "720p • progressivo • mudo";
+"Audio extract failed" = "Falha na extração de áudio";
+"Audio only" = "Apenas áudio";
+"Audio ready" = "Áudio pronto";
+"Download video at the highest available quality" = "Baixar vídeo na maior qualidade disponível";
+"Downloads HD video via DASH streams and encodes to H.264. Requires FFmpegKit." = "Baixa vídeo HD via streams DASH e codifica para H.264. Requer FFmpegKit.";
+"Encoding speed" = "Velocidade de codificação";
+"Enhanced downloads" = "Downloads aprimorados";
+"Faster = lower quality" = "Mais rápido = menor qualidade";
+"FFmpeg not available" = "FFmpeg não disponível";
+"FFmpegKit is not available. Install the sideloaded IPA or the _ffmpeg .deb variant to enable." = "FFmpegKit não está disponível. Instale o IPA sideloaded ou a variante .deb _ffmpeg para ativar.";
+"No audio stream available" = "Nenhum stream de áudio disponível";
+"No audio track found" = "Nenhuma trilha de áudio encontrada";
+"Photo" = "Foto";
+"Photo quality" = "Qualidade da foto";
+"Raw image (no audio, no video)" = "Imagem bruta (sem áudio, sem vídeo)";
+"silent" = "mudo";
+"Use highest resolution available" = "Usar maior resolução disponível";
+"Video quality" = "Qualidade do vídeo";
+"Which quality to download" = "Qual qualidade baixar";
+
+"Tracking" = "Rastreamento";
+"Visited profiles" = "Perfis visitados";
+"Profiles you've opened recently" = "Perfis que você abriu recentemente";
+"Tracking off — enable below to log visits" = "Rastreamento desativado — ative abaixo para registrar visitas";
+"Track visited profiles" = "Rastrear perfis visitados";
+"Logs every profile you open. Stays on-device." = "Registra cada perfil que você abre. Fica apenas no dispositivo.";
+"Compare every scan against your first one" = "Compara cada escaneamento com o primeiro";
+"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "Manter histórico compara cada escaneamento com o primeiro. Rastrear visitas registra cada perfil que você abre para revisá-los aqui.";
+"just now" = "agora mesmo";
+"%dm ago" = "há %d min";
+"%dh ago" = "há %d h";
+"%dd ago" = "há %d d";
+"Visited" = "Visitado";
+"Today" = "Hoje";
+"Last 7 days" = "Últimos 7 dias";
+"Last 30 days" = "Últimos 30 dias";
+"Most recent" = "Mais recente";
+"Oldest first" = "Mais antigo primeiro";
+"Most visited" = "Mais visitado";
+"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "Escolha o que remover. As capturas removem as diferenças desde o último escaneamento; os perfis visitados apagam o histórico de visitas.";
+"Reset snapshots" = "Redefinir capturas";
+"Clear visited profiles" = "Limpar perfis visitados";
+"Reset everything" = "Redefinir tudo";

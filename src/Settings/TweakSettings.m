@@ -14,6 +14,10 @@
 #import "../Features/General/SCIChangelog.h"
 #import "../SCIFFmpeg.h"
 #import "../Features/Experimental/SCIExperimentalGuard.h"
+#import "../Features/Theme/SCITheme.h"
+#import "../Tweak.h"
+#import "../ActionButton/SCIActionIcon.h"
+#import "../UI/SCIIconPicker.h"
 #import "SCISettingsViewController.h"
 #import "../../modules/JGProgressHUD/JGProgressHUD.h"
 #import <objc/runtime.h>
@@ -30,9 +34,9 @@
 
     NSDictionary *test = [NSDictionary dictionaryWithContentsOfURL:src];
     if (!test.count) {
-        UIAlertController *a = [UIAlertController alertControllerWithTitle:@"Error"
-            message:@"File is empty or not a valid .strings file." preferredStyle:UIAlertControllerStyleAlert];
-        [a addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *a = [UIAlertController alertControllerWithTitle:SCILocalized(@"Error")
+            message:SCILocalized(@"File is empty or not a valid .strings file.") preferredStyle:UIAlertControllerStyleAlert];
+        [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"OK") style:UIAlertActionStyleCancel handler:nil]];
         UIViewController *top = controller.presentingViewController ?: UIApplication.sharedApplication.keyWindow.rootViewController;
         [top presentViewController:a animated:YES completion:nil];
         return;
@@ -47,15 +51,15 @@
     BOOL ok = [fm copyItemAtPath:src.path toPath:dest error:nil];
 
     NSString *msg = ok
-        ? [NSString stringWithFormat:@"Updated %@ (%ld keys). Restart to apply.", code, (long)test.count]
-        : @"Could not write file.";
-    UIAlertController *a = [UIAlertController alertControllerWithTitle:ok ? @"Done" : @"Error"
+        ? [NSString stringWithFormat:SCILocalized(@"Updated %@ (%ld keys). Restart to apply."), code, (long)test.count]
+        : SCILocalized(@"Could not write file.");
+    UIAlertController *a = [UIAlertController alertControllerWithTitle:ok ? SCILocalized(@"Done") : SCILocalized(@"Error")
                                                                message:msg preferredStyle:UIAlertControllerStyleAlert];
     if (ok) {
-        [a addAction:[UIAlertAction actionWithTitle:@"Restart now" style:UIAlertActionStyleDefault
+        [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Restart now") style:UIAlertActionStyleDefault
                                             handler:^(__unused UIAlertAction *x) { [SCIUtils showRestartConfirmation]; }]];
     }
-    [a addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"OK") style:UIAlertActionStyleCancel handler:nil]];
     UIViewController *top = UIApplication.sharedApplication.keyWindow.rootViewController;
     while (top.presentedViewController) top = top.presentedViewController;
     [top presentViewController:a animated:YES completion:nil];
@@ -114,6 +118,12 @@
                                             ]
                                         },
                                         @{
+                                            @"header": SCILocalized(@"Action buttons"),
+                                            @"rows": @[
+                                                [self actionIconNavCell],
+                                            ]
+                                        },
+                                        @{
                                             @"header": SCILocalized(@"Browser"),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Open links in external browser") subtitle:SCILocalized(@"Opens links in Safari instead of Instagram's in-app browser") defaultsKey:@"open_links_external"],
@@ -149,23 +159,25 @@
                                             @"header": SCILocalized(@"Comments"),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Copy comment text") subtitle:SCILocalized(@"Adds a copy option to the comment long-press menu") defaultsKey:@"copy_comment"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Download GIF comments") subtitle:SCILocalized(@"Adds a download option for GIF comments") defaultsKey:@"download_gif_comment"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Download GIF comments") subtitle:SCILocalized(@"Adds download and copy options to GIF comments") defaultsKey:@"download_gif_comment"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Custom GIF in comments") subtitle:SCILocalized(@"Long-press the GIF button to paste any Giphy URL") defaultsKey:@"custom_gif_comment"],
                                             ]
                                         },
                                         @{
                                             @"header": SCILocalized(@"Notes"),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide notes tray") subtitle:SCILocalized(@"Hides the notes tray in the DM inbox") defaultsKey:@"hide_notes_tray"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide friends map") subtitle:SCILocalized(@"Hides the friends map icon in the notes tray") defaultsKey:@"hide_friends_map"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide friends map") subtitle:SCILocalized(@"Hides the friends map icon in the notes tray") defaultsKey:@"hide_friends_map" requiresRestart:YES],
                                             ]
                                         },
                                         @{
                                             @"header": SCILocalized(@"Focus/distractions"),
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"No suggested users") subtitle:SCILocalized(@"Hides all suggested users for you to follow, outside your feed") defaultsKey:@"no_suggested_users"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"No suggested users") subtitle:SCILocalized(@"Hides all suggested users for you to follow, outside your feed") defaultsKey:@"no_suggested_users" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"No suggested chats") subtitle:SCILocalized(@"Hides the suggested broadcast channels in direct messages") defaultsKey:@"no_suggested_chats"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide explore posts grid") subtitle:SCILocalized(@"Hides the grid of suggested posts on the explore/search tab") defaultsKey:@"hide_explore_grid" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide trending searches") subtitle:SCILocalized(@"Hides the trending searches under the explore search bar") defaultsKey:@"hide_trending_searches" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Skip sensitive content covers") subtitle:SCILocalized(@"Auto-reveals sensitive media") defaultsKey:@"skip_sensitive_content"],
                                             ]
                                         },
                                         @{
@@ -206,6 +218,7 @@
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Inserts a button row below like/comment/share on each post") defaultsKey:@"feed_action_button"],
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Default tap action") subtitle:SCILocalized(@"What happens on a single tap. Long-press always opens the full menu") menu:[self menus][@"feed_action_default"]],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Show date") subtitle:SCILocalized(@"Adds the date as a small header at the top of the action menu") defaultsKey:@"menu_date_feed"],
                                             ]
                                         },
                                         @{
@@ -253,6 +266,7 @@
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Inserts a button next to the seen/eye button on story overlays") defaultsKey:@"stories_action_button" requiresRestart:YES],
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Default tap action") subtitle:SCILocalized(@"What happens on a single tap. Long-press always opens the full menu") menu:[self menus][@"stories_action_default"]],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Show date") subtitle:SCILocalized(@"Adds the date as a small header at the top of the action menu") defaultsKey:@"menu_date_stories"],
                                             ]
                                         },
                                         @{
@@ -311,17 +325,19 @@
                                         },
                                         @{
                                             @"header": SCILocalized(@"Stickers"),
-                                            @"footer": SCILocalized(@"Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force Quiz brings the legacy Quiz sticker back into the story composer tray."),
+                                            @"footer": SCILocalized(@"Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer."),
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Force Quiz sticker in tray") subtitle:SCILocalized(@"Adds Quiz back to the story sticker picker") defaultsKey:@"force_enable_quiz_sticker" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Force legacy stickers in tray") subtitle:SCILocalized(@"Adds Quiz and Reveal stickers back to the picker") defaultsKey:@"force_enable_quiz_sticker" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Bypass Reveal sticker") subtitle:SCILocalized(@"Skip the DM-to-reveal step on stories with a Reveal sticker") defaultsKey:@"bypass_reveal_sticker"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show quiz answer") subtitle:SCILocalized(@"Circle the correct option on quiz stickers, or the leading option on polls") defaultsKey:@"stories_show_quiz_answer"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show poll vote counts") subtitle:SCILocalized(@"Show vote tallies on poll options and slider count/average before you vote") defaultsKey:@"stories_show_poll_votes_count"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Custom music sticker color") subtitle:SCILocalized(@"Long-press the color wheel on a music or lyric sticker to pick any solid or gradient color") defaultsKey:@"custom_music_sticker_color"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Allow video in photo sticker") subtitle:SCILocalized(@"Lets the photo sticker picker show videos too, not just photos") defaultsKey:@"photo_sticker_allow_video"],
                                             ]
                                         },
                                         @{
                                             @"header": SCILocalized(@"Other"),
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Disable instants creation") subtitle:SCILocalized(@"Hides the functionality to create/send instants") defaultsKey:@"disable_instants_creation" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"View story mentions") subtitle:SCILocalized(@"Show mentioned users in eye button and story menu") defaultsKey:@"view_story_mentions"]
                                             ]
                                         }]
@@ -335,6 +351,7 @@
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Places a button above the like/comment/share column on each reel") defaultsKey:@"reels_action_button"],
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Default tap action") subtitle:SCILocalized(@"What happens on a single tap. Long-press always opens the full menu") menu:[self menus][@"reels_action_default"]],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Show date") subtitle:SCILocalized(@"Adds the date as a small header at the top of the action menu") defaultsKey:@"menu_date_reels"],
                                             ]
                                         },
                                         @{
@@ -353,7 +370,9 @@
                                             @"header": SCILocalized(@"Hiding"),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide reels header") subtitle:SCILocalized(@"Hides the top navigation bar when watching reels") defaultsKey:@"hide_reels_header"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide repost button") subtitle:SCILocalized(@"Hides the repost button on the reels sidebar") defaultsKey:@"hide_reels_repost" requiresRestart:YES]
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide repost button") subtitle:SCILocalized(@"Hides the repost button on the reels sidebar") defaultsKey:@"hide_reels_repost" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide friends avatars") subtitle:SCILocalized(@"Hides the avatar bubbles next to the Friends tab in reels") defaultsKey:@"hide_reels_friends_bubbles"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide social context overlay") subtitle:SCILocalized(@"Hides the floating overlay showing who reposted or commented on reels") defaultsKey:@"hide_reels_floating_social_context"]
                                             ]
                                         },
                                         @{
@@ -417,6 +436,7 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide voice call button") subtitle:SCILocalized(@"Removes the audio call button from DM thread header") defaultsKey:@"hide_voice_call_button" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide video call button") subtitle:SCILocalized(@"Removes the video call button from DM thread header") defaultsKey:@"hide_video_call_button" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide reels blend button") subtitle:SCILocalized(@"Hides the blend button in DMs") defaultsKey:@"hide_reels_blend"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide send to group chat") subtitle:SCILocalized(@"Removes the create/send to group chat row when sharing to multiple recipients") defaultsKey:@"hide_send_to_group"],
                                             ]
                                         },
                                         @{
@@ -497,6 +517,14 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Disable view-once limitations") subtitle:SCILocalized(@"Makes view-once messages behave like normal visual messages (loopable/pauseable)") defaultsKey:@"disable_view_once_limitations"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Disable screenshot detection") subtitle:SCILocalized(@"Removes the screenshot-prevention features for visual messages in DMs") defaultsKey:@"remove_screenshot_alert"],
                                             ]
+                                        },
+                                        @{
+                                            @"header": SCILocalized(@"Instants"),
+                                            @"footer": SCILocalized(@"Tweaks for the QuickSnap / Instants camera surface."),
+                                            @"rows": @[
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Disable instants creation") subtitle:SCILocalized(@"Hides the functionality to create/send instants") defaultsKey:@"disable_instants_creation" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Send from gallery") subtitle:SCILocalized(@"Adds a gallery button to the instants camera so you can send a photo from your album") defaultsKey:@"instants_send_from_gallery" requiresRestart:YES],
+                                            ]
                                         }]
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Profile")
@@ -510,7 +538,7 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Save profile picture") subtitle:SCILocalized(@"Long press to download directly (ignored when zoom is on)") defaultsKey:@"save_profile"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"View highlight cover") subtitle:SCILocalized(@"Adds a view option to the highlight long-press menu to open the cover in full-screen") defaultsKey:@"download_highlight_cover"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Profile copy button") subtitle:SCILocalized(@"Adds a button next to the burger menu on profiles to copy username, name or bio") defaultsKey:@"profile_copy_button"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Follow indicator") subtitle:SCILocalized(@"Shows whether the profile user follows you") defaultsKey:@"follow_indicator"],
+                                                [SCISetting menuCellWithTitle:SCILocalized(@"Follow indicator") subtitle:SCILocalized(@"Shows whether the profile user follows you") menu:[self menus][@"follow_indicator"]],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Copy note on long press") subtitle:SCILocalized(@"Long press the note bubble on a profile to copy the text") defaultsKey:@"profile_note_copy"],
                                             ]
                                         },
@@ -518,18 +546,18 @@
                                             @"header": SCILocalized(@"Fake profile stats"),
                                             @"footer": SCILocalized(@"Only affects your own profile header. Other users see the real numbers."),
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake verified badge") subtitle:SCILocalized(@"Show a checkmark next to your name on your own profile") defaultsKey:@"fake_verified" requiresRestart:YES],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake follower count") subtitle:@"" defaultsKey:@"fake_follower_count" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake verified badge") subtitle:SCILocalized(@"Show a checkmark next to your name on your own profile") defaultsKey:@"fake_verified"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake follower count") subtitle:@"" defaultsKey:@"fake_follower_count"],
                                                 [SCISetting buttonCellWithTitle:SCILocalized(@"Follower count")
                                                                         subtitle:[[NSUserDefaults standardUserDefaults] stringForKey:@"fake_follower_count_value"] ?: SCILocalized(@"Tap to set")
                                                                             icon:nil
                                                                           action:^{ [self promptFakeCountForKey:@"fake_follower_count_value" title:SCILocalized(@"Follower count")]; }],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake following count") subtitle:@"" defaultsKey:@"fake_following_count" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake following count") subtitle:@"" defaultsKey:@"fake_following_count"],
                                                 [SCISetting buttonCellWithTitle:SCILocalized(@"Following count")
                                                                         subtitle:[[NSUserDefaults standardUserDefaults] stringForKey:@"fake_following_count_value"] ?: SCILocalized(@"Tap to set")
                                                                             icon:nil
                                                                           action:^{ [self promptFakeCountForKey:@"fake_following_count_value" title:SCILocalized(@"Following count")]; }],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake post count") subtitle:@"" defaultsKey:@"fake_post_count" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fake post count") subtitle:@"" defaultsKey:@"fake_post_count"],
                                                 [SCISetting buttonCellWithTitle:SCILocalized(@"Post count")
                                                                         subtitle:[[NSUserDefaults standardUserDefaults] stringForKey:@"fake_post_count_value"] ?: SCILocalized(@"Tap to set")
                                                                             icon:nil
@@ -614,9 +642,10 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm follow requests") subtitle:SCILocalized(@"Shows an alert when you accept/decline a follow request") defaultsKey:@"follow_request_confirm"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm vanish mode") subtitle:SCILocalized(@"Shows an alert to confirm before toggling vanish mode") defaultsKey:@"shh_mode_confirm"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm posting comment") subtitle:SCILocalized(@"Shows an alert when you click the post comment button to confirm") defaultsKey:@"post_comment_confirm"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm send to group chat") subtitle:SCILocalized(@"Shows an alert before creating/sending to a group chat from the share sheet") defaultsKey:@"confirm_send_to_group"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm changing theme") subtitle:SCILocalized(@"Shows an alert when you change a chat theme to confirm") defaultsKey:@"change_direct_theme_confirm"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm sticker interaction (stories)") subtitle:SCILocalized(@"Shows an alert when you tap a sticker on someone's story") defaultsKey:@"sticker_interact_confirm"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm sticker interaction (highlights)") subtitle:SCILocalized(@"Shows an alert when you tap a sticker inside a highlight") defaultsKey:@"sticker_interact_confirm_highlights"],
+                                                [SCISetting menuCellWithTitle:SCILocalized(@"Confirm sticker interaction (stories)") subtitle:SCILocalized(@"Shows an alert when you tap a sticker on someone's story") menu:[self menus][@"sticker_interact_stories_mode"]],
+                                                [SCISetting menuCellWithTitle:SCILocalized(@"Confirm sticker interaction (highlights)") subtitle:SCILocalized(@"Shows an alert when you tap a sticker inside a highlight") menu:[self menus][@"sticker_interact_highlights_mode"]],
                                             ]
                                         }]
                 ]
@@ -638,18 +667,12 @@
                                                icon:[SCISymbol symbolWithName:@"moon"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Appearance"),
-                                            @"footer": SCILocalized(@"Theme changes only take effect after an app restart. Tap Apply below when you're done choosing."),
+                                            @"footer": SCILocalized(@"\"Force theme\" overrides iOS appearance; leave it off to follow the system."),
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Force dark mode") subtitle:SCILocalized(@"Keep Instagram in dark appearance regardless of iOS system setting") defaultsKey:@"theme_force_dark"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Full OLED") subtitle:SCILocalized(@"Replace Instagram's dark grays with pure black across the entire app") defaultsKey:@"theme_full_oled"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"OLED chat theme") subtitle:SCILocalized(@"Pure black DM thread background and incoming message bubbles") defaultsKey:@"theme_oled_chat"],
-                                            ]
-                                        },
-                                        @{
-                                            @"header": SCILocalized(@"Keyboard"),
-                                            @"footer": SCILocalized(@"Dark uses the system dark keyboard. OLED forces the keyboard backdrop to pure black."),
-                                            @"rows": @[
-                                                [SCISetting menuCellWithTitle:SCILocalized(@"Keyboard theme") subtitle:SCILocalized(@"Override the keyboard appearance when typing inside Instagram") menu:[self menus][@"theme_keyboard"]],
+                                                [SCISetting menuCellWithTitle:SCILocalized(@"Theme") subtitle:SCILocalized(@"Off, Light, Dark, or OLED") menu:[self menus][@"theme_mode"]],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Force theme") subtitle:SCILocalized(@"When off, follow iOS system appearance") defaultsKey:@"theme_force"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"OLED chat theme") subtitle:SCILocalized(@"Pure black DM thread + incoming bubbles") defaultsKey:@"theme_oled_chat"],
+                                                [SCISetting menuCellWithTitle:SCILocalized(@"Keyboard theme") subtitle:SCILocalized(@"Override the keyboard appearance when typing") menu:[self menus][@"theme_keyboard"]],
                                             ]
                                         },
                                         @{
@@ -659,6 +682,16 @@
                                                                        subtitle:SCILocalized(@"Restart Instagram to apply your theme changes")
                                                                            icon:[SCISymbol symbolWithName:@"arrow.clockwise.circle.fill"]
                                                                          action:^(void) { [SCIUtils showRestartConfirmation]; }
+                                                ],
+                                                [SCISetting buttonCellWithTitle:SCILocalized(@"Reset theme")
+                                                                       subtitle:SCILocalized(@"Turn every theme option off and restart")
+                                                                           icon:[SCISymbol symbolWithName:@"arrow.uturn.backward.circle.fill"]
+                                                                         action:^(void) {
+                                                    [SCIUtils showConfirmation:^{
+                                                        [SCITheme resetToDefaults];
+                                                        [SCIUtils showRestartConfirmation];
+                                                    } title:SCILocalized(@"Reset theme")];
+                                                }
                                                 ]
                                             ]
                                         }]
@@ -711,6 +744,7 @@
                                                 [self clearCacheButtonCell],
                                                 [self autoClearCacheMenuCell],
                                                 [self autoCheckCacheSizeCell],
+                                                [self preserveMessagesDBCell],
                                             ]
                                         },
                                         @{
@@ -982,16 +1016,19 @@
                 [SCISetting staticCellWithTitle:@"Furamako" subtitle:SCILocalized(@"Spanish translation") icon:nil],
                 [SCISetting staticCellWithTitle:@"N4C (@ch1tmdgus)" subtitle:SCILocalized(@"Korean translation") icon:nil],
                 [SCISetting staticCellWithTitle:@"bruuhim" subtitle:SCILocalized(@"Arabic translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"jaydenjcpy" subtitle:SCILocalized(@"Chinese (Traditional) translation") icon:nil],
+                [SCISetting staticCellWithTitle:@"jaydenjcpy" subtitle:SCILocalized(@"Chinese (Traditional and Simplified) translation") icon:nil],
+                [SCISetting staticCellWithTitle:@"Bruno (@brunorainha)" subtitle:SCILocalized(@"Portuguese (Brazil) translation") icon:nil],
+                [SCISetting staticCellWithTitle:@"yesnt10" subtitle:SCILocalized(@"Turkish translation") icon:nil],
+                [SCISetting staticCellWithTitle:@"Mikasa-san" subtitle:SCILocalized(@"Code contributions") icon:nil],
                 [SCISetting staticCellWithTitle:@"John (@erupts0)" subtitle:SCILocalized(@"Testing and feature suggestions") icon:nil],
             ]
         },
         @{
             @"header": SCILocalized(@"Links"),
             @"rows": @[
-                [SCISetting linkCellWithTitle:SCILocalized(@"Source code") subtitle:@"" icon:nil url:@"https://github.com/faroukbmiled/RyukGram"],
-                [SCISetting linkCellWithTitle:SCILocalized(@"Report an issue") subtitle:@"" icon:nil url:@"https://github.com/faroukbmiled/RyukGram/issues"],
-                [SCISetting linkCellWithTitle:SCILocalized(@"Releases") subtitle:@"" icon:nil url:@"https://github.com/faroukbmiled/RyukGram/releases"],
+                [SCISetting linkCellWithTitle:SCILocalized(@"Source code") subtitle:@"" icon:nil url:SCIRepoURL],
+                [SCISetting linkCellWithTitle:SCILocalized(@"Report an issue") subtitle:@"" icon:nil url:SCIRepoIssuesURL],
+                [SCISetting linkCellWithTitle:SCILocalized(@"Releases") subtitle:@"" icon:nil url:SCIRepoReleasesURL],
                 [SCISetting linkCellWithTitle:SCILocalized(@"Telegram channel") subtitle:@"" icon:nil url:@"https://t.me/ryukgram"],
             ]
         },
@@ -1050,6 +1087,14 @@
                                              subtitle:SCILocalized(@"Run a silent cache clear on launch when the interval has elapsed.")
                                                  menu:[self menus][@"cache_auto_clear_mode"]];
     cell.icon = [SCISymbol symbolWithName:@"clock.arrow.circlepath"];
+    return cell;
+}
+
++ (SCISetting *)preserveMessagesDBCell {
+    SCISetting *cell = [SCISetting switchCellWithTitle:SCILocalized(@"Preserve messages database")
+                                              subtitle:SCILocalized(@"Skip the messages database when clearing — keeps DMs, drafts, and saved messages.")
+                                           defaultsKey:@"cache_preserve_messages_db"];
+    cell.icon = [SCISymbol symbolWithName:@"archivebox"];
     return cell;
 }
 
@@ -1117,6 +1162,15 @@
     };
     if (autoCheck) [SCICacheManager getCacheSizeWithCompletion:onScan];
     else           [SCICacheManager getCacheSizeTransientWithCompletion:onScan];
+}
+
+// MARK: - Action button icon
+
++ (SCISetting *)actionIconNavCell {
+    return [SCISetting navigationCellWithTitle:SCILocalized(@"Action button icon")
+                                      subtitle:SCILocalized(@"Used across feed, stories, reels and DMs")
+                                          icon:[SCISymbol symbolWithName:@"square.grid.2x2"]
+                                viewController:[SCIIconPickerViewController new]];
 }
 
 // MARK: - Date format
@@ -1424,6 +1478,29 @@ static void sciPresentTeenIconPicker(void) {
 
 + (NSDictionary *)menus {
     return @{
+        @"theme_mode": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:SCILocalized(@"Off")
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"theme_mode", @"value": @"off" }
+            ],
+            [UICommand commandWithTitle:SCILocalized(@"Light")
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"theme_mode", @"value": @"light" }
+            ],
+            [UICommand commandWithTitle:SCILocalized(@"Dark")
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"theme_mode", @"value": @"dark" }
+            ],
+            [UICommand commandWithTitle:SCILocalized(@"OLED")
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"theme_mode", @"value": @"oled" }
+            ]
+        ]],
+
         @"theme_keyboard": [UIMenu menuWithChildren:@[
             [UICommand commandWithTitle:SCILocalized(@"Off")
                                     image:nil
@@ -1455,6 +1532,21 @@ static void sciPresentTeenIconPicker(void) {
             ]
         ]],
 
+        @"follow_indicator": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:SCILocalized(@"Off")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"follow_indicator", @"value": @"off" }],
+            [UICommand commandWithTitle:SCILocalized(@"On")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"follow_indicator", @"value": @"on" }],
+            [UICommand commandWithTitle:SCILocalized(@"Colored")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"follow_indicator", @"value": @"colored" }]
+        ]],
+
         @"story_blocking_mode": [UIMenu menuWithChildren:@[
             [UICommand commandWithTitle:SCILocalized(@"Block all")
                                     image:nil
@@ -1466,6 +1558,36 @@ static void sciPresentTeenIconPicker(void) {
                                     action:@selector(menuChanged:)
                             propertyList:@{ @"defaultsKey": @"story_blocking_mode", @"value": @"block_selected" }
             ]
+        ]],
+
+        @"sticker_interact_stories_mode": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:SCILocalized(@"Disabled")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"sticker_interact_stories_mode", @"value": @"off" }],
+            [UICommand commandWithTitle:SCILocalized(@"All")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"sticker_interact_stories_mode", @"value": @"all" }],
+            [UICommand commandWithTitle:SCILocalized(@"Reaction stickers only")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"sticker_interact_stories_mode", @"value": @"reactions" }]
+        ]],
+
+        @"sticker_interact_highlights_mode": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:SCILocalized(@"Disabled")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"sticker_interact_highlights_mode", @"value": @"off" }],
+            [UICommand commandWithTitle:SCILocalized(@"All")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"sticker_interact_highlights_mode", @"value": @"all" }],
+            [UICommand commandWithTitle:SCILocalized(@"Reaction stickers only")
+                                  image:nil
+                                 action:@selector(menuChanged:)
+                           propertyList:@{ @"defaultsKey": @"sticker_interact_highlights_mode", @"value": @"reactions" }]
         ]],
 
         @"story_seen_mode": [UIMenu menuWithChildren:@[

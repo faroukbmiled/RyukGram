@@ -1,4 +1,19 @@
 #import "SCIProfileAnalyzerModels.h"
+#import <objc/runtime.h>
+
+static id sciFieldCacheValueLocal(id obj, NSString *key) {
+    if (!obj || !key) return nil;
+    Ivar fcIvar = NULL;
+    for (Class c = [obj class]; c && !fcIvar; c = class_getSuperclass(c)) {
+        fcIvar = class_getInstanceVariable(c, "_fieldCache");
+    }
+    if (!fcIvar) return nil;
+    NSDictionary *fc = object_getIvar(obj, fcIvar);
+    if (![fc isKindOfClass:[NSDictionary class]]) return nil;
+    id v = fc[key];
+    if (!v || [v isKindOfClass:[NSNull class]]) return nil;
+    return v;
+}
 
 #pragma mark - User
 
@@ -20,6 +35,31 @@
     else if ([pid respondsToSelector:@selector(stringValue)]) u.profilePicID = [pid stringValue];
     u.isPrivate = [d[@"is_private"] boolValue];
     u.isVerified = [d[@"is_verified"] boolValue];
+    return u;
+}
+
++ (instancetype)userFromIGUserObject:(id)igUser {
+    if (!igUser) return nil;
+    id pkRaw = sciFieldCacheValueLocal(igUser, @"strong_id__")
+            ?: sciFieldCacheValueLocal(igUser, @"pk")
+            ?: sciFieldCacheValueLocal(igUser, @"pk_id");
+    NSString *pk = [pkRaw isKindOfClass:[NSString class]] ? pkRaw
+                                                          : [pkRaw respondsToSelector:@selector(stringValue)] ? [pkRaw stringValue] : nil;
+    if (!pk.length) return nil;
+
+    SCIProfileAnalyzerUser *u = [self new];
+    u.pk = pk;
+    id un = sciFieldCacheValueLocal(igUser, @"username");
+    u.username = [un isKindOfClass:[NSString class]] ? un : @"";
+    id fn = sciFieldCacheValueLocal(igUser, @"full_name");
+    if ([fn isKindOfClass:[NSString class]]) u.fullName = fn;
+    id pic = sciFieldCacheValueLocal(igUser, @"profile_pic_url");
+    if ([pic isKindOfClass:[NSString class]]) u.profilePicURL = pic;
+    id pid = sciFieldCacheValueLocal(igUser, @"profile_pic_id");
+    if ([pid isKindOfClass:[NSString class]]) u.profilePicID = pid;
+    else if ([pid respondsToSelector:@selector(stringValue)]) u.profilePicID = [pid stringValue];
+    u.isPrivate = [sciFieldCacheValueLocal(igUser, @"is_private") boolValue];
+    u.isVerified = [sciFieldCacheValueLocal(igUser, @"is_verified") boolValue];
     return u;
 }
 
@@ -64,6 +104,38 @@
 - (BOOL)isEqual:(id)other {
     if (![other isKindOfClass:[SCIProfileAnalyzerUser class]]) return NO;
     return [self.pk isEqualToString:((SCIProfileAnalyzerUser *)other).pk];
+}
+
+@end
+
+#pragma mark - Visit
+
+@implementation SCIProfileAnalyzerVisit
+
++ (instancetype)visitFromJSONDict:(NSDictionary *)d {
+    NSDictionary *userDict = d[@"user"];
+    if (![userDict isKindOfClass:[NSDictionary class]]) return nil;
+    SCIProfileAnalyzerUser *u = [SCIProfileAnalyzerUser userFromJSONDict:userDict];
+    if (!u) return nil;
+    double first = [d[@"first_seen"] doubleValue];
+    double last  = [d[@"last_seen"]  doubleValue];
+    if (last  <= 0) last  = [[NSDate date] timeIntervalSince1970];   // legacy zero → "now"
+    if (first <= 0) first = last;
+    SCIProfileAnalyzerVisit *v = [self new];
+    v.user = u;
+    v.firstSeen = [NSDate dateWithTimeIntervalSince1970:first];
+    v.lastSeen  = [NSDate dateWithTimeIntervalSince1970:last];
+    v.visitCount = MAX(1, [d[@"visit_count"] integerValue]);
+    return v;
+}
+
+- (NSDictionary *)toJSONDict {
+    return @{
+        @"user": [self.user toJSONDict],
+        @"first_seen": @([self.firstSeen timeIntervalSince1970]),
+        @"last_seen":  @([self.lastSeen  timeIntervalSince1970]),
+        @"visit_count": @(self.visitCount),
+    };
 }
 
 @end
@@ -127,9 +199,8 @@
 @implementation SCIProfileAnalyzerProfileChange
 - (BOOL)usernameChanged  { return ![self.previous.username isEqualToString:self.current.username]; }
 - (BOOL)fullNameChanged  { return ![(self.previous.fullName ?: @"") isEqualToString:(self.current.fullName ?: @"")]; }
-// Compare profile_pic_id (stable per pic; changes only on upload). URL
-// diffing was unusable — IG rotates the CDN host + path hash per request.
-// Skip when either side is missing the id (old snapshots pre-feature).
+// Compare profile_pic_id (stable per upload); URL diffing is useless because
+// IG rotates the CDN host per request. Skip when either side lacks the id.
 - (BOOL)profilePicChanged {
     NSString *a = self.previous.profilePicID;
     NSString *b = self.current.profilePicID;
@@ -186,7 +257,7 @@ static NSArray *sciIntersect(NSArray *a, NSSet *bSet) {
         r.youStartedFollowing = sciSubtract(current.following, prevFollowing);
         r.youUnfollowed = sciSubtract(previous.following, followingSet);
 
-        // Profile updates: same pk in both snapshots, any field differs.
+        // Same pk in both snapshots, any field differs.
         NSMutableDictionary *prevByPK = [NSMutableDictionary dictionary];
         for (SCIProfileAnalyzerUser *u in previous.followers) prevByPK[u.pk] = u;
         for (SCIProfileAnalyzerUser *u in previous.following) prevByPK[u.pk] = u;

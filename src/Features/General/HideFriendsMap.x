@@ -1,33 +1,19 @@
+// Hide the friends-map note tile in the DM inbox notes tray. The tile is its
+// own IGListKit section; returning zero items collapses it without any cell
+// or sizing fights.
+
 #import "../../Utils.h"
 
-%hook IGDirectNotesTrayRowCell
-- (id)listAdapterObjects {
-    NSArray *originalObjs = %orig();
-    NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:[originalObjs count]];
+%hook _TtC24IGDirectNotesTrayUISwift43IGDirectNotesTrayFriendMapSectionController
 
-    for (id obj in originalObjs) {
-        BOOL shouldHide = NO;
-
-        if ([SCIUtils getBoolPref:@"hide_friends_map"]) {
-
-            if ([obj isKindOfClass:%c(IGDirectNotesTrayUserViewModel)]) {
-
-                if ([[obj valueForKey:@"notePk"] isEqualToString:@"friends_map"]) {
-                    NSLog(@"[SCInsta] Hiding friends map");
-
-                    shouldHide = YES;
-                }
-
-            }
-            
-        }
-
-        // Populate new objs array
-        if (!shouldHide) {
-            [filteredObjs addObject:obj];
-        }
-    }
-
-    return [filteredObjs copy];
+- (NSInteger)numberOfItems {
+    if ([SCIUtils getBoolPref:@"hide_friends_map"]) return 0;
+    return %orig;
 }
+
+- (CGSize)sizeForItemAtIndex:(NSInteger)index {
+    if ([SCIUtils getBoolPref:@"hide_friends_map"]) return CGSizeZero;
+    return %orig;
+}
+
 %end

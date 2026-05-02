@@ -83,42 +83,90 @@ static BOOL sciMsgOnlyHideTabBar(void) {
 
 %end
 
-// Floating settings button — long-press on tab bar is gone when it's hidden.
+// Floating settings gear is parented to IG's nav header so it inherits the header's
+// blur, z-order, and scroll-collapse animation.
 static const void *kSCIMsgOnlyBtnKey = &kSCIMsgOnlyBtnKey;
 
-static void sciMsgOnlyInjectSettingsButton(UIViewController *vc) {
-    if (!sciMsgOnlyHideTabBar() || !vc || !vc.isViewLoaded) return;
-    if (objc_getAssociatedObject(vc, kSCIMsgOnlyBtnKey)) return;
-
-    SCIChromeButton *btn = [[SCIChromeButton alloc] initWithSymbol:@"gearshape"
-                                                         pointSize:18
-                                                          diameter:36];
-    btn.iconTint = [UIColor labelColor];
-    btn.bubbleColor = [UIColor clearColor];
-    btn.translatesAutoresizingMaskIntoConstraints = NO;
-    [btn addTarget:vc action:@selector(sciMsgOnlyOpenSettings)
-          forControlEvents:UIControlEventTouchUpInside];
-    [vc.view addSubview:btn];
-
-    UILayoutGuide *sa = vc.view.safeAreaLayoutGuide;
-    [NSLayoutConstraint activateConstraints:@[
-        [btn.leadingAnchor constraintEqualToAnchor:sa.leadingAnchor constant:12],
-        [btn.topAnchor constraintEqualToAnchor:sa.topAnchor constant:6],
-        [btn.widthAnchor constraintEqualToConstant:36],
-        [btn.heightAnchor constraintEqualToConstant:36],
-    ]];
-
-    objc_setAssociatedObject(vc, kSCIMsgOnlyBtnKey, btn, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+static UIView *sciFindInboxHeaderView(UIView *root) {
+    if (!root) return nil;
+    if ([NSStringFromClass([root class]) containsString:@"NavigationHeaderView"]) return root;
+    for (UIView *sub in root.subviews) {
+        UIView *r = sciFindInboxHeaderView(sub);
+        if (r) return r;
+    }
+    return nil;
 }
 
 %hook IGDirectInboxViewController
-- (void)viewWillAppear:(BOOL)animated {
+
+- (void)viewDidLayoutSubviews {
     %orig;
-    sciMsgOnlyInjectSettingsButton((UIViewController *)self);
+    UIViewController *vc = (UIViewController *)self;
+    if (!sciMsgOnlyHideTabBar() || !vc.isViewLoaded) return;
+
+    UIView *header = sciFindInboxHeaderView(vc.view);
+    if (!header) return;
+
+    SCIChromeButton *btn = objc_getAssociatedObject(header, kSCIMsgOnlyBtnKey);
+    if (!btn || btn.superview != header) {
+        btn = [[SCIChromeButton alloc] initWithSymbol:@"gearshape"
+                                            pointSize:18
+                                             diameter:32];
+        btn.iconTint = [UIColor labelColor];
+        btn.bubbleColor = [UIColor clearColor];
+        btn.translatesAutoresizingMaskIntoConstraints = YES;
+        [btn addTarget:self action:@selector(sciMsgOnlyOpenSettings)
+              forControlEvents:UIControlEventTouchUpInside];
+        [header addSubview:btn];
+        objc_setAssociatedObject(header, kSCIMsgOnlyBtnKey, btn, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+
+    // IG buries its trailing buttons inside a zero-frame wrapper UIView; recurse
+    // to find the rightmost UIButton, then mirror its Y + effective alpha so we
+    // collapse with the rest of IG's chrome on scroll.
+    UIView *anchor = nil;
+    CGRect anchorInHeader = CGRectZero;
+    NSMutableArray *stack = [NSMutableArray arrayWithObject:header];
+    while (stack.count) {
+        UIView *v = stack.lastObject;
+        [stack removeLastObject];
+        if (v != header && v != btn
+            && [v isKindOfClass:[UIButton class]]
+            && !CGRectIsEmpty(v.bounds)) {
+            CGRect r = [v convertRect:v.bounds toView:header];
+            if (CGRectGetMinX(r) > header.bounds.size.width * 0.6
+                && (!anchor || CGRectGetMidX(r) > CGRectGetMidX(anchorInHeader))) {
+                anchor = v;
+                anchorInHeader = r;
+            }
+        }
+        for (UIView *s in v.subviews) [stack addObject:s];
+    }
+
+    CGFloat side = 32;
+    CGFloat y = anchor ? CGRectGetMidY(anchorInHeader) - side * 0.5
+                       : (header.bounds.size.height - side) * 0.5;
+    btn.frame = CGRectMake(12, y, side, side);
+
+    if (anchor) {
+        CGFloat eff = 1.0;
+        BOOL hidden = NO;
+        for (UIView *v = anchor; v && v != header; v = v.superview) {
+            if (v.hidden) hidden = YES;
+            eff *= v.alpha;
+        }
+        btn.alpha = eff;
+        btn.hidden = hidden;
+    } else {
+        btn.alpha = 1.0;
+        btn.hidden = NO;
+    }
+    [header bringSubviewToFront:btn];
 }
 
 %new - (void)sciMsgOnlyOpenSettings {
     UIViewController *vc = (UIViewController *)self;
     [SCIUtils showSettingsVC:vc.view.window];
 }
+
 %end

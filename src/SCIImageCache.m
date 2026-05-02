@@ -6,7 +6,9 @@ static NSCache *memCache(void) {
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         c = [NSCache new];
-        c.countLimit = 64;
+        // Tuned for long Profile Analyzer lists — 64 was evicting visible
+        // rows mid-scroll so revisits showed grey placeholders.
+        c.countLimit = 512;
     });
     return c;
 }
@@ -64,6 +66,27 @@ static NSString *hashKey(NSString *urlString) {
             [data writeToFile:path atomically:YES];
         }
         deliver(image);
+    }] resume];
+}
+
++ (void)loadDataFromURL:(NSURL *)url completion:(void (^)(NSData *))completion {
+    if (!url || !completion) return;
+    void (^deliver)(NSData *) = ^(NSData *data) {
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(data); });
+    };
+
+    NSString *path = [diskDir() stringByAppendingPathComponent:hashKey(url.absoluteString)];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+            deliver([NSData dataWithContentsOfFile:path]);
+        });
+        return;
+    }
+
+    [[[NSURLSession sharedSession] dataTaskWithURL:url
+                                 completionHandler:^(NSData *data, NSURLResponse *_r, NSError *_e) {
+        if (data) [data writeToFile:path atomically:YES];
+        deliver(data);
     }] resume];
 }
 

@@ -1,6 +1,6 @@
 Package: com.faroukbmiled.ryukgram
 Name: RyukGram
-Version: 1.2.2
+Version: 1.2.3
 Architecture: iphoneos-arm
 Description: A feature-rich tweak for Instagram on iOS, based on SCInsta
 Homepage: https://github.com/faroukbmiled/RyukGram

@@ -1,10 +1,6 @@
-// Reveal poll/slider vote counts and quiz correct answers on story/reel
-// stickers, plus force the legacy Quiz sticker back into the composer tray.
-//
-// Prefs:
-//   stories_show_poll_votes_count / stories_show_quiz_answer
-//   reels_show_poll_votes_count   / reels_show_quiz_answer
-//   force_enable_quiz_sticker
+// Reveal poll/quiz/slider results on story/reel stickers, force the
+// legacy Quiz + Reveal stickers back into the composer tray, and bypass
+// the Reveal sticker blur on the consumer side.
 
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
@@ -374,8 +370,8 @@ static void sciApplyPollReveal(UIView *pollView, NSArray *opts) {
 
 %end
 
-// Force-inject IGQuizStickerTrayModel into the composer tray (IG keeps the
-// class + handler wired but filtered it out of the picker).
+// IG ships the Quiz/Reveal classes + handlers but filters them out of the
+// picker — re-inject the tray models when the pref is on.
 
 static IGQuizStickerTrayModel *sciMakeQuizTrayModel(id neighborModel) {
     Class cls = NSClassFromString(@"IGQuizStickerTrayModel");
@@ -394,47 +390,160 @@ static IGQuizStickerTrayModel *sciMakeQuizTrayModel(id neighborModel) {
     return quiz;
 }
 
+static id sciMakeSecretTrayModel(id neighborModel) {
+    Class cls = NSClassFromString(@"IGSecretStickerTrayModel");
+    if (!cls) return nil;
+    id m = [[cls alloc] init];
+    if (!m) return nil;
+    @try {
+        id section = sciCallMaybe(neighborModel, @"stickerSection");
+        if (section && [m respondsToSelector:@selector(setStickerSection:)]) {
+            ((void(*)(id,SEL,id))objc_msgSend)(m, @selector(setStickerSection:), section);
+        }
+    } @catch (__unused id e) {}
+    return m;
+}
+
 %hook IGStoryStickerDataSourceImpl
 
 - (NSArray *)items {
     NSArray *orig = %orig;
     if (!orig || ![SCIUtils getBoolPref:@"force_enable_quiz_sticker"]) return orig;
+
+    BOOL hasQuiz = NO, hasSecret = NO;
     for (id m in orig) {
-        if ([NSStringFromClass([m class]) rangeOfString:@"Quiz" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-            return orig;
-        }
+        NSString *cn = NSStringFromClass([m class]);
+        if ([cn rangeOfString:@"Quiz" options:NSCaseInsensitiveSearch].location != NSNotFound) hasQuiz = YES;
+        if ([cn isEqualToString:@"IGSecretStickerTrayModel"]) hasSecret = YES;
     }
 
-    // Slot quiz next to the poll tray model so it lands in the interactive row.
-    NSUInteger insertIdx = NSNotFound;
-    id neighbor = nil;
-    for (NSUInteger i = 0; i < orig.count; i++) {
-        NSString *cn = NSStringFromClass([orig[i] class]);
-        if ([cn isEqualToString:@"IGPollStickerV2TrayModel"] ||
-            [cn isEqualToString:@"IGPollStickerTrayModel"]) {
-            insertIdx = i + 1;
-            neighbor = orig[i];
-            break;
-        }
-    }
-    if (insertIdx == NSNotFound) {
+    NSMutableArray *mutated = nil;
+
+    if (!hasQuiz) {
+        // Slot next to poll/QnA so it lands in the interactive row.
+        NSUInteger insertIdx = NSNotFound;
+        id neighbor = nil;
         for (NSUInteger i = 0; i < orig.count; i++) {
-            if ([NSStringFromClass([orig[i] class]) isEqualToString:@"IGQuestionAnswerStickerModel"]) {
+            NSString *cn = NSStringFromClass([orig[i] class]);
+            if ([cn isEqualToString:@"IGPollStickerV2TrayModel"] ||
+                [cn isEqualToString:@"IGPollStickerTrayModel"]) {
                 insertIdx = i + 1;
                 neighbor = orig[i];
                 break;
             }
         }
+        if (insertIdx == NSNotFound) {
+            for (NSUInteger i = 0; i < orig.count; i++) {
+                if ([NSStringFromClass([orig[i] class]) isEqualToString:@"IGQuestionAnswerStickerModel"]) {
+                    insertIdx = i + 1;
+                    neighbor = orig[i];
+                    break;
+                }
+            }
+        }
+        IGQuizStickerTrayModel *quiz = sciMakeQuizTrayModel(neighbor);
+        if (quiz) {
+            if (!mutated) mutated = [orig mutableCopy];
+            if (insertIdx == NSNotFound) insertIdx = mutated.count;
+            [mutated insertObject:quiz atIndex:insertIdx];
+        }
     }
-    IGQuizStickerTrayModel *quiz = sciMakeQuizTrayModel(neighbor);
-    if (!quiz) return orig;
-    NSMutableArray *mutated = [orig mutableCopy];
-    if (insertIdx == NSNotFound) insertIdx = mutated.count;
-    [mutated insertObject:quiz atIndex:insertIdx];
-    return mutated;
+
+    if (!hasSecret) {
+        NSArray *base = mutated ?: orig;
+        NSUInteger insertIdx = NSNotFound;
+        id neighbor = nil;
+        for (NSUInteger i = 0; i < base.count; i++) {
+            NSString *cn = NSStringFromClass([base[i] class]);
+            if ([cn isEqualToString:@"IGQuizStickerTrayModel"] ||
+                [cn isEqualToString:@"IGPollStickerV2TrayModel"] ||
+                [cn isEqualToString:@"IGPollStickerTrayModel"] ||
+                [cn isEqualToString:@"IGQuestionAnswerStickerModel"]) {
+                insertIdx = i + 1;
+                neighbor = base[i];
+                break;
+            }
+        }
+        id secret = sciMakeSecretTrayModel(neighbor);
+        if (secret) {
+            if (!mutated) mutated = [orig mutableCopy];
+            if (insertIdx == NSNotFound) insertIdx = mutated.count;
+            [mutated insertObject:secret atIndex:insertIdx];
+        }
+    }
+
+    return mutated ?: orig;
 }
 
 %end
+
+// IG checks these on IGGenAIRestyleExperimentHelper before listing the
+// Reveal sticker in the tray and before consuming it.
+%group SecretStickerGates
+
+%hook IGGenAIRestyleExperimentHelper
+
++ (BOOL)isRevealStickerEnabledWithLauncherSet:(id)set {
+    if ([SCIUtils getBoolPref:@"force_enable_quiz_sticker"]) return YES;
+    return %orig;
+}
+
++ (BOOL)isRevealStickerConsumptionEnabledWithLauncherSet:(id)set {
+    if ([SCIUtils getBoolPref:@"force_enable_quiz_sticker"]) return YES;
+    return %orig;
+}
+
+%end
+
+%end
+
+// Consumer-side bypass for the Reveal blur. IGStoryFullscreenOverlayView
+// owns the blur state; the overlay-view hook is a fallback path.
+
+%hook IGStoryFullscreenOverlayView
+
+- (BOOL)isSecretStoryCurrentlyBlurred {
+    if ([SCIUtils getBoolPref:@"bypass_reveal_sticker"]) return NO;
+    return %orig;
+}
+
+- (void)showSecretStoryBlur:(BOOL)show animated:(BOOL)animated {
+    if (show && [SCIUtils getBoolPref:@"bypass_reveal_sticker"]) {
+        %orig(NO, animated);
+        return;
+    }
+    %orig;
+}
+
+%end
+
+%group SecretOverlayBypass
+
+%hook IGSecretStickerOverlayView
+
+- (void)layoutSubviews {
+    %orig;
+    if (![SCIUtils getBoolPref:@"bypass_reveal_sticker"]) return;
+    if ([self respondsToSelector:@selector(setPreviewBlurEnabled:)]) {
+        [self setPreviewBlurEnabled:NO];
+    }
+    ((UIView *)self).hidden = YES;
+}
+
+%end
+
+%end
+
+%ctor {
+    %init;
+    Class cls = NSClassFromString(@"_TtC25IGMagicModExperimentation30IGGenAIRestyleExperimentHelper");
+    if (!cls) cls = NSClassFromString(@"IGGenAIRestyleExperimentHelper");
+    if (cls) %init(SecretStickerGates, IGGenAIRestyleExperimentHelper = cls);
+
+    Class overlay = NSClassFromString(@"_TtC15IGSecretSticker26IGSecretStickerOverlayView");
+    if (!overlay) overlay = NSClassFromString(@"IGSecretStickerOverlayView");
+    if (overlay) %init(SecretOverlayBypass, IGSecretStickerOverlayView = overlay);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                    //

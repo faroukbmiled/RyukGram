@@ -153,7 +153,7 @@ static const SCIBackupScope SCIBackupScopeAll =
     NSData *data = [NSJSONSerialization dataWithJSONObject:(settings ?: @{})
                                                    options:NSJSONWritingPrettyPrinted | NSJSONWritingSortedKeys
                                                      error:&err];
-    if (err) NSLog(@"[SCInsta] backup: serialize failed: %@", err);
+    if (err) NSLog(@"[RyukGram] backup: serialize failed: %@", err);
     return data;
 }
 

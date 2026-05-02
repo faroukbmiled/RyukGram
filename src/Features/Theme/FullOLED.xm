@@ -1,30 +1,16 @@
-// Replace IG's dark-gray surfaces with pure black.
-//
-// Swaps any near-black fill (RGB all < 0.13, alpha >= 0.9) for #000000.
-// RyukGram's own surfaces opt out by painting above the threshold or with
-// alpha < 0.9 — see SCIOLEDSurface.xm.
+// Replace IG's near-black surfaces with pure black under OLED mode.
+// RyukGram's own surfaces opt out via SCIOLEDSurface.xm.
 
 #import "../../Utils.h"
+#import "SCITheme.h"
 
-static inline BOOL sciOLEDShouldReplace(UIColor *color) {
-    if (!color) return NO;
-    CGFloat r = 0, g = 0, b = 0, a = 0;
-    if (![color getRed:&r green:&g blue:&b alpha:&a]) {
-        CGFloat w = 0;
-        if ([color getWhite:&w alpha:&a]) {
-            return (a >= 0.9 && w < 0.13);
-        }
-        return NO;
-    }
-    return (a >= 0.9 && r < 0.13 && g < 0.13 && b < 0.13);
-}
-
-%group FullOLEDGroup
+%group OLEDRecolorGroup
 
 %hook UIView
 - (void)setBackgroundColor:(UIColor *)color {
-    if (sciOLEDShouldReplace(color)) {
-        %orig([UIColor blackColor]);
+    if (![SCITheme shouldRecolor]) { %orig; return; }
+    if ([SCITheme colorIsNearBlack:color]) {
+        %orig([SCITheme backgroundColor]);
         return;
     }
     %orig;
@@ -33,18 +19,19 @@ static inline BOOL sciOLEDShouldReplace(UIColor *color) {
 
 %hook CAGradientLayer
 - (void)setColors:(NSArray *)colors {
+    if (![SCITheme shouldRecolor]) { %orig; return; }
     if (colors.count >= 1) {
         BOOL allDark = YES;
         for (id raw in colors) {
             CGColorRef cg = (__bridge CGColorRef)raw;
             if (!cg) { allDark = NO; break; }
             UIColor *c = [UIColor colorWithCGColor:cg];
-            if (!sciOLEDShouldReplace(c)) { allDark = NO; break; }
+            if (![SCITheme colorIsNearBlack:c]) { allDark = NO; break; }
         }
         if (allDark) {
-            id black = (id)[UIColor blackColor].CGColor;
+            id replacement = (id)[SCITheme backgroundColor].CGColor;
             NSMutableArray *flat = [NSMutableArray arrayWithCapacity:colors.count];
-            for (NSUInteger i = 0; i < colors.count; i++) [flat addObject:black];
+            for (NSUInteger i = 0; i < colors.count; i++) [flat addObject:replacement];
             %orig(flat);
             return;
         }
@@ -56,7 +43,9 @@ static inline BOOL sciOLEDShouldReplace(UIColor *color) {
 %end
 
 %ctor {
-    if ([SCIUtils getBoolPref:@"theme_full_oled"]) {
-        %init(FullOLEDGroup);
+    [SCITheme migrateLegacyPrefs];
+    // Init unconditionally — the per-call gate handles trait changes at runtime.
+    if ([SCITheme mode] == SCIThemeModeOLED) {
+        %init(OLEDRecolorGroup);
     }
 }

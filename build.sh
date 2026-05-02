@@ -142,6 +142,13 @@ run_ipapatch() {
     ipapatch --input "$IPA" --inplace --noconfirm --dylib packages/zxPluginsInject.dylib
 }
 
+# sidestore = sideload + in-tweak SideloadPatch, no zxPluginsInject/ipapatch.
+if [ "$1" == "sidestore" ]; then
+    export RG_SIDESTORE=1
+    shift
+    set -- sideload "$@"
+fi
+
 # Build just the dylib (for Feather/manual injection)
 if [ "$1" == "dylib" ];
 then
@@ -217,6 +224,14 @@ then
         COMPRESSION=9
     fi
 
+    OUT_IPA="packages/RyukGram-sideloaded.ipa"
+    BUILD_LABEL="sideloading"
+    if [ "$RG_SIDESTORE" == "1" ]; then
+        MAKEARGS="$MAKEARGS SIDESTORE=1"
+        OUT_IPA="packages/RyukGram-sidestore.ipa"
+        BUILD_LABEL="SideStore"
+    fi
+
     # Clean build artifacts
     make clean 2>/dev/null || true
     rm -rf .theos
@@ -255,13 +270,15 @@ then
         fi
     fi
 
-    echo -e '\033[1m\033[32mBuilding RyukGram tweak for sideloading (as IPA)\033[0m'
+    echo -e "\033[1m\033[32mBuilding RyukGram tweak for ${BUILD_LABEL} (as IPA)\033[0m"
 
     make $MAKEARGS
 
-    # Build zxPluginsInject.dylib so ipapatch can inject it after cyan
-    echo -e '\033[1m\033[32mBuilding zxPluginsInject.dylib\033[0m'
-    build_zxpi_dylib
+    # Skip zxPluginsInject for SideStore — its LC injection trips ldid on resign.
+    if [ "$RG_SIDESTORE" != "1" ]; then
+        echo -e '\033[1m\033[32mBuilding zxPluginsInject.dylib\033[0m'
+        build_zxpi_dylib
+    fi
 
     # Copy dylib to packages
     mkdir -p packages
@@ -313,28 +330,47 @@ then
 
     # Create IPA: cyan injects dylib + copies RyukGram.bundle to app root
     echo -e '\033[1m\033[32mCreating the IPA file...\033[0m'
-    rm -f packages/RyukGram-sideloaded.ipa
-    cyan -i "packages/${ipaFile}" -o packages/RyukGram-sideloaded.ipa -f $TWEAKPATH $FLEXPATH $BUNDLE_ARG -c $COMPRESSION -m 15.0 -du
+    rm -f "$OUT_IPA"
+    cyan -i "packages/${ipaFile}" -o "$OUT_IPA" -f $TWEAKPATH $FLEXPATH $BUNDLE_ARG -c $COMPRESSION -m 15.0 -du
 
-    # Inject Safari "Open in Instagram" extension into Payload/*.app/PlugIns/
-    # before ipapatch re-signs, so instagram.com links open the app.
+    # Embed Safari extension before ipapatch resign. Skip on SideStore —
+    # free signing rewrites the parent bundle ID and breaks the appex prefix.
     APPEX_SRC="extensions/OpenInstagramSafariExtension.appex"
-    if [ -d "$APPEX_SRC" ]; then
+    if [ -d "$APPEX_SRC" ] && [ "$RG_SIDESTORE" != "1" ]; then
         echo -e '\033[1m\033[32mEmbedding Safari extension\033[0m'
         INJECT_TMP=$(mktemp -d)
-        unzip -q packages/RyukGram-sideloaded.ipa -d "$INJECT_TMP"
+        unzip -q "$OUT_IPA" -d "$INJECT_TMP"
         APP_DIR="$(find "$INJECT_TMP/Payload" -maxdepth 1 -type d -name '*.app' | head -1)"
         if [ -n "$APP_DIR" ]; then
             mkdir -p "$APP_DIR/PlugIns"
             rm -rf "$APP_DIR/PlugIns/OpenInstagramSafariExtension.appex"
             cp -R "$APPEX_SRC" "$APP_DIR/PlugIns/"
             ( cd "$INJECT_TMP" && zip -qr -${COMPRESSION} ../repacked.ipa Payload )
-            mv "$INJECT_TMP/../repacked.ipa" packages/RyukGram-sideloaded.ipa
+            mv "$INJECT_TMP/../repacked.ipa" "$OUT_IPA"
         fi
         rm -rf "$INJECT_TMP"
     fi
 
-    run_ipapatch packages/RyukGram-sideloaded.ipa
+    # Strip every .appex (IG keeps them under Extensions/, not PlugIns/) — free
+    # signing's bundle ID rewrite breaks the parent-prefix check otherwise.
+    if [ "$RG_SIDESTORE" == "1" ]; then
+        echo -e '\033[1m\033[32mStripping app extensions for SideStore\033[0m'
+        STRIP_TMP=$(mktemp -d)
+        unzip -q "$OUT_IPA" -d "$STRIP_TMP"
+        APP_DIR="$(find "$STRIP_TMP/Payload" -maxdepth 1 -type d -name '*.app' | head -1)"
+        if [ -n "$APP_DIR" ]; then
+            APPEX_COUNT=$(find "$APP_DIR" -type d -name '*.appex' | wc -l | tr -d ' ')
+            find "$APP_DIR" -type d -name '*.appex' -prune -exec rm -rf {} +
+            echo -e "\033[0;33m  removed ${APPEX_COUNT} .appex bundle(s)\033[0m"
+            ( cd "$STRIP_TMP" && zip -qr -${COMPRESSION} ../repacked.ipa Payload )
+            mv "$STRIP_TMP/../repacked.ipa" "$OUT_IPA"
+        fi
+        rm -rf "$STRIP_TMP"
+    fi
+
+    if [ "$RG_SIDESTORE" != "1" ]; then
+        run_ipapatch "$OUT_IPA"
+    fi
 
     echo -e "\033[1m\033[32mDone, enjoy RyukGram!\033[0m\n\nYou can find the ipa file at: $(pwd)/packages"
 
@@ -506,10 +542,12 @@ else
     echo '|RyukGram Build Script |'
     echo '+----------------------+'
     echo
-    echo 'Usage: ./build.sh <dylib/sideload/trollstore/rootless/rootful>'
+    echo 'Usage: ./build.sh <dylib/sideload/sidestore/trollstore/rootless/rootful>'
     echo
     echo '  dylib       - Build the dylib only (for Feather/manual injection)'
     echo '  sideload    - Build a patched IPA (requires cyan + decrypted IPA)'
+    echo '  sidestore   - Like sideload, plus the legacy sideload compatibility patch'
+    echo '                (keychain/app group/CloudKit fixes) for SideStore installs'
     echo '  trollstore  - Build a .tipa for TrollStore (requires cyan + decrypted IPA)'
     echo '  rootless    - Build a rootless .deb package (with FFmpegKit)'
     echo '  rootful     - Build a rootful .deb package (with FFmpegKit)'

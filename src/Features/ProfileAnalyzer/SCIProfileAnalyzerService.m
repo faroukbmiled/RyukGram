@@ -4,7 +4,7 @@
 
 const NSInteger SCIProfileAnalyzerMaxFollowerCount = 13000;
 
-#define SCI_PA_PAGE_DELAY_S 0.25   // small pause between pages — lightweight rate cushion
+#define SCI_PA_PAGE_DELAY_S 0.25   // rate-limit cushion between pages
 
 @interface SCIProfileAnalyzerService () {
 @public
@@ -181,9 +181,7 @@ const NSInteger SCIProfileAnalyzerMaxFollowerCount = 13000;
                 if (u) [acc addObject:u];
             }
         }
-        // Weight each stage by its share of expected work so the ring moves
-        // proportionally regardless of follower/following ratio. 3% reserved
-        // up front for the initial user-info call.
+        // Weight each stage by its share of expected work; 3% reserved for user-info.
         NSInteger followerTarget = strongSelf->_expectedFollowers;
         NSInteger followingTarget = strongSelf->_expectedFollowing;
         double total0 = MAX(1, followerTarget + followingTarget);

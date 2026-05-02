@@ -332,27 +332,82 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+// Sniff container format from magic bytes. WebP routes through a PNG transcode
+// because Save-to-Photos rejects .webp on most iOS versions.
+static NSString *sciSniffImageExt(NSData *data, BOOL *needsTranscode) {
+    if (needsTranscode) *needsTranscode = NO;
+    if (data.length < 12) return @"jpg";
+    const uint8_t *b = data.bytes;
+    if (b[0] == 0xFF && b[1] == 0xD8 && b[2] == 0xFF) return @"jpg";
+    if (b[0] == 0x89 && b[1] == 0x50 && b[2] == 0x4E && b[3] == 0x47) return @"png";
+    if (b[0] == 0x47 && b[1] == 0x49 && b[2] == 0x46) return @"gif";
+    if (b[4] == 'f' && b[5] == 't' && b[6] == 'y' && b[7] == 'p') {
+        if ((b[8] == 'h' && (b[9] == 'e' || b[9] == 'v')) || (b[8] == 'm' && (b[9] == 'i' || b[9] == 's')))
+            return @"heic";
+    }
+    if (b[0] == 'R' && b[1] == 'I' && b[2] == 'F' && b[3] == 'F' &&
+        b[8] == 'W' && b[9] == 'E' && b[10] == 'B' && b[11] == 'P') {
+        if (needsTranscode) *needsTranscode = YES;
+        return @"png";
+    }
+    return @"jpg";
+}
+
 - (void)shareTapped {
     SCIMediaViewerItem *item = self.items[self.currentIndex];
-    NSMutableArray *shareItems = [NSMutableArray array];
-
     UIViewController *current = self.pageVC.viewControllers.firstObject;
-    if ([current isKindOfClass:[_SCIPhotoPageVC class]]) {
-        UIImage *img = [(_SCIPhotoPageVC *)current currentImage];
-        if (img) [shareItems addObject:img];
-    }
+    BOOL isPhoto = [current isKindOfClass:[_SCIPhotoPageVC class]];
 
-    // For videos or if no image loaded, share the URL
-    if (!shareItems.count) {
+    if (!isPhoto) {
         NSURL *url = item.videoURL ?: item.photoURL;
-        if (url) [shareItems addObject:url];
+        if (!url) return;
+        UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:nil];
+        vc.popoverPresentationController.sourceView = self.shareBtn;
+        [self presentViewController:vc animated:YES completion:nil];
+        return;
     }
 
-    if (!shareItems.count) return;
+    // Share original bytes in a temp file with the correct extension — sharing a
+    // raw UIImage breaks Save-to-Photos for WebP-sourced images (e.g. profile pics).
+    if (!item.photoURL) return;
+    UIImage *fallbackImg = [(_SCIPhotoPageVC *)current currentImage];
+    __weak typeof(self) weakSelf = self;
 
-    UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
-    vc.popoverPresentationController.sourceView = self.shareBtn;
-    [self presentViewController:vc animated:YES completion:nil];
+    [SCIImageCache loadDataFromURL:item.photoURL completion:^(NSData *data) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) return;
+
+        NSMutableArray *shareItems = [NSMutableArray array];
+        NSURL *tempFileURL = nil;
+
+        if (data.length) {
+            BOOL transcode = NO;
+            NSString *ext = sciSniffImageExt(data, &transcode);
+            NSData *out = data;
+            if (transcode) {
+                UIImage *decoded = [UIImage imageWithData:data];
+                NSData *png = decoded ? UIImagePNGRepresentation(decoded) : nil;
+                if (png) out = png; else ext = @"webp";
+            }
+            NSString *name = [NSString stringWithFormat:@"sci_share_%@.%@", [[NSUUID UUID] UUIDString], ext];
+            NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+            if ([out writeToFile:path atomically:YES]) {
+                tempFileURL = [NSURL fileURLWithPath:path];
+                [shareItems addObject:tempFileURL];
+            }
+        }
+
+        if (!shareItems.count && fallbackImg) [shareItems addObject:fallbackImg];
+        if (!shareItems.count) [shareItems addObject:item.photoURL];
+
+        UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
+        vc.popoverPresentationController.sourceView = strongSelf.shareBtn;
+        NSURL *toClean = tempFileURL;
+        vc.completionWithItemsHandler = ^(UIActivityType _Nullable type, BOOL completed, NSArray *items, NSError *err) {
+            if (toClean) [[NSFileManager defaultManager] removeItemAtURL:toClean error:nil];
+        };
+        [strongSelf presentViewController:vc animated:YES completion:nil];
+    }];
 }
 
 // ─── Page data source ───

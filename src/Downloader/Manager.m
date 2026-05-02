@@ -37,37 +37,27 @@
     [self.delegate downloadDidProgress:progress];
 }
 
-- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {    
-    // Move downloaded file to cache directory
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     NSURL *finalLocation = [self moveFileToCacheDir:location];
-
     [self.delegate downloadDidFinishWithFileURL:finalLocation];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    if (error) NSLog(@"[SCInsta] Download error: %@", error);
+    if (error) NSLog(@"[RyukGram] Download error: %@", error);
     [self.delegate downloadDidFinishWithError:error];
 }
 
-// Rename downloaded file & move from documents dir -> cache dir
 - (NSURL *)moveFileToCacheDir:(NSURL *)oldPath {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-
     NSString *cacheDirectoryPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
     NSString *stem = [SCIMediaActions currentFilenameStem] ?: NSUUID.UUID.UUIDString;
     NSURL *newPath = [[NSURL fileURLWithPath:cacheDirectoryPath] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", stem, self.fileExtension]];
-    
-    NSLog(@"[SCInsta] Download Handler: Moving file from: %@ to: %@", oldPath.absoluteString, newPath.absoluteString);
 
-    // Move file to cache directory
     NSError *fileMoveError;
     [fileManager moveItemAtURL:oldPath toURL:newPath error:&fileMoveError];
-
     if (fileMoveError) {
-        NSLog(@"[SCInsta] Download Handler: Error while moving file: %@", oldPath.absoluteString);
-        NSLog(@"[SCInsta] Download Handler: %@", fileMoveError);
+        NSLog(@"[RyukGram] move %@ -> %@ failed: %@", oldPath.absoluteString, newPath.absoluteString, fileMoveError);
     }
-
     return newPath;
 }
 

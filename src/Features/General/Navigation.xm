@@ -110,7 +110,6 @@ NSArray *filterSurfacesArray(NSArray *surfaces) {
     if ([SCIUtils getBoolPref:@"hide_messages_tab"]) {
         UIButton *rightButton = [self valueForKey:@"rightButton"];
         if (rightButton) {
-            NSLog(@"[SCInsta] Hiding messages tab (on feed)");
 
             [rightButton removeFromSuperview];
         }

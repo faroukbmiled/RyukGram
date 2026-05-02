@@ -11,6 +11,7 @@ extern BOOL sciAdvanceBypassActive;
 
 typedef struct {
     NSString *confirmPref;
+    NSString *confirmTitle; // reuses the Settings toggle title; nil = generic dialog
     NSString *seenPref;
     NSString *advancePref;
     NSTimeInterval advanceDelay;
@@ -21,6 +22,7 @@ static SCIStoryPolicy sciPolicyForType(SCIStoryInteraction type) {
         case SCIStoryInteractionLike:
             return (SCIStoryPolicy){
                 @"story_like_confirm",
+                SCILocalized(@"Confirm story like"),
                 @"seen_on_story_like",
                 @"advance_on_story_like",
                 0.3
@@ -28,6 +30,7 @@ static SCIStoryPolicy sciPolicyForType(SCIStoryInteraction type) {
         case SCIStoryInteractionEmojiReaction:
             return (SCIStoryPolicy){
                 @"emoji_reaction_confirm",
+                SCILocalized(@"Confirm story emoji reaction"),
                 @"seen_on_story_reply",
                 @"advance_on_story_reply",
                 0.4
@@ -35,12 +38,13 @@ static SCIStoryPolicy sciPolicyForType(SCIStoryInteraction type) {
         case SCIStoryInteractionTextReply:
             return (SCIStoryPolicy){
                 nil,
+                nil,
                 @"seen_on_story_reply",
                 @"advance_on_story_reply",
                 0.4
             };
     }
-    return (SCIStoryPolicy){ nil, nil, nil, 0.3 };
+    return (SCIStoryPolicy){ nil, nil, nil, nil, 0.3 };
 }
 
 #pragma mark - Side effects
@@ -118,7 +122,7 @@ void sciStoryInteraction(SCIStoryInteraction type,
             if (uiReapply) uiReapply();
             if (action) action();
             sciFireSideEffects(policy);
-        }];
+        } title:policy.confirmTitle];
         return;
     }
 

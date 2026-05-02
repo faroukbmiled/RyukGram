@@ -1,8 +1,9 @@
-// Pure-black DM thread background + incoming message bubbles.
-// IGDirectThreadBackgroundImageView / IGDirectMessageBubbleView declared in InstagramHeaders.h.
+// Pure-black DM thread background + incoming bubbles.
+// IGDirectThreadBackgroundImageView / IGDirectMessageBubbleView in InstagramHeaders.h.
 
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
+#import "SCITheme.h"
 
 %group OLEDChatThemeGroup
 
@@ -10,26 +11,23 @@
 - (void)layoutSubviews {
     %orig;
     self.image = nil;
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [SCITheme backgroundColor];
 }
 - (void)setImage:(UIImage *)image {
     %orig(nil);
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [SCITheme backgroundColor];
 }
 - (void)setBackgroundColor:(UIColor *)color {
-    %orig([UIColor blackColor]);
+    %orig([SCITheme backgroundColor]);
 }
 %end
 
 %hook IGDirectMessageBubbleView
 - (void)layoutSubviews {
     %orig;
-    CGFloat r = 0, g = 0, b = 0, a = 0;
-    if ([self.backgroundColor getRed:&r green:&g blue:&b alpha:&a]) {
-        // Leave tinted outgoing bubbles (blue/purple) alone.
-        if (a >= 0.9 && r < 0.2 && g < 0.2 && b < 0.2) {
-            self.backgroundColor = [UIColor blackColor];
-        }
+    // Only swap the incoming-bubble surface — leaves tinted outgoing bubbles alone.
+    if ([SCITheme colorIsNearBlack:self.backgroundColor]) {
+        self.backgroundColor = [SCITheme backgroundColor];
     }
 }
 %end
@@ -37,7 +35,8 @@
 %end
 
 %ctor {
-    if ([SCIUtils getBoolPref:@"theme_oled_chat"]) {
+    [SCITheme migrateLegacyPrefs];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:SCIThemePrefOLEDChat]) {
         %init(OLEDChatThemeGroup);
     }
 }

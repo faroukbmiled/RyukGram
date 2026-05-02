@@ -153,4 +153,14 @@ static void sciPerformRequest(NSMutableURLRequest *req, SCIAPICompletion complet
     }];
 }
 
+// ============ Media ============
+
++ (void)fetchMediaInfoForMediaId:(NSString *)mediaId completion:(SCIAPICompletion)completion {
+    if (!mediaId.length) { if (completion) completion(nil, nil); return; }
+    [self sendRequestWithMethod:@"GET"
+                           path:[NSString stringWithFormat:@"media/%@/info/", mediaId]
+                           body:nil
+                     completion:completion];
+}
+
 @end

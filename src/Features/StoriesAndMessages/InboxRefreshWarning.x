@@ -1,7 +1,5 @@
-// Pull-to-refresh in the DMs tab silently clears preserved (locally retained)
-// unsent messages. This hook intercepts _pullToRefreshIfPossible to show a
-// confirmation dialog when both keep_deleted_message and
-// warn_refresh_clears_preserved are on.
+// Confirmation dialog before pull-to-refresh wipes preserved unsent
+// messages. Gated by keep_deleted_message + warn_refresh_clears_preserved.
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
 #import <objc/runtime.h>
@@ -28,10 +26,8 @@ static UIRefreshControl *sciFindRefreshControl(UIViewController *vc) {
     return nil;
 }
 
-// On cancel, the IGRefreshControl's state machine is already idle by the time
-// our handler runs — but the scroll view's contentInset stays expanded, leaving
-// the spinner area visually exposed. We grab the idle inset via the inbox VC's
-// idleTopContentInsetForRefreshControl: helper and animate the inset back.
+// Cancel path resets the refresh control's state and animates the scroll
+// view's contentInset back to its idle value (IG leaves it expanded otherwise).
 static void sciCancelRefresh(UIViewController *vc) {
     UIRefreshControl *rc = sciFindRefreshControl(vc);
     if (!rc) return;
@@ -82,8 +78,7 @@ static void new_pullToRefresh(id self, SEL _cmd) {
         return;
     }
 
-    // IG fires _pullToRefreshIfPossible repeatedly while the user holds the
-    // pull gesture — drop re-entrant calls until the alert is dismissed.
+    // Drop re-entrant calls — IG fires this repeatedly during the gesture.
     if (sciRefreshAlertVisible) return;
 
     NSUInteger count = sciGetPreservedIds().count;
@@ -93,9 +88,10 @@ static void new_pullToRefresh(id self, SEL _cmd) {
     }
 
     UIViewController *vc = (UIViewController *)self;
-    NSString *msg = [NSString stringWithFormat:
-        @"Refreshing the DMs tab will clear %lu preserved unsent message%@. This cannot be undone.",
-        (unsigned long)count, count == 1 ? @"" : @"s"];
+    NSString *fmt = (count == 1)
+        ? SCILocalized(@"Refreshing the DMs tab will clear %lu preserved unsent message. This cannot be undone.")
+        : SCILocalized(@"Refreshing the DMs tab will clear %lu preserved unsent messages. This cannot be undone.");
+    NSString *msg = [NSString stringWithFormat:fmt, (unsigned long)count];
 
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Clear preserved messages?")
                                                                   message:msg

@@ -21,6 +21,65 @@ static SCIDownloadDelegate *sciActiveDownloadDelegate = nil;
 extern void sciToggleStoryAudio(void);
 extern BOOL sciIsStoryAudioEnabled(void);
 
+// MARK: - Date header
+
+// Auto-detects microseconds (>1e15) and milliseconds (>1e12).
+static NSTimeInterval sciCoerceTimestamp(id v) {
+    double d = 0;
+    if ([v isKindOfClass:[NSNumber class]])      d = [v doubleValue];
+    else if ([v isKindOfClass:[NSString class]]) d = [(NSString *)v doubleValue];
+    if (d <= 0) return 0;
+    if (d > 1e15) d /= 1e6;
+    else if (d > 1e12) d /= 1e3;
+    return d;
+}
+
+static NSDate *sciExtractDateFromMedia(id media) {
+    if (!media) return nil;
+    Ivar iv = NULL;
+    for (Class c = [media class]; c && !iv; c = class_getSuperclass(c))
+        iv = class_getInstanceVariable(c, "_fieldCache");
+    if (!iv) return nil;
+    NSDictionary *dict = nil;
+    @try {
+        id v = object_getIvar(media, iv);
+        if ([v isKindOfClass:[NSDictionary class]]) dict = v;
+    } @catch (__unused id e) { return nil; }
+    if (!dict) return nil;
+
+    for (NSString *k in @[@"taken_at", @"device_timestamp",
+                          @"created_at", @"upload_time", @"published_time"]) {
+        NSTimeInterval t = sciCoerceTimestamp(dict[k]);
+        if (t > 0) return [NSDate dateWithTimeIntervalSince1970:t];
+    }
+    return nil;
+}
+
+// "Apr 24, 2026 at 5:30pm" — lowercase am/pm, 12-hour, local timezone.
+static NSString *sciFormatDateHeader(NSDate *date) {
+    if (!date) return nil;
+    static NSDateFormatter *fmt = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        fmt = [[NSDateFormatter alloc] init];
+        fmt.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+        fmt.dateFormat = @"MMM d, yyyy 'at' h:mma";
+        fmt.AMSymbol = @"am";
+        fmt.PMSymbol = @"pm";
+    });
+    fmt.timeZone = [NSTimeZone localTimeZone];
+    return [fmt stringFromDate:date];
+}
+
+static NSString *sciDatePrefKeyForContext(SCIActionContext ctx) {
+    switch (ctx) {
+        case SCIActionContextFeed:    return @"menu_date_feed";
+        case SCIActionContextReels:   return @"menu_date_reels";
+        case SCIActionContextStories: return @"menu_date_stories";
+    }
+    return nil;
+}
+
 // MARK: - Filename naming
 
 static NSString *sciCurrentFilenameStem = nil;
@@ -38,16 +97,27 @@ static NSString *sciSanitizeFilenameComponent(NSString *s) {
 
 // IGAPIStorableObject's backing dict.
 static NSDictionary *sciMediaFieldCache(id obj) {
-    if (!obj) return nil;
-    static Ivar fcIvar = NULL;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        Class c = NSClassFromString(@"IGAPIStorableObject");
-        if (c) fcIvar = class_getInstanceVariable(c, "_fieldCache");
-    });
-    if (!fcIvar) return nil;
-    id v = object_getIvar(obj, fcIvar);
-    return [v isKindOfClass:[NSDictionary class]] ? v : nil;
+	if (!obj) return nil;
+
+	if ([obj isKindOfClass:NSDictionary.class]) {
+		return (NSDictionary *)obj;
+	}
+
+	Class storableClass = NSClassFromString(@"IGAPIStorableObject");
+	if (storableClass && ![obj isKindOfClass:storableClass]) {
+		return nil;
+	}
+
+	Ivar ivar = class_getInstanceVariable(object_getClass(obj), "_fieldCache");
+	if (!ivar) ivar = class_getInstanceVariable([obj class], "_fieldCache");
+	if (!ivar) return nil;
+
+	@try {
+		id value = object_getIvar(obj, ivar);
+		return [value isKindOfClass:NSDictionary.class] ? value : nil;
+	} @catch (__unused id e) {
+		return nil;
+	}
 }
 
 static NSString *sciUsernameForMedia(id media) {
@@ -92,20 +162,34 @@ static id sciIvar(id obj, const char *name) {
 
 // Read from IGAPIStorableObject._fieldCache (KVC returns NSNull for many keys).
 static id sciFieldCache(id obj, NSString *key) {
-    if (!obj || !key) return nil;
-    static Ivar fcIvar = NULL;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        Class c = NSClassFromString(@"IGAPIStorableObject");
-        if (c) fcIvar = class_getInstanceVariable(c, "_fieldCache");
-    });
-    if (!fcIvar) return nil;
-    id fc = nil;
-    @try { fc = object_getIvar(obj, fcIvar); } @catch (__unused id e) { return nil; }
-    if (![fc isKindOfClass:[NSDictionary class]]) return nil;
-    id val = ((NSDictionary *)fc)[key];
-    if (!val || [val isKindOfClass:[NSNull class]]) return nil;
-    return val;
+	if (!obj || !key.length) return nil;
+
+	NSDictionary *dict = nil;
+
+	if ([obj isKindOfClass:NSDictionary.class]) {
+		dict = (NSDictionary *)obj;
+	} else {
+		Class storableClass = NSClassFromString(@"IGAPIStorableObject");
+
+		if (storableClass && ![obj isKindOfClass:storableClass]) {
+			return nil;
+		}
+
+		Ivar ivar = class_getInstanceVariable(object_getClass(obj), "_fieldCache");
+		if (!ivar) ivar = class_getInstanceVariable([obj class], "_fieldCache");
+		if (!ivar) return nil;
+
+		@try {
+			id value = object_getIvar(obj, ivar);
+			if ([value isKindOfClass:NSDictionary.class]) dict = value;
+		} @catch (__unused id e) {
+			return nil;
+		}
+	}
+
+	id value = dict[key];
+	if (!value || [value isKindOfClass:NSNull.class]) return nil;
+	return value;
 }
 
 // Fresh download delegate (one active download at a time).
@@ -941,6 +1025,12 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
                                       media:(id)media
                                    fromView:(UIView *)sourceView {
     NSMutableArray<SCIAction *> *out = [NSMutableArray array];
+
+    NSString *datePref = sciDatePrefKeyForContext(ctx);
+    if (datePref && [SCIUtils getBoolPref:datePref]) {
+        NSString *dateStr = sciFormatDateHeader(sciExtractDateFromMedia(media));
+        if (dateStr.length) [out addObject:[SCIAction headerWithTitle:dateStr]];
+    }
 
     NSString *ctxLabel = [self contextLabelForContext:ctx];
     // Stamp the filename stem before a download fires.

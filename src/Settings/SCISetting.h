@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, SCITableCell) {
         SCITableCellButton,
         SCITableCellMenu,
         SCITableCellNavigation,
+        SCITableCellColor,
 };
 
 @interface SCISetting : NSObject
@@ -38,6 +39,9 @@ typedef NS_ENUM(NSInteger, SCITableCell) {
 @property (nonatomic, copy) NSString *singularLabel;
 
 @property (nonatomic, copy) void (^action)(void);
+
+/// Color cell fallback when the defaults key is unset/invalid.
+@property (nonatomic, strong, nullable) UIColor *defaultColor;
 
 @property (nonatomic, strong) UIMenu *baseMenu;
 
@@ -94,6 +98,11 @@ typedef NS_ENUM(NSInteger, SCITableCell) {
 + (instancetype)menuCellWithTitle:(NSString *)title
                          subtitle:(NSString *)subtitle
                              menu:(UIMenu *)menu;
+
++ (instancetype)colorCellWithTitle:(NSString *)title
+                          subtitle:(NSString *)subtitle
+                       defaultsKey:(NSString *)defaultsKey
+                      defaultColor:(nullable UIColor *)defaultColor;
 
 + (instancetype)navigationCellWithTitle:(NSString *)title
                                subtitle:(NSString *)subtitle

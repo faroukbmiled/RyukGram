@@ -30,6 +30,11 @@ typedef void(^SCIAPIStatusesCompletion)(NSDictionary * _Nullable statuses, NSErr
 + (void)fetchFriendshipStatusesForPKs:(NSArray<NSString *> *)pks
                            completion:(nullable SCIAPIStatusesCompletion)completion;
 
+// ============ Media ============
+
+// Fetch a single media item. Response carries `items[0]` with `user`, `usertags.in[].user`, etc.
++ (void)fetchMediaInfoForMediaId:(NSString *)mediaId completion:(nullable SCIAPICompletion)completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

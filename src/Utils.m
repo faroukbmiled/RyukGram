@@ -36,7 +36,7 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
 + (void)showQuickLookVC:(NSArray<id> *)items {
     UIViewController *topVC = topMostController();
     if (!topVC) {
-        NSLog(@"[SCInsta] No view controller available to present QuickLook");
+        NSLog(@"[RyukGram] No view controller available to present QuickLook");
         return;
     }
 
@@ -50,7 +50,7 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
 + (void)showShareVC:(id)item {
     UIViewController *topVC = topMostController();
     if (!topVC) {
-        NSLog(@"[SCInsta] No view controller available to present share sheet");
+        NSLog(@"[RyukGram] No view controller available to present share sheet");
         return;
     }
 
@@ -136,7 +136,7 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
         [hud showInView:hudView];
         [hud dismissAfterDelay:dismissDelay];
     } else {
-        NSLog(@"[SCInsta] No valid view for error HUD: %@", errorDesc);
+        NSLog(@"[RyukGram] No valid view for error HUD: %@", errorDesc);
     }
 
     return hud;

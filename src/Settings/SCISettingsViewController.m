@@ -2,6 +2,8 @@
 #import "SCISearchBarStyler.h"
 #import "../Features/General/SCICacheManager.h"
 #import "../SCIImageCache.h"
+#import "../Tweak.h"
+#import "../UI/SCIColorPicker.h"
 
 static char rowStaticRef[] = "row";
 
@@ -120,7 +122,7 @@ static char rowStaticRef[] = "row";
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"settings.language.ok") style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"settings.language.help_translate") style:UIAlertActionStyleDefault
                                             handler:^(__unused UIAlertAction *a) {
-        NSURL *url = [NSURL URLWithString:@"https://github.com/faroukbmiled/RyukGram#translating-ryukgram"];
+        NSURL *url = [NSURL URLWithString:SCIRepoTranslateURL];
         if (url) [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     }]];
     [self presentViewController:alert animated:YES completion:nil];
@@ -157,7 +159,7 @@ static char rowStaticRef[] = "row";
                                           image:nil
                                      identifier:nil
                                         handler:^(__unused UIAction *a) {
-        NSURL *url = [NSURL URLWithString:@"https://github.com/faroukbmiled/RyukGram#translating-ryukgram"];
+        NSURL *url = [NSURL URLWithString:SCIRepoTranslateURL];
         if (url) [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     }];
 
@@ -436,6 +438,13 @@ static char rowStaticRef[] = "row";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
+
+        case SCITableCellColor: {
+            cell.accessoryView = [SCIColorPicker swatchViewForKey:row.defaultsKey
+                                                     defaultColor:row.defaultColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+            break;
+        }
     }
 
     if (row.titleColor) {
@@ -486,6 +495,20 @@ static char rowStaticRef[] = "row";
             row.action();
         }
     }
+    else if (row.type == SCITableCellColor) {
+        __weak typeof(self) weakSelf = self;
+        [SCIColorPicker presentFrom:self
+                              title:row.title
+                        defaultsKey:row.defaultsKey
+                       defaultColor:row.defaultColor
+                           onChange:^(UIColor *color) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (!strongSelf) return;
+            UITableViewCell *cell = [strongSelf.tableView cellForRowAtIndexPath:indexPath];
+            cell.accessoryView = [SCIColorPicker swatchViewForKey:row.defaultsKey
+                                                     defaultColor:row.defaultColor];
+        }];
+    }
     else if (row.type == SCITableCellNavigation) {
         if (row.navSections.count > 0) {
             UIViewController *vc = [[SCISettingsViewController alloc] initWithTitle:row.title sections:row.navSections reduceMargin:NO];
@@ -505,9 +528,7 @@ static char rowStaticRef[] = "row";
 - (void)switchChanged:(UISwitch *)sender {
     SCISetting *row = objc_getAssociatedObject(sender, rowStaticRef);
     [[NSUserDefaults standardUserDefaults] setBool:sender.isOn forKey:row.defaultsKey];
-    
-    NSLog(@"Switch changed: %@", sender.isOn ? @"ON" : @"OFF");
-    
+
     if (row.requiresRestart) {
         [SCIUtils showRestartConfirmation];
     }
@@ -520,21 +541,29 @@ static char rowStaticRef[] = "row";
 - (void)stepperChanged:(UIStepper *)sender {
     SCISetting *row = objc_getAssociatedObject(sender, rowStaticRef);
     [[NSUserDefaults standardUserDefaults] setDouble:sender.value forKey:row.defaultsKey];
-    
-    NSLog(@"Stepper changed: %f", sender.value);
-    
+
     [self reloadCellForView:sender];
 }
 
 - (void)menuChanged:(UICommand *)command {
     NSDictionary *properties = command.propertyList;
-    
+
     [[NSUserDefaults standardUserDefaults] setValue:properties[@"value"] forKey:properties[@"defaultsKey"]];
-    
-    NSLog(@"Menu changed: %@", command.propertyList[@"value"]);
-    
+
     [self reloadCellForView:command.sender animated:YES];
     [self.tableView reloadData];
+
+    NSString *pickerKey = properties[@"presentColorPickerForKey"];
+    if (pickerKey.length) {
+        __weak typeof(self) weakSelf = self;
+        [SCIColorPicker presentFrom:self
+                              title:command.title
+                        defaultsKey:pickerKey
+                       defaultColor:[UIColor blackColor]
+                           onChange:^(UIColor *color) {
+            [weakSelf.tableView reloadData];
+        }];
+    }
 
     if (properties[@"requiresRestart"]) {
         [SCIUtils showRestartConfirmation];

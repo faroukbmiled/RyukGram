@@ -1,10 +1,9 @@
-// Keep RyukGram's table-view surfaces visible under Full OLED.
-//
-// Grouped-inset cells default to #1C1C1E which Full OLED blackens. Repaint
-// SCI*-owned cells at ~#121212 (alpha 0.89 passes the hook's a >= 0.9 gate)
-// on attach, so settings + Profile Analyzer stay readable on black.
+// Keep RyukGram's own table-view surfaces visible under the OLED recolor.
+// Repaints SCI*-owned cells at SCITheme.surfaceColor (alpha 0.89 dodges the
+// recolor gate) on attach.
 
 #import "../../Utils.h"
+#import "SCITheme.h"
 #import <objc/runtime.h>
 
 static inline BOOL sciOLEDSurfaceInRyukGram(UIView *view) {
@@ -17,21 +16,15 @@ static inline BOOL sciOLEDSurfaceInRyukGram(UIView *view) {
     return NO;
 }
 
-static UIColor *sciOLEDSurfaceTone(void) {
-    static UIColor *tone;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{ tone = [UIColor colorWithWhite:0.08 alpha:0.89]; });
-    return tone;
-}
-
 %group OLEDSurfaceGroup
 
 %hook UITableViewCell
 - (void)didMoveToSuperview {
     %orig;
     if (!self.superview) return;
+    if (![SCITheme shouldRecolor]) return;
     if (!sciOLEDSurfaceInRyukGram((UIView *)self)) return;
-    UIColor *tone = sciOLEDSurfaceTone();
+    UIColor *tone = [SCITheme surfaceColor];
     UIBackgroundConfiguration *bg = [UIBackgroundConfiguration listGroupedCellConfiguration];
     bg.backgroundColor = tone;
     self.backgroundConfiguration = bg;
@@ -44,6 +37,7 @@ static UIColor *sciOLEDSurfaceTone(void) {
 - (void)didMoveToSuperview {
     %orig;
     if (!self.superview) return;
+    if (![SCITheme shouldRecolor]) return;
     if (!sciOLEDSurfaceInRyukGram((UIView *)self)) return;
     self.backgroundConfiguration = [UIBackgroundConfiguration clearConfiguration];
 }
@@ -52,7 +46,8 @@ static UIColor *sciOLEDSurfaceTone(void) {
 %end
 
 %ctor {
-    if ([SCIUtils getBoolPref:@"theme_full_oled"]) {
+    [SCITheme migrateLegacyPrefs];
+    if ([SCITheme mode] == SCIThemeModeOLED) {
         %init(OLEDSurfaceGroup);
     }
 }

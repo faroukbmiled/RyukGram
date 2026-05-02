@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     SCIPACategoryYouStartedFollowing,
     SCIPACategoryYouUnfollowed,
     SCIPACategoryProfileUpdates,
+    SCIPACategoryVisitedProfiles,
 };
 
 @interface SCIPACategoryDescriptor : NSObject
@@ -32,6 +33,7 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, assign) BOOL requiresPrevious;
+@property (nonatomic, assign) BOOL standalone;
 @end
 @implementation SCIPACategoryDescriptor @end
 
@@ -41,7 +43,7 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) CAShapeLayer *trackLayer;
 @property (nonatomic, strong) CAShapeLayer *progressLayer;
-@property (nonatomic, assign) double progress;   // 0..1
+@property (nonatomic, assign) double progress;
 @property (nonatomic, assign) BOOL showProgress;
 @end
 
@@ -79,7 +81,7 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGFloat size = MIN(self.bounds.size.width, self.bounds.size.height);
-    if (size < 16) return;   // transient tiny bounds during transitions
+    if (size < 16) return;
     CGFloat inset = 7;
     CGRect imgFrame = CGRectInset(CGRectMake(0, 0, size, size), inset, inset);
     self.imageView.frame = imgFrame;
@@ -350,7 +352,9 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 @property (nonatomic, strong) SCIPAHeaderView *headerView;
 
 @property (nonatomic, strong) SCIProfileAnalyzerReport *report;
+@property (nonatomic, strong) NSArray<SCIProfileAnalyzerVisit *> *visits;
 @property (nonatomic, strong) NSArray<SCIPACategoryDescriptor *> *categories;
+@property (nonatomic, strong) NSArray<SCIPACategoryDescriptor *> *trackingCategories;
 @property (nonatomic, assign) BOOL running;
 @property (nonatomic, copy) NSString *lastHeaderPK;
 @property (nonatomic, assign) BOOL pendingHeaderFetch;
@@ -372,7 +376,11 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
                                                object:nil];
 }
 
-- (void)dealloc { [[NSNotificationCenter defaultCenter] removeObserver:self]; }
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // Service is a singleton — drop in-flight scan when the VC pops.
+    if (self.running) [[SCIProfileAnalyzerService sharedService] cancel];
+}
 
 - (void)analyzerDataChanged:(NSNotification *)note {
     if (!self.isViewLoaded || !self.view.window) return;
@@ -392,13 +400,12 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // Cheap disk + set math; safe during push.
     @try { [self loadCachedReport]; } @catch (__unused NSException *e) {}
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    // Header merge + any network fetch wait until the transition settles.
+    // Header merge + network fetch wait for the transition to settle.
     @try { [self loadHeaderLayered]; } @catch (__unused NSException *e) {}
     if (self.pendingHeaderFetch) {
         self.pendingHeaderFetch = NO;
@@ -446,8 +453,7 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     [self buildTableHeader];
 }
 
-// Pull-to-refresh: re-fetch just the self-profile (/users/{pk}/info/) so the
-// header reflects IG's truth on demand. No rescan, no data reset.
+// Re-fetch just the self-profile so the header reflects live IG data. No rescan.
 - (void)pullToRefreshProfile:(UIRefreshControl *)sender {
     NSString *pk = [SCIUtils currentUserPK];
     if (!pk.length) { [sender endRefreshing]; return; }
@@ -462,7 +468,7 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
             typeof(self) strongSelf = weakSelf;
             if (strongSelf.isViewLoaded && strongSelf.view.window) {
                 [strongSelf paintHeaderFromUserInfo:user];
-                [strongSelf applyFollowerLimitGateFor:[user[@"follower_count"] integerValue]];
+                [strongSelf applyFollowerLimitGateFor:sciHeaderInteger(user, @"follower_count")];
             }
         }
         [sender endRefreshing];
@@ -470,7 +476,6 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 }
 
 - (void)buildTableHeader {
-    // tableHeaderView is frame-driven; let viewWillLayoutSubviews set width.
     self.headerContainer = [UIView new];
     self.headerContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
@@ -494,7 +499,6 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     CGFloat w = self.tableView.bounds.size.width;
     if (w < 1) return;
 
-    // Resolve internal height against the tableView's width.
     self.headerContainer.frame = CGRectMake(0, 0, w, 1);
     [self.headerContainer setNeedsLayout];
     [self.headerContainer layoutIfNeeded];
@@ -510,11 +514,9 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     }
 }
 
-#pragma mark - Header resolution (IG memory → our cache → network)
+#pragma mark - Header resolution
 
-// Layered header lookup: IG fieldCache → on-disk cache → network (only when
-// neither source has usable counts). Results get persisted so cold relaunch
-// is offline.
+// Layered: IG fieldCache → on-disk cache → snapshot identity → network.
 - (void)loadHeaderLayered {
     NSString *pk = [SCIUtils currentUserPK];
     self.lastHeaderPK = pk;
@@ -524,12 +526,9 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
                                 ?: [NSMutableDictionary dictionary];
     SCIProfileAnalyzerSnapshot *snap = self.report.current;
 
-    // Hybrid reconciliation for following_count:
-    //   * snapshot.followingCount captures in-app follow/unfollow mutations.
-    //   * IG's fieldCache only refreshes when the user visits own profile.
-    // We store the last fieldCache value we saw; when it moves, IG refreshed
-    // and is authoritative — we align the snapshot to match. Otherwise the
-    // snapshot (possibly just mutated) wins so unfollows show up live.
+    // following_count reconciliation: fieldCache only updates when the user
+    // visits their own profile, so we align snapshot ↔ fieldCache when it moves
+    // and otherwise let snapshot win (it tracks in-app mutations live).
     NSNumber *liveFollowing = live[@"following_count"];
     NSNumber *lastSeenFollowing = cached[@"last_synced_following_count"];
     BOOL fieldCacheRefreshed = liveFollowing && (!lastSeenFollowing || ![liveFollowing isEqual:lastSeenFollowing]);
@@ -546,16 +545,32 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
         cached[@"following_count"] = liveFollowing;
     }
 
-    // Non-mutable-in-app fields: fieldCache wins when present.
+    // fieldCache wins, but skip empty strings (half-loaded fieldCache).
     for (NSString *k in @[@"username", @"full_name", @"profile_pic_url",
                           @"profile_pic_id", @"follower_count", @"media_count"]) {
-        if (live[k]) cached[k] = live[k];
+        id v = live[k];
+        if (!v) continue;
+        if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] == 0) continue;
+        cached[k] = v;
     }
-    // Fallbacks from snapshot if fieldCache lacks them entirely.
-    if (snap && !cached[@"follower_count"] && snap.followerCount > 0) cached[@"follower_count"] = @(snap.followerCount);
-    if (snap && !cached[@"media_count"]    && snap.mediaCount > 0)    cached[@"media_count"]    = @(snap.mediaCount);
+    // Snapshot fallback — successful scans persist identity, use as last resort.
+    if (snap) {
+        if (![cached[@"username"]  isKindOfClass:[NSString class]] || ![cached[@"username"]  length])
+            if (snap.selfUsername.length) cached[@"username"] = snap.selfUsername;
+        if (![cached[@"full_name"] isKindOfClass:[NSString class]] || ![cached[@"full_name"] length])
+            if (snap.selfFullName.length) cached[@"full_name"] = snap.selfFullName;
+        if (![cached[@"profile_pic_url"] isKindOfClass:[NSString class]] || ![cached[@"profile_pic_url"] length])
+            if (snap.selfProfilePicURL.length) cached[@"profile_pic_url"] = snap.selfProfilePicURL;
+        if (![cached[@"follower_count"] integerValue] && snap.followerCount > 0) cached[@"follower_count"] = @(snap.followerCount);
+        if (![cached[@"media_count"]    integerValue] && snap.mediaCount    > 0) cached[@"media_count"]    = @(snap.mediaCount);
+    }
 
-    if (cached[@"username"] || [cached[@"follower_count"] integerValue] > 0) {
+    BOOL haveUsername = [cached[@"username"] isKindOfClass:[NSString class]] && [cached[@"username"] length];
+    BOOL haveCounts = [cached[@"follower_count"] integerValue] > 0
+                   || [cached[@"following_count"] integerValue] > 0
+                   || [cached[@"media_count"] integerValue] > 0;
+
+    if (haveUsername || haveCounts) {
         [self paintHeaderFromUserInfo:cached];
         [self applyFollowerLimitGateFor:[cached[@"follower_count"] integerValue]];
     } else if (!snap) {
@@ -564,14 +579,12 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
         [self.headerView setStatsLabelsPosts:@"—" followers:@"—" following:@"—"];
     }
 
-    BOOL haveCounts = [cached[@"follower_count"] integerValue] > 0
-                   || [cached[@"following_count"] integerValue] > 0
-                   || [cached[@"media_count"] integerValue] > 0;
-    if (haveCounts) {
+    if (haveCounts && haveUsername) {
         [SCIProfileAnalyzerStorage saveHeaderInfo:cached forUserPK:pk];
-    } else {
-        // Defer to next runloop so the push transition can complete before
-        // any completion-block layout mutations.
+    }
+
+    // Network fallback whenever local sources didn't yield both username + counts.
+    if (!haveUsername || !haveCounts) {
         __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (weakSelf.isViewLoaded && weakSelf.view.window) {
@@ -589,29 +602,53 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     @try { if ([session respondsToSelector:@selector(user)]) igUser = [session valueForKey:@"user"]; } @catch (__unused id e) {}
     NSDictionary *fc = [self fieldCacheForUser:igUser];
     NSMutableDictionary *out = [NSMutableDictionary dictionary];
+    // Skip NSNull — fieldCache stores it for keys IG hasn't filled.
     for (NSString *k in @[@"username", @"full_name", @"profile_pic_url",
                           @"follower_count", @"following_count", @"media_count"]) {
-        if (fc[k]) out[k] = fc[k];
+        id v = fc[k];
+        if (v && ![v isKindOfClass:[NSNull class]]) out[k] = v;
     }
     return out;
 }
 
 - (void)fetchAndCacheHeader {
-    NSString *pk = self.lastHeaderPK;
-    if (!pk.length) return;
+    NSString *pk = self.lastHeaderPK ?: [SCIUtils currentUserPK];
+    if (!pk.length) {
+        // Session not ready (cold launch race) — retry after a beat.
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+            if (!weakSelf.isViewLoaded || !weakSelf.view.window) return;
+            if ([SCIUtils currentUserPK].length) [weakSelf fetchAndCacheHeader];
+        });
+        return;
+    }
+    self.lastHeaderPK = pk;
     __weak typeof(self) weakSelf = self;
     [SCIInstagramAPI sendRequestWithMethod:@"GET"
                                       path:[NSString stringWithFormat:@"users/%@/info/", pk]
                                       body:nil
                                 completion:^(NSDictionary *resp, NSError *error) {
-        NSDictionary *user = [resp[@"user"] isKindOfClass:[NSDictionary class]] ? resp[@"user"] : nil;
-        if (!user.count) return;
-        [SCIProfileAnalyzerStorage saveHeaderInfo:user forUserPK:pk];
         typeof(self) strongSelf = weakSelf;
-        // Drop UI updates if the VC left the window between send + callback.
+        if (!strongSelf) return;
+        NSDictionary *user = [resp[@"user"] isKindOfClass:[NSDictionary class]] ? resp[@"user"] : nil;
+        // One retry on rate-limit / blip; otherwise the header stays blank.
+        if (!user.count) {
+            static const char kSCIPARetryKey;
+            NSNumber *attempt = objc_getAssociatedObject(strongSelf, &kSCIPARetryKey);
+            if (attempt.intValue < 1) {
+                objc_setAssociatedObject(strongSelf, &kSCIPARetryKey, @(attempt.intValue + 1), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)),
+                               dispatch_get_main_queue(), ^{
+                    if (weakSelf.isViewLoaded && weakSelf.view.window) [weakSelf fetchAndCacheHeader];
+                });
+            }
+            return;
+        }
+        [SCIProfileAnalyzerStorage saveHeaderInfo:user forUserPK:pk];
         if (!strongSelf.isViewLoaded || !strongSelf.view.window) return;
         [strongSelf paintHeaderFromUserInfo:user];
-        [strongSelf applyFollowerLimitGateFor:[user[@"follower_count"] integerValue]];
+        [strongSelf applyFollowerLimitGateFor:sciHeaderInteger(user, @"follower_count")];
     }];
 }
 
@@ -650,9 +687,10 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     SCIProfileAnalyzerSnapshot *cur = [SCIProfileAnalyzerStorage currentSnapshotForUserPK:pk];
     SCIProfileAnalyzerSnapshot *prev = [SCIProfileAnalyzerStorage previousSnapshotForUserPK:pk];
     SCIProfileAnalyzerSnapshot *base = [SCIProfileAnalyzerStorage baselineSnapshotForUserPK:pk];
-    // Baseline wins when present; the toggle only drives its lifecycle.
+    // Baseline wins when present (toggled via Keep scan history).
     SCIProfileAnalyzerSnapshot *diffAgainst = base ?: prev;
     self.report = [SCIProfileAnalyzerReport reportFromCurrent:cur previous:diffAgainst];
+    self.visits = [SCIProfileAnalyzerStorage visitedProfilesForUserPK:pk];
     [self rebuildCategories];
     [self refreshHeader];
     [self.tableView reloadData];
@@ -696,10 +734,21 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
         ];
     };
     self.categories = build();
+
+    SCIPACategoryDescriptor *visited = [SCIPACategoryDescriptor new];
+    visited.category = SCIPACategoryVisitedProfiles;
+    visited.title = SCILocalized(@"Visited profiles");
+    visited.subtitle = [SCIUtils getBoolPref:@"profile_analyzer_track_visits"]
+        ? SCILocalized(@"Profiles you've opened recently")
+        : SCILocalized(@"Tracking off — enable below to log visits");
+    visited.symbol = @"eye.circle.fill";
+    visited.color = [UIColor systemTealColor];
+    visited.count = self.visits.count;
+    visited.standalone = YES;
+    self.trackingCategories = @[visited];
 }
 
-// Snapshot-backed paint: only scan-date + warning. Identity + stats + avatar
-// are owned by loadHeaderLayered so fieldCache always wins.
+// Snapshot-backed paint: scan-date + warning. Identity is owned by loadHeaderLayered.
 - (void)refreshHeader {
     self.headerView.scanDateLabel.text = self.report.current
         ? [self scanDateText]
@@ -719,8 +768,14 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 
 - (void)refreshWarning {
     SCIProfileAnalyzerSnapshot *cur = self.report.current;
-    NSInteger followers = cur ? cur.followerCount
-                               : [[self fieldCacheForUser:[[SCIUtils activeUserSession] valueForKey:@"user"]][@"follower_count"] integerValue];
+    NSInteger followers = cur.followerCount;
+    if (!cur) {
+        @try {
+            id session = [SCIUtils activeUserSession];
+            id igUser = session ? [session valueForKey:@"user"] : nil;
+            followers = [[self fieldCacheForUser:igUser][@"follower_count"] integerValue];
+        } @catch (__unused id e) {}
+    }
     if (followers > SCIProfileAnalyzerMaxFollowerCount) {
         self.headerView.warningLabel.hidden = NO;
         self.headerView.warningLabel.text = [NSString stringWithFormat:
@@ -751,7 +806,6 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 
     __weak typeof(self) weakSelf = self;
     [[SCIProfileAnalyzerService sharedService] runForSelfWithHeaderInfo:^(NSDictionary *userInfo) {
-        // Paint the header the moment user-info returns — before follower fetch.
         [weakSelf paintHeaderFromUserInfo:userInfo];
     } progress:^(NSString *status, double fraction) {
         weakSelf.headerView.progressLabel.text = status;
@@ -761,14 +815,29 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     }];
 }
 
+// IG payloads carry NSNull for absent fields — coerce safely.
+static NSString *sciHeaderString(NSDictionary *d, NSString *key) {
+    id v = d[key];
+    return [v isKindOfClass:[NSString class]] ? (NSString *)v : nil;
+}
+static NSInteger sciHeaderInteger(NSDictionary *d, NSString *key) {
+    id v = d[key];
+    if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v integerValue];
+    if ([v isKindOfClass:[NSString class]]) return [(NSString *)v integerValue];
+    return 0;
+}
+
 - (void)paintHeaderFromUserInfo:(NSDictionary *)user {
-    NSString *username = user[@"username"];
-    NSString *fullName = user[@"full_name"];
-    NSString *picURL = user[@"profile_pic_url"];
-    NSInteger followers = [user[@"follower_count"] integerValue];
-    NSInteger following = [user[@"following_count"] integerValue];
-    NSInteger posts = [user[@"media_count"] integerValue];
-    self.headerView.fullNameLabel.text = fullName.length ? fullName : (username.length ? username : SCILocalized(@"No scan yet"));
+    if (![user isKindOfClass:[NSDictionary class]]) return;
+    NSString *username = sciHeaderString(user, @"username");
+    NSString *fullName = sciHeaderString(user, @"full_name");
+    NSString *picURL   = sciHeaderString(user, @"profile_pic_url");
+    NSInteger followers = sciHeaderInteger(user, @"follower_count");
+    NSInteger following = sciHeaderInteger(user, @"following_count");
+    NSInteger posts     = sciHeaderInteger(user, @"media_count");
+
+    self.headerView.fullNameLabel.text = fullName.length ? fullName
+                                       : (username.length ? username : SCILocalized(@"No scan yet"));
     self.headerView.usernameLabel.text = username.length ? [NSString stringWithFormat:@"@%@", username] : @"";
     [self.headerView setStatsLabelsPosts:[self compactNumber:posts]
                               followers:[self compactNumber:followers]
@@ -779,7 +848,25 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
             if (img) iv.image = img;
         }];
     }
+    // tableHeaderView is sized once when assigned; longer text needs a re-measure.
+    [self resizeTableHeader];
 }
+
+- (void)resizeTableHeader {
+    UIView *header = self.headerContainer;
+    if (!header || !self.tableView) return;
+    CGFloat w = self.tableView.bounds.size.width;
+    if (w < 1) return;
+    [header setNeedsLayout];
+    [header layoutIfNeeded];
+    CGFloat h = [header systemLayoutSizeFittingSize:CGSizeMake(w, UILayoutFittingCompressedSize.height)
+                      withHorizontalFittingPriority:UILayoutPriorityRequired
+                            verticalFittingPriority:UILayoutPriorityFittingSizeLevel].height;
+    if (fabs(h - header.frame.size.height) < 0.5 && self.tableView.tableHeaderView == header) return;
+    header.frame = CGRectMake(0, 0, w, h);
+    self.tableView.tableHeaderView = header;   // reassignment forces re-measure
+}
+
 
 - (void)onAnalysisFinished:(SCIProfileAnalyzerSnapshot *)snapshot error:(NSError *)error {
     self.running = NO;
@@ -803,8 +890,7 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 
     NSString *pk = [SCIUtils currentUserPK];
     [SCIProfileAnalyzerStorage saveSnapshot:snapshot forUserPK:pk];
-    // Baseline lifecycle lives at scan boundaries so flipping the toggle
-    // mid-session doesn't wipe what's on screen.
+    // Baseline lifecycle is bound to scans so toggling mid-session doesn't wipe state.
     BOOL accumulate = [SCIUtils getBoolPref:@"profile_analyzer_accumulate"];
     BOOL baselineExists = [SCIProfileAnalyzerStorage baselineSnapshotForUserPK:pk] != nil;
     if (accumulate && !baselineExists) {
@@ -827,14 +913,28 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 }
 
 - (void)resetTapped {
+    NSString *pk = [SCIUtils currentUserPK];
     UIAlertController *a = [UIAlertController alertControllerWithTitle:SCILocalized(@"Reset analyzer data?")
-                                                              message:SCILocalized(@"Removes cached snapshots for this account. You'll lose since-last-scan diffs.")
-                                                       preferredStyle:UIAlertControllerStyleAlert];
-    [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
-    [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Reset") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
-        [SCIProfileAnalyzerStorage resetForUserPK:[SCIUtils currentUserPK]];
+                                                              message:SCILocalized(@"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history.")
+                                                       preferredStyle:UIAlertControllerStyleActionSheet];
+    [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Reset snapshots") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
+        [SCIProfileAnalyzerStorage resetForUserPK:pk];
         [self loadCachedReport];
     }]];
+    [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Clear visited profiles") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
+        [SCIProfileAnalyzerStorage clearVisitsForUserPK:pk];
+        [self loadCachedReport];
+    }]];
+    [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Reset everything") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
+        [SCIProfileAnalyzerStorage resetForUserPK:pk];
+        [SCIProfileAnalyzerStorage clearVisitsForUserPK:pk];
+        [self loadCachedReport];
+    }]];
+    [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+    if (a.popoverPresentationController) {
+        a.popoverPresentationController.sourceView = self.view;
+        a.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width / 2, self.view.bounds.size.height - 40, 1, 1);
+    }
     [self presentViewController:a animated:YES completion:nil];
 }
 
@@ -859,40 +959,45 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 
 #pragma mark - Table
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tv { return 3; }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tv { return 4; }
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return (NSInteger)self.categories.count;
-    if (section == 1) return 1;           // Preferences: keep-changes toggle
-    return 2;                              // Actions: About + Reset
+    if (section == 1) return (NSInteger)self.trackingCategories.count;
+    if (section == 2) return 2;
+    return 2;
 }
 - (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section {
     if (section == 0) return SCILocalized(@"Categories");
-    if (section == 1) return SCILocalized(@"Preferences");
+    if (section == 1) return SCILocalized(@"Tracking");
+    if (section == 2) return SCILocalized(@"Preferences");
     return @"";
 }
 - (NSString *)tableView:(UITableView *)tv titleForFooterInSection:(NSInteger)section {
-    if (section == 1) return SCILocalized(@"When on, scans compare against your first scan so new/lost followers and profile updates don't disappear between scans.");
+    if (section == 2) return SCILocalized(@"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here.");
     return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1) return [self preferencesCellForRow:indexPath.row tableView:tv];
-    if (indexPath.section == 2) return [self actionCellForRow:indexPath.row tableView:tv];
+    if (indexPath.section == 2) return [self preferencesCellForRow:indexPath.row tableView:tv];
+    if (indexPath.section == 3) return [self actionCellForRow:indexPath.row tableView:tv];
     SCIPACategoryCell *cell = [tv dequeueReusableCellWithIdentifier:@"cat" forIndexPath:indexPath];
-    SCIPACategoryDescriptor *d = self.categories[indexPath.row];
+    SCIPACategoryDescriptor *d = (indexPath.section == 1)
+        ? self.trackingCategories[indexPath.row]
+        : self.categories[indexPath.row];
     BOOL waitingForPrev = d.requiresPrevious && !self.report.previous;
     BOOL hasReport = self.report.current != nil;
-    BOOL disabled = waitingForPrev || !hasReport || d.count == 0;
+    BOOL disabled = d.standalone ? (d.count == 0) : (waitingForPrev || !hasReport || d.count == 0);
 
     cell.titleLabel.text = d.title;
-    if (waitingForPrev) {
-        cell.subtitleLabel.text = SCILocalized(@"Available after your next scan");
-    } else if (!hasReport) {
+    if (d.standalone) {
         cell.subtitleLabel.text = d.subtitle;
+    } else if (waitingForPrev) {
+        cell.subtitleLabel.text = SCILocalized(@"Available after your next scan");
     } else {
         cell.subtitleLabel.text = d.subtitle;
     }
-    cell.countLabel.text = (waitingForPrev || !hasReport) ? @"—" : [NSString stringWithFormat:@"%ld", (long)d.count];
+    BOOL showDash = !d.standalone && (waitingForPrev || !hasReport);
+    cell.countLabel.text = showDash ? @"—" : [NSString stringWithFormat:@"%ld", (long)d.count];
     cell.iconBadge.backgroundColor = disabled ? [UIColor systemGray3Color] : d.color;
     cell.iconView.image = [UIImage systemImageNamed:d.symbol];
     cell.contentView.alpha = disabled ? 0.5 : 1.0;
@@ -902,47 +1007,69 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tv deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 1) return;  // toggle row handles its own tap
-    if (indexPath.section == 2) {
+    if (indexPath.section == 2) return;
+    if (indexPath.section == 3) {
         if (indexPath.row == 0) [self infoTapped];
         else [self resetTapped];
         return;
     }
-    SCIPACategoryDescriptor *d = self.categories[indexPath.row];
-    if (d.requiresPrevious && !self.report.previous) return;
-    if (!self.report.current) return;
+    SCIPACategoryDescriptor *d = (indexPath.section == 1)
+        ? self.trackingCategories[indexPath.row]
+        : self.categories[indexPath.row];
+    if (!d.standalone) {
+        if (d.requiresPrevious && !self.report.previous) return;
+        if (!self.report.current) return;
+    }
     if (d.count == 0) return;
     [self.navigationController pushViewController:[self listVCForCategory:d] animated:YES];
 }
 
 - (UITableViewCell *)preferencesCellForRow:(NSInteger)row tableView:(UITableView *)tv {
-    static NSString *rid = @"pref";
+    NSString *rid = (row == 0) ? @"pref_acc" : @"pref_visit";
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:rid];
-    if (!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:rid];
+    if (!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:rid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = SCILocalized(@"Keep scan history");
-    cell.imageView.image = [UIImage systemImageNamed:@"clock.arrow.circlepath"];
-    cell.imageView.tintColor = [UIColor systemIndigoColor];
+    cell.detailTextLabel.numberOfLines = 0;
+    cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
 
     UISwitch *sw = [UISwitch new];
-    sw.on = [SCIUtils getBoolPref:@"profile_analyzer_accumulate"];
     sw.onTintColor = [SCIUtils SCIColor_Primary];
-    [sw addTarget:self action:@selector(accumulateToggled:) forControlEvents:UIControlEventValueChanged];
+
+    if (row == 0) {
+        cell.textLabel.text = SCILocalized(@"Keep scan history");
+        cell.detailTextLabel.text = SCILocalized(@"Compare every scan against your first one");
+        cell.imageView.image = [UIImage systemImageNamed:@"clock.arrow.circlepath"];
+        cell.imageView.tintColor = [UIColor systemIndigoColor];
+        sw.on = [SCIUtils getBoolPref:@"profile_analyzer_accumulate"];
+        [sw addTarget:self action:@selector(accumulateToggled:) forControlEvents:UIControlEventValueChanged];
+    } else {
+        cell.textLabel.text = SCILocalized(@"Track visited profiles");
+        cell.detailTextLabel.text = SCILocalized(@"Logs every profile you open. Stays on-device.");
+        cell.imageView.image = [UIImage systemImageNamed:@"eye.circle"];
+        cell.imageView.tintColor = [UIColor systemTealColor];
+        sw.on = [SCIUtils getBoolPref:@"profile_analyzer_track_visits"];
+        [sw addTarget:self action:@selector(trackVisitsToggled:) forControlEvents:UIControlEventValueChanged];
+    }
     cell.accessoryView = sw;
     return cell;
+}
+
+- (void)trackVisitsToggled:(UISwitch *)sw {
+    [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:@"profile_analyzer_track_visits"];
+    [self rebuildCategories];
+    [self.tableView reloadData];
 }
 
 - (void)accumulateToggled:(UISwitch *)sw {
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:@"profile_analyzer_accumulate"];
     NSString *pk = [SCIUtils currentUserPK];
     if (sw.isOn) {
-        // Promote the current snapshot to baseline immediately.
         if (![SCIProfileAnalyzerStorage baselineSnapshotForUserPK:pk] && self.report.current) {
             [SCIProfileAnalyzerStorage saveBaselineSnapshot:self.report.current forUserPK:pk];
             [self loadCachedReport];
         }
     }
-    // Flipping off is deferred — the baseline is dropped on the next scan.
+    // Flipping off defers — baseline drops on next scan.
 }
 
 - (UITableViewCell *)actionCellForRow:(NSInteger)row tableView:(UITableView *)tv {
@@ -969,7 +1096,9 @@ typedef NS_ENUM(NSInteger, SCIPACategory) {
     SCIProfileAnalyzerReport *r = self.report;
     switch (d.category) {
         case SCIPACategoryMutual:
-            return [[SCIProfileAnalyzerListViewController alloc] initWithTitle:d.title users:r.mutualFollowers kind:SCIPAListKindPlain];
+            return [[SCIProfileAnalyzerListViewController alloc] initWithTitle:d.title users:r.mutualFollowers kind:SCIPAListKindMutual];
+        case SCIPACategoryVisitedProfiles:
+            return [[SCIProfileAnalyzerListViewController alloc] initVisitedListWithTitle:d.title visits:self.visits];
         case SCIPACategoryNotFollowingBack:
             return [[SCIProfileAnalyzerListViewController alloc] initWithTitle:d.title users:r.notFollowingYouBack kind:SCIPAListKindUnfollow];
         case SCIPACategoryDontFollowBack:

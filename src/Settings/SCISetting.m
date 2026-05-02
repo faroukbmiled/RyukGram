@@ -148,6 +148,23 @@
     return setting;
 }
 
+// MARK: - + colorCellWithTitle
+
++ (instancetype)colorCellWithTitle:(NSString *)title
+                          subtitle:(NSString *)subtitle
+                       defaultsKey:(NSString *)defaultsKey
+                      defaultColor:(nullable UIColor *)defaultColor
+{
+    SCISetting *setting = [[self alloc] initWithType:SCITableCellColor];
+
+    setting.title = title;
+    setting.subtitle = subtitle;
+    setting.defaultsKey = defaultsKey;
+    setting.defaultColor = defaultColor;
+
+    return setting;
+}
+
 # pragma mark + menuCellWithTitle
 
 + (instancetype)menuCellWithTitle:(NSString *)title

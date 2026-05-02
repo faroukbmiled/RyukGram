@@ -2,7 +2,7 @@
 #import "../../Utils.h"
 #import "../../Tweak.h"
 
-static NSString *const kRepo = @"faroukbmiled/RyukGram";
+#define kRepo SCIRepoSlug
 // Stores the SCIVersionString of the last tweak build whose popup was shown.
 // When the tweak updates, this mismatches and triggers a fresh check.
 static NSString *const kLastSeenVersionKey = @"sci_changelog_last_seen_version";

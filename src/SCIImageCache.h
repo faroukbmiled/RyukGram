@@ -7,4 +7,7 @@
 
 + (void)loadImageFromURL:(NSURL *)url completion:(void (^)(UIImage *_Nullable image))completion;
 
+// Raw bytes variant — shares the same disk cache. Completion on main queue.
++ (void)loadDataFromURL:(NSURL *)url completion:(void (^)(NSData *_Nullable data))completion;
+
 @end

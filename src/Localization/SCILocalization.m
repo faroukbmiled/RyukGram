@@ -125,7 +125,9 @@ NSArray<NSDictionary<NSString *, NSString *> *> *SCIAvailableLanguages(void) {
             [seen addObject:code];
 
             NSLocale *loc = [NSLocale localeWithLocaleIdentifier:code];
-            NSString *native = [loc localizedStringForLanguageCode:code] ?: code;
+            // Identifier-form keeps scripted/regional codes distinct (zh-Hant vs zh-Hans).
+            NSString *native = [loc localizedStringForLocaleIdentifier:code];
+            if (!native.length) native = [loc localizedStringForLanguageCode:code] ?: code;
             if (native.length) native = [[[native substringToIndex:1] uppercaseString]
                                           stringByAppendingString:[native substringFromIndex:1]];
             [result addObject:@{@"code": code, @"native": native}];

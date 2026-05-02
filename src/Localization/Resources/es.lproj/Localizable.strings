@@ -57,7 +57,6 @@
  *  - Keys and values are both quoted; every line ends with a semicolon.
  */
 
-
 //////////////////////////////////////////////////////////////////////////////
 //               CHROME — TOP BAR, LANGUAGE PICKER, FIRST-RUN               //
 // Shown on the root Settings screen: title, search bar, the globe language //
@@ -84,8 +83,11 @@
 // Settings → General tab                                                   //
 //////////////////////////////////////////////////////////////////////////////
 
+"Action button icon" = "Icono del botón de acción";
+"Action buttons" = "Botones de acción";
 "Adds a copy option to the comment long-press menu" = "Añade la opción de copiar en el menú que aparece al mantener pulsado un comentario";
-"Adds a download option for GIF comments" = "Añade la opción de descargar los GIF en comentarios";
+"Adds download and copy options to GIF comments" = "Añade opciones de descargar y copiar a los comentarios GIF";
+"Auto-reveals sensitive media" = "Revela automáticamente el contenido sensible";
 "Anonymous live viewing" = "Ver directos de forma anónima";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "Bloquea el latido del contador de espectadores para que el transmisor no te vea — tampoco verás el contador de espectadores";
 "Browser" = "Navegador";
@@ -146,10 +148,20 @@
 "Rewrites copied/shared links to use an embed-friendly domain for previews in Discord, Telegram, etc." = "Reescribe enlaces copiados/compartidos para utilizar un dominio compatible con vistas previas embebidas en Discord, Telegram, etc.";
 "Search bars will no longer save your recent searches" = "Las barras de búsqueda ya no guardarán tus búsquedas recientes";
 "Sharing" = "Compartir";
+"Skip sensitive content covers" = "Omitir avisos de contenido sensible";
 "Strip tracking from links" = "Eliminar rastreo de los enlaces";
 "Strip tracking params" = "Eliminar parámetros de rastreo";
 "Toggle live comments" = "Alternar comentarios en vivo";
 "Use detailed color picker" = "Usar selector de color detallado";
+"Custom music sticker color" = "Color personalizado para sticker de música";
+"Long-press the color wheel on a music or lyric sticker to pick any solid or gradient color" = "Mantén pulsada la rueda de colores en un sticker de música o letras para elegir cualquier color sólido o degradado";
+"Allow video in photo sticker" = "Permitir vídeo en el sticker de foto";
+"Lets the photo sticker picker show videos too, not just photos" = "Permite que el selector de stickers de foto también muestre vídeos, no solo fotos";
+"Solid color" = "Color sólido";
+"Gradient color" = "Color en degradado";
+"Start" = "Inicio";
+"End" = "Fin";
+"Used across feed, stories, reels and DMs" = "Se usa en feed, historias, reels y DMs";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               DATE FORMAT                                //
@@ -230,6 +242,8 @@
 "Removes suggested posts" = "Elimina las publicaciones sugeridas";
 "Scroll to top without refreshing when tapping Home" = "Desplazarse hacia arriba sin actualizar al pulsar el botón de Inicio";
 "Show action button" = "Mostrar botón de acción";
+"Show date" = "Mostrar fecha";
+"Adds the date as a small header at the top of the action menu" = "Añade la fecha como un pequeño encabezado en la parte superior del menú de acciones";
 "Stories tray" = "Bandeja de historias";
 "Tapping Home does nothing when already on feed" = "Pulsar botón de Inicio no hace nada cuando te encuentres en la pestaña de Feed (Inicio)";
 "Tray long-press actions" = "Acciones al mantener pulsado en la bandeja";
@@ -250,7 +264,11 @@
 "Disable tab button refresh" = "Deshabilitar actualización con el botón de la pestaña";
 "Doom scrolling limit" = "Límite de doom scrolling";
 "Forces the progress bar to appear on every reel" = "Fuerza la barra de progreso a aparecer en todos los reels";
+"Hide friends avatars" = "Ocultar avatares de amigos";
 "Hide reels header" = "Ocultar el encabezado de los reels";
+"Hide social context overlay" = "Ocultar contexto social flotante";
+"Hides the avatar bubbles next to the Friends tab in reels" = "Oculta los avatares junto a la pestaña Amigos en los reels";
+"Hides the floating overlay showing who reposted or commented on reels" = "Oculta el panel flotante que muestra quién republicó o comentó los reels";
 "Hides the repost button on the reels sidebar" = "Oculta el botón repost en la barra lateral de los reels";
 "Hides the top navigation bar when watching reels" = "Oculta la barra de navegación superior al ver reels";
 "Hiding" = "Ocultar";
@@ -365,10 +383,12 @@
 "Show mentioned users in eye button and story menu" = "Mostrar usuarios mencionados en el botón con forma de ojo (👁) y el menú de la historia";
 "Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "Muestra un botón con forma de ojo (👁) en las historias para añadir o eliminar usuarios de la lista. Desactivado = Usar el menú de los 3 puntos o solo mantener pulsado";
 "Stickers" = "Stickers";
-"Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force Quiz brings the legacy Quiz sticker back into the story composer tray." = "Mira los resultados de encuestas/cuestionarios/deslizador antes de interactuar — aún puedes tocar para votar con normalidad. 'Forzar cuestionario' devuelve el sticker clásico de cuestionario a la bandeja del editor de historias.";
+"Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "Mira los resultados de encuestas/cuestionarios/deslizador antes de interactuar — aún puedes tocar para votar con normalidad. 'Forzar stickers clásicos' devuelve los stickers de cuestionario y revelado al editor de historias.";
 "Peek at poll/quiz/slider results on reels before interacting — you can still tap to vote normally." = "Mira los resultados de encuestas/cuestionarios/deslizador en reels antes de interactuar — aún puedes tocar para votar con normalidad.";
-"Force Quiz sticker in tray" = "Forzar sticker de cuestionario";
-"Adds Quiz back to the story sticker picker" = "Devuelve el cuestionario al selector de stickers de historia";
+"Force legacy stickers in tray" = "Forzar stickers clásicos en la bandeja";
+"Adds Quiz and Reveal stickers back to the picker" = "Devuelve los stickers de cuestionario y revelado al selector";
+"Bypass Reveal sticker" = "Saltar sticker de revelado";
+"Skip the DM-to-reveal step on stories with a Reveal sticker" = "Omite el paso de enviar un mensaje para revelar historias con un sticker de revelado";
 "Show quiz answer" = "Mostrar respuesta del cuestionario";
 "Circle the correct option on quiz stickers, or the leading option on polls" = "Resalta la opción correcta en cuestionarios, o la más votada en encuestas";
 "Show poll vote counts" = "Mostrar votos de encuestas";
@@ -428,9 +448,11 @@
 "Files" = "Archivos";
 "Full last active date" = "Fecha de última vez completa";
 "Hide reels blend button" = "Ocultar el botón de blend";
+"Hide send to group chat" = "Ocultar enviar a chat grupal";
 "Hide video call button" = "Ocultar botón de video llamada";
 "Hide voice call button" = "Ocultar botón de llamada";
 "Hides the blend button in DMs" = "Elimina el botón de blend en las conversaciones";
+"Removes the create/send to group chat row when sharing to multiple recipients" = "Elimina la opción de crear/enviar a chat grupal al compartir con varios destinatarios";
 "Hides typing indicator from others" = "Oculta el indicador de escribiendo para los demás";
 "Indicate unsent messages" = "Indicar eliminación de mensaje";
 "Keep deleted messages" = "Mantener mensajes eliminados";
@@ -465,6 +487,17 @@
 
 "Messages" = "Mensajes";
 "Threads" = "Hilos";
+
+//////////////////////////////////////////////////////////////////////////////
+//                            MESSAGES — INSTANTS                           //
+// Settings → Messages → Instants section                                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Adds a gallery button to the instants camera so you can send a photo from your album" = "Añade un botón de galería a la cámara de instantáneas para enviar una foto desde tu álbum";
+"Instants" = "Instantáneas";
+"Send from gallery" = "Enviar desde la galería";
+"Use" = "Usar";
+"Tweaks for the QuickSnap / Instants camera surface." = "Ajustes para la cámara de QuickSnap / Instantáneas.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                NAVIGATION                                //
@@ -511,9 +544,14 @@
 "Confirm like: Reels" = "Confirmar me gusta en reels";
 "Confirm posting comment" = "Confirmar publicar comentario";
 "Confirm repost" = "Confirmar repost";
+"Confirm send to group chat" = "Confirmar enviar a chat grupal";
+"Send to group chat?" = "¿Enviar a chat grupal?";
+"Shows an alert before creating/sending to a group chat from the share sheet" = "Muestra una alerta antes de crear/enviar a un chat grupal desde el menú de compartir";
 "Confirm vanish mode" = "Confirmar modo Vanish";
 "Confirm sticker interaction (stories)" = "Confirma interacción con stickers (historias)";
 "Confirm sticker interaction (highlights)" = "Confirma interacción con stickers (destacadas)";
+"Reaction stickers only" = "Solo stickers de reacción";
+"All" = "Todos";
 "Confirm story emoji reaction" = "Confirmar reacción con emojis en historias";
 "Confirm story like" = "Confirmar me gusta en historias";
 "Confirm unfollow" = "Confirmar dejar de seguir";
@@ -542,6 +580,11 @@
 
 "Backup & Restore" = "Copia de seguridad & restauración";
 
+"Clear selected data" = "Borrar datos seleccionados";
+"Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page." = "Exporta o importa los ajustes de RyukGram, listas excluidas y datos del Analizador de perfil. Elige cualquier combinación en cada página.";
+"Import" = "Importar";
+"Load from a JSON file" = "Cargar desde un archivo JSON";
+"Save to a JSON file" = "Guardar en un archivo JSON";
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
 // Settings → Advanced tab                                                  //
@@ -570,12 +613,14 @@
 "Nothing to clear" = "Nada que limpiar";
 "Off skips the size scan when Advanced opens." = "Desactivado omite el escaneo de tamaño al abrir Avanzado.";
 "Pause playback when opening settings" = "Pausa la reproducción al abrir la configuración";
+"Preserve messages database" = "Conservar base de datos de mensajes";
 "Pauses any playing video/audio when settings opens" = "Pausa cualquier reproducción de video o audio cuando se abre la configuración";
 "Prevents Instagram from resetting settings after crashes (at your own risk)" = "Evita que Instagram restablezca la configuración después de un cierre inesperado\n(¡Bajo tu propia responsabilidad!)";
 "Remove Instagram's cached images, videos, and temporary files." = "Elimina imágenes, videos y archivos temporales en caché de Instagram.";
 "Reset onboarding state" = "Restablecer estado onboarding";
 "Run a silent cache clear on launch when the interval has elapsed." = "Ejecuta una limpieza silenciosa al iniciar cuando ha pasado el intervalo.";
 "Show cache size" = "Mostrar tamaño de caché";
+"Skip the messages database when clearing — keeps DMs, drafts, and saved messages." = "Omite la base de datos de mensajes al limpiar — conserva DMs, borradores y mensajes guardados.";
 "Show tweak settings on app launch" = "Muestra la configuración del Tweak cuando se inicia la aplicación";
 "Weekly" = "Semanal";
 
@@ -727,6 +772,9 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "A message was unsent" = "Se anuló el envío de un mensaje";
+"%@ unsent a message" = "%@ anuló un mensaje";
+"%@ unsent a message from %@" = "%1$@ anuló un mensaje de %2$@";
+"Message from %@ was unsent" = "Se anuló un mensaje de %@";
 "Add" = "Añadir";
 "Add to block list" = "Añadir a la lista de bloqueo";
 "Add to block list?" = "¿Añadir a la lista de bloqueo?";
@@ -738,6 +786,8 @@
 "Blocked" = "Bloqueado";
 "Cancel" = "Cancelar";
 "Clear preserved messages?" = "¿Borrar mensajes guardados?";
+"Refreshing the DMs tab will clear %lu preserved unsent message. This cannot be undone." = "Actualizar los mensajes borrará %lu mensaje guardado. Esto no se puede deshacer.";
+"Refreshing the DMs tab will clear %lu preserved unsent messages. This cannot be undone." = "Actualizar los mensajes borrará %lu mensajes guardados. Esto no se puede deshacer.";
 "Converting..." = "Convirtiendo...";
 "Copy text" = "Copiar texto";
 "Could not find media" = "No se logró encontrar medios";
@@ -757,7 +807,9 @@
 "Excluded" = "Excluído";
 "Extracting audio..." = "Extrayendo audio...";
 "Failed to encode GIF" = "No se logró codificar el GIF";
+"FFmpeg conversion failed" = "Falló la conversión con FFmpeg";
 "File sending not supported" = "Enviar archivos no soportado";
+"Format not supported without FFmpegKit" = "Formato no compatible sin FFmpegKit";
 "Follow" = "Seguir";
 "Following" = "Siguiendo";
 "Inserts a button on disappearing media overlays" = "Añade un botón sobre los medios efímeros";
@@ -778,6 +830,7 @@
 "No mentions in this story" = "Sin menciones en esta historia";
 "No thread key" = "Sin llave";
 "No voice send method found" = "No se encontró método para envío de voz";
+"no audio track could be read" = "no se pudo leer ninguna pista de audio";
 "Note not found" = "Nota no encontrada";
 "Note text copied" = "Texto de la nota copiado";
 "Open GitHub" = "Abrir GitHub";
@@ -802,7 +855,10 @@
 "Story read receipts disabled" = "Aviso de visualización de historia DESACTIVADO";
 "Story read receipts enabled" = "Aviso de visualización de historia ACTIVADO";
 "This chat will resume normal read-receipt behavior." = "Este chat volverá a funcionar con el sistema habitual de confirmaciones de lectura.";
+"This file" = "Este archivo";
 "Total: %@" = "Total: %@";
+"%@ can't be converted" = "No se puede convertir %@";
+"iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "Las APIs de audio de iOS no pudieron procesar este archivo%@%@\n\nPuedes intentar enviarlo a Instagram tal cual — el servidor de IG puede aceptarlo, o puede fallar silenciosamente.\n\nPara solicitar soporte nativo, abre un ticket:";
 "Un-exclude chat" = "No excluir conversación";
 "Un-exclude chat?" = "¿No excluir conversación?";
 "Un-exclude story seen" = "No excluir de visualización de la historia";
@@ -864,21 +920,21 @@
 
 "Theme" = "Tema";
 "Appearance" = "Apariencia";
-"Keyboard" = "Teclado";
-"Force dark mode" = "Forzar modo oscuro";
-"Keep Instagram in dark appearance regardless of iOS system setting" = "Mantén Instagram en apariencia oscura sin importar el ajuste de iOS";
-"Full OLED" = "OLED completo";
-"Replace Instagram's dark grays with pure black across the entire app" = "Sustituye los grises oscuros de Instagram por negro puro en toda la app";
-"OLED chat theme" = "Tema OLED en chats";
-"Pure black DM thread background and incoming message bubbles" = "Fondo negro puro en los mensajes directos y en las burbujas entrantes";
-"Keyboard theme" = "Tema del teclado";
-"Override the keyboard appearance when typing inside Instagram" = "Cambia la apariencia del teclado al escribir dentro de Instagram";
-"Dark uses the system dark keyboard. OLED forces the keyboard backdrop to pure black." = "Oscuro usa el teclado oscuro del sistema. OLED fuerza el fondo del teclado a negro puro.";
+"Light" = "Claro";
 "Dark" = "Oscuro";
 "OLED" = "OLED";
+"Off, Light, Dark, or OLED" = "Desactivado, Claro, Oscuro u OLED";
+"Force theme" = "Forzar tema";
+"When off, follow iOS system appearance" = "Si está desactivado, sigue la apariencia del sistema iOS";
+"\"Force theme\" overrides iOS appearance; leave it off to follow the system." = "\"Forzar tema\" anula la apariencia de iOS; déjalo desactivado para seguir el sistema.";
+"OLED chat theme" = "Tema OLED en chats";
+"Pure black DM thread + incoming bubbles" = "Fondo negro puro en mensajes directos y burbujas entrantes";
+"Keyboard theme" = "Tema del teclado";
+"Override the keyboard appearance when typing" = "Cambia la apariencia del teclado al escribir";
 "Apply & restart" = "Aplicar y reiniciar";
 "Restart Instagram to apply your theme changes" = "Reinicia Instagram para aplicar los cambios de tema";
-"Theme changes only take effect after an app restart. Tap Apply below when you're done choosing." = "Los cambios de tema solo se aplican tras reiniciar la app. Toca Aplicar cuando termines de elegir.";
+"Reset theme" = "Restablecer tema";
+"Turn every theme option off and restart" = "Desactivar todas las opciones de tema y reiniciar";
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE ANALYZER                              //
@@ -910,11 +966,16 @@
 "No scan yet" = "Aún sin análisis";
 "Not following you back" = "No te siguen de vuelta";
 "OK" = "OK";
+"Updated %@ (%ld keys). Restart to apply." = "Actualizado %@ (%ld claves). Reinicia para aplicar.";
+"Restart now" = "Reiniciar ahora";
+"File is empty or not a valid .strings file." = "El archivo está vacío o no es un archivo .strings válido.";
+"Error" = "Error";
+"Could not write file." = "No se pudo escribir el archivo.";
 "Private account" = "Cuenta privada";
 "Profile Analyzer" = "Analizador de perfil";
 "Profile picture changed" = "Foto de perfil cambiada";
 "Profile updates" = "Cambios de perfil";
-"Removes cached snapshots for this account. You'll lose since-last-scan diffs." = "Borra las instantáneas guardadas de esta cuenta. Perderás los cambios desde el último análisis.";
+
 "Request failed" = "Solicitud fallida";
 "Reset analyzer data?" = "¿Restablecer datos del analizador?";
 "Run analysis" = "Ejecutar análisis";
@@ -1043,6 +1104,8 @@
 "Name (A–Z)" = "Nombre (A–Z)";
 "No DM thread found with @%@" = "No se encontró conversación con @%@";
 "Off" = "DESACTIVADO";
+"On" = "ACTIVADO";
+"Colored" = "Coloreado";
 "Presets" = "Preajustes";
 "Recently added" = "Añadidos recientemente";
 "Remove from list" = "Eliminar de la lista";
@@ -1089,13 +1152,6 @@
 "Note copied" = "Nota copiada";
 
 //////////////////////////////////////////////////////////////////////////////
-//                       CONFIRM DIALOGS (IN-FEATURE)                       //
-// Strings from Confirm dialogs.                                            //
-//////////////////////////////////////////////////////////////////////////////
-
-"Unfollow?" = "¿Dejar de seguir?";
-
-//////////////////////////////////////////////////////////////////////////////
 //                                   MISC                                   //
 // Anything that didn't fit a named section. Usually short labels.          //
 //////////////////////////////////////////////////////////////////////////////
@@ -1134,12 +1190,15 @@
 "%@ — GitHub & Telegram" = "%@ — GitHub y Telegram";
 "About" = "Acerca de";
 "Arabic translation" = "Traducción al árabe";
-"Chinese (Traditional) translation" = "Traducción al chino (tradicional)";
+"Chinese (Traditional and Simplified) translation" = "Traducción al chino (tradicional y simplificado)";
 "Credits" = "Créditos";
 "Developers" = "Desarrolladores";
 "Donate to SoCuul" = "Donar a SoCuul";
 "installed" = "instalado";
 "Korean translation" = "Traducción al coreano";
+"Portuguese (Brazil) translation" = "Traducción al portugués (Brasil)";
+"Turkish translation" = "Traducción al turco";
+"Code contributions" = "Contribuciones de código";
 "latest" = "última";
 "Links" = "Enlaces";
 "No releases" = "Sin versiones";
@@ -1186,3 +1245,38 @@
 "Use highest resolution available" = "Usar la resolución mas alta disponible";
 "Video quality" = "Calidad de video";
 "Which quality to download" = "En qué calidad descargar";
+
+"Composer doesn't accept GIFs" = "El compositor no acepta GIFs";
+"Copy GIF link" = "Copiar enlace del GIF";
+"Custom GIF in comments" = "GIF personalizado en comentarios";
+"Failed to build GIF model" = "No se pudo crear el modelo GIF";
+"GIF link copied" = "Enlace del GIF copiado";
+"Invalid Giphy URL" = "URL de Giphy no válida";
+"Long-press the GIF button to paste any Giphy URL" = "Mantén pulsado el botón GIF para pegar cualquier URL de Giphy";
+"Paste Giphy Link" = "Pegar enlace de Giphy";
+"Paste a giphy.com URL or media ID" = "Pega una URL de giphy.com o un ID de medio";
+"Send" = "Enviar";
+
+"Tracking" = "Seguimiento";
+"Visited profiles" = "Perfiles visitados";
+"Profiles you've opened recently" = "Perfiles que abriste recientemente";
+"Tracking off — enable below to log visits" = "Seguimiento desactivado — actívalo abajo para registrar visitas";
+"Track visited profiles" = "Rastrear perfiles visitados";
+"Logs every profile you open. Stays on-device." = "Registra cada perfil que abres. Se queda en el dispositivo.";
+"Compare every scan against your first one" = "Compara cada análisis con el primero";
+"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "Mantener historial compara cada análisis con el primero. Rastrear visitas registra cada perfil que abres para revisarlos aquí.";
+"just now" = "ahora mismo";
+"%dm ago" = "hace %d min";
+"%dh ago" = "hace %d h";
+"%dd ago" = "hace %d d";
+"Visited" = "Visitado";
+"Today" = "Hoy";
+"Last 7 days" = "Últimos 7 días";
+"Last 30 days" = "Últimos 30 días";
+"Most recent" = "Más reciente";
+"Oldest first" = "Más antiguo primero";
+"Most visited" = "Más visitado";
+"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "Elige qué eliminar. Las instantáneas borran las diferencias desde el último análisis; los perfiles visitados borran el historial de visitas.";
+"Reset snapshots" = "Restablecer instantáneas";
+"Clear visited profiles" = "Borrar perfiles visitados";
+"Reset everything" = "Restablecer todo";

@@ -15,7 +15,6 @@
 
 %new - (void)addLongPressGestureRecognizer {
     if ([self.gestureRecognizers count] == 0) {
-        NSLog(@"[SCInsta] Adding tweak settings long press gesture recognizer");
 
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
         [self addGestureRecognizer:longPress];
@@ -23,9 +22,6 @@
 }
 %new - (void)handleLongPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state != UIGestureRecognizerStateBegan) return;
-    
-    NSLog(@"[SCInsta] Tweak settings gesture activated");
-
     [SCIUtils showSettingsVC:[self window]];
 }
 %end

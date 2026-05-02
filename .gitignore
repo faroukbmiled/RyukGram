@@ -55,3 +55,5 @@ zip-src.sh
 RyukGram-src-*.zip
 *.zip
 *_diff.txt
+
+PUSH.md

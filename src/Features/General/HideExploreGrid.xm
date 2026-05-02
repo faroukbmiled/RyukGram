@@ -58,17 +58,19 @@ static void sciApplyExploreHide(id vc) {
     sciSetIvarViewHidden(vc, "_shimmeringGridView", hideGrid);
 
     Ivar gvcIvar = class_getInstanceVariable([vc class], "_gridViewController");
-    if (!gvcIvar) return;
-    @try {
-        UIViewController *grid = object_getIvar(vc, gvcIvar);
-        if (![grid isKindOfClass:[UIViewController class]] || !grid.isViewLoaded) return;
-        sciSetViewVisuallyHidden(grid.view, hideGrid);
-        Ivar cvIvar = class_getInstanceVariable([grid class], "_collectionView");
-        if (cvIvar) {
-            UIView *cv = object_getIvar(grid, cvIvar);
-            if ([cv isKindOfClass:[UIView class]]) sciSetViewVisuallyHidden(cv, hideGrid);
-        }
-    } @catch (__unused id e) {}
+    if (gvcIvar) {
+        @try {
+            UIViewController *grid = object_getIvar(vc, gvcIvar);
+            if ([grid isKindOfClass:[UIViewController class]] && grid.isViewLoaded) {
+                sciSetViewVisuallyHidden(grid.view, hideGrid);
+                Ivar cvIvar = class_getInstanceVariable([grid class], "_collectionView");
+                if (cvIvar) {
+                    UIView *cv = object_getIvar(grid, cvIvar);
+                    if ([cv isKindOfClass:[UIView class]]) sciSetViewVisuallyHidden(cv, hideGrid);
+                }
+            }
+        } @catch (__unused id e) {}
+    }
 }
 
 // Algo button vs Cancel: both are IGTapButton siblings of the search bar.
@@ -85,6 +87,55 @@ static BOOL sciIsAlgoButton(UIView *btn) {
 // MARK: - VC hooks
 
 %group HideExploreGroup
+
+// Subtract the chip bar's height from contentInset.top when chips are hidden,
+// so the grid sits flush under the header. Class + ivar lookups are cached.
+static Class sciExploreGridVCClass(void) {
+    static Class c = Nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{ c = NSClassFromString(@"IGExploreGridViewController"); });
+    return c;
+}
+
+// Returns the chip bar if `cv` belongs to the explore grid, else nil.
+static inline UIView *sciExploreChipBarFor(UIView *cv) {
+    Class targetCls = sciExploreGridVCClass();
+    if (!targetCls) return nil;
+    UIResponder *r = [cv nextResponder];
+    while (r && [r class] != targetCls) r = [r nextResponder];
+    if (!r) return nil;
+    UIViewController *parent = [(UIViewController *)r parentViewController];
+    if (!parent) return nil;
+    static Ivar cbIvar = NULL;
+    static Class parentCls = Nil;
+    if (parentCls != [parent class]) {
+        parentCls = [parent class];
+        cbIvar = class_getInstanceVariable(parentCls, "_nidoChipBar");
+    }
+    if (!cbIvar) return nil;
+    UIView *cb = object_getIvar(parent, cbIvar);
+    return [cb isKindOfClass:[UIView class]] ? cb : nil;
+}
+
+static inline UIEdgeInsets sciAdjustInset(UIView *cv, UIEdgeInsets inset) {
+    if (!sciHideSearch() || gSearchFocused) return inset;
+    UIView *cb = sciExploreChipBarFor(cv);
+    if (!cb) return inset;
+    CGFloat gap = cb.frame.size.height;
+    if (gap > 0 && inset.top >= CGRectGetMaxY(cb.frame) - 0.5) {
+        inset.top -= gap;
+    }
+    return inset;
+}
+
+%hook IGListCollectionView
+- (void)setContentInset:(UIEdgeInsets)inset {
+    %orig(sciAdjustInset((UIView *)self, inset));
+}
+- (void)setScrollIndicatorInsets:(UIEdgeInsets)inset {
+    %orig(sciAdjustInset((UIView *)self, inset));
+}
+%end
 
 %hook IGExploreViewController
 - (void)viewDidLayoutSubviews {

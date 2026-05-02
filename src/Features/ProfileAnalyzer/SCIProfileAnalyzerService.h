@@ -10,14 +10,12 @@ typedef NS_ENUM(NSInteger, SCIProfileAnalyzerError) {
     SCIProfileAnalyzerErrorCancelled,
 };
 
-// Hard cap — beyond this follower count we refuse to run. Each followers
-// page returns ~25-50 users so large accounts hit IG rate limits fast.
+// Hard cap — refuse to run beyond this follower count to dodge IG rate limits.
 extern const NSInteger SCIProfileAnalyzerMaxFollowerCount;
 
 typedef void(^SCIPAProgress)(NSString *status, double fraction);
 typedef void(^SCIPACompletion)(SCIProfileAnalyzerSnapshot * _Nullable snapshot, NSError * _Nullable error);
-// Fires once, right after the self-user-info call returns. Lets the UI
-// paint the header immediately instead of waiting for the full run to finish.
+// Fires once after the self-user-info call so the header can paint immediately.
 typedef void(^SCIPAHeaderInfo)(NSDictionary *userInfo);
 
 @interface SCIProfileAnalyzerService : NSObject

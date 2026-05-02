@@ -1,24 +1,26 @@
-// Force IG into dark appearance regardless of iOS setting.
+// Forces IG into the chosen appearance when `theme_force` is on.
 
 #import "../../Utils.h"
+#import "SCITheme.h"
 
-%group ForceDarkModeGroup
+%group ForceAppearanceGroup
 
 %hook UIWindow
 - (void)makeKeyAndVisible {
     %orig;
-    self.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+    self.overrideUserInterfaceStyle = [SCITheme overrideStyle];
 }
 - (void)becomeKeyWindow {
     %orig;
-    self.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+    self.overrideUserInterfaceStyle = [SCITheme overrideStyle];
 }
 %end
 
 %end
 
 %ctor {
-    if ([SCIUtils getBoolPref:@"theme_force_dark"]) {
-        %init(ForceDarkModeGroup);
+    [SCITheme migrateLegacyPrefs];
+    if ([SCITheme shouldOverrideAppearance]) {
+        %init(ForceAppearanceGroup);
     }
 }

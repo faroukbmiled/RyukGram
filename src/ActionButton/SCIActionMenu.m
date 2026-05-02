@@ -10,6 +10,7 @@
 @property (nonatomic, copy, readwrite, nullable) NSArray<SCIAction *> *children;
 @property (nonatomic, assign, readwrite) BOOL destructive;
 @property (nonatomic, assign, readwrite) BOOL isSeparator;
+@property (nonatomic, assign, readwrite) BOOL disabled;
 @end
 
 @implementation SCIAction
@@ -47,6 +48,13 @@
 + (instancetype)separator {
     SCIAction *a = [SCIAction new];
     a.isSeparator = YES;
+    return a;
+}
+
++ (instancetype)headerWithTitle:(NSString *)title {
+    SCIAction *a = [SCIAction new];
+    a.title = title ?: @"";
+    a.disabled = YES;
     return a;
 }
 
@@ -89,6 +97,13 @@
         if (action.subtitle.length) ua.subtitle = action.subtitle;
     }
     if (action.destructive) ua.attributes = UIMenuElementAttributesDestructive;
+    if (action.disabled) {
+        if (@available(iOS 15.0, *)) {
+            ua.attributes |= UIMenuElementAttributesDisabled;
+        } else {
+            ua.attributes = UIMenuElementAttributesDisabled;
+        }
+    }
     return ua;
 }
 
@@ -97,22 +112,38 @@
 }
 
 + (UIMenu *)buildMenuWithActions:(NSArray<SCIAction *> *)actions title:(NSString *)title {
+    // Header marker → first inline group's title (small grey caption).
+    NSString *headerTitle = nil;
+    NSArray<SCIAction *> *items = actions;
+    if (actions.count > 0) {
+        SCIAction *first = actions.firstObject;
+        if (first.disabled && !first.handler && !first.isSeparator) {
+            headerTitle = first.title;
+            NSUInteger start = 1;
+            if (start < actions.count && actions[start].isSeparator) start++;
+            items = [actions subarrayWithRange:NSMakeRange(start, actions.count - start)];
+        }
+    }
+
     // Group actions between separators into inline submenus.
     NSMutableArray<UIMenuElement *> *top = [NSMutableArray array];
     NSMutableArray<UIMenuElement *> *currentGroup = [NSMutableArray array];
+    __block BOOL isFirstFlush = YES;
 
     void (^flush)(void) = ^{
         if (currentGroup.count == 0) return;
-        UIMenu *group = [UIMenu menuWithTitle:@""
+        NSString *t = (isFirstFlush && headerTitle.length) ? headerTitle : @"";
+        UIMenu *group = [UIMenu menuWithTitle:t
                                         image:nil
                                    identifier:nil
                                       options:UIMenuOptionsDisplayInline
                                      children:[currentGroup copy]];
         [top addObject:group];
         [currentGroup removeAllObjects];
+        isFirstFlush = NO;
     };
 
-    for (SCIAction *a in actions) {
+    for (SCIAction *a in items) {
         if (a.isSeparator) {
             flush();
             continue;

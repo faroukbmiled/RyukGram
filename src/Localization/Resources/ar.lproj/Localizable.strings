@@ -57,7 +57,6 @@
  *  Translation made by @bruuhim (التعريب بواسطة @bruuhim)
  */
 
-
 //////////////////////////////////////////////////////////////////////////////
 //               CHROME — TOP BAR, LANGUAGE PICKER, FIRST-RUN               //
 // Shown on the root Settings screen: title, search bar, the globe language //
@@ -84,8 +83,11 @@
 // Settings → General tab                                                   //
 //////////////////////////////////////////////////////////////////////////////
 
+"Action button icon" = "‏أيقونة زر الإجراءات‏";
+"Action buttons" = "‏أزرار الإجراءات‏";
 "Adds a copy option to the comment long-press menu" = "‏إضافة خيار النسخ إلى قائمة الضغط المطول للتعليقات‏";
-"Adds a download option for GIF comments" = "‏إضافة خيار تنزيل لتعليقات صور جيف (GIF)‏";
+"Adds download and copy options to GIF comments" = "‏يضيف خيارات التنزيل والنسخ لتعليقات GIF‏";
+"Auto-reveals sensitive media" = "‏يكشف تلقائيًا عن المحتوى الحساس‏";
 "Anonymous live viewing" = "‏مشاهدة البث المباشر مجهول الهوية‏";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "‏يمنع نبض عدّاد المشاهدين فلا يراك المذيع — ولن ترى عدّاد المشاهدين أيضاً‏";
 "Browser" = "‏المتصفح‏";
@@ -146,10 +148,20 @@
 "Rewrites copied/shared links to use an embed-friendly domain for previews in Discord, Telegram, etc." = "‏إعادة كتابة الروابط المنسوخة والمشتركة لاستخدام نطاق ملائم للمعاينة في ديسكورد وتيليجرام وغيرها.‏";
 "Search bars will no longer save your recent searches" = "‏لن تقوم أشرطة البحث بحفظ عمليات بحثك الأخيرة بعد الآن‏";
 "Sharing" = "‏المشاركة‏";
+"Skip sensitive content covers" = "‏تخطي حواجز المحتوى الحساس‏";
 "Strip tracking from links" = "‏تجريد الروابط من التتبع‏";
 "Strip tracking params" = "‏إزالة معلمات التتبع‏";
 "Toggle live comments" = "‏تبديل التعليقات المباشرة‏";
 "Use detailed color picker" = "‏استخدام منتقي الألوان التفصيلي‏";
+"Custom music sticker color" = "‏لون مخصص لملصق الموسيقى‏";
+"Long-press the color wheel on a music or lyric sticker to pick any solid or gradient color" = "‏اضغط مطولاً على عجلة الألوان في ملصق الموسيقى أو الكلمات لاختيار أي لون موحد أو متدرّج‏";
+"Allow video in photo sticker" = "‏السماح بالفيديو في ملصق الصورة‏";
+"Lets the photo sticker picker show videos too, not just photos" = "‏يسمح لمنتقي ملصق الصورة بعرض مقاطع الفيديو أيضًا، وليس الصور فقط‏";
+"Solid color" = "‏لون موحد‏";
+"Gradient color" = "‏لون متدرّج‏";
+"Start" = "‏البداية‏";
+"End" = "‏النهاية‏";
+"Used across feed, stories, reels and DMs" = "‏يُستخدَم في المنشورات والقصص والريلز والرسائل‏";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               DATE FORMAT                                //
@@ -230,6 +242,8 @@
 "Removes suggested posts" = "‏إزالة المنشورات المقترحة‏";
 "Scroll to top without refreshing when tapping Home" = "‏التمرير إلى الأعلى دون تحديث عند النقر على الصفحة الرئيسية‏";
 "Show action button" = "‏إظهار زر الإجراء‏";
+"Show date" = "‏إظهار التاريخ‏";
+"Adds the date as a small header at the top of the action menu" = "‏يُضيف التاريخ كعنوان صغير في أعلى قائمة الإجراءات‏";
 "Stories tray" = "‏شريط القصص‏";
 "Tapping Home does nothing when already on feed" = "‏النقر على الصفحة الرئيسية لا يفعل شيئًا عند التواجد بالفعل في اليوميات‏";
 "Tray long-press actions" = "‏إجراءات الضغط المطول على الشريط‏";
@@ -250,7 +264,11 @@
 "Disable tab button refresh" = "‏تعطيل تحديث زر التبويب‏";
 "Doom scrolling limit" = "‏حد التمرير المفرط‏";
 "Forces the progress bar to appear on every reel" = "‏يفرض ظهور شريط التقدم على كل مقطع ريلز‏";
+"Hide friends avatars" = "‏إخفاء صور الأصدقاء‏";
 "Hide reels header" = "‏إخفاء ترويسة ريلز‏";
+"Hide social context overlay" = "‏إخفاء طبقة السياق الاجتماعي‏";
+"Hides the avatar bubbles next to the Friends tab in reels" = "‏يخفي صور الأصدقاء بجانب علامة تبويب الأصدقاء في ريلز‏";
+"Hides the floating overlay showing who reposted or commented on reels" = "‏يخفي الطبقة العائمة التي تظهر من أعاد النشر أو علّق على الريلز‏";
 "Hides the repost button on the reels sidebar" = "‏إخفاء زر إعادة النشر على الشريط الجانبي لمقاطع ريلز‏";
 "Hides the top navigation bar when watching reels" = "‏إخفاء شريط التنقل العلوي عند مشاهدة ريلز‏";
 "Hiding" = "‏إخفاء‏";
@@ -365,10 +383,12 @@
 "Show mentioned users in eye button and story menu" = "‏إظهار المستخدمين المشار إليهم في زر المشاهدة وقائمة القصة‏";
 "Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "‏يعرض زر عين في القصص لإضافة وإزالة المستخدمين من القائمة. إيقاف = استخدم قائمة النقاط الثلاث أو الضغط المطول فقط‏";
 "Stickers" = "‏ملصقات‏";
-"Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force Quiz brings the legacy Quiz sticker back into the story composer tray." = "‏اطلع على نتائج استطلاعات الرأي/الاختبارات/شريط التمرير قبل التفاعل — لا يزال بإمكانك النقر للتصويت بشكل طبيعي. 'إجبار ظهور ملصق الاختبار' يعيد ملصق الاختبار القديم إلى لوحة إنشاء القصة.‏";
+"Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "‏اطلع على نتائج استطلاعات الرأي/الاختبارات/شريط التمرير قبل التفاعل — لا يزال بإمكانك النقر للتصويت بشكل طبيعي. 'إجبار الملصقات القديمة' يعيد ملصقَي الاختبار والكشف إلى لوحة إنشاء القصة.‏";
 "Peek at poll/quiz/slider results on reels before interacting — you can still tap to vote normally." = "‏اطلع على نتائج استطلاعات الرأي/الاختبارات/شريط التمرير في الريلز قبل التفاعل — لا يزال بإمكانك النقر للتصويت بشكل طبيعي.‏";
-"Force Quiz sticker in tray" = "‏إجبار ظهور ملصق الاختبار‏";
-"Adds Quiz back to the story sticker picker" = "‏إعادة ملصق الاختبار إلى منتقي ملصقات القصة‏";
+"Force legacy stickers in tray" = "‏إجبار ظهور الملصقات القديمة‏";
+"Adds Quiz and Reveal stickers back to the picker" = "‏إعادة ملصقَي الاختبار والكشف إلى منتقي الملصقات‏";
+"Bypass Reveal sticker" = "‏تجاوز ملصق الكشف‏";
+"Skip the DM-to-reveal step on stories with a Reveal sticker" = "‏تخطَّ خطوة إرسال رسالة لكشف القصص التي تحتوي على ملصق الكشف‏";
 "Show quiz answer" = "‏إظهار إجابة الاختبار‏";
 "Circle the correct option on quiz stickers, or the leading option on polls" = "‏تمييز الخيار الصحيح في ملصقات الاختبار أو الخيار الأكثر تصويتًا في الاستطلاعات‏";
 "Show poll vote counts" = "‏إظهار عدد أصوات الاستطلاع‏";
@@ -428,9 +448,11 @@
 "Files" = "‏الملفات‏";
 "Full last active date" = "‏تاريخ آخر ظهور كامل‏";
 "Hide reels blend button" = "‏إخفاء زر مزيج ريلز (Blend)‏";
+"Hide send to group chat" = "‏إخفاء الإرسال إلى مجموعة دردشة‏";
 "Hide video call button" = "‏إخفاء زر مكالمة الفيديو‏";
 "Hide voice call button" = "‏إخفاء زر المكالمة الصوتية‏";
 "Hides the blend button in DMs" = "‏يخفي زر المزيج في الرسائل الخاصة‏";
+"Removes the create/send to group chat row when sharing to multiple recipients" = "‏يزيل خيار إنشاء/إرسال إلى مجموعة دردشة عند المشاركة لعدة مستلمين‏";
 "Hides typing indicator from others" = "‏يخفي مؤشر الكتابة عن الآخرين‏";
 "Indicate unsent messages" = "‏الإشارة للرسائل الملغاة‏";
 "Keep deleted messages" = "‏الاحتفاظ بالرسائل المحذوفة‏";
@@ -465,6 +487,17 @@
 
 "Messages" = "‏الرسائل‏";
 "Threads" = "‏المحادثات‏";
+
+//////////////////////////////////////////////////////////////////////////////
+//                            MESSAGES — INSTANTS                           //
+// Settings → Messages → Instants section                                   //
+//////////////////////////////////////////////////////////////////////////////
+
+"Adds a gallery button to the instants camera so you can send a photo from your album" = "‏يضيف زر المعرض إلى كاميرا اللحظات السريعة لإرسال صورة من ألبومك‏";
+"Instants" = "‏اللحظات السريعة‏";
+"Send from gallery" = "‏إرسال من المعرض‏";
+"Use" = "‏استخدام‏";
+"Tweaks for the QuickSnap / Instants camera surface." = "‏تعديلات على واجهة كاميرا QuickSnap / اللحظات السريعة.‏";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                NAVIGATION                                //
@@ -511,9 +544,14 @@
 "Confirm like: Reels" = "‏تأكيد الإعجاب: ريلز‏";
 "Confirm posting comment" = "‏تأكيد نشر التعليق‏";
 "Confirm repost" = "‏تأكيد إعادة النشر‏";
+"Confirm send to group chat" = "‏تأكيد الإرسال إلى مجموعة دردشة‏";
+"Send to group chat?" = "‏إرسال إلى مجموعة دردشة؟‏";
+"Shows an alert before creating/sending to a group chat from the share sheet" = "‏يعرض تنبيهًا قبل إنشاء/إرسال إلى مجموعة دردشة من قائمة المشاركة‏";
 "Confirm vanish mode" = "‏تأكيد وضع الاختفاء‏";
 "Confirm sticker interaction (stories)" = "‏تأكيد التفاعل مع الملصقات (القصص)‏";
 "Confirm sticker interaction (highlights)" = "‏تأكيد التفاعل مع الملصقات (الهايلايت)‏";
+"Reaction stickers only" = "‏ملصقات التفاعل فقط‏";
+"All" = "‏الكل‏";
 "Confirm story emoji reaction" = "‏تأكيد تفاعل الإيموجي في القصة‏";
 "Confirm story like" = "‏تأكيد الإعجاب بالقصة‏";
 "Confirm unfollow" = "‏تأكيد إلغاء المتابعة‏";
@@ -542,6 +580,11 @@
 
 "Backup & Restore" = "‏النسخ الاحتياطي والاستعادة‏";
 
+"Clear selected data" = "مسح البيانات المحددة";
+"Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page." = "‏تصدير أو استيراد إعدادات RyukGram، القوائم المستثناة وبيانات محلل الملف الشخصي. اختر أي مجموعة في كل صفحة.";
+"Import" = "استيراد";
+"Load from a JSON file" = "تحميل من ملف JSON";
+"Save to a JSON file" = "حفظ إلى ملف JSON";
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
 // Settings → Advanced tab                                                  //
@@ -570,12 +613,14 @@
 "Nothing to clear" = "‏لا شيء للمسح‏";
 "Off skips the size scan when Advanced opens." = "‏عند الإيقاف يتم تخطي فحص الحجم عند فتح «متقدم».‏";
 "Pause playback when opening settings" = "‏إيقاف التشغيل مؤقتًا عند فتح الإعدادات‏";
+"Preserve messages database" = "‏الحفاظ على قاعدة بيانات الرسائل‏";
 "Pauses any playing video/audio when settings opens" = "‏يوقف أي فيديو أو صوت قيد التشغيل مؤقتًا عند فتح الإعدادات‏";
 "Prevents Instagram from resetting settings after crashes (at your own risk)" = "‏يمنع إنستغرام من إعادة ضبط الإعدادات بعد الانهيارات (على مسؤوليتك)‏";
 "Remove Instagram's cached images, videos, and temporary files." = "‏يُزيل صور وفيديوهات وملفات إنستغرام المؤقتة.‏";
 "Reset onboarding state" = "‏إعادة ضبط حالة التهيئة التمهيدية‏";
 "Run a silent cache clear on launch when the interval has elapsed." = "‏يُنفّذ مسحاً صامتاً للذاكرة المؤقتة عند التشغيل إذا انقضت المدة المحددة.‏";
 "Show cache size" = "‏إظهار حجم ذاكرة التخزين المؤقت‏";
+"Skip the messages database when clearing — keeps DMs, drafts, and saved messages." = "‏تخطّي قاعدة بيانات الرسائل عند المسح — يُبقي الرسائل المباشرة والمسودات والرسائل المحفوظة.‏";
 "Show tweak settings on app launch" = "‏إظهار إعدادات الأداة عند تشغيل التطبيق‏";
 "Weekly" = "‏أسبوعياً‏";
 
@@ -727,6 +772,9 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "A message was unsent" = "‏تم إلغاء إرسال رسالة‏";
+"%@ unsent a message" = "‏ألغى %@ إرسال رسالة‏";
+"%@ unsent a message from %@" = "‏ألغى %1$@ إرسال رسالة من %2$@‏";
+"Message from %@ was unsent" = "‏تم إلغاء إرسال رسالة من %@‏";
 "Add" = "‏إضافة‏";
 "Add to block list" = "‏إضافة لقائمة الحظر‏";
 "Add to block list?" = "‏إضافة لقائمة الحظر؟‏";
@@ -738,6 +786,8 @@
 "Blocked" = "‏محظور‏";
 "Cancel" = "‏إلغاء‏";
 "Clear preserved messages?" = "‏مسح الرسائل المحفوظة؟‏";
+"Refreshing the DMs tab will clear %lu preserved unsent message. This cannot be undone." = "‏تحديث الرسائل سيمسح %lu رسالة محفوظة. لا يمكن التراجع.‏";
+"Refreshing the DMs tab will clear %lu preserved unsent messages. This cannot be undone." = "‏تحديث الرسائل سيمسح %lu رسائل محفوظة. لا يمكن التراجع.‏";
 "Converting..." = "‏جارِ التحويل...‏";
 "Copy text" = "‏نسخ النص‏";
 "Could not find media" = "‏تعذر العثور على وسائط‏";
@@ -757,7 +807,9 @@
 "Excluded" = "‏مستبعد‏";
 "Extracting audio..." = "‏جارِ استخراج الصوت...‏";
 "Failed to encode GIF" = "‏فشل معالجة صورة جيف (GIF)‏";
+"FFmpeg conversion failed" = "‏فشل التحويل بواسطة FFmpeg‏";
 "File sending not supported" = "‏إرسال الملفات غير مدعوم‏";
+"Format not supported without FFmpegKit" = "‏الصيغة غير مدعومة بدون FFmpegKit‏";
 "Follow" = "‏متابعة‏";
 "Following" = "‏تُتابع‏";
 "Inserts a button on disappearing media overlays" = "‏يُضيف زراً على طبقة الوسائط المختفية‏";
@@ -778,6 +830,7 @@
 "No mentions in this story" = "‏لا توجد إشارات في هذه القصة‏";
 "No thread key" = "‏لا يوجد مفتاح للمحادثة‏";
 "No voice send method found" = "‏لم يتم العثور على طريقة لإرسال الصوت‏";
+"no audio track could be read" = "‏تعذرت قراءة أي مقطع صوتي‏";
 "Note not found" = "‏لم يتم العثور على الملاحظة‏";
 "Note text copied" = "‏تم نسخ نص الملاحظة‏";
 "Open GitHub" = "‏فتح غيت هاب (GitHub)‏";
@@ -802,7 +855,10 @@
 "Story read receipts disabled" = "‏تم تعطيل مؤشرات قراءة القصص‏";
 "Story read receipts enabled" = "‏تم تفعيل مؤشرات قراءة القصص‏";
 "This chat will resume normal read-receipt behavior." = "‏ستستأنف هذه الدردشة السلوك الطبيعي لمؤشر القراءة.‏";
+"This file" = "‏هذا الملف‏";
 "Total: %@" = "‏الإجمالي: %@‏";
+"%@ can't be converted" = "‏تعذر تحويل %@‏";
+"iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "‏تعذر على واجهات صوت iOS معالجة هذا الملف%@%@\n\nيمكنك محاولة إرساله إلى Instagram كما هو — قد يقبله الخادم، أو قد يفشل بصمت.\n\nلطلب دعم أصلي، افتح تذكرة:‏";
 "Un-exclude chat" = "‏إلغاء استبعاد الدردشة‏";
 "Un-exclude chat?" = "‏إلغاء استبعاد الدردشة؟‏";
 "Un-exclude story seen" = "‏إلغاء استبعاد مشاهدة القصة‏";
@@ -864,21 +920,21 @@
 
 "Theme" = "‏السمة‏";
 "Appearance" = "‏المظهر‏";
-"Keyboard" = "‏لوحة المفاتيح‏";
-"Force dark mode" = "‏فرض الوضع الداكن‏";
-"Keep Instagram in dark appearance regardless of iOS system setting" = "‏إبقاء انستغرام في الوضع الداكن بغض النظر عن إعدادات النظام‏";
-"Full OLED" = "‏OLED كامل‏";
-"Replace Instagram's dark grays with pure black across the entire app" = "‏استبدال الرمادي الداكن في انستغرام بالأسود النقي في جميع أنحاء التطبيق‏";
-"OLED chat theme" = "‏سمة OLED للمحادثات‏";
-"Pure black DM thread background and incoming message bubbles" = "‏خلفية سوداء نقية لمحادثات الرسائل وفقاعات الرسائل الواردة‏";
-"Keyboard theme" = "‏سمة لوحة المفاتيح‏";
-"Override the keyboard appearance when typing inside Instagram" = "‏تجاوز مظهر لوحة المفاتيح عند الكتابة داخل انستغرام‏";
-"Dark uses the system dark keyboard. OLED forces the keyboard backdrop to pure black." = "‏الداكن يستخدم لوحة المفاتيح الداكنة للنظام. OLED يفرض خلفية لوحة المفاتيح إلى الأسود النقي.‏";
+"Light" = "‏فاتح‏";
 "Dark" = "‏داكن‏";
 "OLED" = "OLED";
+"Off, Light, Dark, or OLED" = "‏إيقاف، فاتح، داكن، أو OLED‏";
+"Force theme" = "‏فرض السمة‏";
+"When off, follow iOS system appearance" = "‏عند الإيقاف، يتبع مظهر نظام iOS‏";
+"\"Force theme\" overrides iOS appearance; leave it off to follow the system." = "‏«فرض السمة» يتجاوز مظهر iOS؛ اتركه مغلقاً لاتباع النظام.‏";
+"OLED chat theme" = "‏سمة OLED للمحادثات‏";
+"Pure black DM thread + incoming bubbles" = "‏خلفية سوداء نقية للمحادثات + الفقاعات الواردة‏";
+"Keyboard theme" = "‏سمة لوحة المفاتيح‏";
+"Override the keyboard appearance when typing" = "‏تجاوز مظهر لوحة المفاتيح عند الكتابة‏";
 "Apply & restart" = "‏تطبيق وإعادة التشغيل‏";
 "Restart Instagram to apply your theme changes" = "‏أعد تشغيل انستغرام لتطبيق تغييرات السمة‏";
-"Theme changes only take effect after an app restart. Tap Apply below when you're done choosing." = "‏لا تُطبَّق تغييرات السمة إلا بعد إعادة تشغيل التطبيق. اضغط تطبيق بالأسفل عند الانتهاء من الاختيار.‏";
+"Reset theme" = "‏إعادة تعيين السمة‏";
+"Turn every theme option off and restart" = "‏إيقاف كل خيارات السمة وإعادة التشغيل‏";
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE ANALYZER                              //
@@ -910,11 +966,16 @@
 "No scan yet" = "‏لا يوجد تحليل بعد‏";
 "Not following you back" = "‏لا يتابعونك بالمقابل‏";
 "OK" = "‏حسنًا‏";
+"Updated %@ (%ld keys). Restart to apply." = "‏تم تحديث %@ (%ld مفاتيح). أعد التشغيل للتطبيق.";
+"Restart now" = "إعادة التشغيل الآن";
+"File is empty or not a valid .strings file." = "الملف فارغ أو ليس ملف .strings صالح.";
+"Error" = "خطأ";
+"Could not write file." = "تعذر كتابة الملف.";
 "Private account" = "‏حساب خاص‏";
 "Profile Analyzer" = "‏محلل الملف الشخصي‏";
 "Profile picture changed" = "‏تم تغيير صورة الملف الشخصي‏";
 "Profile updates" = "‏تحديثات الملف الشخصي‏";
-"Removes cached snapshots for this account. You'll lose since-last-scan diffs." = "‏يزيل اللقطات المحفوظة لهذا الحساب. ستفقد الفروق منذ آخر تحليل.‏";
+
 "Request failed" = "‏فشل الطلب‏";
 "Reset analyzer data?" = "‏إعادة تعيين بيانات المحلل؟‏";
 "Run analysis" = "‏تشغيل التحليل‏";
@@ -1043,6 +1104,8 @@
 "Name (A–Z)" = "‏الاسم (أ–ي)‏";
 "No DM thread found with @%@" = "‏لم يتم العثور على محادثة رسائل مع @%@‏";
 "Off" = "‏إيقاف‏";
+"On" = "‏تشغيل‏";
+"Colored" = "‏ملوّن‏";
 "Presets" = "‏الإعدادات المسبقة‏";
 "Recently added" = "‏المُضاف مؤخراً‏";
 "Remove from list" = "‏إزالة من القائمة‏";
@@ -1089,13 +1152,6 @@
 "Note copied" = "‏تم نسخ الملاحظة‏";
 
 //////////////////////////////////////////////////////////////////////////////
-//                       CONFIRM DIALOGS (IN-FEATURE)                       //
-// Strings from Confirm dialogs.                                            //
-//////////////////////////////////////////////////////////////////////////////
-
-"Unfollow?" = "‏إلغاء المتابعة؟‏";
-
-//////////////////////////////////////////////////////////////////////////////
 //                                   MISC                                   //
 // Anything that didn't fit a named section. Usually short labels.          //
 //////////////////////////////////////////////////////////////////////////////
@@ -1134,12 +1190,15 @@
 "%@ — GitHub & Telegram" = "‏%@ — جيت هاب وتيليجرام‏";
 "About" = "‏حول‏";
 "Arabic translation" = "‏الترجمة العربية‏";
-"Chinese (Traditional) translation" = "الترجمة الصينية (التقليدية)";
+"Chinese (Traditional and Simplified) translation" = "ترجمة الصينية (التقليدية والمبسطة)";
 "Credits" = "‏شكر وتقدير‏";
 "Developers" = "‏المطوّرون‏";
 "Donate to SoCuul" = "‏تبرع إلى SoCuul‏";
 "installed" = "‏مُثبّت‏";
 "Korean translation" = "‏الترجمة الكورية‏";
+"Portuguese (Brazil) translation" = "الترجمة البرتغالية (البرازيل)";
+"Turkish translation" = "الترجمة التركية";
+"Code contributions" = "مساهمات في الكود";
 "latest" = "‏الأحدث‏";
 "Links" = "‏الروابط‏";
 "No releases" = "‏لا توجد إصدارات‏";
@@ -1186,3 +1245,38 @@
 "Use highest resolution available" = "‏استخدام أعلى دقة متاحة‏";
 "Video quality" = "‏جودة الفيديو‏";
 "Which quality to download" = "‏الجودة المراد تنزيلها‏";
+
+"Composer doesn't accept GIFs" = "‏المُؤلِّف لا يقبل صور GIF‏";
+"Copy GIF link" = "‏نسخ رابط GIF‏";
+"Custom GIF in comments" = "‏GIF مخصص في التعليقات‏";
+"Failed to build GIF model" = "‏فشل في إنشاء نموذج GIF‏";
+"GIF link copied" = "‏تم نسخ رابط GIF‏";
+"Invalid Giphy URL" = "‏رابط Giphy غير صالح‏";
+"Long-press the GIF button to paste any Giphy URL" = "‏اضغط مطولاً على زر GIF للصق أي رابط Giphy‏";
+"Paste Giphy Link" = "‏لصق رابط Giphy‏";
+"Paste a giphy.com URL or media ID" = "‏الصق رابط giphy.com أو معرف الوسائط‏";
+"Send" = "‏إرسال‏";
+
+"Tracking" = "‏التتبّع‏";
+"Visited profiles" = "‏الحسابات المُشاهَدة‏";
+"Profiles you've opened recently" = "‏الحسابات التي فتحتها مؤخرًا‏";
+"Tracking off — enable below to log visits" = "‏التتبّع متوقّف — فعّله أدناه لتسجيل الزيارات‏";
+"Track visited profiles" = "‏تتبّع الحسابات المُشاهَدة‏";
+"Logs every profile you open. Stays on-device." = "‏يسجّل كل حساب تفتحه. يبقى على الجهاز فقط.‏";
+"Compare every scan against your first one" = "‏قارن كل تحليل بأول تحليل قمت به‏";
+"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "‏يقارن «الاحتفاظ بالسجل» كل تحليل بأول تحليل. أمّا «تتبّع الزيارات» فيسجّل كل حساب تفتحه لتراجعه هنا.‏";
+"just now" = "‏الآن‏";
+"%dm ago" = "‏منذ %d د‏";
+"%dh ago" = "‏منذ %d س‏";
+"%dd ago" = "‏منذ %d ي‏";
+"Visited" = "‏المُشاهَد‏";
+"Today" = "‏اليوم‏";
+"Last 7 days" = "‏آخر 7 أيام‏";
+"Last 30 days" = "‏آخر 30 يومًا‏";
+"Most recent" = "‏الأحدث‏";
+"Oldest first" = "‏الأقدم أولًا‏";
+"Most visited" = "‏الأكثر مشاهدة‏";
+"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "‏اختر ما تريد حذفه. اللقطات تحذف الفروق منذ آخر تحليل؛ الحسابات المُشاهَدة تمحو سجل الزيارات.‏";
+"Reset snapshots" = "‏إعادة تعيين اللقطات‏";
+"Clear visited profiles" = "‏مسح الحسابات المُشاهَدة‏";
+"Reset everything" = "‏إعادة تعيين كل شيء‏";

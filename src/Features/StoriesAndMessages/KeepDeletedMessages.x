@@ -6,47 +6,31 @@
 
 // Keep-deleted messages.
 //
-// Pipeline: each iris delta is per-thread, so its threadId is stashed in TLS
-// while the orig handler runs. The IGDirectMessageUpdate alloc hook stamps
-// new updates with that tid. At apply time we classify each update; remote
-// unsends get their _removeMessages_messageKeys cleared in place so IG's
-// applicator runs but removes nothing.
-//
-// _removeMessages_reason: 0 = unsend, 2 = delete-for-you.
+// Hooks IGDirectCacheUpdatesApplicator._applyThreadUpdates: and clears
+// _removeMessages_messageKeys on remote unsends so IG's applicator runs but
+// removes nothing. _removeMessages_reason: 0 = unsend, 2 = delete-for-you.
+// Variant-agnostic — single chokepoint shared by stock + E2EE A/B paths.
 
 // ============ STATE ============
 
 #define SCI_SENDER_MAP_MAX        4000
 #define SCI_CONTENT_CLASSES_MAX   4000
-#define SCI_PENDING_MAX           500
 #define SCI_PRESERVED_MAX         200
-#define SCI_PRESERVED_IDS_KEY     @"SCIPreservedMsgIds"
+#define SCI_PRESERVED_IDS_KEY     @"SCIPreservedMsgIdsByPk"
+#define SCI_PRESERVED_LEGACY_KEY  @"SCIPreservedMsgIds"
 #define SCI_PRESERVED_TAG         1399
 
-static NSString * const kSCIDeltaTidTLSKey = @"SCI.currentDeltaTid";
-static const void *kSCIUpdateThreadIdKey = &kSCIUpdateThreadIdKey;
-
-static BOOL                                            sciLocalDeleteInProgress = NO;
-static NSMutableArray                                 *sciPendingUpdates        = nil;
-static NSMutableDictionary<NSString *, NSDate *>      *sciDeleteForYouKeys      = nil;
-static NSMutableSet                                   *sciPreservedIds          = nil;
-static NSMutableDictionary<NSString *, NSString *>    *sciMessageContentClasses = nil;
-static NSMutableDictionary<NSString *, NSString *>    *sciSenderPkBySid         = nil;
-static NSMutableSet<NSString *>                       *sciPendingLocalSids      = nil;
+static BOOL                                                       sciLocalDeleteInProgress = NO;
+static NSMutableDictionary<NSString *, NSDate *>                 *sciDeleteForYouKeys      = nil;
+static NSMutableDictionary<NSString *, NSMutableSet<NSString *>*>*sciPreservedByPk         = nil;
+static NSMutableDictionary<NSString *, NSString *>               *sciMessageContentClasses = nil;
+static NSMutableDictionary<NSString *, NSString *>               *sciSenderPkBySid         = nil;
+static NSMutableDictionary<NSString *, NSString *>               *sciSenderNameBySid       = nil;
+static NSMutableSet<NSString *>                                  *sciPendingLocalSids      = nil;
 
 static void sciUpdateCellIndicator(id cell);
 
 // ============ HELPERS ============
-
-static NSString *sciGetCurrentDeltaTid(void) {
-    return [NSThread currentThread].threadDictionary[kSCIDeltaTidTLSKey];
-}
-
-static void sciSetCurrentDeltaTid(NSString *tid) {
-    NSMutableDictionary *td = [NSThread currentThread].threadDictionary;
-    if (tid) td[kSCIDeltaTidTLSKey] = tid;
-    else     [td removeObjectForKey:kSCIDeltaTidTLSKey];
-}
 
 static BOOL sciKeepDeletedEnabled() {
     return [SCIUtils getBoolPref:@"keep_deleted_message"];
@@ -56,24 +40,167 @@ static BOOL sciIndicateUnsentEnabled() {
     return [SCIUtils getBoolPref:@"indicate_unsent_messages"];
 }
 
-NSMutableSet *sciGetPreservedIds() {
-    if (!sciPreservedIds) {
-        NSArray *saved = [[NSUserDefaults standardUserDefaults] arrayForKey:SCI_PRESERVED_IDS_KEY];
-        sciPreservedIds = saved ? [NSMutableSet setWithArray:saved] : [NSMutableSet set];
+static NSString *sciCurrentUserPk(void);
+
+static NSString *sciPkFromIGUser(id user) {
+    if (!user) return nil;
+    @try {
+        for (NSString *key in @[@"pk", @"instagramUserID", @"instagramUserId", @"userID", @"userId", @"identifier"]) {
+            @try {
+                id v = [user valueForKey:key];
+                if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) return v;
+                if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v stringValue];
+            } @catch (__unused id e) {}
+        }
+    } @catch (__unused id e) {}
+    return nil;
+}
+
+// IGDirectCacheUpdatesApplicator is per-IGUserSession; its _user ivar
+// identifies the owning account of any delta passing through.
+static NSString *sciOwningPkFromApplicator(id applicator) {
+    if (!applicator) return nil;
+    @try {
+        Ivar uIvar = class_getInstanceVariable([applicator class], "_user");
+        if (!uIvar) return nil;
+        id user = object_getIvar(applicator, uIvar);
+        return sciPkFromIGUser(user);
+    } @catch (__unused id e) {}
+    return nil;
+}
+
+// Resolves username for a pk via applicator._userMap._objectMap._objects.
+// Reads run on IGUserMap._queue when available — NSMapTable isn't
+// thread-safe and IG mutates the map from its own queue. Falls back to a
+// direct read if the queue ivar is missing or isn't a dispatch_queue.
+static NSString *sciUsernameForPkViaApplicator(id applicator, NSString *pk) {
+    if (!applicator || pk.length == 0) return nil;
+    @try {
+        Ivar umIv = class_getInstanceVariable([applicator class], "_userMap");
+        id userMap = umIv ? object_getIvar(applicator, umIv) : nil;
+        if (!userMap) return nil;
+        Ivar omIv = class_getInstanceVariable([userMap class], "_objectMap");
+        id objMap = omIv ? object_getIvar(userMap, omIv) : nil;
+        if (!objMap) return nil;
+        Ivar oIv = class_getInstanceVariable([objMap class], "_objects");
+        id store = oIv ? object_getIvar(objMap, oIv) : nil;
+        if (!store) return nil;
+
+        Ivar qIv = class_getInstanceVariable([userMap class], "_queue");
+        id qObj = qIv ? object_getIvar(userMap, qIv) : nil;
+        Class dqCls = NSClassFromString(@"OS_dispatch_queue");
+        dispatch_queue_t userQueue = (dqCls && [qObj isKindOfClass:dqCls]) ? (dispatch_queue_t)qObj : nil;
+
+        __block NSString *result = nil;
+        dispatch_block_t lookup = ^{
+            id user = nil;
+            if ([store isKindOfClass:[NSMapTable class]]) {
+                NSMapTable *mt = (NSMapTable *)store;
+                user = [mt objectForKey:pk];
+                if (!user) user = [mt objectForKey:@([pk longLongValue])];
+                if (!user) {
+                    for (id candidate in [mt objectEnumerator]) {
+                        @try {
+                            id cpk = [candidate valueForKey:@"pk"];
+                            NSString *cpkStr = nil;
+                            if ([cpk isKindOfClass:[NSString class]]) cpkStr = cpk;
+                            else if ([cpk isKindOfClass:[NSNumber class]]) cpkStr = [(NSNumber *)cpk stringValue];
+                            if (cpkStr && [cpkStr isEqualToString:pk]) { user = candidate; break; }
+                        } @catch (__unused id e) {}
+                    }
+                }
+            } else if ([store isKindOfClass:[NSDictionary class]]) {
+                user = ((NSDictionary *)store)[pk];
+                if (!user) user = ((NSDictionary *)store)[@([pk longLongValue])];
+            }
+            if (!user) return;
+            @try {
+                id un = [user valueForKey:@"username"];
+                if ([un isKindOfClass:[NSString class]] && [(NSString *)un length] > 0) result = un;
+            } @catch (__unused id e) {}
+        };
+
+        if (userQueue) {
+            @try { dispatch_sync(userQueue, lookup); }
+            @catch (__unused id e) { lookup(); } // queue dead/blocked — best-effort direct read
+        } else {
+            lookup();
+        }
+        return result;
+    } @catch (__unused id e) {}
+    return nil;
+}
+
+// Lazy-loads per-pk dict from defaults; one-shot legacy migration folds the
+// old flat key into the current pk's bucket.
+static NSMutableDictionary<NSString *, NSMutableSet<NSString *>*> *sciGetPreservedByPk(void) {
+    if (sciPreservedByPk) return sciPreservedByPk;
+    sciPreservedByPk = [NSMutableDictionary dictionary];
+    NSDictionary *saved = [[NSUserDefaults standardUserDefaults] dictionaryForKey:SCI_PRESERVED_IDS_KEY];
+    if ([saved isKindOfClass:[NSDictionary class]]) {
+        for (NSString *pk in saved) {
+            id arr = saved[pk];
+            if ([arr isKindOfClass:[NSArray class]])
+                sciPreservedByPk[pk] = [NSMutableSet setWithArray:arr];
+        }
     }
-    return sciPreservedIds;
+    NSArray *legacy = [[NSUserDefaults standardUserDefaults] arrayForKey:SCI_PRESERVED_LEGACY_KEY];
+    if ([legacy isKindOfClass:[NSArray class]] && legacy.count > 0) {
+        NSString *pk = sciCurrentUserPk();
+        if (pk.length) {
+            NSMutableSet *bucket = sciPreservedByPk[pk] ?: [NSMutableSet set];
+            [bucket addObjectsFromArray:legacy];
+            sciPreservedByPk[pk] = bucket;
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:SCI_PRESERVED_LEGACY_KEY];
+        }
+    }
+    return sciPreservedByPk;
 }
 
-static void sciSavePreservedIds() {
-    NSMutableSet *ids = sciGetPreservedIds();
-    while (ids.count > SCI_PRESERVED_MAX)
-        [ids removeObject:[ids anyObject]];
-    [[NSUserDefaults standardUserDefaults] setObject:[ids allObjects] forKey:SCI_PRESERVED_IDS_KEY];
+// Returns/creates the bucket for a specific pk. Apply hook routes through
+// here using the delta's owning pk so backgrounded-account unsends land in
+// their own bucket.
+static NSMutableSet<NSString *> *sciBucketForPk(NSString *pk) {
+    if (!pk.length) return nil;
+    NSMutableDictionary *byPk = sciGetPreservedByPk();
+    NSMutableSet *bucket = byPk[pk];
+    if (!bucket) {
+        bucket = [NSMutableSet set];
+        byPk[pk] = bucket;
+    }
+    return bucket;
 }
 
-void sciClearPreservedIds() {
-    [sciGetPreservedIds() removeAllObjects];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:SCI_PRESERVED_IDS_KEY];
+// Cell-render + inbox-refresh entry — both run in the foreground session.
+// Apply hook uses sciBucketForPk(owningPk) instead.
+NSMutableSet *sciGetPreservedIds(void) {
+    NSString *pk = sciCurrentUserPk();
+    if (!pk.length) return [NSMutableSet set];
+    sciGetPreservedByPk();
+    return sciBucketForPk(pk);
+}
+
+static void sciSavePreservedIds(void) {
+    NSMutableDictionary *byPk = sciGetPreservedByPk();
+    NSMutableDictionary *out = [NSMutableDictionary dictionary];
+    for (NSString *k in byPk) {
+        NSMutableSet *s = byPk[k];
+        while (s.count > SCI_PRESERVED_MAX) [s removeObject:[s anyObject]];
+        if (s.count > 0) out[k] = [s allObjects];
+    }
+    if (out.count > 0)
+        [[NSUserDefaults standardUserDefaults] setObject:out forKey:SCI_PRESERVED_IDS_KEY];
+    else
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:SCI_PRESERVED_IDS_KEY];
+}
+
+// Clears only the active account's bucket — other accounts stay intact.
+void sciClearPreservedIds(void) {
+    NSMutableDictionary *byPk = sciGetPreservedByPk();
+    NSString *pk = sciCurrentUserPk();
+    if (!pk.length) return;
+    [byPk removeObjectForKey:pk];
+    sciSavePreservedIds();
 }
 
 static NSMutableSet<NSString *> *sciGetPendingLocalSids() {
@@ -90,6 +217,23 @@ static void sciTrackSenderPk(NSString *sid, NSString *pk) {
     if (!sid.length || !pk.length) return;
     NSMutableDictionary *m = sciGetSenderMap();
     m[sid] = pk;
+    if (m.count > SCI_SENDER_MAP_MAX) {
+        NSArray *keys = [m allKeys];
+        for (NSUInteger i = 0; i < keys.count / 10; i++) [m removeObjectForKey:keys[i]];
+    }
+}
+
+static NSMutableDictionary<NSString *, NSString *> *sciGetSenderNameMap(void) {
+    if (!sciSenderNameBySid) sciSenderNameBySid = [NSMutableDictionary dictionary];
+    return sciSenderNameBySid;
+}
+
+// Cached sid → username for the unsent pill. Resolved lazily via the
+// applicator's IGUserMap.
+static void sciTrackSenderName(NSString *sid, NSString *name) {
+    if (!sid.length || !name.length) return;
+    NSMutableDictionary *m = sciGetSenderNameMap();
+    m[sid] = name;
     if (m.count > SCI_SENDER_MAP_MAX) {
         NSArray *keys = [m allKeys];
         for (NSUInteger i = 0; i < keys.count / 10; i++) [m removeObjectForKey:keys[i]];
@@ -121,12 +265,19 @@ static BOOL sciIsReactionRelatedMessage(NSString *sid) {
            [className containsString:@"actionLog"];
 }
 
-// Walks IGWindow.userSession.user trying common pk field names. Cached.
-static NSString *sciCurrentUserPk() {
-    static NSString *cached = nil;
-    if (cached) return cached;
+// Walks every connected scene's window for IGUserSession.user. Read fresh
+// every call — caching breaks under account quick-switch.
+static NSString *sciCurrentUserPk(void) {
     @try {
-        for (UIWindow *w in [UIApplication sharedApplication].windows) {
+        NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
+        for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {
+            if (![scene isKindOfClass:[UIWindowScene class]]) continue;
+            for (UIWindow *w in ((UIWindowScene *)scene).windows) [windows addObject:w];
+        }
+        if (windows.count == 0) {
+            for (UIWindow *w in [UIApplication sharedApplication].windows) [windows addObject:w];
+        }
+        for (UIWindow *w in windows) {
             id session = nil;
             @try { session = [w valueForKey:@"userSession"]; } @catch (__unused id e) {}
             if (!session) continue;
@@ -136,14 +287,8 @@ static NSString *sciCurrentUserPk() {
             for (NSString *key in @[@"pk", @"instagramUserID", @"instagramUserId", @"userID", @"userId", @"identifier"]) {
                 @try {
                     id v = [user valueForKey:key];
-                    if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) {
-                        cached = [v copy];
-                        return cached;
-                    }
-                    if ([v isKindOfClass:[NSNumber class]]) {
-                        cached = [[(NSNumber *)v stringValue] copy];
-                        return cached;
-                    }
+                    if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) return v;
+                    if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v stringValue];
                 } @catch (__unused id e) {}
             }
         }
@@ -160,59 +305,6 @@ static NSString *sciExtractServerId(id key) {
         }
     } @catch(id e) {}
     return nil;
-}
-
-// ============ IRIS DELTA STAMPING ============
-
-static NSString *sciDeltaThreadId(id delta) {
-    @try {
-        id payload = [delta valueForKey:@"payload"];
-        if (!payload) return nil;
-        Ivar tdIvar = class_getInstanceVariable([payload class], "_threadDeltaPayload");
-        id threadDelta = tdIvar ? object_getIvar(payload, tdIvar) : nil;
-        if (!threadDelta) return nil;
-        return [threadDelta valueForKey:@"threadId"];
-    } @catch (__unused id e) { return nil; }
-}
-
-static void (*orig_handleIrisDeltas)(id self, SEL _cmd, NSArray *deltas);
-static void new_handleIrisDeltas(id self, SEL _cmd, NSArray *deltas) {
-    if (!deltas || deltas.count == 0) { orig_handleIrisDeltas(self, _cmd, deltas); return; }
-    for (id delta in deltas) {
-        sciSetCurrentDeltaTid(sciDeltaThreadId(delta));
-        @try { orig_handleIrisDeltas(self, _cmd, @[delta]); } @catch (__unused id e) {}
-        sciSetCurrentDeltaTid(nil);
-    }
-}
-
-// Some IG paths bypass the top-level handler and call the per-thread variant.
-static void (*orig_handleIrisDeltasGrouped)(id self, SEL _cmd, NSArray *deltas);
-static void new_handleIrisDeltasGrouped(id self, SEL _cmd, NSArray *deltas) {
-    if (!deltas || deltas.count == 0) { orig_handleIrisDeltasGrouped(self, _cmd, deltas); return; }
-    sciSetCurrentDeltaTid(sciDeltaThreadId(deltas.firstObject));
-    @try { orig_handleIrisDeltasGrouped(self, _cmd, deltas); } @catch (__unused id e) {}
-    sciSetCurrentDeltaTid(nil);
-}
-
-// ============ ALLOC TRACKING ============
-
-static id (*orig_msgUpdate_alloc)(id self, SEL _cmd);
-static id new_msgUpdate_alloc(id self, SEL _cmd) {
-    id instance = orig_msgUpdate_alloc(self, _cmd);
-    if (instance && sciKeepDeletedEnabled()) {
-        NSString *tid = sciGetCurrentDeltaTid();
-        if (tid) {
-            objc_setAssociatedObject(instance, kSCIUpdateThreadIdKey, tid,
-                                     OBJC_ASSOCIATION_COPY_NONATOMIC);
-        }
-        if (!sciPendingUpdates) sciPendingUpdates = [NSMutableArray array];
-        @synchronized(sciPendingUpdates) {
-            [sciPendingUpdates addObject:instance];
-            while (sciPendingUpdates.count > SCI_PENDING_MAX)
-                [sciPendingUpdates removeObjectAtIndex:0];
-        }
-    }
-    return instance;
 }
 
 // ============ REMOTE UNSEND DETECTION ============
@@ -234,7 +326,67 @@ static void sciNeuterRemoveUpdate(id update) {
     } @catch (__unused id e) {}
 }
 
-static void sciProcessOneUpdate(id update, NSMutableSet<NSString *> *preserved) {
+// Captures sid + senderPk from an inserted/replaced message into the per-sid
+// map. sid path varies by metadata variant:
+//   IGDirectPublishedMessageMetadata: _serverId on meta
+//   IGDirectUIMessageMetadata:        _key._serverId / _messageServerId
+static void sciCaptureFromMessage(id m) {
+    if (!m) return;
+    @try {
+        Ivar metaIvar = class_getInstanceVariable([m class], "_metadata");
+        id meta = metaIvar ? object_getIvar(m, metaIvar) : nil;
+        if (!meta) return;
+
+        NSString *sid = nil;
+        static const char *flatNames[] = {"_serverId", "_messageServerId"};
+        for (int i = 0; i < 2 && !sid; i++) {
+            Ivar siv = class_getInstanceVariable([meta class], flatNames[i]);
+            if (siv) {
+                id v = object_getIvar(meta, siv);
+                if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) sid = v;
+            }
+        }
+        if (!sid.length) {
+            Ivar keyIvar = class_getInstanceVariable([meta class], "_key");
+            id key = keyIvar ? object_getIvar(meta, keyIvar) : nil;
+            if (key) {
+                for (int i = 0; i < 2 && !sid; i++) {
+                    Ivar siv = class_getInstanceVariable([key class], flatNames[i]);
+                    if (siv) {
+                        id v = object_getIvar(key, siv);
+                        if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) sid = v;
+                    }
+                }
+            }
+        }
+        if (!sid.length) return;
+
+        Ivar pkIvar = class_getInstanceVariable([meta class], "_senderPk");
+        id pk = pkIvar ? object_getIvar(meta, pkIvar) : nil;
+        if ([pk isKindOfClass:[NSString class]] && [(NSString *)pk length] > 0) {
+            sciTrackSenderPk(sid, pk);
+        }
+    } @catch (__unused id e) {}
+}
+
+// Captures sender info from inserts/replaces so it's ready when an unsend
+// delta lands later for the same sid.
+static void sciCaptureSendersFromUpdate(id update) {
+    @try {
+        Ivar insIvar = class_getInstanceVariable([update class], "_insertMessages");
+        NSArray *inserts = insIvar ? object_getIvar(update, insIvar) : nil;
+        if ([inserts isKindOfClass:[NSArray class]]) {
+            for (id m in (NSArray *)inserts) sciCaptureFromMessage(m);
+        }
+        Ivar repIvar = class_getInstanceVariable([update class], "_replaceMessages_messages");
+        NSArray *replaces = repIvar ? object_getIvar(update, repIvar) : nil;
+        if ([replaces isKindOfClass:[NSArray class]]) {
+            for (id m in (NSArray *)replaces) sciCaptureFromMessage(m);
+        }
+    } @catch (__unused id e) {}
+}
+
+static void sciProcessOneUpdate(id update, NSString *owningPk, NSMutableSet<NSString *> *preserved) {
     @try {
         Ivar removeIvar = class_getInstanceVariable([update class], "_removeMessages_messageKeys");
         if (!removeIvar) return;
@@ -295,59 +447,76 @@ static void sciProcessOneUpdate(id update, NSMutableSet<NSString *> *preserved) 
             return;
         }
 
-        // Real remote unsend — preserve, skipping reactions/action-logs and
-        // any message recorded as sent by the current user.
-        NSString *myPk = sciCurrentUserPk();
+        // Remote unsend → preserve into the owning account's bucket, skipping
+        // reactions/action-logs and any message that account itself sent.
+        NSMutableSet *ownerBucket = sciBucketForPk(owningPk);
+        if (!ownerBucket) return;
         for (id key in keys) {
             NSString *sid = sciExtractServerId(key);
             if (!sid) continue;
             if (sciIsReactionRelatedMessage(sid)) continue;
             NSString *senderPk = sciGetSenderMap()[sid];
-            if (senderPk && myPk && [senderPk isEqualToString:myPk]) continue;
-            [sciGetPreservedIds() addObject:sid];
+            if (senderPk && [senderPk isEqualToString:owningPk]) continue;
+            [ownerBucket addObject:sid];
             [preserved addObject:sid];
         }
     } @catch (__unused id e) {}
 }
 
-// Classify and neuter every pending update stamped with `tid`. Excluded
-// threads are passed through untouched.
-static NSSet<NSString *> *sciNeuterAndPreserveForThread(NSString *tid) {
+// Walks cacheTU.threadUpdates → each.messageUpdate via KVC (Pando-backed).
+static NSSet<NSString *> *sciProcessCacheThreadUpdate(id cacheTU, NSString *tid, NSString *owningPk) {
     NSMutableSet<NSString *> *preserved = [NSMutableSet set];
-    if (!sciPendingUpdates || tid.length == 0) return preserved;
+    if (!cacheTU || tid.length == 0) return preserved;
     if (!sciDeleteForYouKeys) sciDeleteForYouKeys = [NSMutableDictionary dictionary];
     sciPruneStaleDeleteForYouKeys();
 
-    BOOL excluded = [SCIExcludedThreads shouldKeepDeletedBeBlockedForThreadId:tid];
+    if ([SCIExcludedThreads shouldKeepDeletedBeBlockedForThreadId:tid]) return preserved;
 
-    @synchronized(sciPendingUpdates) {
-        NSMutableArray *remaining = [NSMutableArray array];
-        for (id update in sciPendingUpdates) {
-            NSString *stamp = objc_getAssociatedObject(update, kSCIUpdateThreadIdKey);
-            if (![stamp isEqualToString:tid]) {
-                [remaining addObject:update];
-                continue;
-            }
-            if (excluded) continue;
-            NSUInteger before = preserved.count;
-            sciProcessOneUpdate(update, preserved);
-            if (preserved.count > before) sciNeuterRemoveUpdate(update);
-        }
-        [sciPendingUpdates setArray:remaining];
+    NSArray *threadUpdates = nil;
+    @try { threadUpdates = [cacheTU valueForKey:@"threadUpdates"]; } @catch (__unused id e) {}
+    if (![threadUpdates isKindOfClass:[NSArray class]]) return preserved;
+
+    for (id thru in threadUpdates) {
+        id msgUpdate = nil;
+        @try { msgUpdate = [thru valueForKey:@"messageUpdate"]; } @catch (__unused id e) {}
+        if (!msgUpdate) continue;
+
+        sciCaptureSendersFromUpdate(msgUpdate);
+
+        NSUInteger before = preserved.count;
+        sciProcessOneUpdate(msgUpdate, owningPk, preserved);
+        if (preserved.count > before) sciNeuterRemoveUpdate(msgUpdate);
     }
+
     if (preserved.count > 0) sciSavePreservedIds();
     return preserved;
 }
 
 // ============ CACHE UPDATE HOOK ============
 
-static void sciShowUnsentToast() {
+// Body text only — owner account renders as a separate title row in the
+// pill. IG unsend is always sender-removes-own, so deleterName == senderName
+// in practice; the two-name format is wired for hypothetical actor split.
+static NSString *sciBuildUnsentText(NSString *senderName, NSString *deleterName) {
+    BOOL hasSender  = senderName.length > 0;
+    BOOL hasDeleter = deleterName.length > 0;
+    if (hasSender && hasDeleter) {
+        if ([senderName isEqualToString:deleterName])
+            return [NSString stringWithFormat:SCILocalized(@"%@ unsent a message"), senderName];
+        return [NSString stringWithFormat:SCILocalized(@"%@ unsent a message from %@"), deleterName, senderName];
+    }
+    if (hasSender)  return [NSString stringWithFormat:SCILocalized(@"Message from %@ was unsent"), senderName];
+    if (hasDeleter) return [NSString stringWithFormat:SCILocalized(@"%@ unsent a message"), deleterName];
+    return SCILocalized(@"A message was unsent");
+}
+
+static void sciShowUnsentToast(NSString *senderName, NSString *deleterName, NSString *ownerAccount) {
     UIView *hostView = [UIApplication sharedApplication].keyWindow;
     if (!hostView) return;
 
     UIView *pill = [[UIView alloc] init];
     pill.backgroundColor = [UIColor colorWithRed:0.85 green:0.15 blue:0.15 alpha:0.95];
-    pill.layer.cornerRadius = 18;
+    pill.layer.cornerRadius = 14;
     pill.layer.shadowColor = [UIColor blackColor].CGColor;
     pill.layer.shadowOpacity = 0.4;
     pill.layer.shadowOffset = CGSizeMake(0, 2);
@@ -355,24 +524,52 @@ static void sciShowUnsentToast() {
     pill.translatesAutoresizingMaskIntoConstraints = NO;
     pill.alpha = 0;
 
-    UILabel *label = [[UILabel alloc] init];
-    label.text = SCILocalized(@"A message was unsent");
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    [pill addSubview:label];
+    BOOL hasTitle = ownerAccount.length > 0;
+
+    UILabel *titleLabel = nil;
+    if (hasTitle) {
+        titleLabel = [[UILabel alloc] init];
+        titleLabel.text = ownerAccount;
+        titleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.9];
+        titleLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightSemibold];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [pill addSubview:titleLabel];
+    }
+
+    UILabel *bodyLabel = [[UILabel alloc] init];
+    bodyLabel.text = sciBuildUnsentText(senderName, deleterName);
+    bodyLabel.textColor = [UIColor whiteColor];
+    bodyLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
+    bodyLabel.textAlignment = NSTextAlignmentCenter;
+    bodyLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [pill addSubview:bodyLabel];
     [hostView addSubview:pill];
 
-    [NSLayoutConstraint activateConstraints:@[
+    NSMutableArray *cs = [NSMutableArray array];
+    [cs addObjectsFromArray:@[
         [pill.topAnchor constraintEqualToAnchor:hostView.safeAreaLayoutGuide.topAnchor constant:8],
         [pill.centerXAnchor constraintEqualToAnchor:hostView.centerXAnchor],
-        [pill.heightAnchor constraintEqualToConstant:36],
-        [label.centerXAnchor constraintEqualToAnchor:pill.centerXAnchor],
-        [label.centerYAnchor constraintEqualToAnchor:pill.centerYAnchor],
-        [label.leadingAnchor constraintEqualToAnchor:pill.leadingAnchor constant:20],
-        [label.trailingAnchor constraintEqualToAnchor:pill.trailingAnchor constant:-20],
+        [bodyLabel.leadingAnchor constraintEqualToAnchor:pill.leadingAnchor constant:20],
+        [bodyLabel.trailingAnchor constraintEqualToAnchor:pill.trailingAnchor constant:-20],
+        [bodyLabel.centerXAnchor constraintEqualToAnchor:pill.centerXAnchor],
     ]];
+    if (hasTitle) {
+        [cs addObjectsFromArray:@[
+            [pill.heightAnchor constraintEqualToConstant:48],
+            [titleLabel.topAnchor constraintEqualToAnchor:pill.topAnchor constant:6],
+            [titleLabel.leadingAnchor constraintEqualToAnchor:pill.leadingAnchor constant:20],
+            [titleLabel.trailingAnchor constraintEqualToAnchor:pill.trailingAnchor constant:-20],
+            [titleLabel.centerXAnchor constraintEqualToAnchor:pill.centerXAnchor],
+            [bodyLabel.topAnchor constraintEqualToAnchor:titleLabel.bottomAnchor constant:1],
+        ]];
+    } else {
+        [cs addObjectsFromArray:@[
+            [pill.heightAnchor constraintEqualToConstant:36],
+            [bodyLabel.centerYAnchor constraintEqualToAnchor:pill.centerYAnchor],
+        ]];
+    }
+    [NSLayoutConstraint activateConstraints:cs];
 
     [UIView animateWithDuration:0.3 animations:^{ pill.alpha = 1; }];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -405,13 +602,15 @@ static void new_applyUpdates(id self, SEL _cmd, id updates, id completion, id us
         return;
     }
 
+    NSString *owningPk = sciOwningPkFromApplicator(self);
+
     NSMutableSet<NSString *> *preserved = [NSMutableSet set];
-    if ([updates isKindOfClass:[NSArray class]]) {
+    if (owningPk.length && [updates isKindOfClass:[NSArray class]]) {
         for (id tu in (NSArray *)updates) {
             NSString *tid = nil;
             @try { tid = [tu valueForKey:@"threadId"]; } @catch (__unused id e) {}
             if (tid.length == 0) continue;
-            NSSet *p = sciNeuterAndPreserveForThread(tid);
+            NSSet *p = sciProcessCacheThreadUpdate(tu, tid, owningPk);
             if (p.count > 0) [preserved unionSet:p];
         }
     }
@@ -419,18 +618,60 @@ static void new_applyUpdates(id self, SEL _cmd, id updates, id completion, id us
     orig_applyUpdates(self, _cmd, updates, completion, userAccess);
 
     if (preserved.count > 0) {
+        NSString *repSid = [preserved anyObject];
+        NSString *senderName = repSid ? sciGetSenderNameMap()[repSid] : nil;
+        NSString *senderPk = repSid ? sciGetSenderMap()[repSid] : nil;
+        if (!senderName.length && senderPk.length) {
+            senderName = sciUsernameForPkViaApplicator(self, senderPk);
+            if (senderName.length && repSid) sciTrackSenderName(repSid, senderName);
+        }
+        NSString *deleterName = senderName;
+
+        // Cell refresh only for foreground; pill fires for both so unsends
+        // on backgrounded logins still surface.
+        NSString *currentPk = sciCurrentUserPk();
+        BOOL isForeground = currentPk.length && [currentPk isEqualToString:owningPk];
+
+        // Owner-account title row — only when the unsend is on a
+        // backgrounded login. fieldCache is the reliable read for IGUser
+        // fields (KVC returns NSNull for many of them).
+        NSString *ownerAccount = nil;
+        if (!isForeground) {
+            @try {
+                Ivar uIvar = class_getInstanceVariable([self class], "_user");
+                id user = uIvar ? object_getIvar(self, uIvar) : nil;
+                if (user) {
+                    Ivar fcIv = NULL;
+                    for (Class c = [user class]; c && !fcIv; c = class_getSuperclass(c))
+                        fcIv = class_getInstanceVariable(c, "_fieldCache");
+                    if (fcIv) {
+                        NSDictionary *fc = object_getIvar(user, fcIv);
+                        id un = [fc isKindOfClass:[NSDictionary class]] ? fc[@"username"] : nil;
+                        if ([un isKindOfClass:[NSString class]] && [(NSString *)un length] > 0)
+                            ownerAccount = un;
+                    }
+                    if (!ownerAccount.length) {
+                        id un = [user valueForKey:@"username"];
+                        if ([un isKindOfClass:[NSString class]] && [(NSString *)un length] > 0)
+                            ownerAccount = un;
+                    }
+                }
+            } @catch (__unused id e) {}
+        }
+
+        BOOL toastPrefOn = [SCIUtils getBoolPref:@"unsent_message_toast"];
         dispatch_async(dispatch_get_main_queue(), ^{
-            sciRefreshVisibleCellIndicators();
-            if ([SCIUtils getBoolPref:@"unsent_message_toast"]) sciShowUnsentToast();
+            if (isForeground) sciRefreshVisibleCellIndicators();
+            if (toastPrefOn) sciShowUnsentToast(senderName, deleterName, ownerAccount);
         });
     }
 }
 
 // ============ LOCAL DELETE TRACKING ============
 
-// Hooked on the unsend mutation processor. Reads target sids straight off
-// _messageKeys for the per-sid intent path; the time-window flag stays as
-// a safety net for any sid the extraction may miss.
+// Hooks the unsend mutation processor. Per-sid intent path reads target
+// sids off _messageKeys; the time-window flag is a safety net for any sid
+// the extraction may miss.
 static void (*orig_removeMutation_execute)(id self, SEL _cmd, id handler, id pkg);
 static void new_removeMutation_execute(id self, SEL _cmd, id handler, id pkg) {
     @try {
@@ -461,12 +702,9 @@ static void new_removeMutation_execute(id self, SEL _cmd, id handler, id pkg) {
     });
 }
 
-// Sweeps every IGDirect*Outgoing*MutationProcessor and wraps its execute.
-// IGDirectGenericOutgoingMutationProcessor is the empirical DFY signal —
-// it fires for "Delete for you" but not for sends (sends use the *GraphQL*
-// or NonMedia variants). Other classes are wrapped only when their name
-// suggests removal, as a defensive net. Each class gets its own block so
-// origImp is captured per-class.
+// Wraps every removal-shaped IGDirect*Outgoing*MutationProcessor.execute.
+// IGDirectGenericOutgoingMutationProcessor is the DFY signal; the rest are
+// defensive matches by class name.
 static void sciHookAllRemovalMutationProcessors(void) {
     unsigned int count = 0;
     Class *all = objc_copyClassList(&count);
@@ -621,8 +859,8 @@ static void sciUpdateCellIndicator(id cell) {
 static void (*orig_configureCell)(id self, SEL _cmd, id vm, id ringSpec, id launcherSet);
 static void new_configureCell(id self, SEL _cmd, id vm, id ringSpec, id launcherSet) {
     orig_configureCell(self, _cmd, vm, ringSpec, launcherSet);
-    // Capture serverId -> senderPk for every configured cell so the apply
-    // hook can identify "from me" messages and skip preserving them.
+    // Track sid → senderPk per cell so the apply hook can skip preserving
+    // own messages.
     @try {
         Ivar vmIvar = class_getInstanceVariable([self class], "_viewModel");
         id vmObj = vmIvar ? object_getIvar(self, vmIvar) : nil;
@@ -653,8 +891,8 @@ static void new_cellLayoutSubviews(id self, SEL _cmd) {
 
 // ============ ACTION LOG TRACKING ============
 
-// IGDirectThreadActionLog is the local model for "X liked a message" rows.
-// Recording the message id lets the unsend path skip these as bookkeeping.
+// IGDirectThreadActionLog is the local "X liked a message" row model.
+// Tracking its message id keeps the unsend path from preserving these.
 static id (*orig_actionLogFullInit)(id, SEL, id, id, id, id, id, BOOL, BOOL, id);
 static id new_actionLogFullInit(id self, SEL _cmd,
                                  id message, id title, id textAttributes, id textParts,
@@ -683,30 +921,11 @@ static id new_actionLogFullInit(id self, SEL _cmd,
             MSHookMessageEx(actionLogCls, fullInit, (IMP)new_actionLogFullInit, (IMP *)&orig_actionLogFullInit);
     }
 
-    Class msgUpdateClass = NSClassFromString(@"IGDirectMessageUpdate");
-    if (msgUpdateClass) {
-        MSHookMessageEx(object_getClass(msgUpdateClass), @selector(alloc),
-                        (IMP)new_msgUpdate_alloc, (IMP *)&orig_msgUpdate_alloc);
-    }
-
     Class cacheClass = NSClassFromString(@"IGDirectCacheUpdatesApplicator");
     if (cacheClass) {
         SEL sel = NSSelectorFromString(@"_applyThreadUpdates:completion:userAccess:");
         if (class_getInstanceMethod(cacheClass, sel))
             MSHookMessageEx(cacheClass, sel, (IMP)new_applyUpdates, (IMP *)&orig_applyUpdates);
-    }
-
-    Class irisClass = NSClassFromString(@"IGDirectRealtimeIrisDeltaHandler");
-    if (irisClass) {
-        SEL sel1 = NSSelectorFromString(@"handleIrisDeltas:");
-        if (class_getInstanceMethod(irisClass, sel1))
-            MSHookMessageEx(irisClass, sel1,
-                            (IMP)new_handleIrisDeltas, (IMP *)&orig_handleIrisDeltas);
-
-        SEL sel2 = NSSelectorFromString(@"_handleIrisDeltasGroupedByThread:");
-        if (class_getInstanceMethod(irisClass, sel2))
-            MSHookMessageEx(irisClass, sel2,
-                            (IMP)new_handleIrisDeltasGrouped, (IMP *)&orig_handleIrisDeltasGrouped);
     }
 
     Class cellClass = NSClassFromString(@"IGDirectMessageCell");
@@ -737,6 +956,10 @@ static id new_actionLogFullInit(id self, SEL _cmd,
     sciHookAllRemovalMutationProcessors();
 
     if (![SCIUtils getBoolPref:@"indicate_unsent_messages"]) {
-        sciClearPreservedIds();
+        // Indicator off → drop all buckets. pk isn't known at %ctor time so
+        // the per-pk clear path can't run; wipe storage directly.
+        sciPreservedByPk = [NSMutableDictionary dictionary];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:SCI_PRESERVED_IDS_KEY];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:SCI_PRESERVED_LEGACY_KEY];
     }
 }

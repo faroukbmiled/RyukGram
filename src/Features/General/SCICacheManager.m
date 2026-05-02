@@ -63,24 +63,77 @@ static uint64_t sciDirectorySize(NSString *path) {
     return total;
 }
 
+// Directory basenames that hold DM history, drafts, and Notes. Skipped
+// at any depth when "Preserve messages database" is on.
+static BOOL sciIsProtectedMessagesEntryName(const char *name) {
+    static const char * const kProtected[] = {
+        "DirectSQLiteDatabase",
+        "IGDirectE2EEDiskStore",
+        "direct",
+        "Notes",
+        "unified-drafts",
+        "saved-drafts",
+        "Drafts",
+        "PostCreation",
+        "ThreadCreation",
+        NULL,
+    };
+    for (const char * const *p = kProtected; *p; p++) {
+        if (strcmp(name, *p) == 0) return YES;
+    }
+    if (strncmp(name, "Drafts_", 7) == 0) return YES;
+    return NO;
+}
+
 // Recursive delete of directory contents — the top-level dir itself is
 // preserved so IG's file handles stay valid, and RyukGram subtrees are
-// skipped so our analyzer snapshots + header cache survive.
-static void sciDeleteDirectoryContents(NSString *path) {
+// always skipped. When preserveMessagesDB is YES, walks per-file via fts
+// to also skip message stores at any depth.
+static void sciDeleteDirectoryContents(NSString *path, BOOL preserveMessagesDB) {
     const char *root = [path fileSystemRepresentation];
     if (!root) return;
-    DIR *dp = opendir(root);
-    if (!dp) return;
-    struct dirent *de;
-    while ((de = readdir(dp))) {
-        if (de->d_name[0] == '.' && (de->d_name[1] == 0 ||
-            (de->d_name[1] == '.' && de->d_name[2] == 0))) continue;
-        if (sciIsProtectedEntryName(de->d_name)) continue;
-        char full[PATH_MAX];
-        snprintf(full, sizeof(full), "%s/%s", root, de->d_name);
-        removefile(full, NULL, REMOVEFILE_RECURSIVE);
+
+    if (!preserveMessagesDB) {
+        DIR *dp = opendir(root);
+        if (!dp) return;
+        struct dirent *de;
+        while ((de = readdir(dp))) {
+            if (de->d_name[0] == '.' && (de->d_name[1] == 0 ||
+                (de->d_name[1] == '.' && de->d_name[2] == 0))) continue;
+            if (sciIsProtectedEntryName(de->d_name)) continue;
+            char full[PATH_MAX];
+            snprintf(full, sizeof(full), "%s/%s", root, de->d_name);
+            removefile(full, NULL, REMOVEFILE_RECURSIVE);
+        }
+        closedir(dp);
+        return;
     }
-    closedir(dp);
+
+    char * const paths[] = { (char *)root, NULL };
+    FTS *fts = fts_open(paths, FTS_PHYSICAL | FTS_NOCHDIR | FTS_XDEV, NULL);
+    if (!fts) return;
+    FTSENT *ent;
+    while ((ent = fts_read(fts))) {
+        if (ent->fts_level == 0) continue;
+        if (ent->fts_info == FTS_D) {
+            if (ent->fts_level == 1 && sciIsProtectedEntryName(ent->fts_name)) {
+                fts_set(fts, ent, FTS_SKIP);
+                continue;
+            }
+            if (sciIsProtectedMessagesEntryName(ent->fts_name)) {
+                fts_set(fts, ent, FTS_SKIP);
+                continue;
+            }
+            continue;
+        }
+        if (ent->fts_info == FTS_F || ent->fts_info == FTS_SL ||
+            ent->fts_info == FTS_SLNONE || ent->fts_info == FTS_DEFAULT) {
+            unlink(ent->fts_accpath);
+        } else if (ent->fts_info == FTS_DP) {
+            rmdir(ent->fts_accpath);
+        }
+    }
+    fts_close(fts);
 }
 
 @implementation SCICacheManager
@@ -153,10 +206,11 @@ static void sciDeleteDirectoryContents(NSString *path) {
             reclaimed += (uint64_t)[[NSURLCache sharedURLCache] currentDiskUsage];
         }
 
+        BOOL preserveDB = [[NSUserDefaults standardUserDefaults] boolForKey:@"cache_preserve_messages_db"];
         NSArray<NSString *> *dirs = sciCacheDirs();
         dispatch_group_t group = dispatch_group_create();
         for (NSString *d in dirs) {
-            dispatch_group_async(group, q, ^{ sciDeleteDirectoryContents(d); });
+            dispatch_group_async(group, q, ^{ sciDeleteDirectoryContents(d, preserveDB); });
         }
         dispatch_group_async(group, q, ^{
             [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -190,7 +244,7 @@ static void sciDeleteDirectoryContents(NSString *path) {
     if (last > 0 && (now - last) < interval) { [self refreshSizeInBackgroundIfEnabled]; return; }
 
     [self clearCacheWithCompletion:^(uint64_t bytes) {
-        NSLog(@"[SCInsta] auto-clear cache mode=%@ reclaimed=%@", mode, [self formattedSize:bytes]);
+        NSLog(@"[RyukGram] auto-clear cache mode=%@ reclaimed=%@", mode, [self formattedSize:bytes]);
     }];
 }
 

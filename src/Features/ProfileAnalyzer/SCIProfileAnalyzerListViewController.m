@@ -6,15 +6,66 @@
 #import "../../Settings/SCISearchBarStyler.h"
 #import "../../Localization/SCILocalization.h"
 
-// IG throttles /friendships/ aggressively — 50/session + a 1.5s cushion
-// between calls keeps us well inside the soft limit.
+// IG throttles /friendships/ — 50/session + 1.5s cushion stays inside the limit.
 static const NSInteger kSCIPABatchCap = 50;
 static const NSTimeInterval kSCIPABatchDelay = 1.5;
+static const NSTimeInterval kSCIPAFriendshipTTL = 10 * 60;
+static const NSTimeInterval kSCIPAPicRefreshTTL = 5 * 60;
+
+@interface SCIPAFriendshipCache : NSObject
++ (NSNumber *)followingForPK:(NSString *)pk;
++ (void)setFollowing:(BOOL)following forPK:(NSString *)pk;
++ (void)invalidatePK:(NSString *)pk;
+@end
+
+static NSMutableDictionary<NSString *, NSDate *> *sciPicRefreshAttempted(void) {
+    static NSMutableDictionary *m;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{ m = [NSMutableDictionary dictionary]; });
+    return m;
+}
+
+@implementation SCIPAFriendshipCache
++ (NSMutableDictionary *)store {
+    static NSMutableDictionary *m;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{ m = [NSMutableDictionary dictionary]; });
+    return m;
+}
++ (NSNumber *)followingForPK:(NSString *)pk {
+    if (!pk.length) return nil;
+    NSDictionary *e = [self store][pk];
+    if (!e) return nil;
+    if (-[e[@"ts"] timeIntervalSinceNow] > kSCIPAFriendshipTTL) {
+        [[self store] removeObjectForKey:pk];
+        return nil;
+    }
+    return e[@"following"];
+}
++ (void)setFollowing:(BOOL)following forPK:(NSString *)pk {
+    if (!pk.length) return;
+    [self store][pk] = @{ @"following": @(following), @"ts": [NSDate date] };
+}
++ (void)invalidatePK:(NSString *)pk {
+    if (!pk.length) return;
+    [[self store] removeObjectForKey:pk];
+}
+@end
 
 typedef NS_ENUM(NSInteger, SCIPASortMode) {
-    SCIPASortModeDefault,   // original order from the snapshot
-    SCIPASortModeAZ,        // username ascending
-    SCIPASortModeZA,        // username descending
+    SCIPASortModeDefault,
+    SCIPASortModeAZ,
+    SCIPASortModeZA,
+    SCIPASortModeRecent,
+    SCIPASortModeOldest,
+    SCIPASortModeMostVisited,
+};
+
+typedef NS_ENUM(NSInteger, SCIPADateFilter) {
+    SCIPADateFilterAny,
+    SCIPADateFilterToday,
+    SCIPADateFilter7d,
+    SCIPADateFilter30d,
 };
 
 #pragma mark - Cell
@@ -25,8 +76,10 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 @property (nonatomic, strong) UIImageView *verifiedBadge;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) UIButton *actionButton;
+@property (nonatomic, strong) UIActivityIndicatorView *actionSpinner;
 @property (nonatomic, strong) NSLayoutConstraint *usernameTrailingToButton;
 @property (nonatomic, strong) NSLayoutConstraint *usernameTrailingToEdge;
+@property (nonatomic, copy) NSString *boundPK;
 @property (nonatomic, copy) void(^onActionTap)(SCIPAUserCell *);
 @end
 
@@ -77,6 +130,12 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     [_actionButton setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     [self.contentView addSubview:_actionButton];
 
+    _actionSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];
+    _actionSpinner.translatesAutoresizingMaskIntoConstraints = NO;
+    _actionSpinner.color = [UIColor secondaryLabelColor];
+    _actionSpinner.hidesWhenStopped = YES;
+    [self.contentView addSubview:_actionSpinner];
+
     _usernameTrailingToButton = [_verifiedBadge.trailingAnchor constraintLessThanOrEqualToAnchor:_actionButton.leadingAnchor constant:-10];
     _usernameTrailingToEdge = [_verifiedBadge.trailingAnchor constraintLessThanOrEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
 
@@ -102,15 +161,63 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
         [_actionButton.trailingAnchor constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor],
         [_actionButton.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
 
+        [_actionSpinner.centerXAnchor constraintEqualToAnchor:_actionButton.centerXAnchor],
+        [_actionSpinner.centerYAnchor constraintEqualToAnchor:_actionButton.centerYAnchor],
+
         _usernameTrailingToButton,
     ]];
     return self;
 }
 
-- (void)setActionVisible:(BOOL)visible {
-    self.actionButton.hidden = !visible;
-    self.usernameTrailingToButton.active = visible;
-    self.usernameTrailingToEdge.active = !visible;
+typedef NS_ENUM(NSInteger, SCIPACellAction) {
+    SCIPACellActionLoading,
+    SCIPACellActionFollow,
+    SCIPACellActionUnfollow,
+    SCIPACellActionPending,
+};
+
+- (void)applyAction:(SCIPACellAction)state pending:(BOOL)pending tint:(UIColor *)tint {
+    self.usernameTrailingToButton.active = YES;
+    self.usernameTrailingToEdge.active = NO;
+    UIColor *primary = tint ?: [UIColor systemBlueColor];
+
+    switch (state) {
+        case SCIPACellActionLoading:
+            self.actionButton.hidden = YES;
+            [self.actionSpinner startAnimating];
+            break;
+        case SCIPACellActionFollow:
+            self.actionButton.hidden = NO;
+            [self.actionSpinner stopAnimating];
+            [self.actionButton setTitle:SCILocalized(@"Follow") forState:UIControlStateNormal];
+            self.actionButton.backgroundColor = primary;
+            [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            self.actionButton.enabled = !pending;
+            self.actionButton.alpha = pending ? 0.55 : 1.0;
+            break;
+        case SCIPACellActionUnfollow:
+            self.actionButton.hidden = NO;
+            [self.actionSpinner stopAnimating];
+            [self.actionButton setTitle:SCILocalized(@"Unfollow") forState:UIControlStateNormal];
+            self.actionButton.backgroundColor = [[UIColor systemRedColor] colorWithAlphaComponent:0.12];
+            [self.actionButton setTitleColor:[UIColor systemRedColor] forState:UIControlStateNormal];
+            self.actionButton.enabled = !pending;
+            self.actionButton.alpha = pending ? 0.55 : 1.0;
+            break;
+        case SCIPACellActionPending:
+            self.actionButton.hidden = NO;
+            self.actionButton.enabled = NO;
+            self.actionButton.alpha = 0.55;
+            [self.actionSpinner startAnimating];
+            break;
+    }
+}
+
+- (void)hideAction {
+    self.actionButton.hidden = YES;
+    [self.actionSpinner stopAnimating];
+    self.usernameTrailingToButton.active = NO;
+    self.usernameTrailingToEdge.active = YES;
 }
 
 - (void)onAction { if (self.onActionTap) self.onActionTap(self); }
@@ -119,6 +226,9 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     self.avatar.image = nil;
     self.onActionTap = nil;
     self.verifiedBadge.hidden = YES;
+    self.boundPK = nil;
+    [self.actionSpinner stopAnimating];
+    self.actionButton.hidden = YES;
 }
 @end
 
@@ -135,18 +245,28 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 @property (nonatomic, strong) UILabel *emptyLabel;
 @property (nonatomic, strong) NSMutableSet<NSString *> *pendingPKs;
 
-// Multi-select state
 @property (nonatomic, assign) BOOL selectionMode;
 @property (nonatomic, strong) NSMutableSet<NSString *> *selectedPKs;
 @property (nonatomic, strong) UIView *batchBar;
 @property (nonatomic, strong) UIButton *batchActionButton;
 
-// Filter / sort state
 @property (nonatomic, assign) SCIPASortMode sortMode;
 @property (nonatomic, assign) BOOL filterVerifiedOnly;
 @property (nonatomic, assign) BOOL filterNotVerifiedOnly;
 @property (nonatomic, assign) BOOL filterPrivateOnly;
+@property (nonatomic, assign) SCIPADateFilter dateFilter;
 @property (nonatomic, copy) NSString *currentQuery;
+
+@property (nonatomic, copy) NSArray<SCIProfileAnalyzerVisit *> *allVisits;
+@property (nonatomic, copy) NSArray<SCIProfileAnalyzerVisit *> *filteredVisits;
+
+// nil = unknown, @YES = following, @NO = not. Only written on successful
+// show_many or confirmed action; errors leave entries nil so cells stay loading.
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *friendshipStatus;
+@property (nonatomic, strong) NSMutableSet<NSString *> *lookupQueue;
+@property (nonatomic, strong) NSMutableSet<NSString *> *lookupInflight;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSDate *> *lookupBackoff;
+@property (nonatomic, assign) BOOL lookupFlushScheduled;
 @end
 
 @implementation SCIProfileAnalyzerListViewController
@@ -162,6 +282,28 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     self.filteredUsers = self.allUsers;
     self.pendingPKs = [NSMutableSet set];
     self.selectedPKs = [NSMutableSet set];
+    self.friendshipStatus = [NSMutableDictionary dictionary];
+    self.lookupQueue = [NSMutableSet set];
+    self.lookupInflight = [NSMutableSet set];
+    self.lookupBackoff = [NSMutableDictionary dictionary];
+    return self;
+}
+
+- (instancetype)initVisitedListWithTitle:(NSString *)title
+                                   visits:(NSArray<SCIProfileAnalyzerVisit *> *)visits {
+    self = [super init];
+    if (!self) return self;
+    self.title = title;
+    self.kind = SCIPAListKindVisited;
+    self.allVisits = visits ?: @[];
+    self.filteredVisits = self.allVisits;
+    self.sortMode = SCIPASortModeRecent;
+    self.pendingPKs = [NSMutableSet set];
+    self.selectedPKs = [NSMutableSet set];
+    self.friendshipStatus = [NSMutableDictionary dictionary];
+    self.lookupQueue = [NSMutableSet set];
+    self.lookupInflight = [NSMutableSet set];
+    self.lookupBackoff = [NSMutableDictionary dictionary];
     return self;
 }
 
@@ -175,6 +317,10 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     self.filteredChanges = self.allChanges;
     self.pendingPKs = [NSMutableSet set];
     self.selectedPKs = [NSMutableSet set];
+    self.friendshipStatus = [NSMutableDictionary dictionary];
+    self.lookupQueue = [NSMutableSet set];
+    self.lookupInflight = [NSMutableSet set];
+    self.lookupBackoff = [NSMutableDictionary dictionary];
     return self;
 }
 
@@ -185,8 +331,40 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     [self setupSearch];
     [self setupEmptyState];
     [self setupBatchBar];
+    [self seedFriendshipStatusFromKind];
     [self updateNavBar];
     [self refreshCounts];
+}
+
+// Snapshot-derived kinds imply a friendship direction; seed them so we skip
+// the show_many roundtrip. Other kinds fall back to the cross-VC cache.
+- (void)seedFriendshipStatusFromKind {
+    NSNumber *seed;
+    if (self.kind == SCIPAListKindUnfollow || self.kind == SCIPAListKindMutual) seed = @YES;
+    else if (self.kind == SCIPAListKindFollow) seed = @NO;
+
+    NSArray *src;
+    if (self.kind == SCIPAListKindVisited) {
+        NSMutableArray *us = [NSMutableArray arrayWithCapacity:self.allVisits.count];
+        for (SCIProfileAnalyzerVisit *v in self.allVisits) [us addObject:v.user];
+        src = us;
+    } else if (self.kind == SCIPAListKindProfileUpdate) {
+        NSMutableArray *us = [NSMutableArray arrayWithCapacity:self.allChanges.count];
+        for (SCIProfileAnalyzerProfileChange *c in self.allChanges) [us addObject:c.current];
+        src = us;
+    } else {
+        src = self.allUsers;
+    }
+    for (SCIProfileAnalyzerUser *u in src) {
+        if (!u.pk.length) continue;
+        if (seed) {
+            self.friendshipStatus[u.pk] = seed;
+            [SCIPAFriendshipCache setFollowing:seed.boolValue forPK:u.pk];
+            continue;
+        }
+        NSNumber *cached = [SCIPAFriendshipCache followingForPK:u.pk];
+        if (cached) self.friendshipStatus[u.pk] = cached;
+    }
 }
 
 - (void)setupTable {
@@ -194,11 +372,19 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 72;
+    // Visited rows show two subtitle lines (fullName + timestamp); 72pt clips.
+    self.tableView.rowHeight = (self.kind == SCIPAListKindVisited) ? 84 : 72;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 78, 0, 0);
     self.tableView.allowsMultipleSelection = NO;
     [self.tableView registerClass:[SCIPAUserCell class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:self.tableView];
+
+    // Pull-to-refresh: visited list only — others are snapshot-bound.
+    if (self.kind == SCIPAListKindVisited) {
+        UIRefreshControl *rc = [UIRefreshControl new];
+        [rc addTarget:self action:@selector(pullToRefresh:) forControlEvents:UIControlEventValueChanged];
+        self.tableView.refreshControl = rc;
+    }
 }
 
 - (void)setupSearch {
@@ -245,7 +431,6 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 }
 
 - (void)setupBatchBar {
-    // Floating capsule above the home indicator.
     self.batchActionButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.batchActionButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.batchActionButton.titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold];
@@ -273,8 +458,11 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 }
 
 - (BOOL)supportsBatchAction {
-    return self.kind == SCIPAListKindUnfollow || self.kind == SCIPAListKindFollow;
+    return self.kind == SCIPAListKindUnfollow
+        || self.kind == SCIPAListKindFollow
+        || self.kind == SCIPAListKindMutual;
 }
+
 
 - (void)updateNavBar {
     NSMutableArray *rights = [NSMutableArray array];
@@ -285,7 +473,6 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
                                                                target:self action:@selector(toggleSelectionMode)];
         [rights addObject:sel];
     }
-    // Filled variant signals "filter/sort active".
     NSString *symbol = [self hasActiveFilterOrSort]
         ? @"line.3.horizontal.decrease.circle.fill"
         : @"line.3.horizontal.decrease.circle";
@@ -297,6 +484,35 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 
 - (UIMenu *)buildFilterMenu {
     __weak typeof(self) weakSelf = self;
+
+    NSMutableArray *sortChildren = [NSMutableArray array];
+    if (self.kind == SCIPAListKindVisited) {
+        UIAction *recent = [UIAction actionWithTitle:SCILocalized(@"Most recent")
+                                               image:[UIImage systemImageNamed:@"clock.arrow.circlepath"]
+                                          identifier:nil
+                                             handler:^(__kindof UIAction *_) {
+            weakSelf.sortMode = SCIPASortModeRecent; [weakSelf applyFiltersAndSort];
+        }];
+        recent.state = (self.sortMode == SCIPASortModeRecent) ? UIMenuElementStateOn : UIMenuElementStateOff;
+
+        UIAction *oldest = [UIAction actionWithTitle:SCILocalized(@"Oldest first")
+                                               image:[UIImage systemImageNamed:@"clock"]
+                                          identifier:nil
+                                             handler:^(__kindof UIAction *_) {
+            weakSelf.sortMode = SCIPASortModeOldest; [weakSelf applyFiltersAndSort];
+        }];
+        oldest.state = (self.sortMode == SCIPASortModeOldest) ? UIMenuElementStateOn : UIMenuElementStateOff;
+
+        UIAction *mostVisited = [UIAction actionWithTitle:SCILocalized(@"Most visited")
+                                                    image:[UIImage systemImageNamed:@"flame.fill"]
+                                               identifier:nil
+                                                  handler:^(__kindof UIAction *_) {
+            weakSelf.sortMode = SCIPASortModeMostVisited; [weakSelf applyFiltersAndSort];
+        }];
+        mostVisited.state = (self.sortMode == SCIPASortModeMostVisited) ? UIMenuElementStateOn : UIMenuElementStateOff;
+        [sortChildren addObjectsFromArray:@[recent, oldest, mostVisited]];
+    }
+
     UIAction *az = [UIAction actionWithTitle:SCILocalized(@"Username A → Z")
                                         image:[UIImage systemImageNamed:@"arrow.up"]
                                    identifier:nil
@@ -314,11 +530,12 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
         [weakSelf applyFiltersAndSort];
     }];
     za.state = (self.sortMode == SCIPASortModeZA) ? UIMenuElementStateOn : UIMenuElementStateOff;
+    [sortChildren addObjectsFromArray:@[az, za]];
 
     UIMenu *sortGroup = [UIMenu menuWithTitle:SCILocalized(@"Sort")
                                         image:nil identifier:nil
                                       options:UIMenuOptionsDisplayInline
-                                     children:@[az, za]];
+                                     children:sortChildren];
 
     UIAction *verified = [UIAction actionWithTitle:SCILocalized(@"Verified only")
                                               image:[UIImage systemImageNamed:@"checkmark.seal.fill"]
@@ -355,15 +572,41 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
                                        children:@[verified, notVerified, priv]];
 
     NSMutableArray *children = [NSMutableArray arrayWithObjects:sortGroup, filterGroup, nil];
+
+    if (self.kind == SCIPAListKindVisited) {
+        UIAction *(^df)(NSString *, NSString *, SCIPADateFilter) =
+        ^UIAction *(NSString *title, NSString *symbol, SCIPADateFilter mode) {
+            UIAction *a = [UIAction actionWithTitle:title
+                                              image:[UIImage systemImageNamed:symbol]
+                                         identifier:nil
+                                            handler:^(__kindof UIAction *_) {
+                weakSelf.dateFilter = (weakSelf.dateFilter == mode) ? SCIPADateFilterAny : mode;
+                [weakSelf applyFiltersAndSort];
+            }];
+            a.state = (self.dateFilter == mode) ? UIMenuElementStateOn : UIMenuElementStateOff;
+            return a;
+        };
+        UIMenu *dateGroup = [UIMenu menuWithTitle:SCILocalized(@"Visited")
+                                            image:nil identifier:nil
+                                          options:UIMenuOptionsDisplayInline
+                                         children:@[
+            df(SCILocalized(@"Today"),         @"sun.max",         SCIPADateFilterToday),
+            df(SCILocalized(@"Last 7 days"),   @"calendar.badge.clock", SCIPADateFilter7d),
+            df(SCILocalized(@"Last 30 days"),  @"calendar",        SCIPADateFilter30d),
+        ]];
+        [children insertObject:dateGroup atIndex:1];
+    }
+
     if ([self hasActiveFilterOrSort]) {
         UIAction *clear = [UIAction actionWithTitle:SCILocalized(@"Clear")
                                               image:[UIImage systemImageNamed:@"arrow.counterclockwise"]
                                          identifier:nil
                                             handler:^(__kindof UIAction *_) {
-            weakSelf.sortMode = SCIPASortModeDefault;
+            weakSelf.sortMode = (weakSelf.kind == SCIPAListKindVisited) ? SCIPASortModeRecent : SCIPASortModeDefault;
             weakSelf.filterVerifiedOnly = NO;
             weakSelf.filterNotVerifiedOnly = NO;
             weakSelf.filterPrivateOnly = NO;
+            weakSelf.dateFilter = SCIPADateFilterAny;
             [weakSelf applyFiltersAndSort];
         }];
         clear.attributes = UIMenuElementAttributesDestructive;
@@ -374,8 +617,14 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 }
 
 - (void)refreshCounts {
-    NSUInteger total = self.kind == SCIPAListKindProfileUpdate ? self.allChanges.count : self.allUsers.count;
-    NSUInteger shown = self.kind == SCIPAListKindProfileUpdate ? self.filteredChanges.count : self.filteredUsers.count;
+    NSUInteger total, shown;
+    if (self.kind == SCIPAListKindProfileUpdate) {
+        total = self.allChanges.count; shown = self.filteredChanges.count;
+    } else if (self.kind == SCIPAListKindVisited) {
+        total = self.allVisits.count;  shown = self.filteredVisits.count;
+    } else {
+        total = self.allUsers.count;   shown = self.filteredUsers.count;
+    }
     self.navigationItem.prompt = [NSString stringWithFormat:SCILocalized(@"%lu of %lu"),
                                   (unsigned long)shown, (unsigned long)total];
     self.emptyLabel.hidden = shown > 0;
@@ -388,7 +637,6 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     [self applyFiltersAndSort];
 }
 
-// Pipeline: search → verified/private filter → sort.
 - (void)applyFiltersAndSort {
     NSString *q = self.currentQuery;
     BOOL hasQuery = q.length > 0;
@@ -421,6 +669,20 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
             [out addObject:c];
         }
         self.filteredChanges = [self sortChanges:out];
+    } else if (self.kind == SCIPAListKindVisited) {
+        NSDate *cutoff = [self dateCutoffForCurrentFilter];
+        NSMutableArray *out = [NSMutableArray arrayWithCapacity:self.allVisits.count];
+        for (SCIProfileAnalyzerVisit *vst in self.allVisits) {
+            SCIProfileAnalyzerUser *u = vst.user;
+            if (hasQuery && ![u.username localizedCaseInsensitiveContainsString:q]
+                         && ![u.fullName localizedCaseInsensitiveContainsString:q]) continue;
+            if (verified && !u.isVerified) continue;
+            if (notVerified && u.isVerified) continue;
+            if (priv && !u.isPrivate) continue;
+            if (cutoff && [vst.lastSeen compare:cutoff] == NSOrderedAscending) continue;
+            [out addObject:vst];
+        }
+        self.filteredVisits = [self sortVisits:out];
     } else {
         self.filteredUsers = applyToUsers(self.allUsers);
     }
@@ -438,6 +700,42 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     }];
 }
 
+- (NSDate *)dateCutoffForCurrentFilter {
+    NSTimeInterval secs = 0;
+    switch (self.dateFilter) {
+        case SCIPADateFilterToday: secs = 86400;        break;
+        case SCIPADateFilter7d:    secs = 7  * 86400;   break;
+        case SCIPADateFilter30d:   secs = 30 * 86400;   break;
+        default: return nil;
+    }
+    return [NSDate dateWithTimeIntervalSinceNow:-secs];
+}
+
+- (NSArray *)sortVisits:(NSArray<SCIProfileAnalyzerVisit *> *)src {
+    SCIPASortMode m = self.sortMode;
+    if (m == SCIPASortModeRecent || m == SCIPASortModeDefault) {
+        return [src sortedArrayUsingComparator:^NSComparisonResult(SCIProfileAnalyzerVisit *a, SCIProfileAnalyzerVisit *b) {
+            return [b.lastSeen compare:a.lastSeen];
+        }];
+    }
+    if (m == SCIPASortModeOldest) {
+        return [src sortedArrayUsingComparator:^NSComparisonResult(SCIProfileAnalyzerVisit *a, SCIProfileAnalyzerVisit *b) {
+            return [a.lastSeen compare:b.lastSeen];
+        }];
+    }
+    if (m == SCIPASortModeMostVisited) {
+        return [src sortedArrayUsingComparator:^NSComparisonResult(SCIProfileAnalyzerVisit *a, SCIProfileAnalyzerVisit *b) {
+            if (a.visitCount == b.visitCount) return [b.lastSeen compare:a.lastSeen];
+            return (a.visitCount < b.visitCount) ? NSOrderedDescending : NSOrderedAscending;
+        }];
+    }
+    BOOL asc = (m == SCIPASortModeAZ);
+    return [src sortedArrayUsingComparator:^NSComparisonResult(SCIProfileAnalyzerVisit *a, SCIProfileAnalyzerVisit *b) {
+        NSComparisonResult r = [a.user.username caseInsensitiveCompare:b.user.username ?: @""];
+        return asc ? r : -r;
+    }];
+}
+
 - (NSArray *)sortChanges:(NSArray<SCIProfileAnalyzerProfileChange *> *)src {
     if (self.sortMode == SCIPASortModeDefault) return src;
     BOOL asc = (self.sortMode == SCIPASortModeAZ);
@@ -448,22 +746,31 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 }
 
 - (BOOL)hasActiveFilterOrSort {
-    return self.filterVerifiedOnly || self.filterNotVerifiedOnly || self.filterPrivateOnly || self.sortMode != SCIPASortModeDefault;
+    SCIPASortMode neutral = (self.kind == SCIPAListKindVisited) ? SCIPASortModeRecent : SCIPASortModeDefault;
+    return self.filterVerifiedOnly || self.filterNotVerifiedOnly || self.filterPrivateOnly
+        || self.dateFilter != SCIPADateFilterAny
+        || self.sortMode != neutral;
 }
 
 #pragma mark - Table
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section {
-    return self.kind == SCIPAListKindProfileUpdate ? self.filteredChanges.count : self.filteredUsers.count;
+    if (self.kind == SCIPAListKindProfileUpdate) return self.filteredChanges.count;
+    if (self.kind == SCIPAListKindVisited)       return self.filteredVisits.count;
+    return self.filteredUsers.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SCIPAUserCell *cell = [tv dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     SCIProfileAnalyzerUser *user;
     SCIProfileAnalyzerProfileChange *change = nil;
+    SCIProfileAnalyzerVisit *visit = nil;
     if (self.kind == SCIPAListKindProfileUpdate) {
         change = self.filteredChanges[indexPath.row];
         user = change.current;
+    } else if (self.kind == SCIPAListKindVisited) {
+        visit = self.filteredVisits[indexPath.row];
+        user = visit.user;
     } else {
         user = self.filteredUsers[indexPath.row];
     }
@@ -485,6 +792,19 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
         if (change.profilePicChanged) [lines addObject:SCILocalized(@"Profile picture changed")];
         cell.subtitleLabel.text = [lines componentsJoinedByString:@"\n"];
         cell.subtitleLabel.numberOfLines = 3;
+    } else if (self.kind == SCIPAListKindVisited) {
+        NSString *when = [self relativeStringForDate:visit.lastSeen];
+        NSString *dateLine = (visit.visitCount > 1)
+            ? [NSString stringWithFormat:@"%@ · %ld", when, (long)visit.visitCount]
+            : when;
+        NSString *first = user.fullName.length ? user.fullName : (user.isPrivate ? SCILocalized(@"Private account") : @"");
+        if (first.length) {
+            cell.subtitleLabel.text = [NSString stringWithFormat:@"%@\n%@", first, dateLine];
+            cell.subtitleLabel.numberOfLines = 2;
+        } else {
+            cell.subtitleLabel.text = dateLine;
+            cell.subtitleLabel.numberOfLines = 1;
+        }
     } else {
         cell.subtitleLabel.text = user.fullName.length ? user.fullName : (user.isPrivate ? SCILocalized(@"Private account") : @"");
         cell.subtitleLabel.numberOfLines = 1;
@@ -492,7 +812,6 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 
     [self configureActionForCell:cell user:user];
 
-    // Selection-mode checkmark affordance
     if (self.selectionMode) {
         BOOL on = [self.selectedPKs containsObject:user.pk];
         cell.accessoryType = on ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
@@ -500,39 +819,113 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
 
-    if (user.profilePicURL.length) {
-        NSURL *url = [NSURL URLWithString:user.profilePicURL];
-        NSString *pkTag = user.pk;
-        cell.avatar.tag = pkTag.hash;
-        [SCIImageCache loadImageFromURL:url completion:^(UIImage *image) {
-            if (cell.avatar.tag == (NSInteger)pkTag.hash) cell.avatar.image = image;
-        }];
-    } else {
+    // Skip avatar reset when reconfiguring the same row — avoids a grey flash.
+    BOOL pkChanged = ![cell.boundPK isEqualToString:user.pk];
+    if (pkChanged) {
+        cell.boundPK = user.pk;
         cell.avatar.image = [UIImage systemImageNamed:@"person.circle.fill"];
         cell.avatar.tintColor = [UIColor systemGrayColor];
+    }
+    if (user.profilePicURL.length) {
+        NSURL *url = [NSURL URLWithString:user.profilePicURL];
+        NSString *boundPK = user.pk;
+        __weak typeof(self) weakSelf = self;
+        __weak SCIPAUserCell *weakCell = cell;
+        [SCIImageCache loadImageFromURL:url completion:^(UIImage *image) {
+            SCIPAUserCell *strongCell = weakCell;
+            if (image) {
+                if ([strongCell.boundPK isEqualToString:boundPK]) strongCell.avatar.image = image;
+                return;
+            }
+            // CDN URL expired — fetch a fresh one.
+            [weakSelf refreshProfilePicForUser:user];
+        }];
+    } else {
+        // Visit captured before fieldCache populated — fetch identity now.
+        [self refreshProfilePicForUser:user];
     }
     return cell;
 }
 
-- (void)configureActionForCell:(SCIPAUserCell *)cell user:(SCIProfileAnalyzerUser *)user {
-    BOOL hasButton = !self.selectionMode
-        && (self.kind == SCIPAListKindFollow || self.kind == SCIPAListKindUnfollow);
-    [cell setActionVisible:hasButton];
-    if (!hasButton) return;
-
-    BOOL pending = [self.pendingPKs containsObject:user.pk];
-    if (self.kind == SCIPAListKindUnfollow) {
-        [cell.actionButton setTitle:SCILocalized(@"Unfollow") forState:UIControlStateNormal];
-        cell.actionButton.backgroundColor = [[UIColor systemRedColor] colorWithAlphaComponent:0.12];
-        [cell.actionButton setTitleColor:[UIColor systemRedColor] forState:UIControlStateNormal];
-    } else {
-        [cell.actionButton setTitle:SCILocalized(@"Follow") forState:UIControlStateNormal];
-        cell.actionButton.backgroundColor = [SCIUtils SCIColor_Primary] ?: [UIColor systemBlueColor];
-        [cell.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+- (void)refreshProfilePicForUser:(SCIProfileAnalyzerUser *)user {
+    if (!user.pk.length) return;
+    NSMutableDictionary *seen = sciPicRefreshAttempted();
+    @synchronized (seen) {
+        NSDate *last = seen[user.pk];
+        if (last && -[last timeIntervalSinceNow] < kSCIPAPicRefreshTTL) return;
+        seen[user.pk] = [NSDate date];
     }
-    cell.actionButton.enabled = !pending;
-    cell.actionButton.alpha = pending ? 0.5 : 1.0;
+    __weak typeof(self) weakSelf = self;
+    [SCIInstagramAPI sendRequestWithMethod:@"GET"
+                                      path:[NSString stringWithFormat:@"users/%@/info/", user.pk]
+                                      body:nil
+                                completion:^(NSDictionary *resp, NSError *error) {
+        NSDictionary *info = [resp[@"user"] isKindOfClass:[NSDictionary class]] ? resp[@"user"] : nil;
+        if (!info.count) return;
 
+        NSString *fresh = [info[@"profile_pic_url"] isKindOfClass:[NSString class]] ? info[@"profile_pic_url"] : nil;
+        if (!fresh.length) {
+            // Some private / restricted accounts only expose the HD url.
+            NSDictionary *hd = info[@"hd_profile_pic_url_info"];
+            if ([hd isKindOfClass:[NSDictionary class]]) {
+                id u = hd[@"url"];
+                if ([u isKindOfClass:[NSString class]]) fresh = u;
+            }
+        }
+
+        BOOL changed = NO;
+        if (fresh.length && ![user.profilePicURL isEqualToString:fresh]) {
+            user.profilePicURL = fresh; changed = YES;
+        }
+        NSString *un = [info[@"username"] isKindOfClass:[NSString class]] ? info[@"username"] : nil;
+        if (un.length && ![user.username isEqualToString:un]) { user.username = un; changed = YES; }
+        NSString *fn = [info[@"full_name"] isKindOfClass:[NSString class]] ? info[@"full_name"] : nil;
+        if (fn && ![(user.fullName ?: @"") isEqualToString:fn]) { user.fullName = fn; changed = YES; }
+        BOOL ver = [info[@"is_verified"] boolValue];
+        BOOL pri = [info[@"is_private"] boolValue];
+        if (user.isVerified != ver) { user.isVerified = ver; changed = YES; }
+        if (user.isPrivate  != pri) { user.isPrivate  = pri; changed = YES; }
+
+        if (!changed) return;
+
+        if (weakSelf.kind == SCIPAListKindVisited) {
+            [SCIProfileAnalyzerStorage refreshVisitedUser:user forUserPK:[SCIUtils currentUserPK]];
+        }
+        [weakSelf reloadVisibleRowsForPKs:@[user.pk]];
+    }];
+}
+
+- (NSString *)relativeStringForDate:(NSDate *)date {
+    if (!date) return @"—";
+    NSTimeInterval delta = -[date timeIntervalSinceNow];
+    if (delta < 60)    return SCILocalized(@"just now");
+    if (delta < 3600)  return [NSString stringWithFormat:SCILocalized(@"%dm ago"), MAX(1, (int)(delta / 60))];
+    if (delta < 86400) return [NSString stringWithFormat:SCILocalized(@"%dh ago"), (int)(delta / 3600)];
+    if (delta < 7 * 86400) return [NSString stringWithFormat:SCILocalized(@"%dd ago"), (int)(delta / 86400)];
+    NSDateFormatter *f = [NSDateFormatter new];
+    f.dateStyle = NSDateFormatterMediumStyle;
+    f.timeStyle = NSDateFormatterNoStyle;
+    return [f stringFromDate:date];
+}
+
+- (void)configureActionForCell:(SCIPAUserCell *)cell user:(SCIProfileAnalyzerUser *)user {
+    if (self.selectionMode) {
+        [cell hideAction];
+        return;
+    }
+    BOOL pending = [self.pendingPKs containsObject:user.pk];
+    NSNumber *status = self.friendshipStatus[user.pk];
+    UIColor *primary = [SCIUtils SCIColor_Primary] ?: [UIColor systemBlueColor];
+
+    if (pending) {
+        [cell applyAction:SCIPACellActionPending pending:YES tint:primary];
+    } else if (!status) {
+        [cell applyAction:SCIPACellActionLoading pending:NO tint:primary];
+    } else if ([status boolValue]) {
+        [cell applyAction:SCIPACellActionUnfollow pending:NO tint:primary];
+    } else {
+        [cell applyAction:SCIPACellActionFollow pending:NO tint:primary];
+    }
     __weak typeof(self) weakSelf = self;
     cell.onActionTap = ^(SCIPAUserCell *c) { [weakSelf performActionForUser:user]; };
 }
@@ -541,12 +934,16 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 
 - (void)performActionForUser:(SCIProfileAnalyzerUser *)user {
     if ([self.pendingPKs containsObject:user.pk]) return;
-    if (self.kind == SCIPAListKindUnfollow) {
+    NSNumber *status = self.friendshipStatus[user.pk];
+    if (!status) return;
+    BOOL currentlyFollowing = [status boolValue];
+    if (currentlyFollowing) {
         NSString *msg = [NSString stringWithFormat:SCILocalized(@"Unfollow @%@?"), user.username ?: @""];
         UIAlertController *a = [UIAlertController alertControllerWithTitle:nil message:msg preferredStyle:UIAlertControllerStyleAlert];
         [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+        __weak typeof(self) weakSelf = self;
         [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Unfollow") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *_) {
-            [self sendFriendshipForUser:user follow:NO reload:YES];
+            [weakSelf sendFriendshipForUser:user follow:NO reload:YES];
         }]];
         [self presentViewController:a animated:YES completion:nil];
     } else {
@@ -556,24 +953,35 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 
 - (void)sendFriendshipForUser:(SCIProfileAnalyzerUser *)user follow:(BOOL)follow reload:(BOOL)reload {
     [self.pendingPKs addObject:user.pk];
-    if (reload) [self.tableView reloadData];
+    if (reload) [self reloadVisibleRowsForPKs:@[user.pk]];
+    __weak typeof(self) weakSelf = self;
     void(^done)(NSDictionary *, NSError *) = ^(NSDictionary *resp, NSError *err) {
-        [self.pendingPKs removeObject:user.pk];
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        [strongSelf.pendingPKs removeObject:user.pk];
         BOOL success = (err == nil) && ([resp[@"status"] isEqualToString:@"ok"] || resp[@"friendship_status"]);
         if (success) {
-            [self persistFriendshipChangeForUser:user followed:follow];
-            [self removeUserFromList:user];
+            strongSelf.friendshipStatus[user.pk] = @(follow);
+            [SCIPAFriendshipCache setFollowing:follow forPK:user.pk];
+            [strongSelf persistFriendshipChangeForUser:user followed:follow];
+            BOOL membershipChanged =
+                ((strongSelf.kind == SCIPAListKindUnfollow || strongSelf.kind == SCIPAListKindMutual) && !follow)
+             || (strongSelf.kind == SCIPAListKindFollow && follow);
+            if (membershipChanged) {
+                [strongSelf removeUserFromList:user];
+            } else {
+                [strongSelf reloadVisibleRowsForPKs:@[user.pk]];
+            }
         } else {
             [SCIUtils showErrorHUDWithDescription:err.localizedDescription ?: SCILocalized(@"Request failed")];
-            [self.tableView reloadData];
+            [strongSelf reloadVisibleRowsForPKs:@[user.pk]];
         }
     };
     if (follow) [SCIInstagramAPI followUserPK:user.pk completion:done];
     else        [SCIInstagramAPI unfollowUserPK:user.pk completion:done];
 }
 
-// Mirror in-app follow/unfollow into the cached snapshot so category counts
-// + header stats update live without a rescan.
+// Mirror in-app follow/unfollow into the snapshot so category counts update live.
 - (void)persistFriendshipChangeForUser:(SCIProfileAnalyzerUser *)user followed:(BOOL)followed {
     NSString *pk = [SCIUtils currentUserPK];
     SCIProfileAnalyzerSnapshot *snap = [SCIProfileAnalyzerStorage currentSnapshotForUserPK:pk];
@@ -594,6 +1002,10 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 }
 
 - (void)removeUserFromList:(SCIProfileAnalyzerUser *)user {
+    if (self.kind == SCIPAListKindVisited || self.kind == SCIPAListKindProfileUpdate) {
+        [self reloadVisibleRowsForPKs:@[user.pk]];   // history kinds keep the row
+        return;
+    }
     NSMutableArray *all = [self.allUsers mutableCopy];
     [all removeObject:user];
     self.allUsers = all;
@@ -609,9 +1021,14 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tv deselectRowAtIndexPath:indexPath animated:YES];
-    SCIProfileAnalyzerUser *user = self.kind == SCIPAListKindProfileUpdate
-        ? self.filteredChanges[indexPath.row].current
-        : self.filteredUsers[indexPath.row];
+    SCIProfileAnalyzerUser *user;
+    if (self.kind == SCIPAListKindProfileUpdate) {
+        user = self.filteredChanges[indexPath.row].current;
+    } else if (self.kind == SCIPAListKindVisited) {
+        user = self.filteredVisits[indexPath.row].user;
+    } else {
+        user = self.filteredUsers[indexPath.row];
+    }
 
     if (self.selectionMode) {
         if ([self.selectedPKs containsObject:user.pk]) [self.selectedPKs removeObject:user.pk];
@@ -623,7 +1040,150 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
 
     if (!user.username.length) return;
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://user?username=%@", user.username]];
-    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    // Dismiss the modal first so IG can route the deep link.
+    UIViewController *presenter = self.navigationController.presentingViewController ?: self.presentingViewController;
+    void (^open)(void) = ^{
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    };
+    if (presenter) [presenter dismissViewControllerAnimated:YES completion:open];
+    else           open();
+}
+
+#pragma mark - Pull-to-refresh
+
+- (void)pullToRefresh:(UIRefreshControl *)sender {
+    // Re-read disk, drop cached friendship/pic dedup, then force a fresh
+    // /users/{pk}/info/ for every visible row so identity + pic resync.
+    self.allVisits = [SCIProfileAnalyzerStorage visitedProfilesForUserPK:[SCIUtils currentUserPK]] ?: @[];
+
+    @synchronized (sciPicRefreshAttempted()) {
+        for (SCIProfileAnalyzerVisit *v in self.allVisits) {
+            NSString *pk = v.user.pk;
+            if (!pk.length) continue;
+            [sciPicRefreshAttempted() removeObjectForKey:pk];
+            [self.friendshipStatus removeObjectForKey:pk];
+            [self.lookupBackoff removeObjectForKey:pk];
+            [SCIPAFriendshipCache invalidatePK:pk];
+        }
+    }
+
+    [self applyFiltersAndSort];
+
+    NSMutableSet<SCIProfileAnalyzerUser *> *visibleUsers = [NSMutableSet set];
+    for (NSIndexPath *ip in self.tableView.indexPathsForVisibleRows) {
+        if (ip.row >= (NSInteger)self.filteredVisits.count) continue;
+        SCIProfileAnalyzerUser *u = self.filteredVisits[ip.row].user;
+        if (u.pk.length) [visibleUsers addObject:u];
+    }
+    for (SCIProfileAnalyzerUser *u in visibleUsers) [self refreshProfilePicForUser:u];
+
+    [self.tableView reloadData];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        [sender endRefreshing];
+    });
+}
+
+#pragma mark - Lazy friendship lookup
+
+- (NSString *)pkAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.kind == SCIPAListKindProfileUpdate) {
+        if (indexPath.row >= (NSInteger)self.filteredChanges.count) return nil;
+        return self.filteredChanges[indexPath.row].current.pk;
+    }
+    if (self.kind == SCIPAListKindVisited) {
+        if (indexPath.row >= (NSInteger)self.filteredVisits.count) return nil;
+        return self.filteredVisits[indexPath.row].user.pk;
+    }
+    if (indexPath.row >= (NSInteger)self.filteredUsers.count) return nil;
+    return self.filteredUsers[indexPath.row].pk;
+}
+
+- (void)tableView:(UITableView *)tv willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *pk = [self pkAtIndexPath:indexPath];
+    if (!pk.length) return;
+    if (self.friendshipStatus[pk]) return;
+    if ([self.lookupInflight containsObject:pk]) return;
+    NSDate *backoff = self.lookupBackoff[pk];
+    if (backoff && -[backoff timeIntervalSinceNow] < 60.0) return;
+    [self.lookupQueue addObject:pk];
+    [self scheduleLookupFlush];
+}
+
+- (void)scheduleLookupFlush {
+    if (self.lookupFlushScheduled) return;
+    self.lookupFlushScheduled = YES;
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.18 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        weakSelf.lookupFlushScheduled = NO;
+        [weakSelf flushPendingLookups];
+    });
+}
+
+- (void)flushPendingLookups {
+    if (!self.lookupQueue.count) return;
+    NSArray *all = [self.lookupQueue allObjects];
+    [self.lookupQueue removeAllObjects];
+    NSInteger chunkSize = 80;   // show_many caps around ~100 ids
+    for (NSInteger i = 0; i < (NSInteger)all.count; i += chunkSize) {
+        NSArray *chunk = [all subarrayWithRange:NSMakeRange(i, MIN(chunkSize, (NSInteger)all.count - i))];
+        for (NSString *pk in chunk) [self.lookupInflight addObject:pk];
+        __weak typeof(self) weakSelf = self;
+        [SCIInstagramAPI fetchFriendshipStatusesForPKs:chunk
+                                             completion:^(NSDictionary *statuses, NSError *error) {
+            typeof(self) strongSelf = weakSelf;
+            if (!strongSelf) return;
+            for (NSString *pk in chunk) [strongSelf.lookupInflight removeObject:pk];
+            if (error || !statuses.count) {
+                // Back off so willDisplay doesn't re-queue the same pks each scroll.
+                NSDate *now = [NSDate date];
+                for (NSString *pk in chunk) strongSelf.lookupBackoff[pk] = now;
+            } else {
+                for (NSString *pk in chunk) {
+                    NSDictionary *st = statuses[pk];
+                    BOOL following = [st isKindOfClass:[NSDictionary class]] ? [st[@"following"] boolValue] : NO;
+                    strongSelf.friendshipStatus[pk] = @(following);
+                    [SCIPAFriendshipCache setFollowing:following forPK:pk];
+                }
+            }
+            [strongSelf reloadVisibleRowsForPKs:chunk];
+        }];
+    }
+}
+
+- (void)reloadVisibleRowsForPKs:(NSArray<NSString *> *)pks {
+    NSSet *set = [NSSet setWithArray:pks];
+    NSMutableArray *paths = [NSMutableArray array];
+    for (NSIndexPath *ip in self.tableView.indexPathsForVisibleRows) {
+        NSString *pk = [self pkAtIndexPath:ip];
+        if (pk && [set containsObject:pk]) [paths addObject:ip];
+    }
+    if (paths.count) [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma mark - Swipe actions (visited only)
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tv
+        trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.kind != SCIPAListKindVisited) return nil;
+    if (indexPath.row >= (NSInteger)self.filteredVisits.count) return nil;
+    SCIProfileAnalyzerVisit *vst = self.filteredVisits[indexPath.row];
+    __weak typeof(self) weakSelf = self;
+    UIContextualAction *del = [UIContextualAction
+        contextualActionWithStyle:UIContextualActionStyleDestructive
+                            title:SCILocalized(@"Remove")
+                          handler:^(UIContextualAction *_, UIView *__, void(^done)(BOOL)) {
+        [SCIProfileAnalyzerStorage removeVisitForUserPK:[SCIUtils currentUserPK] visitedPK:vst.user.pk];
+        NSMutableArray *all = [weakSelf.allVisits mutableCopy];
+        [all removeObject:vst];
+        weakSelf.allVisits = all;
+        [weakSelf applyFiltersAndSort];
+        done(YES);
+    }];
+    del.image = [UIImage systemImageNamed:@"trash"];
+    return [UISwipeActionsConfiguration configurationWithActions:@[del]];
 }
 
 #pragma mark - Multi-select
@@ -632,7 +1192,6 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
     self.selectionMode = !self.selectionMode;
     [self.selectedPKs removeAllObjects];
     self.batchActionButton.hidden = !self.selectionMode;
-    // Leave room for the capsule so last-row cells don't sit under it.
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.selectionMode ? 96 : 0, 0);
     [self updateNavBar];
     [self refreshBatchBar];
@@ -671,16 +1230,22 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
                                                               message:msg preferredStyle:UIAlertControllerStyleAlert];
     [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
     UIAlertActionStyle style = follow ? UIAlertActionStyleDefault : UIAlertActionStyleDestructive;
+    __weak typeof(self) weakSelf = self;
     [a addAction:[UIAlertAction actionWithTitle:verb style:style handler:^(UIAlertAction *_) {
-        [self runBatchAction];
+        [weakSelf runBatchAction];
     }]];
     [self presentViewController:a animated:YES completion:nil];
 }
 
 - (void)runBatchAction {
+    BOOL follow = (self.kind == SCIPAListKindFollow);
     NSMutableArray<SCIProfileAnalyzerUser *> *queue = [NSMutableArray array];
     for (SCIProfileAnalyzerUser *u in self.allUsers) {
-        if ([self.selectedPKs containsObject:u.pk]) [queue addObject:u];
+        if (![self.selectedPKs containsObject:u.pk]) continue;
+        // Skip users already in the target state.
+        NSNumber *st = self.friendshipStatus[u.pk];
+        if (st && [st boolValue] == follow) continue;
+        [queue addObject:u];
         if (queue.count >= kSCIPABatchCap) break;
     }
     [self.selectedPKs removeAllObjects];
@@ -712,6 +1277,8 @@ typedef NS_ENUM(NSInteger, SCIPASortMode) {
         NSUInteger nextDone = done + 1;
         BOOL ok = (err == nil) && ([resp[@"status"] isEqualToString:@"ok"] || resp[@"friendship_status"]);
         if (ok) {
+            strongSelf.friendshipStatus[u.pk] = @(follow);
+            [SCIPAFriendshipCache setFollowing:follow forPK:u.pk];
             [strongSelf persistFriendshipChangeForUser:u followed:follow];
             [strongSelf removeUserFromList:u];
         }

@@ -97,6 +97,11 @@
 @interface IGMedia : IGBaseMedia
 @property(readonly) IGVideo *video;
 @property(readonly) IGPhoto *photo;
+- (id)mediaOverlay;
+@end
+
+// Sensitive-content cover cell (hosts a Bloks template).
+@interface IGMediaOverlayCell : UICollectionViewCell
 @end
 
 @interface IGPostItem : NSObject
@@ -197,6 +202,8 @@
 @end
 
 @interface IGStoryVideoView : UIView
+@property (nonatomic, readonly) IGMedia *item;
+@property (readonly, nonatomic) IGMedia *videoURLProvider;
 @property (nonatomic, weak, readwrite) IGStoryFullscreenSectionController *captionDelegate;
 
 - (void)addLongPressGestureRecognizer; // new
@@ -212,6 +219,8 @@
 @property (nonatomic, weak, readwrite) id gestureDelegate;
 - (id)gestureDelegate;
 - (void)addLongPressGestureRecognizer; // new
+- (BOOL)isSecretStoryCurrentlyBlurred;
+- (void)showSecretStoryBlur:(BOOL)show animated:(BOOL)animated;
 @end
 
 @interface IGDirectVisualMessageViewerController : UIViewController
@@ -297,6 +306,24 @@
 @end
 
 @interface IGDirectInboxSearchAIAgentsSuggestedPromptRowCell : UIView
+@end
+
+// IG inbox top nav header (Swift class, demangled name).
+@interface IGDirectInboxNavigationHeaderView : UIView
+@end
+
+// Share-sheet "Send to group chat" facepile button + its bottom-buttons container.
+@interface _TtC12IGShareSheet45IGShareSheetCreateOrSendToGroupFacepileButton : UIView
+@end
+@interface _TtC12IGShareSheet38IGShareSheetBottomButtonsViewContainer : UIView
+@end
+
+// Reels: friends-tab avatar bubbles + floating social-context overlay.
+@interface _TtC32IGSundialFriendsLaneEntryPointUI30IGFriendsLaneEntryPointTabView : UIControl
+@end
+@interface IGStoryFacepileView : UIView
+@end
+@interface _TtC25IGFloatingSocialContextUI39IGFloatingSocialContextMediaOverlayView : UIView
 @end
 
 @interface IGDSSegmentedPillBarView : UIView
@@ -386,6 +413,11 @@
 @interface IGStoryColorPaletteView : UIView
 @end
 
+// Color wheel button on music + lyric sticker editors.
+@interface IGStoryColorPaletteWheel : UIControl
+- (void)addLongPressGestureRecognizer; // new
+@end
+
 @interface IGProfilePictureImageView : UIView
 @property (nonatomic, readonly) IGUser *userGQL;
 
@@ -438,6 +470,10 @@
 
 @interface IGDirectThreadViewDrawingViewController : UIViewController
 - (void)drawingControls:controls didSelectColor:color;
+@end
+
+// DM thread title view — hosts username + "Active …" subtitle.
+@interface IGDirectLeftAlignedTitleView : UIView
 @end
 
 @interface IGSundialViewerNavigationBarOld : UIView
@@ -497,6 +533,10 @@
 @end
 
 @interface IGCommentThreadViewController : UIViewController
+@end
+
+// Comment composer input bar — found via IG strings scan ("IGCommentComposerView", "commentComposerView:didTapStickerEntryButton:")
+@interface IGCommentComposerView : UIView
 @end
 
 @interface IGSeeAllItemConfiguration : NSObject
@@ -723,6 +763,10 @@ typedef FLEXAlertAction * _Nonnull (^FLEXAlertActionHandler)(void(^handler)(NSAr
 @interface IGSliderStickerView : UIView
 @end
 
+// Photo sticker picker — preferredMediaTypes is an array of PHAssetMediaType numbers.
+@interface IGStickerGalleryViewController : UIViewController
+@end
+
 // Composer sticker tray data source — hooked to inject the quiz model.
 @interface IGStoryStickerDataSourceImpl : NSObject
 - (NSArray *)items;
@@ -732,4 +776,20 @@ typedef FLEXAlertAction * _Nonnull (^FLEXAlertActionHandler)(void(^handler)(NSAr
 @property (nonatomic) BOOL isBoostEligible;
 @property (nonatomic, copy) id stickerSection;
 @property (nonatomic, copy) NSArray *prompts;
+@end
+
+// Reveal/Secret sticker — blur story until viewer DMs the author.
+@interface IGSecretStickerTrayModel : NSObject
+@property (nonatomic, copy) id stickerSection;
+@end
+
+// Swift class _TtC15IGSecretSticker26IGSecretStickerOverlayView — bound at runtime.
+@interface IGSecretStickerOverlayView : UIView
+- (void)setPreviewBlurEnabled:(BOOL)enabled;
+@end
+
+// Swift class _TtC25IGMagicModExperimentation30IGGenAIRestyleExperimentHelper.
+@interface IGGenAIRestyleExperimentHelper : NSObject
++ (BOOL)isRevealStickerEnabledWithLauncherSet:(id)set;
++ (BOOL)isRevealStickerConsumptionEnabledWithLauncherSet:(id)set;
 @end

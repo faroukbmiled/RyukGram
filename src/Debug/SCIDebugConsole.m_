@@ -1,0 +1,441 @@
+#import "SCIDebugConsole.h"
+
+#define SCI_DEBUG_BUFFER_MAX 1500
+
+static NSMutableArray<NSString *> *sciDebugLogBuffer = nil;
+static NSDateFormatter *sciDebugDateFmt = nil;
+
+static dispatch_queue_t sciDebugLogQueue(void) {
+    static dispatch_queue_t q;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        q = dispatch_queue_create("com.ryuk.ryukgram.debuglog", DISPATCH_QUEUE_SERIAL);
+    });
+    return q;
+}
+
+static void sciDebugEnsure(void) {
+    if (!sciDebugLogBuffer) sciDebugLogBuffer = [NSMutableArray arrayWithCapacity:SCI_DEBUG_BUFFER_MAX];
+    if (!sciDebugDateFmt) {
+        sciDebugDateFmt = [NSDateFormatter new];
+        sciDebugDateFmt.dateFormat = @"HH:mm:ss.SSS";
+    }
+}
+
+void SCIDebugLog(NSString *category, NSString *format, ...) {
+    if (!format) return;
+    va_list args;
+    va_start(args, format);
+    NSString *body = [[NSString alloc] initWithFormat:format arguments:args];
+    va_end(args);
+
+    if (category.length > 0) NSLog(@"[RyukGram][%@] %@", category, body);
+    else                     NSLog(@"[RyukGram] %@", body);
+
+    NSDate *now = [NSDate date];
+    dispatch_async(sciDebugLogQueue(), ^{
+        sciDebugEnsure();
+        NSString *line = category.length > 0
+            ? [NSString stringWithFormat:@"[%@] [%@] %@", [sciDebugDateFmt stringFromDate:now], category, body]
+            : [NSString stringWithFormat:@"[%@] %@", [sciDebugDateFmt stringFromDate:now], body];
+        [sciDebugLogBuffer addObject:line];
+        while (sciDebugLogBuffer.count > SCI_DEBUG_BUFFER_MAX)
+            [sciDebugLogBuffer removeObjectAtIndex:0];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[SCIDebugConsole shared] installIfNeeded];
+            [[SCIDebugConsole shared] performSelector:@selector(appendLine:) withObject:line];
+        });
+    });
+}
+
+NSString *SCIDebugLogDump(void) {
+    __block NSString *out = nil;
+    dispatch_sync(sciDebugLogQueue(), ^{
+        sciDebugEnsure();
+        NSMutableString *s = [NSMutableString string];
+        [s appendFormat:@"=== RyukGram debug log ===\n"];
+        [s appendFormat:@"Generated: %@\n", [NSDate date]];
+        [s appendFormat:@"Lines: %lu\n", (unsigned long)sciDebugLogBuffer.count];
+        [s appendString:@"==========================\n"];
+        for (NSString *l in sciDebugLogBuffer) {
+            [s appendString:l];
+            [s appendString:@"\n"];
+        }
+        out = [s copy];
+    });
+    return out;
+}
+
+void SCIDebugLogClear(void) {
+    dispatch_async(sciDebugLogQueue(), ^{
+        sciDebugEnsure();
+        [sciDebugLogBuffer removeAllObjects];
+    });
+}
+
+// ===== Static viewer =====
+
+@interface SCIDebugLogViewController ()
+@property (nonatomic, strong) UITextView *textView;
+@end
+
+@implementation SCIDebugLogViewController
+
++ (void)presentFromTopViewController {
+    UIWindow *win = nil;
+    for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {
+        if (![scene isKindOfClass:[UIWindowScene class]]) continue;
+        for (UIWindow *w in ((UIWindowScene *)scene).windows) {
+            if (w.isKeyWindow) { win = w; break; }
+        }
+        if (win) break;
+    }
+    if (!win) win = [UIApplication sharedApplication].windows.firstObject;
+    UIViewController *top = win.rootViewController;
+    while (top.presentedViewController) top = top.presentedViewController;
+
+    SCIDebugLogViewController *vc = [SCIDebugLogViewController new];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.modalPresentationStyle = UIModalPresentationFormSheet;
+    [top presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"RyukGram Debug";
+    self.view.backgroundColor = [UIColor systemBackgroundColor];
+
+    self.textView = [[UITextView alloc] initWithFrame:self.view.bounds];
+    self.textView.editable = NO;
+    self.textView.font = [UIFont fontWithName:@"Menlo" size:11];
+    self.textView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.textView.backgroundColor = [UIColor systemBackgroundColor];
+    self.textView.textColor = [UIColor labelColor];
+    [self.view addSubview:self.textView];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [self.textView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
+        [self.textView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
+        [self.textView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:8],
+        [self.textView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-8],
+    ]];
+
+    self.navigationItem.leftBarButtonItem =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                      target:self action:@selector(close)];
+    UIBarButtonItem *copy = [[UIBarButtonItem alloc] initWithTitle:@"Copy"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self action:@selector(copyLog)];
+    UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                             target:self action:@selector(refresh)];
+    UIBarButtonItem *clear = [[UIBarButtonItem alloc] initWithTitle:@"Clear"
+                                                              style:UIBarButtonItemStylePlain
+                                                             target:self action:@selector(clearLog)];
+    self.navigationItem.rightBarButtonItems = @[copy, refresh, clear];
+
+    [self refresh];
+}
+
+- (void)refresh {
+    self.textView.text = SCIDebugLogDump();
+    if (self.textView.text.length > 0) {
+        [self.textView scrollRangeToVisible:NSMakeRange(self.textView.text.length - 1, 1)];
+    }
+}
+
+- (void)copyLog {
+    [UIPasteboard generalPasteboard].string = self.textView.text ?: @"";
+    UIAlertController *a = [UIAlertController alertControllerWithTitle:@"Copied"
+                                                               message:@"Debug log copied to clipboard."
+                                                        preferredStyle:UIAlertControllerStyleAlert];
+    [a addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:a animated:YES completion:nil];
+}
+
+- (void)clearLog {
+    UIAlertController *a = [UIAlertController alertControllerWithTitle:@"Clear log?"
+                                                               message:nil
+                                                        preferredStyle:UIAlertControllerStyleAlert];
+    [a addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [a addAction:[UIAlertAction actionWithTitle:@"Clear"
+                                          style:UIAlertActionStyleDestructive
+                                        handler:^(UIAlertAction *_) {
+        SCIDebugLogClear();
+        [self refresh];
+    }]];
+    [self presentViewController:a animated:YES completion:nil];
+}
+
+- (void)close { [self dismissViewControllerAnimated:YES completion:nil]; }
+
+@end
+
+// ===== Floating live console =====
+
+// Pass touches through to IG when not on the panel/bubble.
+@interface SCIDebugPassthroughWindow : UIWindow
+@end
+@implementation SCIDebugPassthroughWindow
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *hit = [super hitTest:point withEvent:event];
+    if (hit == self) return nil;
+    if (hit == self.rootViewController.view) return nil;
+    return hit;
+}
+@end
+
+@interface SCIDebugConsole () {
+    UIWindow      *_window;
+    UIView        *_panel;
+    UILabel       *_titleLabel;
+    UITextView    *_textView;
+    UIButton      *_copyBtn;
+    UIButton      *_clearBtn;
+    UIButton      *_minBtn;
+    UIButton      *_bubble;
+    BOOL           _minimised;
+    BOOL           _installed;
+    CGPoint        _dragStart;
+    CGPoint        _viewStart;
+    NSMutableArray<NSString *> *_pendingLines;
+}
+- (void)appendLine:(NSString *)line;
+@end
+
+@implementation SCIDebugConsole
+
++ (instancetype)shared {
+    static SCIDebugConsole *s; static dispatch_once_t o;
+    dispatch_once(&o, ^{ s = [SCIDebugConsole new]; });
+    return s;
+}
+
+- (instancetype)init {
+    if ((self = [super init])) {
+        _pendingLines = [NSMutableArray array];
+        // %ctor logs land before any scene exists — retry on activation.
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(onSceneActive:)
+                                                     name:UISceneDidActivateNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(onSceneActive:)
+                                                     name:UIWindowDidBecomeKeyNotification
+                                                   object:nil];
+    }
+    return self;
+}
+
+- (void)onSceneActive:(NSNotification *)note {
+    dispatch_async(dispatch_get_main_queue(), ^{ [self installIfNeeded]; });
+}
+
+- (UIWindowScene *)pickScene {
+    for (UIScene *s in [UIApplication sharedApplication].connectedScenes) {
+        if (![s isKindOfClass:[UIWindowScene class]]) continue;
+        if (s.activationState == UISceneActivationStateForegroundActive) return (UIWindowScene *)s;
+    }
+    for (UIScene *s in [UIApplication sharedApplication].connectedScenes) {
+        if ([s isKindOfClass:[UIWindowScene class]]) return (UIWindowScene *)s;
+    }
+    return nil;
+}
+
+- (void)installIfNeeded {
+    if (_installed) return;
+    UIWindowScene *scene = [self pickScene];
+    if (!scene) return;
+
+    _window = [[SCIDebugPassthroughWindow alloc] initWithWindowScene:scene];
+    _window.windowLevel = UIWindowLevelAlert + 100;
+    _window.backgroundColor = [UIColor clearColor];
+    _window.hidden = NO;
+
+    UIViewController *root = [UIViewController new];
+    root.view = [[UIView alloc] initWithFrame:_window.bounds];
+    root.view.backgroundColor = [UIColor clearColor];
+    _window.rootViewController = root;
+
+    [self buildPanelInView:root.view];
+    [self buildBubbleInView:root.view];
+    _minimised = NO;
+    _bubble.hidden = YES;
+    _installed = YES;
+
+    for (NSString *l in _pendingLines) [self appendLineNow:l];
+    [_pendingLines removeAllObjects];
+
+    if (_textView.text.length == 0) {
+        NSString *dump = SCIDebugLogDump();
+        if (dump.length > 0) {
+            _textView.text = dump;
+            [_textView scrollRangeToVisible:NSMakeRange(_textView.text.length, 0)];
+        }
+    }
+}
+
+- (void)buildPanelInView:(UIView *)host {
+    CGFloat w = MIN(host.bounds.size.width - 20, 360);
+    CGFloat h = 220;
+    CGFloat x = (host.bounds.size.width - w) / 2;
+    CGFloat y = MAX(host.safeAreaInsets.top + 40, 60);
+
+    _panel = [[UIView alloc] initWithFrame:CGRectMake(x, y, w, h)];
+    _panel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.88];
+    _panel.layer.cornerRadius = 10;
+    _panel.layer.borderWidth = 1;
+    _panel.layer.borderColor = [UIColor systemRedColor].CGColor;
+    _panel.clipsToBounds = YES;
+    [host addSubview:_panel];
+
+    UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, w, 28)];
+    bar.backgroundColor = [UIColor systemRedColor];
+    [_panel addSubview:bar];
+
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, w - 16, 28)];
+    _titleLabel.text = @"RyukGram Debug";
+    _titleLabel.textColor = [UIColor whiteColor];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:11];
+    [bar addSubview:_titleLabel];
+
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPan:)];
+    [bar addGestureRecognizer:pan];
+
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 28, w, h - 28 - 36)];
+    _textView.editable = NO;
+    _textView.backgroundColor = [UIColor clearColor];
+    _textView.textColor = [UIColor whiteColor];
+    _textView.font = [UIFont fontWithName:@"Menlo" size:9];
+    _textView.textContainerInset = UIEdgeInsetsMake(4, 6, 4, 6);
+    [_panel addSubview:_textView];
+
+    UIView *btnRow = [[UIView alloc] initWithFrame:CGRectMake(0, h - 36, w, 36)];
+    btnRow.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.08];
+    [_panel addSubview:btnRow];
+
+    _copyBtn  = [self barButton:@"Copy"   action:@selector(onCopy)];
+    _clearBtn = [self barButton:@"Clear"  action:@selector(onClear)];
+    _minBtn   = [self barButton:@"Hide ▶" action:@selector(onMinimise)];
+
+    NSArray *btns = @[_copyBtn, _clearBtn, _minBtn];
+    CGFloat bw = w / btns.count;
+    for (NSUInteger i = 0; i < btns.count; i++) {
+        UIButton *b = btns[i];
+        b.frame = CGRectMake(i * bw, 0, bw, 36);
+        [btnRow addSubview:b];
+    }
+}
+
+- (UIButton *)barButton:(NSString *)title action:(SEL)sel {
+    UIButton *b = [UIButton buttonWithType:UIButtonTypeSystem];
+    [b setTitle:title forState:UIControlStateNormal];
+    [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    b.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+    [b addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
+    return b;
+}
+
+- (void)buildBubbleInView:(UIView *)host {
+    _bubble = [UIButton buttonWithType:UIButtonTypeCustom];
+    _bubble.frame = CGRectMake(host.bounds.size.width - 56, 80, 44, 44);
+    _bubble.backgroundColor = [UIColor systemRedColor];
+    _bubble.layer.cornerRadius = 22;
+    _bubble.layer.shadowColor = [UIColor blackColor].CGColor;
+    _bubble.layer.shadowOpacity = 0.3;
+    _bubble.layer.shadowOffset = CGSizeMake(0, 2);
+    [_bubble setTitle:@"RG" forState:UIControlStateNormal];
+    [_bubble setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _bubble.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [_bubble addTarget:self action:@selector(onMinimise) forControlEvents:UIControlEventTouchUpInside];
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPan:)];
+    [_bubble addGestureRecognizer:pan];
+    [host addSubview:_bubble];
+}
+
+- (void)onPan:(UIPanGestureRecognizer *)g {
+    UIView *target = (g.view == _bubble) ? _bubble : _panel;
+    if (g.state == UIGestureRecognizerStateBegan) {
+        _dragStart = [g locationInView:target.superview];
+        _viewStart = target.center;
+    } else if (g.state == UIGestureRecognizerStateChanged) {
+        CGPoint p = [g locationInView:target.superview];
+        target.center = CGPointMake(_viewStart.x + (p.x - _dragStart.x),
+                                    _viewStart.y + (p.y - _dragStart.y));
+    }
+}
+
+- (void)appendLine:(NSString *)line {
+    if (!line) return;
+    if (!NSThread.isMainThread) {
+        dispatch_async(dispatch_get_main_queue(), ^{ [self appendLine:line]; });
+        return;
+    }
+    if (!_installed) {
+        [_pendingLines addObject:line];
+        if (_pendingLines.count > 1500) [_pendingLines removeObjectAtIndex:0];
+        return;
+    }
+    [self appendLineNow:line];
+}
+
+- (void)appendLineNow:(NSString *)line {
+    NSMutableString *s = [_textView.text mutableCopy] ?: [NSMutableString string];
+    [s appendString:line];
+    [s appendString:@"\n"];
+    if (s.length > 60000) [s deleteCharactersInRange:NSMakeRange(0, s.length - 60000)];
+    _textView.text = s;
+    [_textView scrollRangeToVisible:NSMakeRange(s.length, 0)];
+    if (_minimised) [self pulseBubble];
+}
+
+- (void)pulseBubble {
+    [UIView animateWithDuration:0.12 animations:^{
+        self->_bubble.transform = CGAffineTransformMakeScale(1.18, 1.18);
+    } completion:^(BOOL _) {
+        [UIView animateWithDuration:0.12 animations:^{
+            self->_bubble.transform = CGAffineTransformIdentity;
+        }];
+    }];
+}
+
+- (void)onCopy {
+    [UIPasteboard generalPasteboard].string = SCIDebugLogDump();
+    NSString *prev = [_copyBtn titleForState:UIControlStateNormal];
+    [_copyBtn setTitle:@"Copied!" forState:UIControlStateNormal];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        [self->_copyBtn setTitle:prev forState:UIControlStateNormal];
+    });
+}
+
+- (void)onClear {
+    SCIDebugLogClear();
+    _textView.text = @"";
+}
+
+- (void)onMinimise { [self toggleMinimised]; }
+
+- (void)toggleMinimised {
+    _minimised = !_minimised;
+    _panel.hidden = _minimised;
+    _bubble.hidden = !_minimised;
+    if (_minimised) [self snapBubbleToEdge];
+}
+
+- (void)snapBubbleToEdge {
+    UIView *host = _bubble.superview;
+    if (!host) return;
+    CGFloat rightX = host.bounds.size.width - _bubble.bounds.size.width / 2 - 6;
+    CGFloat y = MAX(host.safeAreaInsets.top + 30, MIN(_bubble.center.y, host.bounds.size.height - 80));
+    [UIView animateWithDuration:0.2 animations:^{
+        self->_bubble.center = CGPointMake(rightX, y);
+    }];
+}
+
+- (void)show {
+    if (!_installed) [self installIfNeeded];
+    _window.hidden = NO;
+}
+
+@end

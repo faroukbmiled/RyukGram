@@ -1,4 +1,4 @@
-// Copy comment text + download GIF from comment long-press menu
+// Comment long-press menu extras: copy text + GIF download/link submenu.
 #import "../../Utils.h"
 #import "../../Downloader/Download.h"
 #import <objc/runtime.h>
@@ -68,15 +68,29 @@ static id new_commentCtxMenu(id self, SEL _cmd, id cv, id indexPath, CGPoint poi
         }
 
         if (hasGif && [SCIUtils getBoolPref:@"download_gif_comment"]) {
-            [extra addObject:[UIAction actionWithTitle:SCILocalized(@"Download GIF")
-                                               image:[UIImage systemImageNamed:@"arrow.down.circle"]
-                                          identifier:nil
-                                             handler:^(__kindof UIAction *_) {
+            UIAction *download = [UIAction actionWithTitle:SCILocalized(@"Download GIF")
+                                                     image:[UIImage systemImageNamed:@"arrow.down.circle"]
+                                                identifier:nil
+                                                   handler:^(__kindof UIAction *_) {
                 NSURL *url = [NSURL URLWithString:gifURL];
                 if (!url) return;
                 sciGifDl = [[SCIDownloadDelegate alloc] initWithAction:sciGifDownloadAction() showProgress:YES];
                 [sciGifDl downloadFileWithURL:url fileExtension:@"gif" hudLabel:nil];
-            }]];
+            }];
+            NSString *pageURL = gifId.length ? [NSString stringWithFormat:@"https://giphy.com/gifs/%@", gifId] : nil;
+            UIAction *copy = [UIAction actionWithTitle:SCILocalized(@"Copy GIF link")
+                                                 image:[UIImage systemImageNamed:@"link"]
+                                            identifier:nil
+                                               handler:^(__kindof UIAction *_) {
+                if (!pageURL.length) return;
+                [UIPasteboard generalPasteboard].string = pageURL;
+                [SCIUtils showToastForDuration:1.5 title:SCILocalized(@"GIF link copied") subtitle:nil];
+            }];
+            [extra addObject:[UIMenu menuWithTitle:@"GIF"
+                                             image:[UIImage systemImageNamed:@"photo"]
+                                        identifier:nil
+                                           options:0
+                                          children:@[download, copy]]];
         }
 
         if (!extra.count) return base;

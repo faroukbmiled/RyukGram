@@ -15,10 +15,10 @@
 #define SCILog(fmt, ...) \
     do { \
         NSString *tmpStr = [NSString stringWithFormat:(fmt), ##__VA_ARGS__]; \
-        os_log(OS_LOG_DEFAULT, "[SCInsta Test] %{public}s", tmpStr.UTF8String); \
+        os_log(OS_LOG_DEFAULT, "[RyukGram] %{public}s", tmpStr.UTF8String); \
     } while(0)
 
-#define SCILogId(prefix, obj) os_log(OS_LOG_DEFAULT, "[SCInsta Test] %{public}@: %{public}@", prefix, obj);
+#define SCILogId(prefix, obj) os_log(OS_LOG_DEFAULT, "[RyukGram] %{public}@: %{public}@", prefix, obj);
 
 @interface SCIUtils : NSObject
 
@@ -68,6 +68,7 @@
 + (BOOL)existingLongPressGestureRecognizerForView:(UIView *)view;
 
 // Alerts
+// Pass the matching Settings toggle title for `title` (reuses localized strings). nil = generic.
 + (BOOL)showConfirmation:(void(^)(void))okHandler title:(NSString *)title;
 + (BOOL)showConfirmation:(void(^)(void))okHandler cancelHandler:(void(^)(void))cancelHandler title:(NSString *)title;
 + (BOOL)showConfirmation:(void(^)(void))okHandler;

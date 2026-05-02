@@ -98,7 +98,7 @@ static void sciLoadFFmpegKit(void) {
 
         handle = dlopen(fwPath.UTF8String, RTLD_NOW | RTLD_GLOBAL);
         if (handle) {
-            NSLog(@"[SCInsta] FFmpegKit loaded from %@", fwPath);
+            NSLog(@"[RyukGram] FFmpegKit loaded from %@", fwPath);
             break;
         }
         const char *err = dlerror();
@@ -106,8 +106,8 @@ static void sciLoadFFmpegKit(void) {
     }
 
     if (!handle) {
-        NSLog(@"[SCInsta] FFmpegKit not available");
-        for (NSString *e in dlErrors) NSLog(@"[SCInsta] dlopen: %@", e);
+        NSLog(@"[RyukGram] FFmpegKit not available");
+        for (NSString *e in dlErrors) NSLog(@"[RyukGram] dlopen: %@", e);
 
         dispatch_async(dispatch_get_main_queue(), ^{
             NSMutableString *msg = [NSMutableString stringWithString:@"dlopen errors:\n"];
@@ -160,9 +160,9 @@ static void sciLoadFFmpegKit(void) {
 
     if (FFmpegKitClass) {
         sciFFmpegLoaded = YES;
-        NSLog(@"[SCInsta] FFmpegKit ready");
+        NSLog(@"[RyukGram] FFmpegKit ready");
     } else {
-        NSLog(@"[SCInsta] FFmpegKit classes not found after dlopen");
+        NSLog(@"[RyukGram] FFmpegKit classes not found after dlopen");
         dlclose(handle);
     }
 }

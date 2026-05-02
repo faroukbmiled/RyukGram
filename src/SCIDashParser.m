@@ -44,7 +44,6 @@ static NSString *sciScanDictForManifest(NSDictionary *dict, NSString *path, int 
         id v = dict[k];
         NSString *lk = k.lowercaseString;
         if (([lk containsString:@"dash"] || [lk containsString:@"manifest"]) && sciLooksLikeManifest(v)) {
-            NSLog(@"[SCInsta][Dash] hit %@/%@ (len=%lu)", path, k, (unsigned long)[(NSString *)v length]);
             return v;
         }
         if ([v isKindOfClass:[NSDictionary class]]) {
@@ -146,12 +145,10 @@ static NSString *sciToManifestString(id val) {
         NSString *found = sciScanDictForManifest(fc, @"fieldCache", 0);
         if (found) return found;
 
-        // Last-ditch manifest hunt + dump via iterative stack (no recursion,
+        // Last-ditch manifest hunt via iterative stack (no recursion,
         // no block self-capture).
         NSMutableArray *stack = [NSMutableArray arrayWithObject:@[fc, @"fieldCache", @(0)]];
         NSString *bigManifest = nil;
-        NSString *bigManifestPath = nil;
-        NSMutableArray *longStrings = [NSMutableArray array];
         while (stack.count) {
             NSArray *frame = stack.lastObject; [stack removeLastObject];
             id obj = frame[0];
@@ -173,24 +170,12 @@ static NSString *sciToManifestString(id val) {
                     NSString *head = [s substringToIndex:MIN((NSUInteger)32, s.length)];
                     if (!bigManifest && ([head containsString:@"<MPD"] || [head containsString:@"<?xml"])) {
                         bigManifest = s;
-                        bigManifestPath = path;
                     }
-                    if (s.length > 200) [longStrings addObject:@[path, @(s.length), [s substringToIndex:MIN((NSUInteger)120, s.length)]]];
                 }
             }
         }
-        if (bigManifest) {
-            NSLog(@"[SCInsta][Dash] found manifest at %@ (len=%lu)", bigManifestPath, (unsigned long)bigManifest.length);
-            return bigManifest;
-        }
-
-        static dispatch_once_t once;
-        dispatch_once(&once, ^{
-            NSLog(@"[SCInsta][Dash] no manifest found; top-level keys=%@", [[fc allKeys] componentsJoinedByString:@","]);
-            for (NSArray *row in longStrings) {
-                NSLog(@"[SCInsta][Dash]  long-str %@ (len=%@) head=%@", row[0], row[1], row[2]);
-            }
-        });
+        if (bigManifest) return bigManifest;
+        NSLog(@"[RyukGram][Dash] no manifest found; top-level keys=%@", [[fc allKeys] componentsJoinedByString:@","]);
     }
 
     return nil;

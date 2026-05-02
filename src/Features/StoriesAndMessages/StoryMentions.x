@@ -1,5 +1,7 @@
 // View story mentions — list mentioned users for the current story item.
 // Reachable via eye long-press menu and the 3-dot story menu.
+// Covers reel @-mentions and accounts surfaced by shared post/reel stickers
+// (post owner, in-post tags, and reel collab co-authors).
 
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
@@ -11,7 +13,6 @@
 
 extern __weak UIViewController *sciActiveStoryViewerVC;
 
-// Forward decl — defined below.
 static id sciFieldCacheValue(id obj, NSString *key);
 
 static NSString *sciUserPK(id userObj) {
@@ -33,9 +34,9 @@ static void sciStyleFollowBtn(UIButton *btn, BOOL following) {
     [btn setTitleColor:following ? [UIColor labelColor] : [UIColor whiteColor] forState:UIControlStateNormal];
 }
 
-// ============ Mention extraction ============
+// ============ Story media + mention extraction ============
 
-static NSArray *sciCurrentStoryMentions(UIView *anchor) {
+static IGMedia *sciCurrentStoryMedia(UIView *anchor) {
     UIViewController *storyVC = nil;
     if (anchor) storyVC = sciFindVC(anchor, @"IGStoryViewerViewController");
     if (!storyVC) storyVC = sciActiveStoryViewerVC;
@@ -70,14 +71,38 @@ static NSArray *sciCurrentStoryMentions(UIView *anchor) {
             }
         } @catch (__unused id e) {}
     }
+    return media;
+}
+
+static NSArray *sciCurrentStoryMentions(UIView *anchor) {
+    IGMedia *media = sciCurrentStoryMedia(anchor);
     if (!media) return nil;
     SEL sel = NSSelectorFromString(@"reelMentions");
     if (![media respondsToSelector:sel]) return nil;
     return ((id(*)(id,SEL))objc_msgSend)(media, sel);
 }
 
-// IGUser stores fields in a Pando-backed dictionary. KVC goes through a
-// resolver that returns NSNull for many keys, so we read the dict directly.
+// IDs of posts/reels embedded as share stickers — resolved via /api/v1/media/<id>/info/.
+// Each IGAPIStoryFeedMediaTappableObject Pando exposes -mediaId.
+static NSArray<NSString *> *sciCurrentStorySharedPostMediaIDs(UIView *anchor) {
+    IGMedia *media = sciCurrentStoryMedia(anchor);
+    if (!media) return nil;
+    SEL sel = NSSelectorFromString(@"storyFeedMedia");
+    if (![media respondsToSelector:sel]) return nil;
+    NSArray *items = ((id(*)(id,SEL))objc_msgSend)(media, sel);
+    if (![items isKindOfClass:[NSArray class]] || !items.count) return nil;
+    NSMutableArray<NSString *> *ids = [NSMutableArray array];
+    for (id it in items) {
+        SEL ms = NSSelectorFromString(@"mediaId");
+        if (![it respondsToSelector:ms]) continue;
+        id v = ((id(*)(id,SEL))objc_msgSend)(it, ms);
+        if (![v isKindOfClass:[NSString class]] || ![v length]) continue;
+        if (![ids containsObject:v]) [ids addObject:v];
+    }
+    return ids.count ? ids : nil;
+}
+
+// IGUser stores fields in a Pando-backed dict; KVC returns NSNull for many keys, read directly.
 static id sciFieldCacheValue(id obj, NSString *key) {
     if (!obj || !key) return nil;
     static Ivar fcIvar = NULL;
@@ -124,9 +149,16 @@ static NSDictionary *sciMentionUserInfo(id mention) {
 
 @interface SCIStoryMentionsVC : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSArray<NSDictionary *> *userInfos;
+@property (nonatomic, strong) NSArray<NSString *> *sharedMediaIDs;
+@property (nonatomic, copy) NSString *storyAuthorPK;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSString *currentUsername;
+@property (nonatomic, copy) NSString *currentUserPK;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary *> *friendshipStatuses;
+@property (nonatomic, strong) NSMutableSet<NSString *> *seenPKs;
+@property (nonatomic, strong) UIActivityIndicatorView *loader;
+@property (nonatomic, strong) UIStackView *emptyStack;
+@property (nonatomic, assign) NSInteger inFlightFetches;
 @end
 
 @implementation SCIStoryMentionsVC
@@ -139,6 +171,13 @@ static NSDictionary *sciMentionUserInfo(id mention) {
         if ([window respondsToSelector:@selector(userSession)])
             self.currentUsername = ((IGUserSession *)[window valueForKey:@"userSession"]).user.username;
     } @catch (__unused id e) {}
+    self.currentUserPK = [SCIUtils currentUserPK];
+
+    self.seenPKs = [NSMutableSet set];
+    for (NSDictionary *info in self.userInfos) {
+        NSString *pk = sciUserPK(info[@"userObj"]) ?: info[@"pk"];
+        if (pk.length) [self.seenPKs addObject:pk];
+    }
 
     UIColor *bg = [UIColor colorWithDynamicProvider:^UIColor *(UITraitCollection *tc) {
         return tc.userInterfaceStyle == UIUserInterfaceStyleDark
@@ -202,11 +241,47 @@ static NSDictionary *sciMentionUserInfo(id mention) {
         [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
     ]];
 
-    // Bulk-fetch friendship statuses for all mentions in one round trip.
+    UIImageView *emptyIcon = [[UIImageView alloc] initWithImage:
+        [UIImage systemImageNamed:@"at"
+          withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:36
+                                                                            weight:UIImageSymbolWeightLight]]];
+    emptyIcon.tintColor = [UIColor tertiaryLabelColor];
+    emptyIcon.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UILabel *emptyLabel = [[UILabel alloc] init];
+    emptyLabel.text = SCILocalized(@"No mentions in this story");
+    emptyLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    emptyLabel.textColor = [UIColor secondaryLabelColor];
+    emptyLabel.textAlignment = NSTextAlignmentCenter;
+    emptyLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    self.emptyStack = [[UIStackView alloc] initWithArrangedSubviews:@[emptyIcon, emptyLabel]];
+    self.emptyStack.axis = UILayoutConstraintAxisVertical;
+    self.emptyStack.spacing = 12;
+    self.emptyStack.alignment = UIStackViewAlignmentCenter;
+    self.emptyStack.translatesAutoresizingMaskIntoConstraints = NO;
+    self.emptyStack.hidden = YES;
+
+    self.loader = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];
+    self.loader.color = [UIColor secondaryLabelColor];
+    self.loader.hidesWhenStopped = YES;
+    self.loader.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [self.view addSubview:self.emptyStack];
+    [self.view addSubview:self.loader];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.emptyStack.centerXAnchor constraintEqualToAnchor:self.tableView.centerXAnchor],
+        [self.emptyStack.centerYAnchor constraintEqualToAnchor:self.tableView.centerYAnchor],
+        [self.loader.centerYAnchor constraintEqualToAnchor:titleLabel.centerYAnchor],
+        [self.loader.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:16],
+    ]];
+
+    [self fetchSharedPostUsers];
+
     self.friendshipStatuses = [NSMutableDictionary dictionary];
     NSMutableArray *pks = [NSMutableArray array];
     for (NSDictionary *info in self.userInfos) {
-        NSString *pk = sciUserPK(info[@"userObj"]);
+        NSString *pk = sciUserPK(info[@"userObj"]) ?: info[@"pk"];
         if (pk.length) [pks addObject:pk];
     }
     if (pks.count) {
@@ -218,42 +293,124 @@ static NSDictionary *sciMentionUserInfo(id mention) {
         }];
     }
 
-    if (self.userInfos.count == 0) {
-        UIImageView *emptyIcon = [[UIImageView alloc] initWithImage:
-            [UIImage systemImageNamed:@"at"
-              withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:36
-                                                                                weight:UIImageSymbolWeightLight]]];
-        emptyIcon.tintColor = [UIColor tertiaryLabelColor];
-        emptyIcon.translatesAutoresizingMaskIntoConstraints = NO;
+    [self refreshEmptyAndLoaderState];
+}
 
-        UILabel *emptyLabel = [[UILabel alloc] init];
-        emptyLabel.text = SCILocalized(@"No mentions in this story");
-        emptyLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
-        emptyLabel.textColor = [UIColor secondaryLabelColor];
-        emptyLabel.textAlignment = NSTextAlignmentCenter;
-        emptyLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
-        UIStackView *empty = [[UIStackView alloc] initWithArrangedSubviews:@[emptyIcon, emptyLabel]];
-        empty.axis = UILayoutConstraintAxisVertical;
-        empty.spacing = 12;
-        empty.alignment = UIStackViewAlignmentCenter;
-        empty.translatesAutoresizingMaskIntoConstraints = NO;
-
-        [self.view addSubview:empty];
-        [NSLayoutConstraint activateConstraints:@[
-            [empty.centerXAnchor constraintEqualToAnchor:self.tableView.centerXAnchor],
-            [empty.centerYAnchor constraintEqualToAnchor:self.tableView.centerYAnchor],
-        ]];
-    }
+- (void)refreshEmptyAndLoaderState {
+    BOOL pending = self.inFlightFetches > 0;
+    if (pending) [self.loader startAnimating]; else [self.loader stopAnimating];
+    self.emptyStack.hidden = self.userInfos.count > 0 || pending;
 }
 
 - (void)closeTapped {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (NSDictionary *)infoFromAPIUser:(NSDictionary *)user {
+    if (![user isKindOfClass:[NSDictionary class]]) return nil;
+    NSString *pk = nil;
+    id pkRaw = user[@"pk"] ?: user[@"pk_id"] ?: user[@"id"];
+    if ([pkRaw isKindOfClass:[NSString class]]) pk = pkRaw;
+    else if ([pkRaw isKindOfClass:[NSNumber class]]) pk = [(NSNumber *)pkRaw stringValue];
+    if (!pk.length) return nil;
+
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    info[@"pk"] = pk;
+    NSString *username = user[@"username"];
+    NSString *fullName = user[@"full_name"];
+    NSString *picStr   = user[@"profile_pic_url"];
+    info[@"username"] = username.length ? username : pk;
+    if (fullName.length) info[@"fullName"] = fullName;
+    if (picStr.length) {
+        NSURL *u = [NSURL URLWithString:picStr];
+        if (u) info[@"picURL"] = u;
+    }
+    return [info copy];
+}
+
+- (BOOL)appendUserInfoIfNew:(NSDictionary *)info {
+    if (!info) return NO;
+    NSString *pk = info[@"pk"];
+    if (!pk.length || [self.seenPKs containsObject:pk]) return NO;
+    if (self.currentUserPK.length && [pk isEqualToString:self.currentUserPK]) return NO;
+    if (self.storyAuthorPK.length && [pk isEqualToString:self.storyAuthorPK]) return NO;
+    [self.seenPKs addObject:pk];
+    NSMutableArray *all = [self.userInfos mutableCopy];
+    [all addObject:info];
+    self.userInfos = [all copy];
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:(NSInteger)all.count - 1 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+    return YES;
+}
+
+- (void)collectUsersFromMediaItem:(NSDictionary *)item into:(NSMutableArray<NSDictionary *> *)out {
+    if (![item isKindOfClass:[NSDictionary class]]) return;
+
+    NSDictionary *ownerInfo = [self infoFromAPIUser:item[@"user"]];
+    if (ownerInfo) [out addObject:ownerInfo];
+
+    NSDictionary *usertags = item[@"usertags"];
+    NSArray *tagged = [usertags isKindOfClass:[NSDictionary class]] ? usertags[@"in"] : nil;
+    if ([tagged isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *tag in tagged) {
+            if (![tag isKindOfClass:[NSDictionary class]]) continue;
+            NSDictionary *info = [self infoFromAPIUser:tag[@"user"]];
+            if (info) [out addObject:info];
+        }
+    }
+
+    // Reels @collab co-authors.
+    for (NSString *key in @[@"coauthor_producers", @"invited_coauthor_producers"]) {
+        NSArray *coa = item[key];
+        if (![coa isKindOfClass:[NSArray class]]) continue;
+        for (NSDictionary *u in coa) {
+            NSDictionary *info = [self infoFromAPIUser:u];
+            if (info) [out addObject:info];
+        }
+    }
+
+    NSArray *carousel = item[@"carousel_media"];
+    if ([carousel isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *c in carousel) [self collectUsersFromMediaItem:c into:out];
+    }
+}
+
+- (void)fetchSharedPostUsers {
+    for (NSString *mediaId in self.sharedMediaIDs) {
+        self.inFlightFetches++;
+        __weak typeof(self) weakSelf = self;
+        [SCIInstagramAPI fetchMediaInfoForMediaId:mediaId completion:^(NSDictionary *response, NSError *error) {
+            __strong typeof(weakSelf) self_ = weakSelf;
+            if (!self_) return;
+            self_.inFlightFetches--;
+
+            NSArray *items = response[@"items"];
+            NSMutableArray<NSDictionary *> *collected = [NSMutableArray array];
+            if ([items isKindOfClass:[NSArray class]] && items.count) {
+                [self_ collectUsersFromMediaItem:items[0] into:collected];
+            }
+
+            NSMutableArray<NSString *> *newPKs = [NSMutableArray array];
+            for (NSDictionary *info in collected) {
+                if ([self_ appendUserInfoIfNew:info]) [newPKs addObject:info[@"pk"]];
+            }
+
+            [self_ refreshEmptyAndLoaderState];
+
+            if (newPKs.count) {
+                [SCIInstagramAPI fetchFriendshipStatusesForPKs:newPKs completion:^(NSDictionary *statuses, NSError *err) {
+                    if (!statuses.count) return;
+                    [self_.friendshipStatuses addEntriesFromDictionary:statuses];
+                    [self_.tableView reloadData];
+                }];
+            }
+        }];
+    }
+    [self refreshEmptyAndLoaderState];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    // Resume story playback when mentions sheet dismisses
     if (sciActiveStoryViewerVC) {
         SEL sel = NSSelectorFromString(@"tryResumePlayback");
         if ([sciActiveStoryViewerVC respondsToSelector:sel]) {
@@ -380,16 +537,17 @@ static NSDictionary *sciMentionUserInfo(id mention) {
     } else {
         followBtn.hidden = NO;
         id userObj = info[@"userObj"];
+        NSString *pk = sciUserPK(userObj) ?: info[@"pk"];
 
         BOOL following = NO;
-        NSString *pk = sciUserPK(userObj);
         NSDictionary *status = pk ? self.friendshipStatuses[pk] : nil;
         if ([status isKindOfClass:[NSDictionary class]]) {
             following = [status[@"following"] boolValue];
         }
         sciStyleFollowBtn(followBtn, following);
 
-        objc_setAssociatedObject(followBtn, "userObj", userObj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (userObj) objc_setAssociatedObject(followBtn, "userObj", userObj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (pk) objc_setAssociatedObject(followBtn, "pk", pk, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [followBtn addTarget:self action:@selector(followTapped:) forControlEvents:UIControlEventTouchUpInside];
     }
 
@@ -398,8 +556,7 @@ static NSDictionary *sciMentionUserInfo(id mention) {
 
 - (void)followTapped:(UIButton *)sender {
     id userObj = objc_getAssociatedObject(sender, "userObj");
-    if (!userObj) return;
-    NSString *pk = sciUserPK(userObj);
+    NSString *pk = sciUserPK(userObj) ?: objc_getAssociatedObject(sender, "pk");
     if (!pk.length) return;
 
     BOOL currentlyFollowing = [[sender titleForState:UIControlStateNormal] isEqualToString:@"Following"];
@@ -431,9 +588,9 @@ static NSDictionary *sciMentionUserInfo(id mention) {
     };
 
     if (!currentlyFollowing && [SCIUtils getBoolPref:@"follow_confirm"]) {
-        [SCIUtils showConfirmation:doIt];
+        [SCIUtils showConfirmation:doIt title:SCILocalized(@"Confirm follow")];
     } else if (currentlyFollowing && [SCIUtils getBoolPref:@"unfollow_confirm"]) {
-        [SCIUtils showConfirmation:doIt];
+        [SCIUtils showConfirmation:doIt title:SCILocalized(@"Confirm unfollow")];
     } else {
         doIt();
     }
@@ -466,6 +623,8 @@ void sciShowStoryMentions(UIViewController *presenter, UIView *anchor) {
 
     SCIStoryMentionsVC *vc = [[SCIStoryMentionsVC alloc] init];
     vc.userInfos = [infos copy];
+    vc.sharedMediaIDs = sciCurrentStorySharedPostMediaIDs(anchor);
+    vc.storyAuthorPK = sciUserPK(sciFieldCacheValue(sciCurrentStoryMedia(anchor), @"user"));
     vc.modalPresentationStyle = UIModalPresentationPageSheet;
 
     if (@available(iOS 15.0, *)) {
@@ -508,7 +667,7 @@ NSArray *sciMaybeAppendStoryMentionsMenuItem(NSArray *items) {
     @try {
         typedef id (*Init)(id, SEL, id, id, id);
         newItem = ((Init)objc_msgSend)([menuItemCls alloc],
-            @selector(initWithTitle:image:handler:), @"View mentions", nil, handler);
+            @selector(initWithTitle:image:handler:), SCILocalized(@"View mentions"), nil, handler);
     } @catch (__unused id e) {}
 
     if (!newItem) return items;

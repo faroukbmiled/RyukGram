@@ -13,10 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly, nullable) NSArray<SCIAction *> *children;
 @property (nonatomic, assign, readonly) BOOL destructive;
 @property (nonatomic, assign, readonly) BOOL isSeparator;
+@property (nonatomic, assign, readonly) BOOL disabled;
 
 + (instancetype)actionWithTitle:(NSString *)title
                            icon:(nullable NSString *)icon
                         handler:(void(^)(void))handler;
+
+/// When placed first in the actions array, renders as a small grey caption above the menu.
++ (instancetype)headerWithTitle:(NSString *)title;
 
 + (instancetype)actionWithTitle:(NSString *)title
                        subtitle:(nullable NSString *)subtitle

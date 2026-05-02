@@ -1,4 +1,4 @@
-// Hide the trending-searches pill bar under the explore search bar.
+// Hide the trending-searches pill bar inside the search-typeahead screen.
 
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"

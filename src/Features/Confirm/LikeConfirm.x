@@ -20,7 +20,7 @@ static void new_sciHandleTap(Class cls, SEL _cmd, id ctx, id btn, BOOL anim) {
     [SCIUtils showConfirmation:^{
         @try { orig_sciHandleTap(cls, _cmd, sCtx, sBtn, anim); }
         @catch (__unused id e) {}
-    }];
+    } title:SCILocalized(@"Confirm like: Reels")];
 }
 
 // Copy the completion block — it's a stack block and won't survive the alert.
@@ -35,7 +35,7 @@ static void new_sciHandleTapComp(Class cls, SEL _cmd, id ctx, id btn, BOOL anim,
     [SCIUtils showConfirmation:^{
         @try { orig_sciHandleTapComp(cls, _cmd, sCtx, sBtn, anim, sComp); }
         @catch (__unused id e) {}
-    }];
+    } title:SCILocalized(@"Confirm like: Reels")];
 }
 
 __attribute__((constructor)) static void _sciHookReelsLikeHandler(void) {
@@ -50,14 +50,14 @@ __attribute__((constructor)) static void _sciHookReelsLikeHandler(void) {
         MSHookMessageEx(meta, s2, (IMP)new_sciHandleTapComp, (IMP *)&orig_sciHandleTapComp);
 }
 
-#define CONFIRMPOSTLIKE(orig)                          \
-    if ([SCIUtils getBoolPref:@"like_confirm"])        \
-        [SCIUtils showConfirmation:^(void) { orig; }]; \
+#define CONFIRMPOSTLIKE(orig)                                                                    \
+    if ([SCIUtils getBoolPref:@"like_confirm"])                                                  \
+        [SCIUtils showConfirmation:^(void) { orig; } title:SCILocalized(@"Confirm like: Posts")]; \
     else return orig;
 
-#define CONFIRMREELSLIKE(orig)                         \
-    if ([SCIUtils getBoolPref:@"like_confirm_reels"])  \
-        [SCIUtils showConfirmation:^(void) { orig; }]; \
+#define CONFIRMREELSLIKE(orig)                                                                    \
+    if ([SCIUtils getBoolPref:@"like_confirm_reels"])                                             \
+        [SCIUtils showConfirmation:^(void) { orig; } title:SCILocalized(@"Confirm like: Reels")]; \
     else return orig;
 
 // Liking posts

@@ -1,11 +1,15 @@
-// Keyboard appearance override for IG's text inputs.
-// Modes: "off" / "dark" / "oled".
+// Keyboard appearance override (theme_keyboard: off / dark / oled).
+//
+// Search-keyboard reset fix: UIKBBackdropView reverts to translucent on
+// context change (focus moves into a UISearchBar, etc.). Hooking
+// setBackgroundColor: + didMoveToWindow snaps any future repaint back to black.
 
 #import "../../Utils.h"
-#import "../../InstagramHeaders.h"
+#import "SCITheme.h"
 
-static inline BOOL sciKeyboardOLED(void) {
-    return [[[NSUserDefaults standardUserDefaults] stringForKey:@"theme_keyboard"] isEqualToString:@"oled"];
+static inline NSString *sciKeyboardMode(void) {
+    NSString *raw = [[NSUserDefaults standardUserDefaults] stringForKey:SCIThemePrefKeyboard];
+    return raw.length ? raw : @"off";
 }
 
 %group KeyboardThemeDarkGroup
@@ -24,12 +28,31 @@ static inline BOOL sciKeyboardOLED(void) {
 }
 %end
 
+%hook UISearchBar
+- (BOOL)becomeFirstResponder {
+    self.keyboardAppearance = UIKeyboardAppearanceDark;
+    return %orig;
+}
+%end
+
 %end
 
 %group KeyboardThemeOLEDGroup
 
 %hook UIKBBackdropView
 - (void)layoutSubviews {
+    %orig;
+    self.backgroundColor = [UIColor blackColor];
+    for (UIView *sub in self.subviews) sub.backgroundColor = [UIColor blackColor];
+}
+- (void)setBackgroundColor:(UIColor *)color {
+    if (![color isEqual:[UIColor blackColor]]) {
+        %orig([UIColor blackColor]);
+        return;
+    }
+    %orig;
+}
+- (void)didMoveToWindow {
     %orig;
     self.backgroundColor = [UIColor blackColor];
     for (UIView *sub in self.subviews) sub.backgroundColor = [UIColor blackColor];
@@ -46,11 +69,13 @@ static inline BOOL sciKeyboardOLED(void) {
 %end
 
 %ctor {
-    NSString *mode = [[NSUserDefaults standardUserDefaults] stringForKey:@"theme_keyboard"];
-    if ([mode isEqualToString:@"dark"] || [mode isEqualToString:@"oled"]) {
-        %init(KeyboardThemeDarkGroup);
-        if (sciKeyboardOLED()) {
-            %init(KeyboardThemeOLEDGroup);
-        }
+    [SCITheme migrateLegacyPrefs];
+    NSString *mode = sciKeyboardMode();
+    if ([mode isEqualToString:@"off"]) return;
+
+    %init(KeyboardThemeDarkGroup);
+
+    if ([mode isEqualToString:@"oled"]) {
+        %init(KeyboardThemeOLEDGroup);
     }
 }

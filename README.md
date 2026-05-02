@@ -1,6 +1,6 @@
 # RyukGram
 A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com/SoCuul/SCInsta) with additional features and fixes.\
-`Version v1.2.2` | `Tested on Instagram 426.0.0`
+`Version v1.2.3` | `Tested on Instagram 426.0.0`
 
 ---
 
@@ -25,7 +25,8 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Disable app haptics
 - Copy description
 - Copy comment text from long-press menu **\***
-- Download GIF comments **\***
+- Download / copy GIF comments **\***
+- Custom GIF in comments — long-press the GIF button to paste any Giphy link **\***
 - Profile copy button **\***
 - Replace domain in shared links for embeds (Discord, Telegram, etc.) **\***
 - Strip tracking params from shared links **\***
@@ -47,6 +48,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
   - No suggested chats
   - Hide trending searches
   - Hide explore posts grid
+  - Skip sensitive content covers **\***
 - Live
   - Anonymous live viewing **\***
   - Toggle live comments **\***
@@ -78,6 +80,8 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Unlock password-locked reels **\***
 - Hide reels header
 - Hide repost button in reels **\***
+- Hide friends avatars on the reels Friends tab **\***
+- Hide social context overlay on reels (reposted/commented bubbles) **\***
 - Hide reels blend button
 - Disable scrolling reels
 - Prevent doom scrolling (limit maximum viewable reels)
@@ -91,6 +95,8 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 ### Action buttons **\***
 - Context-aware action menu on feed, reels, and stories **\***
 - Configurable default tap action per context **\***
+- Global icon picker — change the icon used across feed, stories, reels and DMs **\***
+- Optional date header at the top of the action menu **\***
 - Carousel and multi-story reel support with bulk download **\***
 - Repost via IG's native creation flow **\***
 - Full-screen media viewer with zoom and swipe **\***
@@ -101,7 +107,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Save profile picture
 - View highlight cover from profile long-press menu **\***
 - Profile copy button **\***
-- Follow indicator — shows whether the user follows you **\***
+- Follow indicator — shows whether the user follows you (off / on / colored) **\***
 - Copy note on long press **\***
 - Fake profile stats — verified badge and follower/following/post counts **\***
 
@@ -110,7 +116,9 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Mutuals and non-followbacks lists **\***
 - New and lost followers/following trackers across scans **\***
 - Profile change history — username, name, bio, pfp **\***
-- Searchable lists with batch follow/unfollow **\***
+- Searchable lists with inline and batch follow/unfollow **\***
+- Visited profiles tracker — log every profile you open with date / verified / private filters **\***
+- Pull-to-refresh on the visited list re-syncs identity and pictures from IG **\***
 
 ### Saving
 - Enhanced HD downloads up to 1080p **\***
@@ -137,11 +145,12 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Advance on story like **\***
 - Advance on story reply **\***
 - Per-chat read-receipt exclusion list with Block all / Block selected mode **\***
-- Send audio as file from DM plus menu **\***
+- Send audio as file — DM plus menu, or long-press the camera button while replying **\***
 - Download voice messages **\***
 - Disable typing status
 - Disable vanish mode swipe **\***
 - Hide voice/video call buttons (independent toggles) **\***
+- Hide send to group chat in the share sheet **\***
 - Unlimited replay of direct stories **\***
 - Full last active date **\***
 - Send files in DMs (experimental) **\***
@@ -158,11 +167,15 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - View story mentions **\***
 - Stop story auto-advance **\***
 - Reveal poll/slider vote counts and quiz answers on stories and reels before interacting **\***
-- Force legacy Quiz sticker back into the story composer tray **\***
+- Force legacy Quiz and Reveal stickers back into the story composer tray **\***
+- Bypass Reveal sticker — view stories blurred behind a Reveal sticker without DMing the author **\***
+- Allow video in photo sticker — story photo sticker picker accepts videos too **\***
+- Custom solid or gradient color for music and lyric stickers **\***
 - Disappearing DM media overlay — action button, mark-as-viewed eye, and audio toggle **\***
 - Download disappearing DM media **\***
 - Upload audio as voice message with built-in trim editor **\***
 - Disable instants creation
+- Send Instants from your photo album — gallery button on the Instants camera with a built-in square cropper, posts through IG's native capture flow
 
 ### Navigation
 - Modify tab bar icon order
@@ -190,8 +203,9 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Confirm follow requests
 - Confirm vanish mode
 - Confirm posting comment
+- Confirm send to group chat **\***
 - Confirm changing direct message theme
-- Confirm sticker interaction (stories / highlights, separate toggles) **\***
+- Confirm sticker interaction (stories / highlights, per-surface: disabled / all / reaction stickers only) **\***
 
 ### Fake location **\***
 - Override location app-wide for any IG feature reading coordinates
@@ -200,11 +214,10 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Quick toggle button on the Friends Map
 
 ### Theme **\***
-- Force dark mode
-- Full OLED — pure black app-wide
+- Theme picker — Off / Light / Dark / OLED, with optional Force theme to override the iOS appearance
 - OLED chat theme — pure black DM thread and incoming bubbles
-- Keyboard theme — dark or OLED
-- Apply & restart button
+- Keyboard theme — dark or OLED, sticks through search keyboard activations
+- Apply & restart, plus Reset theme to revert every theme option
 
 ### Tweak settings **\***
 - Search bar with breadcrumbs across nested pages
@@ -224,10 +237,10 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 ### Localization **\***
 - Multi-language UI with fallback to English **\***
 - Built-in language picker in Settings **\***
-- Currently shipping: **English**, **Spanish**, **Russian**, **Korean**, **Arabic**, **Chinese (Traditional)**
+- Currently shipping: **English**, **Spanish**, **Russian**, **Korean**, **Arabic**, **Chinese (Traditional)**, **Chinese (Simplified)**, **Portuguese (Brazil)**, **Turkish**
 
 ### Optimization
-- Clear Instagram cache on demand with optional auto-clear interval **\***
+- Clear Instagram cache on demand with optional auto-clear interval, with a toggle to preserve DMs, drafts, and Notes **\***
 
 # Translating RyukGram
 Want to see RyukGram in your language? Two ways:
@@ -251,7 +264,7 @@ Partial translations are welcome — untranslated keys fall back to English at r
 If you find a string that still renders in English on a translated build, open an issue with a screenshot.
 
 ## Known Issues
-- Preserved unsent messages cannot be removed using "Delete for you". Pull to refresh in the DMs tab clears all preserved messages (with optional confirmation if "Warn before clearing on refresh" is enabled).
+- Preserved unsent messages cannot be removed using "Delete for you". Pull to refresh in the DMs tab clears the active account's preserved messages (with optional confirmation if "Warn before clearing on refresh" is enabled).
 - "Delete for you" detection uses a ~2 second window after the local action. If a real other-party unsend happens to land in the same window, it may not be preserved. Rare in practice and limited to that specific overlap.
 - With Liquid Glass buttons + Hide UI on capture both on, the DM eye leaves an empty glass bubble in captures — IG draws that backdrop, not the tweak, so it's outside our redaction.
 
@@ -281,7 +294,7 @@ If you find a string that still renders in English on a translated build, open a
 ### Run build script
 ```sh
 $ chmod +x build.sh
-$ ./build.sh <sideload/rootless/rootful>
+$ ./build.sh <sideload/sidestore/rootless/rootful>
 ```
 
 # Credits
@@ -296,4 +309,7 @@ $ ./build.sh <sideload/rootless/rootful>
 - [@ch1tmdgus](https://github.com/ch1tmdgus) (N4C) — Korean translation
 - [ZomkaDEV](https://github.com/ZomkaDEV) — Russian translation
 - [@bruuhim](https://github.com/bruuhim) — Arabic translation
-- [@jaydenjcpy](https://github.com/jaydenjcpy) — Chinese (Traditional) translation
+- [@jaydenjcpy](https://github.com/jaydenjcpy) — Chinese (Traditional and Simplified) translation
+- Bruno ([@brunorainha](https://github.com/brunorainha)) — Portuguese (Brazil) translation
+- [@yesnt10](https://github.com/yesnt10) — Turkish translation
+- [@Mikasa-san](https://github.com/Mikasa-san) — code contributions

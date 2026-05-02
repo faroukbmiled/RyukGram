@@ -7,7 +7,7 @@
 #import <objc/message.h>
 #import <substrate.h>
 
-// Find the IGStoryTrayCell with an active long-press gesture
+// Find the IGStoryTrayCell whose long-press is currently active.
 static UIView *sciFindLongPressedCell(UIView *root) {
     Class cellCls = NSClassFromString(@"IGStoryTrayCell");
     if (!cellCls) return nil;
@@ -26,11 +26,11 @@ static UIView *sciFindLongPressedCell(UIView *root) {
     return nil;
 }
 
-// Find the IGImageView inside a specific cell
+// Walk the cell's view tree for the first non-trivial UIImage. Used as a fallback
+// when the IGImageURL chain is missing or the network fetch fails.
 static UIImage *sciCoverImageFromCell(UIView *cell) {
     if (!cell) return nil;
-    Class igImageView = NSClassFromString(@"IGImageView");
-    if (!igImageView) igImageView = [UIImageView class];
+    Class igImageView = NSClassFromString(@"IGImageView") ?: [UIImageView class];
     NSMutableArray *stack = [NSMutableArray arrayWithObject:cell];
     while (stack.count) {
         UIView *v = stack.lastObject; [stack removeLastObject];
@@ -48,19 +48,77 @@ static void sciViewCoverImage(UIImage *image) {
         [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not find cover image")];
         return;
     }
-
-    // Save to temp and open in the media viewer
     NSData *data = UIImageJPEGRepresentation(image, 1.0);
     if (!data) return;
     NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:
         [NSString stringWithFormat:@"cover_%@.jpg", [[NSUUID UUID] UUIDString]]];
     [data writeToFile:tmpPath atomically:YES];
-    NSURL *tmpURL = [NSURL fileURLWithPath:tmpPath];
-    [SCIMediaViewer showWithVideoURL:nil photoURL:tmpURL caption:nil];
+    [SCIMediaViewer showWithVideoURL:nil photoURL:[NSURL fileURLWithPath:tmpPath] caption:nil];
 }
 
-// Stored reference to the long-pressed cell (captured at presentation time)
+// Captured at action-sheet presentation time so the handler can read the cell after
+// the long-press has ended.
 static __weak UIView *sciLongPressedHighlightCell = nil;
+
+// Read a named ivar (walking superclasses) without messaging the object — safe on
+// proxy classes that crash under isKindOfClass:/class.
+static id sciReadIvarSafe(id obj, const char *name) {
+    if (!obj || !name) return nil;
+    Class c = object_getClass(obj);
+    Ivar iv = nil;
+    while (c && !iv) {
+        iv = class_getInstanceVariable(c, name);
+        if (!iv) c = class_getSuperclass(c);
+    }
+    if (!iv) return nil;
+    id v = nil;
+    @try { v = object_getIvar(obj, iv); } @catch (__unused id e) {}
+    return v;
+}
+
+// Manual isKindOfClass — avoids messaging proxies / NSMessageBuilder.
+static BOOL sciIsNSURL(id obj) {
+    if (!obj) return NO;
+    Class c = object_getClass(obj);
+    Class target = [NSURL class];
+    while (c) { if (c == target) return YES; c = class_getSuperclass(c); }
+    return NO;
+}
+
+// IGStoryTrayCell._avatarView._ownerImageView._imageView._imageSpecifier
+//                                            ._remoteImage_imageURL._url
+// The CDN signs the full query string, so the URL must be used verbatim — stripping
+// stp= produces a 22-byte signature error.
+static NSURL *sciHighResCoverURLFromCell(UIView *cell) {
+    id chain = cell;
+    static const char * const path[] = {
+        "_avatarView", "_ownerImageView", "_imageView",
+        "_imageSpecifier", "_remoteImage_imageURL", "_url", NULL
+    };
+    for (const char * const *seg = path; *seg && chain; seg++) chain = sciReadIvarSafe(chain, *seg);
+    return sciIsNSURL(chain) ? (NSURL *)chain : nil;
+}
+
+static void sciFetchAndPresentCover(NSURL *url, UIView *fallbackCell) {
+    if (!url) {
+        sciViewCoverImage(sciCoverImageFromCell(fallbackCell));
+        return;
+    }
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url
+        completionHandler:^(NSData *data, NSURLResponse *resp, NSError *err) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!data || err || data.length < 512) {
+                    sciViewCoverImage(sciCoverImageFromCell(fallbackCell));
+                    return;
+                }
+                NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:
+                    [NSString stringWithFormat:@"cover_%@.jpg", [[NSUUID UUID] UUIDString]]];
+                [data writeToFile:tmpPath atomically:YES];
+                [SCIMediaViewer showWithVideoURL:nil photoURL:[NSURL fileURLWithPath:tmpPath] caption:nil];
+            });
+        }];
+    [task resume];
+}
 
 static void (*orig_present)(id, SEL, id, BOOL, id);
 static void new_present(id self, SEL _cmd, id vc, BOOL animated, id completion) {
@@ -68,7 +126,6 @@ static void new_present(id self, SEL _cmd, id vc, BOOL animated, id completion) 
         [NSStringFromClass([vc class]) containsString:@"ActionSheet"] &&
         [NSStringFromClass([self class]) containsString:@"Profile"]) {
 
-        // Capture the long-pressed cell NOW while the gesture is still active
         UIView *cell = sciFindLongPressedCell([(UIViewController *)self view]);
         sciLongPressedHighlightCell = cell;
 
@@ -79,14 +136,14 @@ static void new_present(id self, SEL _cmd, id vc, BOOL animated, id completion) 
                 Class actionCls = NSClassFromString(@"IGActionSheetControllerAction");
                 if (actionCls) {
                     void (^handler)(void) = ^{
-                        UIImage *cover = sciCoverImageFromCell(sciLongPressedHighlightCell);
-                        sciViewCoverImage(cover);
+                        NSURL *hi = sciHighResCoverURLFromCell(sciLongPressedHighlightCell);
+                        sciFetchAndPresentCover(hi, sciLongPressedHighlightCell);
                     };
 
                     SEL initSel = @selector(initWithTitle:subtitle:style:handler:accessibilityIdentifier:accessibilityLabel:);
                     typedef id (*InitFn)(id, SEL, id, id, NSInteger, id, id, id);
                     id newAction = ((InitFn)objc_msgSend)([actionCls alloc], initSel,
-                        @"View cover", nil, 0, handler, nil, nil);
+                        SCILocalized(@"View cover"), nil, 0, handler, nil, nil);
 
                     if (newAction) {
                         NSMutableArray *newActions = [actions mutableCopy];

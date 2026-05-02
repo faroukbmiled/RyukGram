@@ -2,27 +2,39 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-// Lightweight user record — what we cache per follower/following entry.
+// Cached user record (one per follower / following / visit entry).
 @interface SCIProfileAnalyzerUser : NSObject <NSCopying>
 
 @property (nonatomic, copy) NSString *pk;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy, nullable) NSString *fullName;
 @property (nonatomic, copy, nullable) NSString *profilePicURL;
-// Stable IG-internal ID of the current profile picture — changes only when
-// the user uploads a new one. Used for reliable change detection.
+// Stable IG-internal pic id; only changes when the user uploads a new photo.
 @property (nonatomic, copy, nullable) NSString *profilePicID;
 @property (nonatomic, assign) BOOL isPrivate;
 @property (nonatomic, assign) BOOL isVerified;
 
 + (nullable instancetype)userFromAPIDict:(NSDictionary *)dict;
 + (nullable instancetype)userFromJSONDict:(NSDictionary *)dict;
++ (nullable instancetype)userFromIGUserObject:(id)igUser;
 - (NSDictionary *)toJSONDict;
 
 @end
 
-// One-point-in-time capture of an account's graph + self info. Persisted
-// to disk as JSON; diffs between snapshots produce the report categories.
+// One visited-profile entry — first/last seen + cumulative count.
+@interface SCIProfileAnalyzerVisit : NSObject
+
+@property (nonatomic, strong) SCIProfileAnalyzerUser *user;
+@property (nonatomic, strong) NSDate *firstSeen;
+@property (nonatomic, strong) NSDate *lastSeen;
+@property (nonatomic, assign) NSInteger visitCount;
+
++ (nullable instancetype)visitFromJSONDict:(NSDictionary *)dict;
+- (NSDictionary *)toJSONDict;
+
+@end
+
+// Point-in-time capture of an account's graph + self info; persisted as JSON.
 @interface SCIProfileAnalyzerSnapshot : NSObject
 
 @property (nonatomic, strong) NSDate *scanDate;
@@ -41,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-// Per-profile change entry (username/fullName/pic edited since last scan).
+// Per-user change between snapshots (username / fullName / pic).
 @interface SCIProfileAnalyzerProfileChange : NSObject
 @property (nonatomic, strong) SCIProfileAnalyzerUser *previous;
 @property (nonatomic, strong) SCIProfileAnalyzerUser *current;
@@ -50,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL profilePicChanged;
 @end
 
-// Derived category arrays, computed from (current, previous) snapshots.
+// Derived category arrays from (current, previous) snapshots.
 @interface SCIProfileAnalyzerReport : NSObject
 
 @property (nonatomic, strong, nullable) SCIProfileAnalyzerSnapshot *current;
@@ -59,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray<SCIProfileAnalyzerUser *> *mutualFollowers;
 @property (nonatomic, copy) NSArray<SCIProfileAnalyzerUser *> *notFollowingYouBack;
 @property (nonatomic, copy) NSArray<SCIProfileAnalyzerUser *> *youDontFollowBack;
-// `new*` getters are reserved by ARC's Cocoa new-family rule, hence the name.
+// "recent" / "lost" — `new*` is reserved by ARC's Cocoa new-family rule.
 @property (nonatomic, copy) NSArray<SCIProfileAnalyzerUser *> *recentFollowers;
 @property (nonatomic, copy) NSArray<SCIProfileAnalyzerUser *> *lostFollowers;
 @property (nonatomic, copy) NSArray<SCIProfileAnalyzerUser *> *youStartedFollowing;
