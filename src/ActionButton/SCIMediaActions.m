@@ -8,6 +8,7 @@
 #import "../Downloader/Download.h"
 #import "../PhotoAlbum.h"
 #import "../Features/StoriesAndMessages/SCIExcludedStoryUsers.h"
+#import "../Features/StoriesAndMessages/OverlayHelpers.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <Photos/Photos.h>
@@ -1147,7 +1148,6 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
                                               handler:^{
                 UIView *v = weakSource;
                 UIViewController *host = [SCIUtils nearestViewControllerForView:v];
-                extern void sciShowStoryMentions(UIViewController *, UIView *);
                 if (!host) return;
                 sciShowStoryMentions(host, v);
             }]];

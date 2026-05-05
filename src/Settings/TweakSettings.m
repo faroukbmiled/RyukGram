@@ -336,9 +336,10 @@
                                             ]
                                         },
                                         @{
-                                            @"header": SCILocalized(@"Other"),
+                                            @"header": SCILocalized(@"Mentions"),
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"View story mentions") subtitle:SCILocalized(@"Show mentioned users in eye button and story menu") defaultsKey:@"view_story_mentions"]
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"View story mentions") subtitle:SCILocalized(@"Adds a 'View mentions' entry to the action button menu and story 3-dot menu") defaultsKey:@"view_story_mentions"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Mentions overlay button") subtitle:SCILocalized(@"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels") defaultsKey:@"story_mentions_button" requiresRestart:YES]
                                             ]
                                         }]
                 ],
@@ -437,6 +438,13 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide video call button") subtitle:SCILocalized(@"Removes the video call button from DM thread header") defaultsKey:@"hide_video_call_button" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide reels blend button") subtitle:SCILocalized(@"Hides the blend button in DMs") defaultsKey:@"hide_reels_blend"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide send to group chat") subtitle:SCILocalized(@"Removes the create/send to group chat row when sharing to multiple recipients") defaultsKey:@"hide_send_to_group"],
+                                            ]
+                                        },
+                                        @{
+                                            @"header": SCILocalized(@"Share sheet"),
+                                            @"footer": SCILocalized(@"Long-press a recipient to pin or unpin. Pinned recipients render at the top."),
+                                            @"rows": @[
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Pin recipients on long-press") subtitle:SCILocalized(@"Long-press in the share sheet to pin a chat/user to the top") defaultsKey:@"share_sheet_pin_threads"],
                                             ]
                                         },
                                         @{
@@ -666,13 +674,25 @@
                                            subtitle:@""
                                                icon:[SCISymbol symbolWithName:@"moon"]
                                         navSections:@[@{
-                                            @"header": SCILocalized(@"Appearance"),
-                                            @"footer": SCILocalized(@"\"Force theme\" overrides iOS appearance; leave it off to follow the system."),
+                                            @"header": SCILocalized(@"Theme"),
+                                            @"footer": SCILocalized(@"The theme RyukGram applies to Instagram."),
                                             @"rows": @[
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Theme") subtitle:SCILocalized(@"Off, Light, Dark, or OLED") menu:[self menus][@"theme_mode"]],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Force theme") subtitle:SCILocalized(@"When off, follow iOS system appearance") defaultsKey:@"theme_force"],
+                                            ]
+                                        },
+                                        @{
+                                            @"header": SCILocalized(@"Surfaces"),
+                                            @"footer": SCILocalized(@"Optional per-surface overrides. Each one is independent of the theme above."),
+                                            @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"OLED chat theme") subtitle:SCILocalized(@"Pure black DM thread + incoming bubbles") defaultsKey:@"theme_oled_chat"],
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Keyboard theme") subtitle:SCILocalized(@"Override the keyboard appearance when typing") menu:[self menus][@"theme_keyboard"]],
+                                            ]
+                                        },
+                                        @{
+                                            @"header": SCILocalized(@"Behavior"),
+                                            @"footer": SCILocalized(@"Affects everything above. When off, RyukGram's theme and surface overrides only apply while iOS is in dark mode — leaving light mode untouched."),
+                                            @"rows": @[
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Force theme") subtitle:SCILocalized(@"Override iOS appearance regardless of system mode") defaultsKey:@"theme_force"],
                                             ]
                                         },
                                         @{
@@ -972,10 +992,10 @@
 
 + (SCISetting *)releaseNotesButtonCell {
     SCISetting *cell = [SCISetting buttonCellWithTitle:SCILocalized(@"Release notes")
-                                               subtitle:@""
+                                               subtitle:SCILocalized(@"Browse changes from previous releases")
                                                    icon:nil
                                                  action:^{ [SCIChangelog presentAllFromViewController:sciTopVC()]; }];
-    cell.titleColor = [UIColor systemBlueColor];
+    cell.titleColor = [UIColor labelColor];
     return cell;
 }
 
@@ -1000,27 +1020,16 @@
             @"rows": @[
                 [SCISetting linkCellWithTitle:@"Ryuk" subtitle:SCILocalized(@"RyukGram developer") imageUrl:@"https://github.com/faroukbmiled.png" url:@"https://github.com/faroukbmiled"],
                 [SCISetting linkCellWithTitle:@"darthplagueiswise (Radan)" subtitle:SCILocalized(@"Experimental features") imageUrl:@"https://github.com/darthplagueiswise.png" url:@"https://github.com/darthplagueiswise"],
-                [SCISetting linkCellWithTitle:@"SoCuul" subtitle:SCILocalized(@"Original SCInsta developer") imageUrl:@"https://i.imgur.com/c9CbytZ.png" url:@"https://github.com/SoCuul/SCInsta"],
             ]
         },
         @{
             @"header": @"",
             @"rows": @[
                 [self releaseNotesButtonCell],
-            ]
-        },
-        @{
-            @"header": SCILocalized(@"Credits"),
-            @"rows": @[
-                [SCISetting staticCellWithTitle:@"ZomkaDEV" subtitle:SCILocalized(@"Russian translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"Furamako" subtitle:SCILocalized(@"Spanish translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"N4C (@ch1tmdgus)" subtitle:SCILocalized(@"Korean translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"bruuhim" subtitle:SCILocalized(@"Arabic translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"jaydenjcpy" subtitle:SCILocalized(@"Chinese (Traditional and Simplified) translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"Bruno (@brunorainha)" subtitle:SCILocalized(@"Portuguese (Brazil) translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"yesnt10" subtitle:SCILocalized(@"Turkish translation") icon:nil],
-                [SCISetting staticCellWithTitle:@"Mikasa-san" subtitle:SCILocalized(@"Code contributions") icon:nil],
-                [SCISetting staticCellWithTitle:@"John (@erupts0)" subtitle:SCILocalized(@"Testing and feature suggestions") icon:nil],
+                [SCISetting navigationCellWithTitle:SCILocalized(@"Credits")
+                                           subtitle:SCILocalized(@"Inspirations, contributors, translators")
+                                               icon:nil
+                                        navSections:[self creditsNavSections]],
             ]
         },
         @{
@@ -1035,7 +1044,46 @@
         @{
             @"header": @"",
             @"rows": @[
-                [SCISetting linkCellWithTitle:SCILocalized(@"Donate to SoCuul") subtitle:SCILocalized(@"Support the original developer") icon:[SCISymbol symbolWithName:@"heart.fill" color:[UIColor systemPinkColor] size:20.0] url:@"https://ko-fi.com/SoCuul"],
+                [SCISetting linkCellWithTitle:SCILocalized(@"Donate to Ryuk") subtitle:SCILocalized(@"Support RyukGram development") icon:[SCISymbol symbolWithName:@"heart.fill" color:[UIColor systemPinkColor] size:20.0] url:@"https://ko-fi.com/ryuk744335"],
+            ]
+        },
+    ];
+}
+
++ (NSArray *)creditsNavSections {
+    return @[
+        @{
+            @"header": SCILocalized(@"Inspirations"),
+            @"rows": @[
+                [SCISetting linkCellWithTitle:@"SoCuul" subtitle:SCILocalized(@"Original SCInsta developer") icon:nil url:@"https://github.com/SoCuul/SCInsta"],
+                [SCISetting linkCellWithTitle:@"BandarHL" subtitle:SCILocalized(@"Original BHInstagram developer") icon:nil url:@"https://github.com/BandarHL"],
+                [SCISetting linkCellWithTitle:@"Instaoled (@VAXMG)" subtitle:SCILocalized(@"OLED theme inspiration") icon:nil url:@"https://t.me/ciesIPAs"],
+            ]
+        },
+        @{
+            @"header": SCILocalized(@"Code and research"),
+            @"rows": @[
+                [SCISetting linkCellWithTitle:@"Mikasa-san" subtitle:SCILocalized(@"Code contributions") icon:nil url:@"https://github.com/Mikasa-san"],
+                [SCISetting linkCellWithTitle:@"John (@erupts0)" subtitle:SCILocalized(@"Testing and feature suggestions") icon:nil url:@"https://github.com/erupts0"],
+            ]
+        },
+        @{
+            @"header": SCILocalized(@"Translators"),
+            @"rows": @[
+                [SCISetting linkCellWithTitle:@"ZomkaDEV" subtitle:SCILocalized(@"Russian translation") icon:nil url:@"https://github.com/ZomkaDEV"],
+                [SCISetting staticCellWithTitle:@"Furamako" subtitle:SCILocalized(@"Spanish translation") icon:nil],
+                [SCISetting linkCellWithTitle:@"N4C (@ch1tmdgus)" subtitle:SCILocalized(@"Korean translation") icon:nil url:@"https://github.com/ch1tmdgus"],
+                [SCISetting linkCellWithTitle:@"bruuhim" subtitle:SCILocalized(@"Arabic translation") icon:nil url:@"https://github.com/bruuhim"],
+                [SCISetting linkCellWithTitle:@"jaydenjcpy" subtitle:SCILocalized(@"Chinese (Traditional and Simplified) translation") icon:nil url:@"https://github.com/jaydenjcpy"],
+                [SCISetting linkCellWithTitle:@"Bruno (@brunorainha)" subtitle:SCILocalized(@"Portuguese (Brazil) translation") icon:nil url:@"https://github.com/brunorainha"],
+                [SCISetting linkCellWithTitle:@"yesnt10" subtitle:SCILocalized(@"Turkish translation") icon:nil url:@"https://github.com/yesnt10"],
+            ]
+        },
+        @{
+            @"header": @"",
+            @"footer": SCILocalized(@"RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated."),
+            @"rows": @[
+                [SCISetting linkCellWithTitle:SCILocalized(@"Donate to SoCuul") subtitle:SCILocalized(@"Support the original SCInsta developer") icon:[SCISymbol symbolWithName:@"heart.fill" color:[UIColor systemPinkColor] size:20.0] url:@"https://ko-fi.com/SoCuul"],
             ]
         },
     ];

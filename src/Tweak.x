@@ -28,11 +28,8 @@ static NSString *sciSafeValue(id obj, NSString *key) {
 	@try { return [obj valueForKey:key]; } @catch (__unused id e) { return nil; }
 }
 
-%hook IGInstagramAppDelegate
-
-- (_Bool)application:(UIApplication *)application willFinishLaunchingWithOptions:(id)arg2 {
-    // Default SCInsta config
-    NSDictionary *sciDefaults = @{
+static NSDictionary *sciDefaultsDictionary(void) {
+    return @{
         @"hide_ads": @(YES),
         @"copy_description": @(YES),
         @"profile_copy_button": @(YES),
@@ -61,6 +58,8 @@ static NSString *sciSafeValue(id obj, NSString *key) {
         @"messages_only_hide_tabbar": @(NO),
         @"hide_send_to_group": @(NO),
         @"confirm_send_to_group": @(NO),
+        @"share_sheet_pin_threads": @(NO),
+        @"share_sheet_pinned_thread_ids": @[],
         @"hide_reels_friends_bubbles": @(NO),
         @"hide_reels_floating_social_context": @(NO),
         @"fake_follower_count": @(NO),
@@ -120,6 +119,7 @@ static NSString *sciSafeValue(id obj, NSString *key) {
         @"disable_auto_unmuting_reels": @(NO),
         @"auto_scroll_reels_mode": @"off",
         @"settings_shortcut": @(YES),
+        @"prevent_doom_scrolling": @(NO),
         @"doom_scrolling_reel_count": @(1),
         @"keep_seen_visual_local": @(NO),
         @"send_audio_as_file": @(YES),
@@ -147,6 +147,7 @@ static NSString *sciSafeValue(id obj, NSString *key) {
         @"story_seen_mode": @"button",
         @"story_audio_toggle": @(NO),
         @"view_story_mentions": @(YES),
+        @"story_mentions_button": @(NO),
         @"stories_show_quiz_answer": @(NO),
         @"stories_show_poll_votes_count": @(NO),
         @"reels_show_quiz_answer": @(NO),
@@ -194,9 +195,20 @@ static NSString *sciSafeValue(id obj, NSString *key) {
         @"custom_music_sticker_color": @(NO),
         @"instants_send_from_gallery": @(NO)
     };
-    [[NSUserDefaults standardUserDefaults] registerDefaults:sciDefaults];
-    [SCIUtils setSciRegisteredDefaults:sciDefaults];
-    
+}
+
+static void sciRegisterDefaultsOnce(void) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSDictionary *defaults = sciDefaultsDictionary();
+        [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+        [SCIUtils setSciRegisteredDefaults:defaults];
+    });
+}
+
+%hook IGInstagramAppDelegate
+
+- (_Bool)application:(UIApplication *)application willFinishLaunchingWithOptions:(id)arg2 {
     // Override instagram defaults
     if ([SCIUtils getBoolPref:@"liquid_glass_buttons"]) {
         [[NSUserDefaults standardUserDefaults] setValue:@(YES) forKey:@"instagram.override.project.lucent.navigation"];
@@ -600,6 +612,8 @@ static NSInteger hook_IGTabBarStyleForLauncherSet(NSInteger set) {
 }
 
 %ctor {
+	sciRegisterDefaultsOnce();
+
 	Class swizzleToggle = objc_getClass("IGLiquidGlassSwizzle.IGLiquidGlassSwizzleToggle");
 	if (swizzleToggle) {
 		MSHookMessageEx(swizzleToggle, @selector(isEnabled), (IMP)new_swizzleToggle_isEnabled, (IMP *)&orig_swizzleToggle_isEnabled);

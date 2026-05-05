@@ -2,6 +2,7 @@
 #import "SCIActionMenu.h"
 #import "SCIRepostSheet.h"
 #import "../Utils.h"
+#import "../Features/StoriesAndMessages/OverlayHelpers.h"
 #import <objc/runtime.h>
 
 // Associated-object keys for per-button config.
@@ -137,10 +138,7 @@ const void *kSCIDismissKey   = &kSCIDismissKey;
         [SCIRepostSheet repostWithVideoURL:vidURL photoURL:imgURL];
     } else if ([tap isEqualToString:@"view_mentions"]) {
         UIViewController *host = [SCIUtils nearestViewControllerForView:sender];
-        if (host) {
-            extern void sciShowStoryMentions(UIViewController *, UIView *);
-            sciShowStoryMentions(host, sender);
-        }
+        if (host) sciShowStoryMentions(host, sender);
     }
 }
 

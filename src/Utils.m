@@ -4,23 +4,31 @@
 
 @implementation SCIUtils
 
-+ (BOOL)getBoolPref:(NSString *)key {
-    if (![key length] || [[NSUserDefaults standardUserDefaults] objectForKey:key] == nil) return false;
+static NSDictionary *sciRegisteredDefaultsRef = nil;
 
-    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
++ (BOOL)getBoolPref:(NSString *)key {
+    if (![key length]) return false;
+    id v = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (v == nil) v = sciRegisteredDefaultsRef[key];
+    if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v boolValue];
+    if ([v isKindOfClass:[NSString class]]) return [(NSString *)v boolValue];
+    return false;
 }
 + (double)getDoublePref:(NSString *)key {
-    if (![key length] || [[NSUserDefaults standardUserDefaults] objectForKey:key] == nil) return 0;
-
-    return [[NSUserDefaults standardUserDefaults] doubleForKey:key];
+    if (![key length]) return 0;
+    id v = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (v == nil) v = sciRegisteredDefaultsRef[key];
+    if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v doubleValue];
+    if ([v isKindOfClass:[NSString class]]) return [(NSString *)v doubleValue];
+    return 0;
 }
 + (NSString *)getStringPref:(NSString *)key {
-    if (![key length] || [[NSUserDefaults standardUserDefaults] objectForKey:key] == nil) return @"";
-
-    return [[NSUserDefaults standardUserDefaults] stringForKey:key];
+    if (![key length]) return @"";
+    id v = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (v == nil) v = sciRegisteredDefaultsRef[key];
+    if (![v isKindOfClass:[NSString class]]) return @"";
+    return v;
 }
-
-static NSDictionary *sciRegisteredDefaultsRef = nil;
 
 + (NSDictionary<NSString *, id> *)sciRegisteredDefaults { return sciRegisteredDefaultsRef ?: @{}; }
 + (void)setSciRegisteredDefaults:(NSDictionary<NSString *, id> *)defaults {

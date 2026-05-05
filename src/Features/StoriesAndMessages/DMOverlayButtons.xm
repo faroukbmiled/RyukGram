@@ -1,6 +1,5 @@
 // DM disappearing-media overlay buttons — action / eye / audio (tags 1342–1344).
 // Hooks IGDirectVisualMessageViewerController directly; reads only dm_visual_* prefs.
-// Action button defaults to enabled when dm_visual_action_button key does not exist.
 
 #import "OverlayHelpers.h"
 #import "../../SCIChrome.h"
@@ -11,18 +10,12 @@
 static const void *kSCIDMOwnerVCKey = &kSCIDMOwnerVCKey;
 static char kDMActionDefaultKey;
 
-static inline BOOL SCIDMPrefBoolDefault(NSString *key, BOOL defaultValue) {
-	id value = [NSUserDefaults.standardUserDefaults objectForKey:key];
-	return value ? [value boolValue] : defaultValue;
-}
-
-static inline BOOL SCIDMActionEnabled(void) {return SCIDMPrefBoolDefault(@"dm_visual_action_button", YES);}
+static inline BOOL SCIDMActionEnabled(void) {return [SCIUtils getBoolPref:@"dm_visual_action_button"];}
 
 static inline BOOL SCIDMEyeEnabled(void) {return [SCIUtils getBoolPref:@"dm_visual_seen_button"];}
 
 static inline NSString *SCIDMDefaultAction(void) {
-	NSString *action = [SCIUtils getStringPref:@"dm_visual_action_default"];
-	return action.length ? action : @"menu";
+	return [SCIUtils getStringPref:@"dm_visual_action_default"];
 }
 
 static inline SCIChromeButton *SCIDMButton(NSString *symbol, CGFloat pointSize, CGFloat diameter, NSInteger tag) {

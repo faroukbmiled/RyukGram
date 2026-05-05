@@ -16,13 +16,11 @@ static const void *kFeedPageIndexKey = &kFeedPageIndexKey;
 static char kFeedActionConfiguredKey;
 
 static inline BOOL SCIFeedActionEnabled(void) {
-	id value = [NSUserDefaults.standardUserDefaults objectForKey:@"feed_action_button"];
-	return value ? [value boolValue] : YES;
+	return [SCIUtils getBoolPref:@"feed_action_button"];
 }
 
 static inline NSString *SCIFeedDefaultAction(void) {
-	NSString *action = [SCIUtils getStringPref:@"feed_action_default"];
-	return action.length ? action : @"menu";
+	return [SCIUtils getStringPref:@"feed_action_default"];
 }
 
 static BOOL sciFindFeedUFIContext(UIView *view, UICollectionViewCell **outUFICell, UICollectionView **outCollectionView) {

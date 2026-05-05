@@ -72,6 +72,7 @@ static inline NSString *sciKeyboardMode(void) {
     [SCITheme migrateLegacyPrefs];
     NSString *mode = sciKeyboardMode();
     if ([mode isEqualToString:@"off"]) return;
+    if (![SCITheme forceTheme] && ![SCITheme isSystemDark]) return;
 
     %init(KeyboardThemeDarkGroup);
 

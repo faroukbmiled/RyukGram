@@ -151,6 +151,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Disable vanish mode swipe **\***
 - Hide voice/video call buttons (independent toggles) **\***
 - Hide send to group chat in the share sheet **\***
+- Pin recipients on long-press in the share sheet — pinned chats render at the top **\***
 - Unlimited replay of direct stories **\***
 - Full last active date **\***
 - Send files in DMs (experimental) **\***
@@ -164,7 +165,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Long-press the story seen button for quick actions **\***
 - Per-user story seen-receipt exclusion list with Block all / Block selected mode **\***
 - Story audio mute/unmute toggle **\***
-- View story mentions **\***
+- View story mentions, with optional quick-access overlay button **\***
 - Stop story auto-advance **\***
 - Reveal poll/slider vote counts and quiz answers on stories and reels before interacting **\***
 - Force legacy Quiz and Reveal stickers back into the story composer tray **\***
@@ -300,8 +301,9 @@ $ ./build.sh <sideload/sidestore/rootless/rootful>
 # Credits
 - [SCInsta](https://github.com/SoCuul/SCInsta) by [@SoCuul](https://github.com/SoCuul) — original tweak this fork is based on
 - [@BandarHL](https://github.com/BandarHL) — creator of the original BHInstagram project
-- [@faroukbmiled](https://github.com/faroukbmiled) — RyukGram modifications and additional features
+- [Instaoled](https://t.me/ciesIPAs) by @VAXMG — OLED theme inspiration
 - [@euoradan](https://t.me/euoradan) (Radan) — experimental Instagram feature flag research
+- [@Mikasa-san](https://github.com/Mikasa-san) — code contributions
 - [@erupts0](https://github.com/erupts0) (John) — testing and feature suggestions
 - [BillyCurtis/OpenInstagramSafariExtension](https://github.com/BillyCurtis/OpenInstagramSafariExtension) — base for the bundled Safari extension
 - [@asdfzxcvbn](https://github.com/asdfzxcvbn) — [ipapatch](https://github.com/asdfzxcvbn/ipapatch) and [zxPluginsInject](https://github.com/asdfzxcvbn/zxPluginsInject)
@@ -312,4 +314,10 @@ $ ./build.sh <sideload/sidestore/rootless/rootful>
 - [@jaydenjcpy](https://github.com/jaydenjcpy) — Chinese (Traditional and Simplified) translation
 - Bruno ([@brunorainha](https://github.com/brunorainha)) — Portuguese (Brazil) translation
 - [@yesnt10](https://github.com/yesnt10) — Turkish translation
-- [@Mikasa-san](https://github.com/Mikasa-san) — code contributions
+
+# Support
+
+RyukGram is free and open source. If you'd like to support development:
+
+- [☕ Donate to Ryuk (RyukGram)](https://ko-fi.com/ryuk744335)
+- [☕ Donate to SoCuul (original SCInsta)](https://ko-fi.com/SoCuul) — RyukGram wouldn't exist without SoCuul's original SCInsta, so showing them some love is always welcome

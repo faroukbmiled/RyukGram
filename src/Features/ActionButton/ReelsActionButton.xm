@@ -12,13 +12,11 @@ static const NSInteger kReelActionBtnTag = 1337;
 static char kReelActionDefaultKey;
 
 static inline BOOL SCIReelsActionEnabled(void) {
-	id value = [NSUserDefaults.standardUserDefaults objectForKey:@"reels_action_button"];
-	return value ? [value boolValue] : YES;
+	return [SCIUtils getBoolPref:@"reels_action_button"];
 }
 
 static inline NSString *SCIReelDefaultAction(void) {
-	NSString *action = [SCIUtils getStringPref:@"reels_action_default"];
-	return action.length ? action : @"menu";
+	return [SCIUtils getStringPref:@"reels_action_default"];
 }
 
 static UIView *sciFindSuperviewOfClass(UIView *view, NSString *className) {

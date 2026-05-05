@@ -122,9 +122,8 @@ static NSArray *removeItemsInList(NSArray *list, BOOL isFeed) {
     return filteredObjs;
 }
 %end
-%hook IGSundialFeedDataSource
-- (NSArray *)objectsForListAdapter:(id)arg1 {
-    NSArray *filteredList = removeItemsInList(%orig, NO);
+static NSArray *sciSundialFilterAndLimit(NSArray *list) {
+    NSArray *filteredList = removeItemsInList(list, NO);
 
     if ([SCIUtils getBoolPref:@"prevent_doom_scrolling"]) {
         double reelCount = [SCIUtils getDoublePref:@"doom_scrolling_reel_count"];
@@ -132,6 +131,17 @@ static NSArray *removeItemsInList(NSArray *list, BOOL isFeed) {
     }
 
     return filteredList;
+}
+
+%hook IGSundialFeedDataSource
+- (NSArray *)objectsForListAdapter:(id)arg1 {
+    return sciSundialFilterAndLimit(%orig);
+}
+%end
+// Demangled name: IGSundialFeed.IGSundialFeedDataSource
+%hook _TtC13IGSundialFeed23IGSundialFeedDataSource
+- (NSArray *)objectsForListAdapter:(id)arg1 {
+    return sciSundialFilterAndLimit(%orig);
 }
 %end
 %hook IGContextualFeedViewController

@@ -1,4 +1,4 @@
-// Story overlay buttons — action / audio / eye (tags 1339–1341).
+// Story overlay buttons — action / audio / eye / mentions (tags 1339–1341, 1345).
 // Early-exits in DM context; DMOverlayButtons.xm handles that surface.
 
 #import "OverlayHelpers.h"
@@ -18,21 +18,20 @@ extern "C" void sciRefreshAllVisibleOverlays(UIViewController *storyVC);
 extern "C" void sciTriggerStoryMarkSeen(UIViewController *storyVC);
 extern "C" __weak UIViewController *sciActiveStoryViewerVC;
 extern "C" NSDictionary *sciOwnerInfoForView(UIView *view);
-extern "C" void sciShowStoryMentions(UIViewController *, UIView *);
 
 static char kStoryActionObservedKey;
 static char kStoryActionDefaultKey;
 static char kStoryReelItemsProviderKey;
+static char kStoryMentionsAnchorKey;
+static char kStoryMentionsRetryGenKey;
 static void *kStoryActionHighlightContext = &kStoryActionHighlightContext;
 
 static inline BOOL SCIStoryActionEnabled(void) {
-	id value = [NSUserDefaults.standardUserDefaults objectForKey:@"stories_action_button"];
-	return value ? [value boolValue] : YES;
+	return [SCIUtils getBoolPref:@"stories_action_button"];
 }
 
 static inline NSString *SCIStoryDefaultAction(void) {
-	NSString *action = [SCIUtils getStringPref:@"stories_action_default"];
-	return action.length ? action : @"menu";
+	return [SCIUtils getStringPref:@"stories_action_default"];
 }
 
 static inline SCIChromeButton *SCIStoryButton(NSString *symbol, CGFloat pointSize, CGFloat diameter, NSInteger tag) {
@@ -242,6 +241,12 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 	if ([SCIUtils getBoolPref:@"no_seen_receipt"]) {
 		((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshSeenButton));
 	}
+
+	// --- Mentions button (tag 1345) ---
+	// Anchored to eye/action when present, otherwise free-stands at the
+	// default trailing slot. Visibility independent of the action button.
+	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshStoryMentionsButton));
+	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciKickMentionsRetryChain));
 }
 
 // MARK: - Action button menu-dismiss resume
@@ -276,6 +281,7 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 	if (oldAction && [oldAction isEqualToString:currentAction]) return;
 	SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
 	SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
+	SCIRemoveStoryButton(self, SCI_STORY_MENTIONS_TAG, self);
 	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciInstallStoryOverlayButtons));
 	if ([SCIUtils getBoolPref:@"no_seen_receipt"]) {((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshSeenButton));}
 }
@@ -369,6 +375,100 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 	}
 }
 
+// MARK: - Mentions button
+
+// Anchored to the overlay's own safe area + a computed trailing offset that
+// steps past whichever of action/eye are present. Anchoring against sibling
+// buttons silently broke when those got rebuilt mid-transition.
+%new
+- (void)sciRefreshStoryMentionsButton {
+	BOOL hasContent = [SCIUtils getBoolPref:@"story_mentions_button"] && sciStoryHasMentionsOrShares(self);
+
+	SCIChromeButton *existing = (SCIChromeButton *)[self viewWithTag:SCI_STORY_MENTIONS_TAG];
+	if (![existing isKindOfClass:SCIChromeButton.class]) existing = nil;
+
+	if (!hasContent) {
+		if (existing) [existing removeFromSuperview];
+		return;
+	}
+
+	// Open-from-tray transition uses a degenerate IGStoryFullscreenCell shell
+	// (~4x10) that gets discarded once the real fullscreen cell zooms in.
+	// Defer until the overlay reaches full width; layoutSubviews re-fires.
+	if (self.window && self.bounds.size.width < self.window.bounds.size.width * 0.5) {
+		if (existing) [existing removeFromSuperview];
+		return;
+	}
+
+	BOOL hasEye = [self viewWithTag:SCI_STORY_EYE_TAG] != nil;
+	BOOL hasAction = [self viewWithTag:SCI_STORY_ACTION_TAG] != nil;
+	NSInteger neighbours = (hasEye ? 1 : 0) | (hasAction ? 2 : 0);
+	NSNumber *prev = objc_getAssociatedObject(existing, &kStoryMentionsAnchorKey);
+	if (existing && prev && prev.integerValue == neighbours) return;
+
+	if (existing) [existing removeFromSuperview];
+
+	SCIChromeButton *button = SCIStoryButton(@"at", 18.0, 36.0, SCI_STORY_MENTIONS_TAG);
+	[button addTarget:self action:@selector(sciStoryMentionsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+	[self addSubview:button];
+	objc_setAssociatedObject(button, &kStoryMentionsAnchorKey, @(neighbours), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+	CGFloat trailingOffset = -12.0;
+	if (hasAction) trailingOffset -= 36.0 + 10.0;
+	if (hasEye)    trailingOffset -= 36.0 + 10.0;
+
+	[NSLayoutConstraint activateConstraints:@[
+		[button.bottomAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.bottomAnchor constant:-100.0],
+		[button.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:trailingOffset],
+		[button.widthAnchor constraintEqualToConstant:36.0],
+		[button.heightAnchor constraintEqualToConstant:36.0]
+	]];
+}
+
+// Pando lazy-loads `reel_mentions` / `story_feed_media`. Generation-tokened
+// retry chain re-checks every 350ms until data lands or attempts exhaust.
+%new
+- (void)sciKickMentionsRetryChain {
+	if (![SCIUtils getBoolPref:@"story_mentions_button"]) return;
+	if ([self viewWithTag:SCI_STORY_MENTIONS_TAG]) return;
+
+	NSInteger gen = [objc_getAssociatedObject(self, &kStoryMentionsRetryGenKey) integerValue] + 1;
+	objc_setAssociatedObject(self, &kStoryMentionsRetryGenKey, @(gen), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	((void(*)(id, SEL, NSInteger, NSInteger))objc_msgSend)(self, @selector(sciScheduleMentionsRetryGeneration:remaining:), gen, 6);
+}
+
+%new
+- (void)sciScheduleMentionsRetryGeneration:(NSInteger)gen remaining:(NSInteger)remaining {
+	if (remaining <= 0) return;
+
+	__weak __typeof(self) weakSelf = self;
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		__strong __typeof(weakSelf) strongSelf = weakSelf;
+		if (!strongSelf || !strongSelf.superview) return;
+
+		NSInteger current = [objc_getAssociatedObject(strongSelf, &kStoryMentionsRetryGenKey) integerValue];
+		if (current != gen) return;
+
+		((void(*)(id, SEL))objc_msgSend)(strongSelf, @selector(sciRefreshStoryMentionsButton));
+		if ([strongSelf viewWithTag:SCI_STORY_MENTIONS_TAG]) return;
+
+		((void(*)(id, SEL, NSInteger, NSInteger))objc_msgSend)(strongSelf, @selector(sciScheduleMentionsRetryGeneration:remaining:), gen, remaining - 1);
+	});
+}
+
+%new
+- (void)sciStoryMentionsButtonTapped:(SCIChromeButton *)sender {
+	UIImpactFeedbackGenerator *haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+	[haptic impactOccurred];
+
+	UIViewController *storyVC = sciFindVC(self, @"IGStoryViewerViewController");
+	if (!storyVC) storyVC = sciActiveStoryViewerVC;
+	if (!storyVC) return;
+
+	sciPauseStoryPlayback(self);
+	sciShowStoryMentions(storyVC, self);
+}
+
 // MARK: - Owner / audio / action refresh on layout
 
 - (void)layoutSubviews {
@@ -378,10 +478,12 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 		SCIRemoveStoryButton(self, SCI_STORY_ACTION_TAG, self);
 		SCIRemoveStoryButton(self, SCI_STORY_EYE_TAG, self);
 		SCIRemoveStoryButton(self, SCI_STORY_AUDIO_TAG, self);
+		SCIRemoveStoryButton(self, SCI_STORY_MENTIONS_TAG, self);
 		return;
 	}
 
 	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshStoryActionButton));
+	((void(*)(id, SEL))objc_msgSend)(self, @selector(sciRefreshStoryMentionsButton));
 
 	static char kLastPKKey;
 	static char kLastExcludedKey;
@@ -640,10 +742,12 @@ static void sciSyncStoryButtonsAlpha(UIView *sourceView, CGFloat alpha) {
 			UIView *seen = [sibling viewWithTag:SCI_STORY_EYE_TAG];
 			UIView *action = [sibling viewWithTag:SCI_STORY_ACTION_TAG];
 			UIView *audio = [sibling viewWithTag:SCI_STORY_AUDIO_TAG];
+			UIView *mentions = [sibling viewWithTag:SCI_STORY_MENTIONS_TAG];
 
 			if (seen) seen.alpha = alpha;
 			if (action) action.alpha = alpha;
 			if (audio) audio.alpha = alpha;
+			if (mentions) mentions.alpha = alpha;
 			return;
 		}
 
@@ -660,12 +764,64 @@ static void sciSyncStoryButtonsAlpha(UIView *sourceView, CGFloat alpha) {
 
 %end
 
+// MARK: - Mentions refresh broadcast
+
+// Per-overlay refresh + retry-kick across all live story overlays.
+// Each overlay does its own per-cell media check, so this lands on the
+// correct cells regardless of which is currently visible.
+static void sciRefreshMentionsInVisibleOverlays(id storyVC) {
+	if (![storyVC isKindOfClass:[UIViewController class]]) return;
+	UIView *root = ((UIViewController *)storyVC).view;
+	if (!root) return;
+	Class overlayCls = NSClassFromString(@"IGStoryFullscreenOverlayView");
+	if (!overlayCls) overlayCls = NSClassFromString(@"IGStoryFullscreenOverlayMetalLayerView");
+	if (!overlayCls) return;
+	SEL refresh = @selector(sciRefreshStoryMentionsButton);
+	SEL kick = @selector(sciKickMentionsRetryChain);
+	NSMutableArray *stack = [NSMutableArray arrayWithObject:root];
+	while (stack.count) {
+		UIView *v = stack.lastObject; [stack removeLastObject];
+		if ([v isKindOfClass:overlayCls]) {
+			if ([v respondsToSelector:refresh])
+				((void(*)(id, SEL))objc_msgSend)(v, refresh);
+			if ([v respondsToSelector:kick])
+				((void(*)(id, SEL))objc_msgSend)(v, kick);
+		}
+		for (UIView *sub in v.subviews) [stack addObject:sub];
+	}
+}
+
+// VC delegate callbacks fire AFTER the story content is loaded and visible —
+// the canonical "story is now showing" events when Pando field data is bound.
+%hook IGStoryViewerViewController
+
+- (void)fullscreenSectionController:(id)sc didDisplayStoryModel:(id)model {
+	%orig;
+	if ([SCIUtils getBoolPref:@"story_mentions_button"])
+		sciRefreshMentionsInVisibleOverlays(self);
+}
+
+- (void)fullscreenSectionController:(id)sc didStartToProgressWithStoryItem:(id)item {
+	%orig;
+	if ([SCIUtils getBoolPref:@"story_mentions_button"])
+		sciRefreshMentionsInVisibleOverlays(self);
+}
+
+- (void)fullscreenSectionController:(id)sc didUpdateFromStoryModel:(id)fromModel toStoryModel:(id)toModel storyItem:(id)item {
+	%orig;
+	if ([SCIUtils getBoolPref:@"story_mentions_button"])
+		sciRefreshMentionsInVisibleOverlays(self);
+}
+
+%end
+
 %end // StoryOverlayGroup
 
 %ctor {
 	if (SCIStoryActionEnabled() ||
 		[SCIUtils getBoolPref:@"story_audio_toggle"] ||
-		[SCIUtils getBoolPref:@"no_seen_receipt"]) {
+		[SCIUtils getBoolPref:@"no_seen_receipt"] ||
+		[SCIUtils getBoolPref:@"story_mentions_button"]) {
 		%init(StoryOverlayGroup);
 	}
 }

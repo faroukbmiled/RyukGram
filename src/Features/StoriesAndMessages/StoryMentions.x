@@ -611,9 +611,291 @@ static NSDictionary *sciMentionUserInfo(id mention) {
 
 // ============ Entry points ============
 
+// Per-cell media lookup so each overlay reflects its own story, not the VC's
+// currentViewModel (which is stale for preloaded adjacent cells).
+static IGMedia *sciStoryMediaForOverlay(UIView *overlay) {
+    if (!overlay) return nil;
+    Class cellClass = NSClassFromString(@"IGStoryFullscreenCell");
+    Class sectionClass = NSClassFromString(@"IGStoryFullscreenSectionController");
+    if (!cellClass || !sectionClass) return nil;
+
+    UIView *cur = overlay;
+    UICollectionViewCell *cell = nil;
+    while (cur) {
+        if ([cur isKindOfClass:cellClass]) { cell = (UICollectionViewCell *)cur; break; }
+        cur = cur.superview;
+    }
+    if (!cell) return nil;
+
+    id sc = nil;
+    unsigned int count = 0;
+    Ivar *ivars = class_copyIvarList([cell class], &count);
+    for (unsigned int i = 0; i < count && !sc; i++) {
+        const char *t = ivar_getTypeEncoding(ivars[i]);
+        if (!t || t[0] != '@') continue;
+        id v = object_getIvar(cell, ivars[i]);
+        if (!v) continue;
+        if ([v isKindOfClass:sectionClass]) { sc = v; break; }
+        unsigned int c2 = 0;
+        Ivar *iv2 = class_copyIvarList([v class], &c2);
+        for (unsigned int j = 0; j < c2; j++) {
+            const char *t2 = ivar_getTypeEncoding(iv2[j]);
+            if (!t2 || t2[0] != '@') continue;
+            id v2 = object_getIvar(v, iv2[j]);
+            if (v2 && [v2 isKindOfClass:sectionClass]) { sc = v2; break; }
+        }
+        if (iv2) free(iv2);
+    }
+    if (ivars) free(ivars);
+    if (!sc) return nil;
+
+    SEL csi = NSSelectorFromString(@"currentStoryItem");
+    if (![sc respondsToSelector:csi]) return nil;
+    id item = ((id(*)(id, SEL))objc_msgSend)(sc, csi);
+    if (!item) return nil;
+    if ([item isKindOfClass:NSClassFromString(@"IGMedia")]) return (IGMedia *)item;
+    return sciExtractMediaFromItem(item);
+}
+
+// Self-shares only count as "has mentions" when their inner usertags or
+// coauthors surface a non-owner. That data isn't on the outer story IGMedia —
+// fetch /api/v1/media/<id>/info/ once per mediaId, cache for the session,
+// broadcast a refresh when the cache flips so the button installs.
+static NSMutableDictionary<NSString *, NSNumber *> *sciSharedMediaTagsCache(void) {
+    static NSMutableDictionary *cache;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{ cache = [NSMutableDictionary dictionary]; });
+    return cache;
+}
+
+static NSMutableSet<NSString *> *sciSharedMediaInFlight(void) {
+    static NSMutableSet *set;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{ set = [NSMutableSet set]; });
+    return set;
+}
+
+static NSString *sciPKFromAPIUser(NSDictionary *u) {
+    if (![u isKindOfClass:[NSDictionary class]]) return nil;
+    id v = u[@"pk"] ?: u[@"pk_id"] ?: u[@"id"];
+    if ([v isKindOfClass:[NSString class]]) return v;
+    if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v stringValue];
+    return nil;
+}
+
+static BOOL sciAPIItemHasUserOtherThan(NSDictionary *item, NSString *storyOwnerPK) {
+    if (![item isKindOfClass:[NSDictionary class]]) return NO;
+
+    NSString *ownerPk = sciPKFromAPIUser(item[@"user"]);
+    if (ownerPk.length && ![ownerPk isEqualToString:storyOwnerPK]) return YES;
+
+    NSDictionary *ut = item[@"usertags"];
+    NSArray *tagged = [ut isKindOfClass:[NSDictionary class]] ? ut[@"in"] : nil;
+    if ([tagged isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *t in tagged) {
+            NSString *pk = sciPKFromAPIUser(t[@"user"]);
+            if (pk.length && ![pk isEqualToString:storyOwnerPK]) return YES;
+        }
+    }
+
+    for (NSString *key in @[@"coauthor_producers", @"invited_coauthor_producers"]) {
+        NSArray *coa = item[key];
+        if (![coa isKindOfClass:[NSArray class]]) continue;
+        for (NSDictionary *u in coa) {
+            NSString *pk = sciPKFromAPIUser(u);
+            if (pk.length && ![pk isEqualToString:storyOwnerPK]) return YES;
+        }
+    }
+
+    NSArray *carousel = item[@"carousel_media"];
+    if ([carousel isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *c in carousel) {
+            if (sciAPIItemHasUserOtherThan(c, storyOwnerPK)) return YES;
+        }
+    }
+
+    return NO;
+}
+
+static void sciBroadcastMentionsButtonRefresh(void) {
+    UIViewController *vc = sciActiveStoryViewerVC;
+    if (!vc || !vc.view) return;
+    Class overlayCls = NSClassFromString(@"IGStoryFullscreenOverlayView");
+    if (!overlayCls) overlayCls = NSClassFromString(@"IGStoryFullscreenOverlayMetalLayerView");
+    if (!overlayCls) return;
+    SEL refresh = NSSelectorFromString(@"sciRefreshStoryMentionsButton");
+    SEL kick = NSSelectorFromString(@"sciKickMentionsRetryChain");
+    NSMutableArray *stack = [NSMutableArray arrayWithObject:vc.view];
+    while (stack.count) {
+        UIView *v = stack.lastObject; [stack removeLastObject];
+        if ([v isKindOfClass:overlayCls]) {
+            if ([v respondsToSelector:refresh])
+                ((void(*)(id, SEL))objc_msgSend)(v, refresh);
+            if ([v respondsToSelector:kick])
+                ((void(*)(id, SEL))objc_msgSend)(v, kick);
+        }
+        for (UIView *sub in v.subviews) [stack addObject:sub];
+    }
+}
+
+static void sciFetchSharedMediaTags(NSString *mediaId, NSString *storyOwnerPK) {
+    if (!mediaId.length || !storyOwnerPK.length) return;
+
+    NSMutableSet *inflight = sciSharedMediaInFlight();
+    NSMutableDictionary *cache = sciSharedMediaTagsCache();
+    @synchronized(inflight) {
+        if (cache[mediaId]) return;
+        if ([inflight containsObject:mediaId]) return;
+        [inflight addObject:mediaId];
+    }
+
+    [SCIInstagramAPI fetchMediaInfoForMediaId:mediaId completion:^(NSDictionary *response, NSError *error) {
+        BOOL hasNonSelf = NO;
+        NSArray *items = response[@"items"];
+        if ([items isKindOfClass:[NSArray class]] && items.count) {
+            hasNonSelf = sciAPIItemHasUserOtherThan(items[0], storyOwnerPK);
+        }
+
+        @synchronized(inflight) {
+            [inflight removeObject:mediaId];
+            if (response || !error) cache[mediaId] = @(hasNonSelf);
+        }
+
+        if (hasNonSelf) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                sciBroadcastMentionsButtonRefresh();
+            });
+        }
+    }];
+}
+
+static NSString *sciStoryOwnerPK(IGMedia *media) {
+    if (!media) return nil;
+    id userObj = sciFieldCacheValue(media, @"user");
+    if (!userObj) return nil;
+    id pk = sciFieldCacheValue(userObj, @"strong_id__");
+    if (!pk) pk = sciFieldCacheValue(userObj, @"pk");
+    if (!pk && [userObj respondsToSelector:@selector(pk)]) {
+        @try { pk = ((id(*)(id, SEL))objc_msgSend)(userObj, @selector(pk)); } @catch (__unused id e) {}
+    }
+    return pk ? [NSString stringWithFormat:@"%@", pk] : nil;
+}
+
+static BOOL sciMediaHasMentionsOrShares(IGMedia *media) {
+    if (!media) return NO;
+
+    // Explicit @-mentions are always non-self — any non-empty array means show.
+    for (NSString *name in @[@"storyMentions", @"reelMentions"]) {
+        SEL s = NSSelectorFromString(name);
+        if (![media respondsToSelector:s]) continue;
+        id v = ((id(*)(id, SEL))objc_msgSend)(media, s);
+        if ([v isKindOfClass:[NSArray class]] && [(NSArray *)v count] > 0) return YES;
+    }
+    for (NSString *key in @[@"story_mentions", @"reel_mentions"]) {
+        id v = sciFieldCacheValue(media, key);
+        if ([v isKindOfClass:[NSArray class]] && [(NSArray *)v count] > 0) return YES;
+    }
+
+    // Shared post/reel stickers — count only if the shared media's owner is
+    // someone OTHER than the story owner.
+    NSArray *sfm = nil;
+    SEL sfmSel = NSSelectorFromString(@"storyFeedMedia");
+    if ([media respondsToSelector:sfmSel]) {
+        id v = ((id(*)(id, SEL))objc_msgSend)(media, sfmSel);
+        if ([v isKindOfClass:[NSArray class]]) sfm = v;
+    }
+    if (!sfm.count) {
+        id v = sciFieldCacheValue(media, @"story_feed_media");
+        if ([v isKindOfClass:[NSArray class]]) sfm = v;
+    }
+    if (!sfm.count) return NO;
+
+    NSString *storyOwnerPK = sciStoryOwnerPK(media);
+    NSString *storyOwnerUN = nil;
+    id ownerObj = sciFieldCacheValue(media, @"user");
+    if (ownerObj) {
+        id un = sciFieldCacheValue(ownerObj, @"username");
+        if ([un isKindOfClass:[NSString class]]) storyOwnerUN = un;
+    }
+
+    SEL ownerSel = NSSelectorFromString(@"mediaOwnerId");
+    SEL attrSel = NSSelectorFromString(@"attribution");
+    SEL compoundSel = NSSelectorFromString(@"mediaCompoundStr");
+    SEL mediaIdSel = NSSelectorFromString(@"mediaId");
+    NSMutableDictionary *cache = sciSharedMediaTagsCache();
+
+    for (id item in sfm) {
+        id ownerId = nil;
+        if ([item respondsToSelector:ownerSel]) {
+            @try { ownerId = ((id(*)(id, SEL))objc_msgSend)(item, ownerSel); } @catch (__unused id e) {}
+        }
+        id attribution = nil;
+        if ([item respondsToSelector:attrSel]) {
+            @try { attribution = ((id(*)(id, SEL))objc_msgSend)(item, attrSel); } @catch (__unused id e) {}
+        }
+        // mediaCompoundStr is IG's "<mediaPk>_<ownerPk>" format — fallback when
+        // mediaOwnerId selector returns nil from Pando lazy-load.
+        NSString *compound = nil;
+        if ([item respondsToSelector:compoundSel]) {
+            @try {
+                id v = ((id(*)(id, SEL))objc_msgSend)(item, compoundSel);
+                if ([v isKindOfClass:[NSString class]]) compound = v;
+            } @catch (__unused id e) {}
+        }
+        NSString *ownerStr = ownerId ? [NSString stringWithFormat:@"%@", ownerId] : nil;
+        if (!ownerStr.length && compound.length) {
+            NSRange us = [compound rangeOfString:@"_" options:NSBackwardsSearch];
+            if (us.location != NSNotFound && us.location + 1 < compound.length) {
+                ownerStr = [compound substringFromIndex:us.location + 1];
+            }
+        }
+        NSString *attrStr = [attribution isKindOfClass:[NSString class]] ? attribution : nil;
+
+        NSString *mediaId = nil;
+        if ([item respondsToSelector:mediaIdSel]) {
+            @try {
+                id v = ((id(*)(id, SEL))objc_msgSend)(item, mediaIdSel);
+                if ([v isKindOfClass:[NSString class]] && [(NSString *)v length]) mediaId = v;
+            } @catch (__unused id e) {}
+        }
+
+        // Cross-user share — non-self mention, show immediately.
+        if (ownerStr.length && storyOwnerPK.length) {
+            if (![ownerStr isEqualToString:storyOwnerPK]) return YES;
+        } else if (attrStr.length && storyOwnerUN.length) {
+            if (![attrStr isEqualToString:storyOwnerUN]) return YES;
+        }
+
+        // Self-share or unresolved: only the inner usertags/coauthors expose
+        // any hidden mentions. Async fetch + cache decides on the next refresh.
+        if (!mediaId.length) continue;
+
+        NSNumber *cached = cache[mediaId];
+        if (cached) {
+            if (cached.boolValue) return YES;
+            continue;
+        }
+        if (storyOwnerPK.length) sciFetchSharedMediaTags(mediaId, storyOwnerPK);
+    }
+
+    return NO;
+}
+
+// Visibility check for the story-overlay mentions button. Triggers an async
+// pre-fetch (cached per mediaId) when a self-share's inner tags need probing.
+BOOL sciStoryHasMentionsOrShares(UIView *anchor) {
+    IGMedia *perCell = sciStoryMediaForOverlay(anchor);
+    if (sciMediaHasMentionsOrShares(perCell)) return YES;
+
+    if (!sciActiveStoryViewerVC) return NO;
+    IGMedia *fallback = sciCurrentStoryMedia(anchor);
+    return (fallback && fallback != perCell) ? sciMediaHasMentionsOrShares(fallback) : NO;
+}
+
 void sciShowStoryMentions(UIViewController *presenter, UIView *anchor) {
     if (![SCIUtils getBoolPref:@"view_story_mentions"]) return;
 
+    IGMedia *currentMedia = sciCurrentStoryMedia(anchor);
     NSArray *mentions = sciCurrentStoryMentions(anchor);
     NSMutableArray *infos = [NSMutableArray array];
     for (id mention in mentions) {
@@ -624,7 +906,7 @@ void sciShowStoryMentions(UIViewController *presenter, UIView *anchor) {
     SCIStoryMentionsVC *vc = [[SCIStoryMentionsVC alloc] init];
     vc.userInfos = [infos copy];
     vc.sharedMediaIDs = sciCurrentStorySharedPostMediaIDs(anchor);
-    vc.storyAuthorPK = sciUserPK(sciFieldCacheValue(sciCurrentStoryMedia(anchor), @"user"));
+    vc.storyAuthorPK = sciUserPK(sciFieldCacheValue(currentMedia, @"user"));
     vc.modalPresentationStyle = UIModalPresentationPageSheet;
 
     if (@available(iOS 15.0, *)) {

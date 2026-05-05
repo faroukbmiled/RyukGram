@@ -10,6 +10,7 @@
 static const NSInteger kFollowBadgeTag = 99788;
 static const char kFollowStatusKey;
 static const char kFollowProfilePKKey;
+static const char kFollowFetchInFlightKey;
 
 static NSNumber *sciGetFollowStatus(id vc) {
 	return objc_getAssociatedObject(vc, &kFollowStatusKey);
@@ -25,6 +26,14 @@ static NSString *sciGetFollowProfilePK(id vc) {
 
 static void sciSetFollowProfilePK(id vc, NSString *pk) {
 	objc_setAssociatedObject(vc, &kFollowProfilePKKey, pk, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+static NSString *sciGetFetchInFlight(id vc) {
+	return objc_getAssociatedObject(vc, &kFollowFetchInFlightKey);
+}
+
+static void sciSetFetchInFlight(id vc, NSString *pk) {
+	objc_setAssociatedObject(vc, &kFollowFetchInFlightKey, pk, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 static void sciRemoveBadgeFromView(UIView *view) {
@@ -69,7 +78,7 @@ static void sciRenderBadge(UIViewController *vc) {
 	UIView *statContainer = sciFindStatContainer(vc.view);
 	if (!statContainer) return;
 
-	sciRemoveBadgeFromView(statContainer);
+	if ([statContainer viewWithTag:kFollowBadgeTag]) return;
 
 	BOOL followedBy = status.boolValue;
 	NSString *text = followedBy ? SCILocalized(@"Follows you") : SCILocalized(@"Doesn't follow you");
@@ -94,76 +103,104 @@ static void sciRenderBadge(UIViewController *vc) {
 	]];
 }
 
-%hook IGProfileViewController
+static void sciFetchAndRender(UIViewController *vc, NSString *profilePK);
 
-- (void)viewDidAppear:(BOOL)animated {
-	%orig;
-
+static void sciRefreshIndicator(UIViewController *vc) {
 	if (!sciFollowIndicatorEnabled()) {
-		sciRemoveBadgeFromView(self.view);
-		sciSetFollowStatus(self, nil);
-		sciSetFollowProfilePK(self, nil);
+		sciRemoveBadgeFromView(vc.view);
+		sciSetFollowStatus(vc, nil);
+		sciSetFollowProfilePK(vc, nil);
+		sciSetFetchInFlight(vc, nil);
 		return;
 	}
 
 	id igUser = nil;
 	@try {
-		igUser = [self valueForKey:@"user"];
+		igUser = [vc valueForKey:@"user"];
 	} @catch (__unused NSException *e) {}
-
-	if (!igUser) {
-		sciRemoveBadgeFromView(self.view);
-		return;
-	}
 
 	NSString *profilePK = [SCIUtils pkFromIGUser:igUser];
 	NSString *myPK = [SCIUtils currentUserPK];
 
-	if (!profilePK.length || !myPK.length || [profilePK isEqualToString:myPK]) {
-		sciRemoveBadgeFromView(self.view);
-		sciSetFollowStatus(self, nil);
-		sciSetFollowProfilePK(self, nil);
+	if (!igUser || !profilePK.length) return;
+
+	if (!myPK.length || [profilePK isEqualToString:myPK]) {
+		sciRemoveBadgeFromView(vc.view);
+		sciSetFollowStatus(vc, nil);
+		sciSetFollowProfilePK(vc, nil);
+		sciSetFetchInFlight(vc, nil);
 		return;
 	}
 
-	NSString *cachedPK = sciGetFollowProfilePK(self);
-	NSNumber *cachedStatus = sciGetFollowStatus(self);
+	NSString *cachedPK = sciGetFollowProfilePK(vc);
+	NSNumber *cachedStatus = sciGetFollowStatus(vc);
 
 	if (cachedStatus && [cachedPK isEqualToString:profilePK]) {
-		sciRenderBadge(self);
+		sciRenderBadge(vc);
 		return;
 	}
 
-	sciRemoveBadgeFromView(self.view);
-	sciSetFollowStatus(self, nil);
-	sciSetFollowProfilePK(self, profilePK);
+	if ([cachedPK isEqualToString:profilePK] && [sciGetFetchInFlight(vc) isEqualToString:profilePK]) return;
 
-	__weak UIViewController *weakSelf = self;
+	sciRemoveBadgeFromView(vc.view);
+	sciSetFollowStatus(vc, nil);
+	sciSetFollowProfilePK(vc, profilePK);
+	sciFetchAndRender(vc, profilePK);
+}
+
+static void sciFetchAndRender(UIViewController *vc, NSString *profilePK) {
+	sciSetFetchInFlight(vc, profilePK);
+	__weak UIViewController *weakSelf = vc;
 	NSString *requestedPK = [profilePK copy];
 	NSString *path = [NSString stringWithFormat:@"friendships/show/%@/", requestedPK];
 
 	[SCIInstagramAPI sendRequestWithMethod:@"GET" path:path body:nil completion:^(NSDictionary *response, NSError *error) {
-		if (error || !response) return;
-
-		BOOL followedBy = [response[@"followed_by"] boolValue];
-
 		dispatch_async(dispatch_get_main_queue(), ^{
-			UIViewController *vc = weakSelf;
-			if (!vc) return;
+			UIViewController *strongVC = weakSelf;
+			if (!strongVC) return;
 
-			if (![sciGetFollowProfilePK(vc) isEqualToString:requestedPK]) return;
+			if (![sciGetFetchInFlight(strongVC) isEqualToString:requestedPK]) return;
+			sciSetFetchInFlight(strongVC, nil);
+
+			if (error || !response) return;
+
+			if (![sciGetFollowProfilePK(strongVC) isEqualToString:requestedPK]) return;
 
 			if (!sciFollowIndicatorEnabled()) {
-				sciRemoveBadgeFromView(vc.view);
-				sciSetFollowStatus(vc, nil);
-				sciSetFollowProfilePK(vc, nil);
+				sciRemoveBadgeFromView(strongVC.view);
+				sciSetFollowStatus(strongVC, nil);
+				sciSetFollowProfilePK(strongVC, nil);
 				return;
 			}
 
-			sciSetFollowStatus(vc, @(followedBy));
-			sciRenderBadge(vc);
+			BOOL followedBy = [response[@"followed_by"] boolValue];
+			sciSetFollowStatus(strongVC, @(followedBy));
+			sciRenderBadge(strongVC);
 		});
 	}];
+}
+
+%hook IGProfileViewController
+
+- (void)setUser:(id)user {
+	%orig;
+	dispatch_async(dispatch_get_main_queue(), ^{
+		sciRefreshIndicator(self);
+	});
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	%orig;
+	sciRefreshIndicator(self);
+}
+
+- (void)viewDidLayoutSubviews {
+	%orig;
+	if (!sciGetFollowStatus(self)) return;
+	UIView *statContainer = sciFindStatContainer(self.view);
+	if (statContainer && ![statContainer viewWithTag:kFollowBadgeTag]) {
+		sciRenderBadge(self);
+	}
 }
 
 %end

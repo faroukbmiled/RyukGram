@@ -298,11 +298,16 @@
 @interface IGDirectShareRecipient : NSObject
 - (NSString *)threadName;
 - (BOOL)isBroadcastChannel;
+- (NSString *)threadID; // new
 @end
 
 @interface IGDirectRecipientCellViewModel : NSObject
 - (id)recipient;
 - (NSInteger)sectionType;
+@end
+
+// Share-sheet recipient list view controller — hosts the IGListAdapter.
+@interface IGDirectRecipientListViewController : UIViewController
 @end
 
 @interface IGDirectInboxSearchAIAgentsSuggestedPromptRowCell : UIView
@@ -601,9 +606,11 @@
 @interface UIKBBackdropView : UIView @end
 @interface UIKBKeyplaneChargedView : UIView @end
 
-// Story tray list adapter — drives data source updates for the home feed tray.
+// IGListKit adapter — used across feed tray, share sheet, etc.
 @interface IGListAdapter : NSObject
 - (void)performUpdatesAnimated:(BOOL)animated completion:(void (^)(BOOL))completion;
+- (id)objectAtSection:(NSInteger)section; // new
+- (id)dataSource; // new
 @end
 
 // Reels/feed video cell — used for long-press zoom gesture attachment.
