@@ -213,6 +213,12 @@
                                            subtitle:@""
                                                icon:[SCISymbol symbolWithName:@"rectangle.stack"]
                                         navSections:@[@{
+                                            @"header": SCILocalized(@"Main feed"),
+                                            @"rows": @[
+                                                [SCISetting menuCellWithTitle:SCILocalized(@"Main feed") subtitle:SCILocalized(@"Choose Instagram's default feed or force the Following feed") menu:[self menus][@"main_feed_mode"]],
+                                            ]
+                                        },
+                                        @{
                                             @"header": SCILocalized(@"Action button"),
                                             @"footer": SCILocalized(@"Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below."),
                                             @"rows": @[
@@ -1699,6 +1705,12 @@ static void sciPresentTeenIconPicker(void) {
         @"reels_action_default":   [self defaultTapMenuForKey:@"reels_action_default"   context:@"reels"],
         @"stories_action_default": [self defaultTapMenuForKey:@"stories_action_default" context:@"stories"],
         @"dm_visual_action_default": [self defaultTapMenuForKey:@"dm_visual_action_default" context:@"dm_visual"],
+        @"main_feed_mode": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:SCILocalized(@"Default") image:nil action:@selector(menuChanged:)
+                           propertyList:@{@"defaultsKey": @"main_feed_mode", @"value": @"default", @"requiresRestart": @YES}],
+            [UICommand commandWithTitle:SCILocalized(@"Following") image:nil action:@selector(menuChanged:)
+                           propertyList:@{@"defaultsKey": @"main_feed_mode", @"value": @"following", @"requiresRestart": @YES}],
+        ]],
 
         @"default_video_quality": [UIMenu menuWithChildren:@[
             [UICommand commandWithTitle:SCILocalized(@"Always ask") image:nil action:@selector(menuChanged:)
