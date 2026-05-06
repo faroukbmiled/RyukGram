@@ -90,7 +90,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Add user")
                                                                    message:SCILocalized(@"Enter username")
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) { tf.placeholder = SCILocalized(@"username"); tf.autocapitalizationType = UITextAutocapitalizationTypeNone; }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) { tf.placeholder = SCILocalized(@"Username"); tf.autocapitalizationType = UITextAutocapitalizationTypeNone; }];
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Search") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *a) {
         NSString *q = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];

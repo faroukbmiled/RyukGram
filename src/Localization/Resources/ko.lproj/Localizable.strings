@@ -1,58 +1,58 @@
 /*
- * RyukGram — Localizable.strings  (English source of truth)
- * -------------------------------------------------------------------------
+ *  RyukGram — Localizable.strings  (English source of truth)
+ *  -------------------------------------------------------------------------
  *
- * Every user-facing string in RyukGram goes through the macro
- * SCILocalized(@"English text here")
- * in the Objective-C source. The argument is BOTH the lookup key and the
- * English fallback, so if a translation is missing the user still sees
- * clean English — nothing ever breaks.
- *
- *
- * HOW TO ADD A NEW LANGUAGE
- * -------------------------------------------------------------------------
- *
- * 1. Copy this file into a new folder named after the language code:
- * src/Localization/Resources/<code>.lproj/Localizable.strings
- * e.g.  ar.lproj  (Arabic)
- * es.lproj  (Spanish)
- * fr.lproj  (French)
- * 2. Translate the RIGHT-hand side of every `"key" = "value";` line.
- * Do NOT touch the left-hand side — that is the lookup key and must
- * stay identical to the English version, otherwise the app will never
- * find your translation.
- * 3. Keep every format specifier (%@, %lu, %d, %lld, %1$@, …) exactly
- * as-is, in the same order. If you need to reorder them, switch to
- * positional specifiers (%1$@ %2$lu).
- * 4. Keep embedded quotes escaped with a backslash: \" — and newlines
- * as \n.
- * 5. Open a pull request at https://github.com/faroukbmiled/RyukGram/pulls
- * so we can ship the language in the next release.
+ *  Every user-facing string in RyukGram goes through the macro
+ *      SCILocalized(@"English text here")
+ *  in the Objective-C source. The argument is BOTH the lookup key and the
+ *  English fallback, so if a translation is missing the user still sees
+ *  clean English — nothing ever breaks.
  *
  *
- * HOW TO ADD A NEW STRING IN CODE
- * -------------------------------------------------------------------------
+ *  HOW TO ADD A NEW LANGUAGE
+ *  -------------------------------------------------------------------------
  *
- * Just wrap the English text with SCILocalized(...) in the .m / .x / .xm
- * file — the helper resolves to the English text automatically when no
- * translation exists. Then add the same English text as BOTH the key and
- * the value inside the matching section below, e.g.
+ *  1. Copy this file into a new folder named after the language code:
+ *         src/Localization/Resources/<code>.lproj/Localizable.strings
+ *     e.g.  ar.lproj  (Arabic)
+ *           es.lproj  (Spanish)
+ *           fr.lproj  (French)
+ *  2. Translate the RIGHT-hand side of every `"key" = "value";` line.
+ *     Do NOT touch the left-hand side — that is the lookup key and must
+ *     stay identical to the English version, otherwise the app will never
+ *     find your translation.
+ *  3. Keep every format specifier (%@, %lu, %d, %lld, %1$@, …) exactly
+ *     as-is, in the same order. If you need to reorder them, switch to
+ *     positional specifiers (%1$@ %2$lu).
+ *  4. Keep embedded quotes escaped with a backslash: \" — and newlines
+ *     as \n.
+ *  5. Open a pull request at https://github.com/faroukbmiled/RyukGram/pulls
+ *     so we can ship the language in the next release.
  *
- * "Download all items" = "Download all items";
  *
- * Translators copy that line into their own .lproj and translate only the
- * right-hand side.
+ *  HOW TO ADD A NEW STRING IN CODE
+ *  -------------------------------------------------------------------------
+ *
+ *  Just wrap the English text with SCILocalized(...) in the .m / .x / .xm
+ *  file — the helper resolves to the English text automatically when no
+ *  translation exists. Then add the same English text as BOTH the key and
+ *  the value inside the matching section below, e.g.
+ *
+ *      "Download all items" = "Download all items";
+ *
+ *  Translators copy that line into their own .lproj and translate only the
+ *  right-hand side.
  *
  *
- * FILE FORMAT NOTES
- * -------------------------------------------------------------------------
+ *  FILE FORMAT NOTES
+ *  -------------------------------------------------------------------------
  *
- * - UTF-8, LF line endings.
- * - Slash-star block comments and double-slash line comments both work.
- * - DO NOT nest one slash-star block comment inside another — the
- * parser will close the outer block at the first inner close marker
- * and every lookup in the file will silently fail.
- * - Keys and values are both quoted; every line ends with a semicolon.
+ *  - UTF-8, LF line endings.
+ *  - Slash-star block comments and double-slash line comments both work.
+ *  - DO NOT nest one slash-star block comment inside another — the
+ *    parser will close the outer block at the first inner close marker
+ *    and every lookup in the file will silently fail.
+ *  - Keys and values are both quoted; every line ends with a semicolon.
  */
 
 //////////////////////////////////////////////////////////////////////////////
@@ -67,11 +67,9 @@
 "settings.firstrun.title" = "RyukGram 설정 정보";
 "settings.language.english_only" = "RyukGram은 현재 영어만 기본 제공합니다. 다른 언어는 번역을 기다리고 있습니다 — README의 짧은 가이드를 따라 한국어 번역에 참여해 보세요.";
 "settings.language.help_translate" = "번역 돕기";
-"settings.language.ok" = "확인";
 "settings.language.system" = "시스템 기본값";
 "settings.language.title" = "언어";
 "settings.results.many" = "%lu개의 결과";
-"settings.results.none" = "결과 없음";
 "settings.results.one" = "%lu개의 결과";
 "settings.search.placeholder" = "설정 검색";
 "settings.title" = "RyukGram 설정";
@@ -208,6 +206,8 @@
 "Action button" = "작업 버튼";
 "Adds 'View profile picture' and 'View cover' to story tray long-press menus" = "스토리 트레이를 길게 누를 때의 메뉴에 '프로필 사진 보기' 및 '커버 보기'를 추가합니다";
 "Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "각 피드 게시물 아래에 다운로드/공유/복사/확장/리포스트 항목이 있는 RyukGram 작업 버튼을 추가합니다. 탭하면 기본적으로 메뉴가 열립니다. 아래에서 탭 동작을 변경하세요.";
+"Choose Instagram's default feed or force the Following feed" = "Instagram의 기본 피드를 사용하거나 팔로잉 피드를 강제합니다";
+"Main feed" = "메인 피드";
 "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "피드 새로고침 시점과 방법을 제어합니다. 백그라운드 새로고침은 약 10분 후 앱으로 돌아올 때 발생합니다. 홈 버튼 새로고침은 이미 홈 탭에 있을 때 홈 탭을 탭하면 발생합니다.";
 "Default tap action" = "기본 탭 작업";
 "Disable background refresh" = "백그라운드 새로고침 비활성화";
@@ -226,6 +226,11 @@
 "Hides the story tray at the top" = "상단의 스토리 트레이를 숨깁니다";
 "Inserts a button row below like/comment/share on each post" = "각 게시물의 좋아요/댓글/공유 아래에 버튼 행을 삽입합니다";
 "Long press on media to expand in full-screen viewer" = "미디어를 길게 눌러 전체 화면 뷰어로 확대합니다";
+"Start media muted" = "음소거로 미디어 시작";
+"Expanded videos open with sound off" = "확대된 동영상이 소리 꺼진 상태로 열립니다";
+"Enhanced media resolution" = "향상된 미디어 해상도";
+"Media saving" = "미디어 저장";
+"Spoof device profile so IG serves higher-quality images" = "기기 프로파일을 위조하여 IG가 고품질 이미지를 제공하도록 합니다";
 "Media" = "미디어";
 "Media zoom" = "미디어 확대";
 "No suggested for you" = "회원님을 위한 추천 없음";
@@ -241,10 +246,20 @@
 "Scroll to top without refreshing when tapping Home" = "홈을 탭할 때 새로고침하지 않고 맨 위로 스크롤합니다";
 "Show action button" = "작업 버튼 표시";
 "Show date" = "날짜 표시";
-"Adds the date as a small header at the top of the action menu" = "작업 메뉴 상단에 작은 헤더로 날짜를 표시합니다";
 "Stories tray" = "스토리 트레이";
 "Tapping Home does nothing when already on feed" = "이미 피드에 있을 때 홈을 탭해도 아무 작업도 수행하지 않습니다";
 "Tray long-press actions" = "트레이 길게 누르기 작업";
+
+"Composer doesn't accept GIFs" = "댓글 입력기가 GIF를 지원하지 않습니다";
+"Copy GIF link" = "GIF 링크 복사";
+"Custom GIF in comments" = "댓글에서 사용자 지정 GIF";
+"Failed to build GIF model" = "GIF 모델 생성 실패";
+"GIF link copied" = "GIF 링크가 복사되었습니다";
+"Invalid Giphy URL" = "유효하지 않은 Giphy URL";
+"Long-press the GIF button to paste any Giphy URL" = "GIF 버튼을 길게 눌러 Giphy URL을 붙여넣으세요";
+"Paste Giphy Link" = "Giphy 링크 붙여넣기";
+"Paste a giphy.com URL or media ID" = "giphy.com URL 또는 미디어 ID 붙여넣기";
+"Send" = "보내기";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
@@ -292,7 +307,6 @@
 // Settings → Profile tab                                                   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Adds a button next to the burger menu on profiles to copy username, name or bio" = "프로필의 햄버거 메뉴 옆에 사용자 이름, 이름 또는 소개를 복사하는 버튼을 추가합니다";
 "Adds a view option to the highlight long-press menu to open the cover in full-screen" = "하이라이트를 길게 누를 때의 메뉴에 커버를 전체 화면으로 여는 보기 옵션을 추가합니다";
 "Copy note on long press" = "길게 눌러 노트 복사";
 "Fake follower count" = "가짜 팔로워 수";
@@ -309,7 +323,6 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "프로필 요소의 길게 누르기 제스처 — 기능별 작업 버튼과 별도로 유지됩니다.";
 "Only affects your own profile header. Other users see the real numbers." = "본인 프로필 헤더에만 적용됩니다. 다른 사용자에게는 실제 숫자가 표시됩니다.";
 "Post count" = "게시물 수";
-"Profile copy button" = "프로필 복사 버튼";
 "Save profile picture" = "프로필 사진 저장";
 "Show a checkmark next to your name on your own profile" = "본인 프로필 이름 옆에 체크 표시를 보여줍니다";
 "Shows whether the profile user follows you" = "프로필 사용자가 회원님을 팔로우하는지 표시합니다";
@@ -335,7 +348,6 @@
 "Route saves into a dedicated album in Photos instead of the camera roll root" = "기본 카메라 롤 대신 사진 앱의 전용 앨범으로 저장 경로를 지정합니다";
 "Save action" = "저장 동작";
 "Save to RyukGram album" = "RyukGram 앨범에 저장";
-"Saving" = "저장 중";
 "Show a confirmation dialog before starting a download" = "다운로드를 시작하기 전에 확인 대화 상자를 표시합니다";
 "What happens after the gesture downloads" = "제스처 다운로드 후 동작";
 "When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library." = "\"RyukGram 앨범에 저장\"이 켜져 있으면, 다운로드 및 공유 시트의 \"사진 앱에 저장\" 선택 항목이 사진 라이브러리의 전용 \"RyukGram\" 앨범으로 라우팅됩니다.";
@@ -371,15 +383,14 @@
 "Marks a story as seen when you send a reply or emoji reaction, even with seen blocking on" = "읽음 차단이 켜져 있어도 답장이나 이모티콘 반응을 보낼 때 스토리를 읽음으로 표시합니다";
 "Marks stories as seen locally (grey ring) while still blocking the seen receipt on the server" = "서버에서는 여전히 읽음 표시를 차단하면서 로컬에서는 스토리를 읽음으로 표시(회색 링)합니다";
 "Master toggle. When off, the list is ignored" = "마스터 토글. 꺼져 있으면 목록이 무시됩니다";
-"Other" = "기타";
 "Playback" = "재생";
 "Quick list button in stories" = "스토리의 빠른 목록 버튼";
 "Search, sort, swipe to remove" = "검색, 정렬, 스와이프하여 제거";
 "Seen receipts" = "읽음 표시";
 "Sending a reply or emoji reaction automatically advances to the next story" = "답장이나 이모티콘 반응을 보내면 자동으로 다음 스토리로 넘어갑니다";
-"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "Adds a 'View mentions' entry to the action button menu and story 3-dot menu";
-"Mentions overlay button" = "Mentions overlay button";
-"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels";
+"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "작업 버튼 메뉴와 스토리 점 3개 메뉴에 '멘션 보기' 항목을 추가합니다";
+"Mentions overlay button" = "멘션 오버레이 버튼";
+"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "스토리 오버레이의 작업/눈 버튼 옆에 버튼을 추가합니다. 현재 스토리에 멘션이나 공유된 게시물/릴스가 있을 때만 표시됩니다";
 "Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "스토리에 눈 모양 버튼을 표시하여 목록에서 사용자를 추가/제거합니다. 끄기 = 점 3개 메뉴를 사용하거나 길게 누르기만 허용";
 "Stickers" = "스티커";
 "Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "상호작용하기 전에 투표/퀴즈/슬라이더 결과를 미리 봅니다 — 평소처럼 탭해서 투표할 수 있습니다. '레거시 강제'는 퀴즈와 리빌 스티커를 스토리 편집기에 복원합니다.";
@@ -423,8 +434,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Activity" = "활동";
-"Allows typing and sending DMs longer than Instagram's limit" = "Instagram 제한보다 긴 DM을 입력하고 보낼 수 있도록 허용";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "음성 메시지를 길게 누를 때의 메뉴에 '다운로드' 옵션을 추가하여 M4A 오디오로 저장합니다";
+"Allows typing and sending DMs longer than Instagram's limit" = "Instagram 제한보다 긴 DM을 입력하고 보낼 수 있도록 허용";
 "Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram" = "DM의 더보기(+) 메뉴에 '파일 보내기' 옵션을 추가합니다. 지원되는 파일 형식은 Instagram에 의해 제한될 수 있습니다.";
 "Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages" = "DM의 더보기(+) 메뉴에 '오디오 파일' 옵션을 추가하여 오디오 파일을 음성 메시지로 보냅니다";
 "Adds copy text, download GIF/audio to the note long-press menu" = "노트를 길게 누를 때의 메뉴에 텍스트 복사, GIF/오디오 다운로드를 추가합니다";
@@ -465,7 +476,6 @@
 "Keep deleted messages" = "삭제된 메시지 보관";
 "Makes view-once messages behave like normal visual messages (loopable/pauseable)" = "한 번 보기 메시지를 일반 시각적 메시지처럼 작동하게 합니다(반복 재생/일시 정지 가능)";
 "Note actions" = "노트 작업";
-"Preserve messages that others unsend" = "다른 사람이 전송 취소한 메시지 보존";
 "Preserves messages that others unsend" = "다른 사람이 전송 취소한 메시지를 보존합니다";
 "Prevents accidental swipe-up activation of vanish mode" = "실수로 위로 스와이프하여 배니시 모드가 활성화되는 것을 방지합니다";
 "Quick list button in chats" = "채팅의 빠른 목록 버튼";
@@ -577,7 +587,7 @@
 "Shows an alert when you click the like button on reels to confirm the like" = "릴스에서 좋아요 버튼을 클릭할 때 좋아요를 확인할 경고를 표시합니다";
 "Shows an alert when you click the like button on stories to confirm the like" = "스토리에서 좋아요 버튼을 클릭할 때 좋아요를 확인할 경고를 표시합니다";
 "Shows an alert when you click the post comment button to confirm" = "댓글 게시 버튼을 클릭할 때 확인할 경고를 표시합니다";
-"Shows an alert when you click the repost button to confirm before resposting" = "리포스트 버튼을 클릭할 때 리포스트하기 전에 확인할 경고를 표시합니다";
+"Shows an alert when you click the repost button to confirm before reposting" = "리포스트 버튼을 클릭할 때 리포스트하기 전에 확인할 경고를 표시합니다";
 "Shows an alert when you click the unfollow button to confirm" = "언팔로우 버튼을 클릭할 때 확인할 경고를 표시합니다";
 
 //////////////////////////////////////////////////////////////////////////////
@@ -586,12 +596,12 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Backup & Restore" = "백업 및 복원";
-
 "Clear selected data" = "선택한 데이터 지우기";
 "Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page." = "RyukGram 설정, 제외 목록 및 프로필 분석기 데이터를 내보내거나 가져옵니다. 각 페이지에서 원하는 조합을 선택하세요.";
 "Import" = "가져오기";
 "Load from a JSON file" = "JSON 파일에서 불러오기";
 "Save to a JSON file" = "JSON 파일로 저장";
+
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
 // Settings → Advanced tab                                                  //
@@ -606,7 +616,6 @@
 "Clear" = "지우기";
 "Clear cache" = "캐시 지우기";
 "Clear cache (%@)" = "캐시 지우기 (%@)";
-"Clear cache?" = "캐시를 지우시겠습니까?";
 "Clearing cache…" = "캐시 지우는 중…";
 "Clearing still scans on demand." = "지우기는 필요할 때 여전히 스캔합니다.";
 "Daily" = "매일";
@@ -729,11 +738,9 @@
 "Could not extract photo URL" = "사진 URL을 추출할 수 없습니다";
 "Could not extract video URL" = "동영상 URL을 추출할 수 없습니다";
 "Done" = "완료";
-"Download all (%lu)" = "모두 다운로드 (%lu)";
 "Download all stories and share?" = "모든 스토리를 다운로드하고 공유하시겠습니까?";
 "Download all to Photos" = "사진 앱에 모두 다운로드";
 "Download and share all" = "모두 다운로드 및 공유";
-"Download and share?" = "다운로드하고 공유하시겠습니까?";
 "Download failed" = "다운로드 실패";
 "Downloaded %lu items" = "%lu개의 항목 다운로드됨";
 "Downloading %@..." = "%@ 다운로드 중...";
@@ -761,9 +768,7 @@
 "Preparing repost..." = "리포스트 준비 중...";
 "Repost" = "리포스트";
 "Repost unavailable" = "리포스트를 사용할 수 없습니다";
-"Save all stories to Photos?" = "모든 스토리를 사진 앱에 저장하시겠습니까?";
 "Save failed" = "저장 실패";
-"Save to Photos?" = "사진 앱에 저장하시겠습니까?";
 "Saved %lu items" = "%lu개의 항목 저장됨";
 "Saved to Photos" = "사진 앱에 저장됨";
 "Saved to RyukGram" = "RyukGram에 저장됨";
@@ -785,7 +790,6 @@
 "Message from %@ was unsent" = "%@님의 메시지 전송이 취소되었습니다";
 "Add" = "추가";
 "Add to block list" = "차단 목록에 추가";
-"Add to block list?" = "차단 목록에 추가하시겠습니까?";
 "Added to block list" = "차단 목록에 추가됨";
 "Added to exclude list" = "제외 목록에 추가됨";
 "Audio not loaded yet. Play the message first and try again." = "오디오가 아직 로드되지 않았습니다. 먼저 메시지를 재생한 다음 다시 시도하세요.";
@@ -801,10 +805,8 @@
 "Could not find media" = "미디어를 찾을 수 없습니다";
 "Could not find story media" = "스토리 미디어를 찾을 수 없습니다";
 "Could not get audio data. Try again after refreshing the chat." = "오디오 데이터를 가져올 수 없습니다. 채팅을 새로고침한 후 다시 시도하세요.";
-"Could not get video URL" = "동영상 URL을 가져올 수 없습니다";
 "Disable read receipts" = "읽음 표시 비활성화";
 "Disappearing media" = "사라지는 미디어";
-"Done!" = "완료!";
 "Download audio" = "오디오 다운로드";
 "Downloading audio..." = "오디오 다운로드 중...";
 "Enable read receipts" = "읽음 표시 활성화";
@@ -848,7 +850,6 @@
 "Read receipts will no longer be blocked for this chat." = "이 채팅에 대해 더 이상 읽음 표시가 차단되지 않습니다.";
 "Remove" = "제거";
 "Remove from block list" = "차단 목록에서 제거";
-"Remove from block list?" = "차단 목록에서 제거하시겠습니까?";
 "Remove from exclude list" = "제외 목록에서 제거";
 "Removed" = "제거됨";
 "Removed from list" = "목록에서 제거됨";
@@ -868,7 +869,6 @@
 "%@ can't be converted" = "%@ 변환 불가";
 "iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "iOS 오디오 API가 이 파일을 처리할 수 없습니다%@%@\n\n그대로 Instagram에 보내볼 수 있습니다 — IG 서버가 수락할 수도 있고 조용히 실패할 수도 있습니다.\n\n네이티브 지원을 요청하려면 이슈를 여세요:";
 "Un-exclude chat" = "채팅 제외 취소";
-"Un-exclude chat?" = "채팅 제외를 취소하시겠습니까?";
 "Un-exclude story seen" = "스토리 읽음 제외 취소";
 "Un-excluded" = "제외 취소됨";
 "Unblocked" = "차단 해제됨";
@@ -898,9 +898,7 @@
 "Comments shown" = "댓글 표시됨";
 "Copied text to clipboard" = "클립보드에 텍스트 복사됨";
 "Copy" = "복사";
-"Copy all" = "모두 복사";
 "Copy bio" = "소개 복사";
-"Copy from profile" = "프로필에서 복사";
 "Copy name" = "이름 복사";
 "Could not find cover image" = "커버 이미지를 찾을 수 없습니다";
 "Current: %@" = "현재: %@";
@@ -922,12 +920,10 @@
 "Saved locations" = "저장된 위치";
 "Select color" = "색상 선택";
 "Set location" = "위치 설정";
-"Settings…" = "설정…";
 "Turn Location Services on in Settings → Privacy to use your current location." = "현재 위치를 사용하려면 설정 → 개인정보에서 위치 서비스를 켜세요.";
 "Type emoji..." = "이모티콘 입력...";
 
 "Theme" = "테마";
-"Appearance" = "모양";
 "Light" = "라이트";
 "Dark" = "다크";
 "OLED" = "OLED";
@@ -949,7 +945,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE ANALYZER                              //
-// Settings → General → Profile Analyzer                                    //
+// Settings → Profile Analyzer                                              //
 //////////////////////////////////////////////////////////////////////////////
 
 "%lu followers · %lu following" = "팔로워 %lu · 팔로잉 %lu";
@@ -958,12 +954,11 @@
 "Analysis failed" = "분석 실패";
 "Another analysis is already running" = "이미 다른 분석이 진행 중입니다";
 "Available after your next scan" = "다음 분석 후 사용 가능";
-"Cancelled" = "취소됨";
+"Categories" = "카테고리";
 "Couldn't fetch profile information" = "프로필 정보를 가져오지 못했습니다";
 "Fetching followers (%lu/%ld)…" = "팔로워 가져오는 중 (%lu/%ld)…";
 "Fetching following (%lu/%ld)…" = "팔로잉 가져오는 중 (%lu/%ld)…";
 "Fetching profile info…" = "프로필 정보 가져오는 중…";
-"Categories" = "카테고리";
 "First scan: %@" = "첫 분석: %@";
 "Follower count exceeds %ld — analysis disabled to avoid rate limits." = "팔로워 수가 %ld명을 초과하여 API 제한을 피하기 위해 분석이 비활성화되었습니다.";
 "Gained since last scan" = "마지막 분석 이후 증가";
@@ -977,11 +972,6 @@
 "No scan yet" = "분석 기록 없음";
 "Not following you back" = "맞팔하지 않음";
 "OK" = "확인";
-"Updated %@ (%ld keys). Restart to apply." = "%@ 업데이트됨 (%ld개 키). 다시 시작하여 적용하세요.";
-"Restart now" = "지금 다시 시작";
-"File is empty or not a valid .strings file." = "파일이 비어 있거나 유효한 .strings 파일이 아닙니다.";
-"Error" = "오류";
-"Could not write file." = "파일을 쓸 수 없습니다.";
 "Private account" = "비공개 계정";
 "Profile Analyzer" = "프로필 분석";
 "Profile picture changed" = "프로필 사진 변경됨";
@@ -991,7 +981,6 @@
 "Reset analyzer data?" = "분석 데이터를 초기화할까요?";
 "Run analysis" = "분석 실행";
 "Run your first analysis" = "첫 분석을 실행하세요";
-"Search username or name" = "아이디 또는 이름 검색";
 "Since last scan" = "마지막 분석 이후";
 "Starting…" = "시작 중…";
 "They follow you, you don't follow back" = "나를 팔로우 중이지만 내가 맞팔하지 않음";
@@ -1048,8 +1037,8 @@
 "Inspect the full payload" = "전체 데이터 보기";
 "Keep scan history" = "분석 기록 유지";
 "Large accounts are blocked: analysis is disabled above 13,000 followers to avoid Instagram rate-limiting the whole app." = "대형 계정 차단: 팔로워가 13,000명을 초과하면 Instagram이 앱 전체에 제한을 걸 수 있어 분석이 비활성화됩니다.";
-"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "업로드되지 않습니다 — 모든 데이터는 이 기기에 저장되며 휴지통 아이콘으로 삭제할 수 있습니다.";
 "Not verified only" = "미인증 계정만";
+"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "업로드되지 않습니다 — 모든 데이터는 이 기기에 저장되며 휴지통 아이콘으로 삭제할 수 있습니다.";
 "Nothing was applied." = "적용된 내용이 없습니다.";
 "Posts" = "게시물";
 "Preferences" = "설정";
@@ -1074,8 +1063,29 @@
 "Username A → Z" = "아이디 A → Z";
 "Username Z → A" = "아이디 Z → A";
 "Verified only" = "인증 계정만";
-"When on, scans compare against your first scan so new/lost followers and profile updates don't disappear between scans." = "켜면 각 분석이 첫 분석과 비교되어 새/이탈 팔로워와 프로필 변경이 분석 사이에 사라지지 않습니다.";
-
+"Tracking" = "추적";
+"Visited profiles" = "방문한 프로필";
+"Profiles you've opened recently" = "최근에 연 프로필";
+"Tracking off — enable below to log visits" = "추적 꺼짐 — 아래에서 활성화하여 방문 기록";
+"Track visited profiles" = "방문한 프로필 추적";
+"Logs every profile you open. Stays on-device." = "여는 모든 프로필을 기록합니다. 기기에만 저장됩니다.";
+"Compare every scan against your first one" = "모든 분석을 첫 번째 분석과 비교";
+"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "기록 유지는 각 분석을 첫 번째 분석과 비교합니다. 방문 추적은 여는 모든 프로필을 기록해 여기서 검토할 수 있게 합니다.";
+"just now" = "방금 전";
+"%dm ago" = "%d분 전";
+"%dh ago" = "%d시간 전";
+"%dd ago" = "%d일 전";
+"Visited" = "방문함";
+"Today" = "오늘";
+"Last 7 days" = "최근 7일";
+"Last 30 days" = "최근 30일";
+"Most recent" = "최신순";
+"Oldest first" = "오래된 순";
+"Most visited" = "가장 많이 방문";
+"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "삭제할 항목을 선택하세요. 스냅샷은 마지막 분석 이후 차이를 삭제하고, 방문한 프로필은 방문 기록을 삭제합니다.";
+"Reset snapshots" = "스냅샷 재설정";
+"Clear visited profiles" = "방문한 프로필 지우기";
+"Reset everything" = "모두 재설정";
 //////////////////////////////////////////////////////////////////////////////
 //                         SETTINGS VIEWS & DIALOGS                         //
 // Excluded-lists managers, backup/restore flows, in-picker labels.         //
@@ -1083,18 +1093,17 @@
 
 "Add chat" = "채팅 추가";
 "Add custom domain" = "사용자 지정 도메인 추가";
-"Add preset…" = "프리셋 추가…";
 "Add to list?" = "목록에 추가하시겠습니까?";
 "Add user" = "사용자 추가";
 "Apply" = "적용";
 "Apply to" = "다음에 적용";
 "Chats" = "채팅";
+"Colored" = "색상";
 "Could not read file." = "파일을 읽을 수 없습니다.";
 "Could not resolve user ID" = "사용자 ID를 확인할 수 없습니다";
 "Could not write temporary file." = "임시 파일을 쓸 수 없습니다.";
 "Current location" = "현재 위치";
 "Custom" = "사용자 지정";
-"Date Format" = "날짜 형식";
 "Delete" = "삭제";
 "Enable fake location" = "가짜 위치 활성화";
 "Enter username" = "사용자 이름 입력";
@@ -1116,7 +1125,6 @@
 "No DM thread found with @%@" = "@%@의 DM 스레드를 찾을 수 없습니다";
 "Off" = "끄기";
 "On" = "켜기";
-"Colored" = "색상";
 "Presets" = "프리셋";
 "Recently added" = "최근 추가됨";
 "Remove from list" = "목록에서 제거";
@@ -1175,23 +1183,37 @@
 "Copy video URL" = "동영상 URL 복사";
 "Could not access reel media" = "릴스 미디어에 접근할 수 없습니다";
 "Could not access reel photo" = "릴스 사진에 접근할 수 없습니다";
-"Could not extract photo url from post" = "게시물에서 사진 URL을 추출할 수 없습니다";
-"Could not extract photo url from reel" = "릴스에서 사진 URL을 추출할 수 없습니다";
-"Could not extract photo url from story" = "스토리에서 사진 URL을 추출할 수 없습니다";
-"Could not extract video url from post" = "게시물에서 동영상 URL을 추출할 수 없습니다";
-"Could not extract video url from reel" = "릴스에서 동영상 URL을 추출할 수 없습니다";
-"Could not extract video url from story" = "스토리에서 동영상 URL을 추출할 수 없습니다";
+"Could not write file." = "파일을 쓸 수 없습니다.";
 "Download Quality" = "다운로드 품질";
+"Error" = "오류";
 "Extras" = "Extras";
 "FFmpegKit Debug" = "FFmpegKit 디버그";
+"File is empty or not a valid .strings file." = "파일이 비어 있거나 유효한 .strings 파일이 아닙니다.";
 "Later" = "나중에";
 "No!" = "아니요!";
-"OK" = "확인";
 "Restart" = "재시작";
+"Restart now" = "지금 다시 시작";
 "Restart required" = "재시작 필요";
-"username" = "사용자명";
+"Updated %@ (%ld keys). Restart to apply." = "%@ 업데이트됨 (%ld개 키). 다시 시작하여 적용하세요.";
 "Yes" = "예";
 "You must restart the app to apply this change" = "이 변경 사항을 적용하려면 앱을 다시 시작해야 합니다";
+"Add language" = "언어 추가";
+"Enter the language code (e.g. fr, de, ja)" = "언어 코드를 입력하세요 (예: fr, de, ja)";
+"Update localization" = "번역 업데이트";
+"Pick a language to update, or add a new one" = "업데이트할 언어를 고르거나 새 언어를 추가하세요";
+"English .strings file not found" = "영어 .strings 파일을 찾을 수 없습니다";
+"Loading" = "불러오는 중";
+"Next" = "다음";
+"Preset" = "프리셋";
+"(unset)" = "(설정 안 됨)";
+"  • Keep-deleted: OFF" = "  • 삭제된 메시지 보관: 끔";
+"  • Keep-deleted: ON" = "  • 삭제된 메시지 보관: 켬";
+"KD: OFF" = "KD: 끔";
+"Downloading %lu of %lu" = "%lu / %lu 다운로드 중";
+"%lu active • tap to cancel" = "%lu개 진행 중 • 탭하여 취소";
+"Downloading %d%%" = "다운로드 중 %d%%";
+"Download all and share?" = "모두 다운로드하고 공유하시겠습니까?";
+"Save all to Photos?" = "모두 사진 앱에 저장하시겠습니까?";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               ABOUT / CREDITS                            //
@@ -1210,6 +1232,7 @@
 "Portuguese (Brazil) translation" = "포르투갈어 (브라질) 번역";
 "Turkish translation" = "터키어 번역";
 "Code contributions" = "코드 기여";
+"Following feed mode (from InstaSane)" = "팔로잉 피드 모드 (InstaSane 기반)";
 "latest" = "최신";
 "Links" = "링크";
 "No releases" = "릴리스 없음";
@@ -1220,8 +1243,8 @@
 "Russian translation" = "러시아어 번역";
 "RyukGram developer" = "RyukGram 개발자";
 "Join Telegram channel" = "Telegram 채널 참여";
-"View on GitHub" = "GitHub에서 보기";
 "Source code" = "소스 코드";
+"View on GitHub" = "GitHub에서 보기";
 "Spanish translation" = "스페인어 번역";
 "Support the original SCInsta developer" = "SCInsta 원작자 후원하기";
 "Inspirations" = "영감";
@@ -1267,240 +1290,203 @@
 "Video quality" = "비디오 품질";
 "Which quality to download" = "어떤 품질로 다운로드할지 선택하세요";
 
-"Composer doesn't accept GIFs" = "댓글 입력기가 GIF를 지원하지 않습니다";
-"Copy GIF link" = "GIF 링크 복사";
-"Custom GIF in comments" = "댓글에서 사용자 지정 GIF";
-"Failed to build GIF model" = "GIF 모델 생성 실패";
-"GIF link copied" = "GIF 링크가 복사되었습니다";
-"Invalid Giphy URL" = "유효하지 않은 Giphy URL";
-"Long-press the GIF button to paste any Giphy URL" = "GIF 버튼을 길게 눌러 Giphy URL을 붙여넣으세요";
-"Paste Giphy Link" = "Giphy 링크 붙여넣기";
-"Paste a giphy.com URL or media ID" = "giphy.com URL 또는 미디어 ID 붙여넣기";
-"Send" = "보내기";
-
-"Tracking" = "추적";
-"Visited profiles" = "방문한 프로필";
-"Profiles you've opened recently" = "최근에 연 프로필";
-"Tracking off — enable below to log visits" = "추적 꺼짐 — 아래에서 활성화하여 방문 기록";
-"Track visited profiles" = "방문한 프로필 추적";
-"Logs every profile you open. Stays on-device." = "여는 모든 프로필을 기록합니다. 기기에만 저장됩니다.";
-"Compare every scan against your first one" = "모든 분석을 첫 번째 분석과 비교";
-"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "기록 유지는 각 분석을 첫 번째 분석과 비교합니다. 방문 추적은 여는 모든 프로필을 기록해 여기서 검토할 수 있게 합니다.";
-"just now" = "방금 전";
-"%dm ago" = "%d분 전";
-"%dh ago" = "%d시간 전";
-"%dd ago" = "%d일 전";
-"Visited" = "방문함";
-"Today" = "오늘";
-"Last 7 days" = "최근 7일";
-"Last 30 days" = "최근 30일";
-"Most recent" = "최신순";
-"Oldest first" = "오래된 순";
-"Most visited" = "가장 많이 방문";
-"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "삭제할 항목을 선택하세요. 스냅샷은 마지막 분석 이후 차이를 삭제하고, 방문한 프로필은 방문 기록을 삭제합니다.";
-"Reset snapshots" = "스냅샷 재설정";
-"Clear visited profiles" = "방문한 프로필 지우기";
-"Reset everything" = "모두 재설정";
-
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //                          ACTION MENU CONFIG                              //
-// Configure-menu screen, profile action button, action catalog labels.    //
+// Profile action button: per-section toggles, reorder handles, default-tap //
+// behavior, reset confirmations, action catalog labels.                    //
 //////////////////////////////////////////////////////////////////////////////
 
-"Audio & visibility" = "Audio & visibility";
-"Bio" = "Bio";
-"bio" = "bio";
-"Bulk download" = "Bulk download";
-"Collapse this section's actions behind a single entry" = "Collapse this section's actions behind a single entry";
-"Configure: %@" = "Configure: %@";
-"Copied %@" = "Copied %@";
-"Copy ID" = "Copy ID";
-"Copy Info" = "Copy Info";
-"Copy media URL" = "Copy media URL";
-"Copy profile link" = "Copy profile link";
-"Copy username" = "Copy username";
-"DM disappearing media" = "DM disappearing media";
-"Download" = "Download";
-"Download all to Gallery" = "Download all to Gallery";
-"Download to Gallery" = "Download to Gallery";
-"Exclude/include user" = "Exclude/include user";
-"Feed settings" = "Feed settings";
-"Followers: %@" = "Followers: %@";
-"Following: %@" = "Following: %@";
+"Long-press gestures" = "길게 누르기 제스처";
+"Inserts a button in the profile navigation header" = "프로필 내비게이션 헤더에 버튼을 삽입합니다";
+"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "프로필 헤더에 복사, 사진 보기, 공유, 저장, 프로필 정보 항목이 있는 RyukGram 작업 버튼을 추가합니다. 탭하면 기본적으로 메뉴가 열립니다. 메뉴 구성에서 탭 동작을 변경하세요.";
+"Configure menu" = "메뉴 구성";
+"Reorder, enable/disable, set default tap, show date" = "순서 변경, 켜기/끄기, 기본 탭 설정, 날짜 표시";
+"Reorder, enable/disable, set default tap" = "순서 변경, 켜기/끄기, 기본 탭 설정";
+"RyukGram profile actions" = "RyukGram 프로필 작업";
+"Reorder sections" = "섹션 순서 변경";
+"Drag the ≡ handle to reorder sections." = "≡ 핸들을 끌어 섹션 순서를 바꾸세요.";
+"Drag the ≡ handle to reorder. Toggle a row off to hide it from the menu. Mark a section as a submenu to collapse its actions behind a single entry." = "≡ 핸들을 끌어 순서를 바꾸세요. 행을 끄면 메뉴에서 숨겨집니다. 섹션을 서브메뉴로 표시하면 해당 작업이 단일 항목 뒤로 접힙니다.";
+"Show as submenu" = "서브메뉴로 표시";
+"Collapse this section's actions behind a single entry" = "이 섹션의 작업을 단일 항목 뒤로 접기";
+"Configure: %@" = "구성: %@";
+"What happens on a single tap. Long-press always opens the full menu." = "한 번 탭했을 때의 동작입니다. 길게 누르면 항상 전체 메뉴가 열립니다.";
+"Reset to defaults" = "기본값으로 재설정";
+"Reset to defaults?" = "기본값으로 재설정할까요?";
+"This will restore the default sections, order, and toggles for this menu." = "이 메뉴의 기본 섹션, 순서, 토글이 복원됩니다.";
+"Audio & visibility" = "오디오 및 표시";
+"DM disappearing media" = "DM 사라지는 미디어";
+"Bulk download" = "일괄 다운로드";
+"Feed settings" = "피드 설정";
+"Reels settings" = "릴스 설정";
+"Profile settings" = "프로필 설정";
+"Stories settings" = "스토리 설정";
+"Copy ID" = "ID 복사";
+"Copy Info" = "정보 복사";
+"Copy all info" = "모든 정보 복사";
+"Copy media URL" = "미디어 URL 복사";
+"Copy profile link" = "프로필 링크 복사";
+"Copy username" = "아이디 복사";
+"Download" = "다운로드";
+"Download to Gallery" = "갤러리에 다운로드";
+"Download all to Gallery" = "갤러리에 모두 다운로드";
+"Nothing to download" = "다운로드할 항목 없음";
+"Exclude/include user" = "사용자 제외/포함";
+"Mute / unmute audio" = "오디오 음소거/해제";
+"Save picture to Gallery" = "갤러리에 사진 저장";
+"Share picture" = "사진 공유";
+"View picture" = "사진 보기";
+"Bio" = "소개";
 "ID" = "ID";
-"Info" = "Info";
-"Mute / unmute audio" = "Mute / unmute audio";
-"name" = "name";
-"Picture not found" = "Picture not found";
-"Private profile" = "Private profile";
-"profile link" = "profile link";
-"Profile info" = "Profile info";
-"Profile link" = "Profile link";
-"Profile settings" = "Profile settings";
-"Profile unavailable" = "Profile unavailable";
-"Public profile" = "Public profile";
-"Reels settings" = "Reels settings";
-"Reorder sections" = "Reorder sections";
-"Reset to defaults" = "Reset to defaults";
-"Reset to defaults?" = "Reset to defaults?";
-"RyukGram profile actions" = "RyukGram profile actions";
-"Save picture" = "Save picture";
-"Save picture to Gallery" = "Save picture to Gallery";
-"Share picture" = "Share picture";
-"Show as submenu" = "Show as submenu";
-"Stories settings" = "Stories settings";
-"This will restore the default sections, order, and toggles for this menu." = "This will restore the default sections, order, and toggles for this menu.";
-"Username" = "Username";
-"View picture" = "View picture";
-"What happens on a single tap. Long-press always opens the full menu." = "What happens on a single tap. Long-press always opens the full menu.";
-"Profile action button" = "Profile action button";
-"Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions" = "Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions";
-"Configure menu" = "Configure menu";
-"Configure profile menu" = "Configure profile menu";
-"Reorder, enable/disable, set default tap, show date" = "Reorder, enable/disable, set default tap, show date";
-"Reorder, enable/disable, set default tap" = "Reorder, enable/disable, set default tap";
+"Info" = "정보";
+"Profile info" = "프로필 정보";
+"Profile link" = "프로필 링크";
+"Picture not found" = "사진을 찾을 수 없음";
+"Private profile" = "비공개 프로필";
+"Profile unavailable" = "프로필을 사용할 수 없음";
+"Public profile" = "공개 프로필";
+"Username" = "아이디";
+"Followers: %@" = "팔로워: %@";
+"Following: %@" = "팔로잉: %@";
+"Copied %@" = "%@ 복사됨";
 
-////////////////////////////////////////////////////////////////////////
-//                          PHASE 1 FOLLOW-UPS                              //
+//////////////////////////////////////////////////////////////////////////////
+//                                 GALLERY                                  //
+// On-device media library: enable + save mode, browsing, filters, sort,    //
+// delete tools, picker entries, and the Photos/Gallery download submenu.   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Long-press gestures" = "Long-press gestures";
-"Inserts a button in the profile navigation header" = "Inserts a button in the profile navigation header";
-"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu.";
-"Download all to Gallery?" = "Download all to Gallery?";
-"Download all to Photos?" = "Download all to Photos?";
-"Nothing to download" = "Nothing to download";
-
-////////////////////////////////////////////////////////////////////////
-//                              GALLERY                                     //
-// On-device media library + save mode preferences.                         //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browse, filter, sort, delete saved media" = "Browse, filter, sort, delete saved media";
-"Enable gallery" = "Enable gallery";
-"Gallery" = "Gallery";
-"Gallery only" = "Gallery only";
-"On-device library of everything you've downloaded through RyukGram" = "On-device library of everything you've downloaded through RyukGram";
-"Open Gallery" = "Open Gallery";
-"Photos + Gallery" = "Photos + Gallery";
-"Photos only" = "Photos only";
-"Save mode" = "Save mode";
-"Save to Gallery?" = "Save to Gallery?";
-"Saved to Gallery" = "Saved to Gallery";
-"Show gallery entries in download menus and unlock the library page below" = "Show gallery entries in download menus and unlock the library page below";
-"When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search." = "When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search.";
-"Where 'Download to Photos' actually writes when gallery is on" = "Where 'Download to Photos' actually writes when gallery is on";
-
-////////////////////////////////////////////////////////////////////////
-//                          GALLERY (PHASE 2.1)                             //
-//////////////////////////////////////////////////////////////////////////////
-
-"Gallery save mode" = "Gallery save mode";
+"Enable gallery" = "갤러리 활성화";
+"Show gallery entries in download menus and unlock the gallery button" = "다운로드 메뉴에 갤러리 항목을 표시하고 갤러리 버튼을 활성화합니다";
+"Gallery" = "갤러리";
+"Gallery Settings" = "갤러리 설정";
+"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "RyukGram을 통해 다운로드한 미디어의 기기 내 라이브러리입니다. 저장 모드는 '사진 앱에 다운로드'가 실제로 어디에 쓸지 선택합니다.";
 "Hold DM tab to open gallery" = "DM 탭을 길게 눌러 갤러리 열기";
 "Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "하단 탭바의 받은편지함 버튼을 길게 눌러 RyukGram 갤러리를 엽니다";
+"Gallery save mode" = "갤러리 저장 모드";
+"Where 'Download to Photos' actually writes when gallery is on" = "갤러리가 켜져 있을 때 '사진 앱에 다운로드'가 실제로 쓰는 위치";
+"Photos only" = "사진 앱만";
+"Gallery only" = "갤러리만";
+"Photos + Gallery" = "사진 앱 + 갤러리";
+"Save to Gallery?" = "갤러리에 저장할까요?";
+"Saved to Gallery" = "갤러리에 저장됨";
+"Save all to Gallery?" = "갤러리에 모두 저장할까요?";
+"Saved %lu items to Gallery" = "갤러리에 %lu개의 항목이 저장됨";
+"Saving to Gallery..." = "갤러리에 저장 중...";
+"to Gallery" = "갤러리에";
+"Browsing" = "탐색";
+"Manage" = "관리";
+"Storage" = "저장 공간";
+"Total files" = "전체 파일";
+"Total size" = "전체 크기";
+"Show favorites at top" = "즐겨찾기를 상단에 표시";
+"When enabled, favorites are pinned above other files inside the current sort and folder context." = "켜면 현재 정렬 및 폴더 컨텍스트 내에서 즐겨찾기가 다른 파일보다 위에 고정됩니다.";
+"Images" = "이미지";
+"Videos" = "동영상";
+"GIFs" = "GIF";
+"Options" = "옵션";
+"Clear filters" = "필터 지우기";
+"Favorites only" = "즐겨찾기만";
+"By source" = "출처별";
+"By type" = "유형별";
+"By user" = "사용자별";
+"Source" = "출처";
+"Source user" = "출처 사용자";
+"Type" = "유형";
+"Search users" = "사용자 검색";
+"Newest first" = "최신순";
+"Largest first" = "큰 파일부터";
+"Smallest first" = "작은 파일부터";
+"Name A-Z" = "이름 A-Z";
+"Name Z-A" = "이름 Z-A";
+"Images first" = "이미지 먼저";
+"Videos first" = "동영상 먼저";
+"Delete files" = "파일 삭제";
+"Delete %@?" = "%@을(를) 삭제할까요?";
+"Delete from Gallery?" = "갤러리에서 삭제할까요?";
+"Deleted from Gallery" = "갤러리에서 삭제됨";
+"This will permanently remove this file from the gallery." = "이 파일이 갤러리에서 영구적으로 제거됩니다.";
+"This will permanently remove %ld file(s)." = "%ld개의 파일이 영구적으로 제거됩니다.";
+"Delete all files" = "모든 파일 삭제";
+"Delete all images" = "모든 이미지 삭제";
+"Delete all videos" = "모든 동영상 삭제";
+"Delete by user" = "사용자별 삭제";
+"Delete feed posts" = "피드 게시물 삭제";
+"Delete profile pictures" = "프로필 사진 삭제";
+"Delete reels" = "릴스 삭제";
+"Delete stories" = "스토리 삭제";
+"Delete thumbnails" = "썸네일 삭제";
+"Delete DM media" = "DM 미디어 삭제";
+"All files deleted" = "모든 파일 삭제됨";
+"Files deleted" = "파일 삭제됨";
+"Images deleted" = "이미지 삭제됨";
+"Videos deleted" = "동영상 삭제됨";
+"Feed posts deleted" = "피드 게시물 삭제됨";
+"Profile pictures deleted" = "프로필 사진 삭제됨";
+"Reels deleted" = "릴스 삭제됨";
+"Stories deleted" = "스토리 삭제됨";
+"Thumbnails deleted" = "썸네일 삭제됨";
+"DM media deleted" = "DM 미디어 삭제됨";
+"User files deleted" = "사용자 파일 삭제됨";
+"No files to delete" = "삭제할 파일 없음";
+"Failed" = "실패";
+"Failed to delete" = "삭제 실패";
+"Unable to open original post" = "원본 게시물을 열 수 없음";
+"Unable to open profile" = "프로필을 열 수 없음";
+"Unknown user" = "알 수 없는 사용자";
+"(unknown)" = "(알 수 없음)";
+"The original content may no longer exist." = "원본 콘텐츠가 더 이상 존재하지 않을 수 있습니다.";
+"Select All" = "전체 선택";
+"Deselect All" = "전체 선택 해제";
+"Share selected" = "선택 항목 공유";
+"Move selected" = "선택 항목 이동";
+"Favorite selected" = "선택 항목 즐겨찾기";
+"Delete selected" = "선택 항목 삭제";
+"Deleted selected files" = "선택한 파일이 삭제됨";
+"List view" = "목록 보기";
+"Grid view" = "그리드 보기";
+"More" = "더보기";
+"Favorite" = "즐겨찾기";
+"Unfavorite" = "즐겨찾기 해제";
+"Rename" = "이름 변경";
+"Move to Folder" = "폴더로 이동";
+"Open Original Post" = "원본 게시물 열기";
+"Open Profile" = "프로필 열기";
+"No files in Gallery" = "갤러리에 파일이 없습니다";
+"Save media from the preview screen\nto see it here." = "미리 보기 화면에서 미디어를 저장하면\n여기에 표시됩니다.";
+"No matching files" = "일치하는 파일 없음";
+"Delete Selected Files?" = "선택한 파일을 삭제하시겠습니까?";
+"This will permanently remove %ld file%@ from the gallery." = "갤러리에서 %ld개 파일%@을(를) 영구적으로 제거합니다.";
+"New Folder" = "새 폴더";
+"New folder…" = "새 폴더…";
+"Folder name" = "폴더 이름";
+"Create" = "만들기";
+"Create & Move" = "만들고 이동";
+"Rename Folder" = "폴더 이름 변경";
+"Delete Folder" = "폴더 삭제";
+"Delete Folder?" = "폴더를 삭제하시겠습니까?";
+"This folder is empty." = "이 폴더는 비어 있습니다.";
+"This folder contains %ld file(s). They will be moved to the parent folder." = "이 폴더에는 %ld개의 파일이 있습니다. 상위 폴더로 이동됩니다.";
+"Root" = "루트";
+"DMs" = "DM";
+"Thumb" = "썸네일";
+"Story" = "스토리";
+"Comment" = "댓글";
+"Other" = "기타";
+"Pick audio" = "오디오 선택";
+"Audio from RyukGram Gallery" = "RyukGram 갤러리의 오디오";
+"Share" = "공유";
+
+//////////////////////////////////////////////////////////////////////////////
+//                              HOME SHORTCUT                               //
+// Extra button on the home top bar (right of the create-post +) — picks    //
+// between Gallery, Changelog, etc. Configure-screen and the row reorderer. //
+//////////////////////////////////////////////////////////////////////////////
+
 "Home shortcut button" = "홈 단축 버튼";
-"Changelog" = "변경 사항";
-"Show gallery entries in download menus and unlock the gallery button" = "Show gallery entries in download menus and unlock the gallery button";
-"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (PHASE 2 REVAMP)                           //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browsing" = "Browsing";
-"Clear filters" = "Clear filters";
-"Delete files" = "Delete files";
-"Favorites only" = "Favorites only";
-"Gallery Settings" = "Gallery Settings";
-"Images" = "Images";
-"Manage" = "Manage";
-"Show favorites at top" = "Show favorites at top";
-"Storage" = "Storage";
-"Total files" = "Total files";
-"Total size" = "Total size";
-"Videos" = "Videos";
-"When enabled, favorites are pinned above other files inside the current sort and folder context." = "When enabled, favorites are pinned above other files inside the current sort and folder context.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DELETE + REVAMP 2)                        //
-//////////////////////////////////////////////////////////////////////////////
-
-"All files deleted" = "All files deleted";
-"By source" = "By source";
-"By type" = "By type";
-"By user" = "By user";
-"DM media deleted" = "DM media deleted";
-"Delete %@?" = "Delete %@?";
-"Delete DM media" = "Delete DM media";
-"Delete all files" = "Delete all files";
-"Delete all images" = "Delete all images";
-"Delete all videos" = "Delete all videos";
-"Delete by user" = "Delete by user";
-"Delete feed posts" = "Delete feed posts";
-"Delete profile pictures" = "Delete profile pictures";
-"Delete reels" = "Delete reels";
-"Delete stories" = "Delete stories";
-"Delete thumbnails" = "Delete thumbnails";
-"Feed posts deleted" = "Feed posts deleted";
-"Files deleted" = "Files deleted";
-"Images deleted" = "Images deleted";
-"No files to delete" = "No files to delete";
-"Profile pictures deleted" = "Profile pictures deleted";
-"Reels deleted" = "Reels deleted";
-"Search..." = "Search...";
-"Stories deleted" = "Stories deleted";
-"This will permanently remove %ld file(s)." = "This will permanently remove %ld file(s).";
-"Thumbnails deleted" = "Thumbnails deleted";
-"Unable to open original post" = "Unable to open original post";
-"Unable to open profile" = "Unable to open profile";
-"Unknown user" = "Unknown user";
-"User files deleted" = "User files deleted";
-"Videos deleted" = "Videos deleted";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (SORT + FILTER)                            //
-//////////////////////////////////////////////////////////////////////////////
-
-"Images first" = "Images first";
-"Largest first" = "Largest first";
-"Name A-Z" = "Name A-Z";
-"Name Z-A" = "Name Z-A";
-"Newest first" = "Newest first";
-"Oldest first" = "Oldest first";
-"Options" = "Options";
-"Smallest first" = "Smallest first";
-"Source" = "Source";
-"Source user" = "Source user";
-"Type" = "Type";
-"Videos first" = "Videos first";
-
+"Adds a button to the home top bar, right of the create-post +. Off entirely turns it off." = "홈 상단 바의 게시물 만들기 + 오른쪽에 버튼을 추가합니다. 완전 끄기는 버튼을 비활성화합니다.";
 "Configure the extra button on the home top bar" = "홈 상단 바의 추가 버튼 구성";
 "Show button" = "버튼 표시";
-"Icon" = "아이콘";
-
 "Auto" = "자동";
+"Icon" = "아이콘";
 "Drag the ≡ handle to reorder. Toggle a row off to hide that destination. With one action enabled tapping fires it; with two or more, tapping presents a menu." = "≡ 핸들을 끌어 순서를 바꿉니다. 행을 끄면 해당 대상이 숨겨집니다. 한 동작이 켜져 있으면 탭으로 바로 실행하고, 두 개 이상이면 탭하면 메뉴를 표시합니다.";
-
-"Copy all info" = "모든 정보 복사";
-"profile info" = "프로필 정보";
-
-"Start media muted" = "음소거로 미디어 시작";
-"Expanded videos open with sound off" = "확대된 동영상이 소리 꺼진 상태로 열립니다";
-
-"Enhanced media resolution" = "향상된 미디어 해상도";
-"Spoof device profile so IG serves higher-quality images" = "기기 프로파일을 위조하여 IG가 고품질 이미지를 제공하도록 합니다";
-
-"Media saving" = "미디어 저장";
-
-//////////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DOWNLOAD MENU + PICKERS)                  //
-//////////////////////////////////////////////////////////////////////////////
-
-"GIFs" = "GIFs";
-"to Gallery" = "to Gallery";
-"Share" = "Share";
-"Pick audio" = "Pick audio";
-"Audio from RyukGram Gallery" = "Audio from RyukGram Gallery";
-"Main feed" = "Main feed";
-"Choose Instagram's default feed or force the Following feed" = "Choose Instagram's default feed or force the Following feed";
-"Following feed mode (from InstaSane)" = "Following feed mode (from InstaSane)";
+"Changelog" = "변경 사항";

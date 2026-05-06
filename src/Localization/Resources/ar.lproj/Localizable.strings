@@ -5,7 +5,7 @@
  *  Every user-facing string in RyukGram goes through the macro
  *      SCILocalized(@"English text here")
  *  in the Objective-C source. The argument is BOTH the lookup key and the
- *  English fallback, so if a missing translation the user still sees
+ *  English fallback, so if a translation is missing the user still sees
  *  clean English — nothing ever breaks.
  *
  *
@@ -53,8 +53,6 @@
  *    parser will close the outer block at the first inner close marker
  *    and every lookup in the file will silently fail.
  *  - Keys and values are both quoted; every line ends with a semicolon.
- *
- *  Translation made by @bruuhim (التعريب بواسطة @bruuhim)
  */
 
 //////////////////////////////////////////////////////////////////////////////
@@ -69,11 +67,9 @@
 "settings.firstrun.title" = "‏معلومات إعدادات ريوك غرام‏";
 "settings.language.english_only" = "‏يتوفر ريوك غرام حاليًا باللغة الإنجليزية فقط. اللغات الأخرى جاهزة بانتظار الترجمة — ساهم في الترجمة إلى لغتك باتباع الدليل القصير في ملف ريدمي (README).‏";
 "settings.language.help_translate" = "‏المساعدة في الترجمة‏";
-"settings.language.ok" = "‏موافق‏";
 "settings.language.system" = "‏الافتراضي للنظام‏";
 "settings.language.title" = "‏اللغة‏";
 "settings.results.many" = "‏%lu نتائج‏";
-"settings.results.none" = "‏لا توجد نتائج‏";
 "settings.results.one" = "‏%lu نتيجة‏";
 "settings.search.placeholder" = "‏البحث في الإعدادات‏";
 "settings.title" = "‏إعدادات ريوك غرام‏";
@@ -210,6 +206,8 @@
 "Action button" = "‏زر الإجراء‏";
 "Adds 'View profile picture' and 'View cover' to story tray long-press menus" = "‏إضافة 'عرض صورة الملف الشخصي' و 'عرض الغلاف' إلى قوائم الضغط المطول في شريط القصص‏";
 "Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "‏يضيف زر إجراء ريوك غرام أسفل كل منشور في اليوميات مع خيارات تنزيل ومشاركة ونسخ وتوسيع وإعادة نشر. يؤدي النقر إلى فتح القائمة افتراضيًا؛ قم بتغيير السلوك أدناه.‏";
+"Choose Instagram's default feed or force the Following feed" = "‏اختر اليوميات الافتراضية لإنستغرام أو فرض يوميات المتابَعين‏";
+"Main feed" = "‏اليوميات الرئيسية‏";
 "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "‏يتحكم في متى وكيف يتم تحديث اليوميات. يحدث التحديث في الخلفية عند العودة إلى التطبيق بعد ~10 دقائق. ويحدث تحديث زر الصفحة الرئيسية عند النقر فوقه أثناء التواجد فيه بالفعل.‏";
 "Default tap action" = "‏إجراء النقر الافتراضي‏";
 "Disable background refresh" = "‏تعطيل التحديث في الخلفية‏";
@@ -228,6 +226,11 @@
 "Hides the story tray at the top" = "‏إخفاء شريط القصص في الأعلى‏";
 "Inserts a button row below like/comment/share on each post" = "‏إدراج صف أزرار أسفل الإعجاب والتعليق والمشاركة على كل منشور‏";
 "Long press on media to expand in full-screen viewer" = "‏اضغط مطولاً على الوسائط لتوسيعها في عارض ملء الشاشة‏";
+"Start media muted" = "‫بدء الوسائط بدون صوت‬";
+"Expanded videos open with sound off" = "‫تُفتح مقاطع الفيديو الموسعة بدون صوت‬";
+"Enhanced media resolution" = "‫دقة وسائط محسّنة‬";
+"Media saving" = "‫حفظ الوسائط‬";
+"Spoof device profile so IG serves higher-quality images" = "‫انتحل ملف الجهاز ليقدم إنستغرام صورًا أعلى جودة‬";
 "Media" = "‏الوسائط‏";
 "Media zoom" = "‏تكبير الوسائط‏";
 "No suggested for you" = "‏لا توجد اقتراحات لك‏";
@@ -243,10 +246,20 @@
 "Scroll to top without refreshing when tapping Home" = "‏التمرير إلى الأعلى دون تحديث عند النقر على الصفحة الرئيسية‏";
 "Show action button" = "‏إظهار زر الإجراء‏";
 "Show date" = "‏إظهار التاريخ‏";
-"Adds the date as a small header at the top of the action menu" = "‏يُضيف التاريخ كعنوان صغير في أعلى قائمة الإجراءات‏";
 "Stories tray" = "‏شريط القصص‏";
 "Tapping Home does nothing when already on feed" = "‏النقر على الصفحة الرئيسية لا يفعل شيئًا عند التواجد بالفعل في اليوميات‏";
 "Tray long-press actions" = "‏إجراءات الضغط المطول على الشريط‏";
+
+"Composer doesn't accept GIFs" = "‏المُؤلِّف لا يقبل صور GIF‏";
+"Copy GIF link" = "‏نسخ رابط GIF‏";
+"Custom GIF in comments" = "‏GIF مخصص في التعليقات‏";
+"Failed to build GIF model" = "‏فشل في إنشاء نموذج GIF‏";
+"GIF link copied" = "‏تم نسخ رابط GIF‏";
+"Invalid Giphy URL" = "‏رابط Giphy غير صالح‏";
+"Long-press the GIF button to paste any Giphy URL" = "‏اضغط مطولاً على زر GIF للصق أي رابط Giphy‏";
+"Paste Giphy Link" = "‏لصق رابط Giphy‏";
+"Paste a giphy.com URL or media ID" = "‏الصق رابط giphy.com أو معرف الوسائط‏";
+"Send" = "‏إرسال‏";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
@@ -294,7 +307,6 @@
 // Settings → Profile tab                                                   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Adds a button next to the burger menu on profiles to copy username, name or bio" = "‏إضافة زر بجوار القائمة في الملفات الشخصية لنسخ اسم المستخدم أو الاسم أو البايو‏";
 "Adds a view option to the highlight long-press menu to open the cover in full-screen" = "‏إضافة خيار عرض إلى قائمة الضغط المطول على الهايلايت لفتح الغلاف بملء الشاشة‏";
 "Copy note on long press" = "‏نسخ الملاحظة عند الضغط المطول‏";
 "Fake follower count" = "‏عدد متابعين وهمي‏";
@@ -311,7 +323,6 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "‏إيماءات الضغط المطول على عناصر الملف الشخصي — منفصلة عن أزرار الإجراءات لكل ميزة.‏";
 "Only affects your own profile header. Other users see the real numbers." = "‏يؤثر فقط على رأس ملفك الشخصي. يرى المستخدمون الآخرون الأرقام الحقيقية.‏";
 "Post count" = "‏عدد المنشورات‏";
-"Profile copy button" = "‏زر نسخ الملف الشخصي‏";
 "Save profile picture" = "‏حفظ صورة الملف الشخصي‏";
 "Show a checkmark next to your name on your own profile" = "‏إظهار علامة توثيق بجوار اسمك في ملفك الشخصي‏";
 "Shows whether the profile user follows you" = "‏يُظهر ما إذا كان صاحب الملف الشخصي يتابعك‏";
@@ -337,7 +348,6 @@
 "Route saves into a dedicated album in Photos instead of the camera roll root" = "‏توجيه الحفظ إلى ألبوم مخصص في تطبيق الصور بدلاً من الألبوم الرئيسي‏";
 "Save action" = "‏إجراء الحفظ‏";
 "Save to RyukGram album" = "‏الحفظ في ألبوم ريوك غرام‏";
-"Saving" = "‏يتم الحفظ‏";
 "Show a confirmation dialog before starting a download" = "‏عرض نافذة تأكيد قبل بدء التنزيل‏";
 "What happens after the gesture downloads" = "‏ماذا يحدث بعد تنزيلات الإيماءة‏";
 "When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library." = "‏عند تشغيل \"الحفظ في ألبوم ريوك غرام\"، يتم توجيه التنزيلات واختيارات \"الحفظ في الصور\" إلى ألبوم مخصص يسمى \"RyukGram\" في مكتبة الصور الخاصة بك.‏";
@@ -373,15 +383,14 @@
 "Marks a story as seen when you send a reply or emoji reaction, even with seen blocking on" = "‏يحدد القصة كمقروءة عند إرسال رد أو تفاعل، حتى مع تفعيل حظر المشاهدة‏";
 "Marks stories as seen locally (grey ring) while still blocking the seen receipt on the server" = "‏يحدد القصص كمقروءة محليًا (حلقة رمادية) بينما لا يزال يحظر إرسال مؤشر المشاهدة للخادم‏";
 "Master toggle. When off, the list is ignored" = "‏المفتاح الرئيسي. عند إيقاف التشغيل، يتم تجاهل القائمة‏";
-"Other" = "‏أخرى‏";
 "Playback" = "‏التشغيل‏";
 "Quick list button in stories" = "‏زر القائمة السريعة في القصص‏";
 "Search, sort, swipe to remove" = "‏بحث، فرز، التمرير للإزالة‏";
 "Seen receipts" = "‏مؤشرات القراءة‏";
 "Sending a reply or emoji reaction automatically advances to the next story" = "‏إرسال رد أو تفاعل ينقلك تلقائيًا للقصة التالية‏";
-"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "Adds a 'View mentions' entry to the action button menu and story 3-dot menu";
-"Mentions overlay button" = "Mentions overlay button";
-"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels";
+"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "‏يضيف خيار 'عرض الإشارات' إلى قائمة زر الإجراء وقائمة النقاط الثلاث في القصص‏";
+"Mentions overlay button" = "‏زر الإشارات على القصة‏";
+"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "‏يضيف زرًا بجوار زر الإجراء/المشاهدة على القصة. يظهر فقط عند احتواء القصة الحالية على إشارات أو منشورات/ريلز مشتركة‏";
 "Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "‏يعرض زر عين في القصص لإضافة وإزالة المستخدمين من القائمة. إيقاف = استخدم قائمة النقاط الثلاث أو الضغط المطول فقط‏";
 "Stickers" = "‏ملصقات‏";
 "Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "‏اطلع على نتائج استطلاعات الرأي/الاختبارات/شريط التمرير قبل التفاعل — لا يزال بإمكانك النقر للتصويت بشكل طبيعي. 'إجبار الملصقات القديمة' يعيد ملصقَي الاختبار والكشف إلى لوحة إنشاء القصة.‏";
@@ -425,8 +434,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Activity" = "‏النشاط‏";
-"Allows typing and sending DMs longer than Instagram's limit" = "‏يسمح بكتابة وإرسال رسائل أطول من الحد المسموح به في إنستغرام‏";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "‏يضيف خيار 'تنزيل' إلى قائمة الضغط المطول للرسائل الصوتية لحفظها كصوت M4A‏";
+"Allows typing and sending DMs longer than Instagram's limit" = "‏يسمح بكتابة وإرسال رسائل أطول من الحد المسموح به في إنستغرام‏";
 "Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram" = "‏يضيف خيار 'إرسال ملف' إلى قائمة الزائد في الرسائل الخاصة. الأنواع المدعومة قد يقيدها إنستغرام‏";
 "Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages" = "‏يضيف خيار 'ملف صوتي' إلى قائمة الزائد في الرسائل الخاصة لإرسال الملفات الصوتية كرسائل صوتية‏";
 "Adds copy text, download GIF/audio to the note long-press menu" = "‏يضيف خيارات نسخ النص، وتنزيل صور جيف والصوت إلى قائمة الضغط المطول للملاحظة‏";
@@ -467,7 +476,6 @@
 "Keep deleted messages" = "‏الاحتفاظ بالرسائل المحذوفة‏";
 "Makes view-once messages behave like normal visual messages (loopable/pauseable)" = "‏يجعل رسائل العرض لمرة واحدة تتصرف كالرسائل العادية (قابلة للتكرار والإيقاف)‏";
 "Note actions" = "‏إجراءات الملاحظات‏";
-"Preserve messages that others unsend" = "‏الاحتفاظ بالرسائل التي يلغي الآخرون إرسالها‏";
 "Preserves messages that others unsend" = "‏يحتفظ بالرسائل التي يلغي الآخرون إرسالها‏";
 "Prevents accidental swipe-up activation of vanish mode" = "‏يمنع التنشيط العشوائي لوضع الاختفاء عند السحب لأعلى‏";
 "Quick list button in chats" = "‏زر القائمة السريعة في الدردشات‏";
@@ -579,7 +587,7 @@
 "Shows an alert when you click the like button on reels to confirm the like" = "‏يُظهر تنبيهًا عند النقر على زر الإعجاب في مقاطع ريلز للتأكيد‏";
 "Shows an alert when you click the like button on stories to confirm the like" = "‏يُظهر تنبيهًا عند النقر على زر الإعجاب في القصص للتأكيد‏";
 "Shows an alert when you click the post comment button to confirm" = "‏يُظهر تنبيهًا عند النقر على زر نشر التعليق للتأكيد‏";
-"Shows an alert when you click the repost button to confirm before resposting" = "‏يُظهر تنبيهًا عند النقر على زر إعادة النشر للتأكيد‏";
+"Shows an alert when you click the repost button to confirm before reposting" = "‏يُظهر تنبيهًا عند النقر على زر إعادة النشر للتأكيد‏";
 "Shows an alert when you click the unfollow button to confirm" = "‏يُظهر تنبيهًا عند النقر على زر إلغاء المتابعة للتأكيد‏";
 
 //////////////////////////////////////////////////////////////////////////////
@@ -588,12 +596,12 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Backup & Restore" = "‏النسخ الاحتياطي والاستعادة‏";
-
 "Clear selected data" = "مسح البيانات المحددة";
 "Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page." = "‏تصدير أو استيراد إعدادات RyukGram، القوائم المستثناة وبيانات محلل الملف الشخصي. اختر أي مجموعة في كل صفحة.";
 "Import" = "استيراد";
 "Load from a JSON file" = "تحميل من ملف JSON";
 "Save to a JSON file" = "حفظ إلى ملف JSON";
+
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
 // Settings → Advanced tab                                                  //
@@ -608,7 +616,6 @@
 "Clear" = "‏مسح‏";
 "Clear cache" = "‏مسح ذاكرة التخزين المؤقت‏";
 "Clear cache (%@)" = "‏مسح ذاكرة التخزين المؤقت (%@)‏";
-"Clear cache?" = "‏مسح ذاكرة التخزين المؤقت؟‏";
 "Clearing cache…" = "‏جاري المسح…‏";
 "Clearing still scans on demand." = "‏سيظل المسح يُجري الفحص عند الطلب.‏";
 "Daily" = "‏يومياً‏";
@@ -731,11 +738,9 @@
 "Could not extract photo URL" = "‏تعذر استخراج رابط الصورة‏";
 "Could not extract video URL" = "‏تعذر استخراج رابط الفيديو‏";
 "Done" = "‏تم‏";
-"Download all (%lu)" = "‏تنزيل الكل (%lu)‏";
 "Download all stories and share?" = "‏تنزيل كل القصص والمشاركة؟‏";
 "Download all to Photos" = "‏تنزيل الكل إلى الصور‏";
 "Download and share all" = "‏تنزيل ومشاركة الكل‏";
-"Download and share?" = "‏تنزيل ومشاركة؟‏";
 "Download failed" = "‏فشل التنزيل‏";
 "Downloaded %lu items" = "‏تم تنزيل %lu من العناصر‏";
 "Downloading %@..." = "‏جارِ تنزيل %@...‏";
@@ -763,9 +768,7 @@
 "Preparing repost..." = "‏جارِ تجهيز إعادة النشر...‏";
 "Repost" = "‏إعادة نشر‏";
 "Repost unavailable" = "‏إعادة النشر غير متاحة‏";
-"Save all stories to Photos?" = "‏حفظ جميع القصص في الصور؟‏";
 "Save failed" = "‏فشل الحفظ‏";
-"Save to Photos?" = "‏حفظ في الصور؟‏";
 "Saved %lu items" = "‏تم حفظ %lu من العناصر‏";
 "Saved to Photos" = "‏تم الحفظ في الصور‏";
 "Saved to RyukGram" = "‏تم الحفظ في ريوك غرام‏";
@@ -787,7 +790,6 @@
 "Message from %@ was unsent" = "‏تم إلغاء إرسال رسالة من %@‏";
 "Add" = "‏إضافة‏";
 "Add to block list" = "‏إضافة لقائمة الحظر‏";
-"Add to block list?" = "‏إضافة لقائمة الحظر؟‏";
 "Added to block list" = "‏تمت الإضافة لقائمة الحظر‏";
 "Added to exclude list" = "‏أُضيف إلى قائمة الاستبعاد‏";
 "Audio not loaded yet. Play the message first and try again." = "‏لم يتم تحميل الصوت بعد. قم بتشغيل الرسالة أولاً وحاول مجددًا.‏";
@@ -803,10 +805,8 @@
 "Could not find media" = "‏تعذر العثور على وسائط‏";
 "Could not find story media" = "‏تعذر العثور على وسائط القصة‏";
 "Could not get audio data. Try again after refreshing the chat." = "‏تعذر الحصول على بيانات الصوت. حاول مجددًا بعد تحديث الدردشة.‏";
-"Could not get video URL" = "‏تعذر الحصول على رابط الفيديو‏";
 "Disable read receipts" = "‏تعطيل مؤشرات القراءة‏";
 "Disappearing media" = "‏وسائط مختفية‏";
-"Done!" = "‏تم!‏";
 "Download audio" = "‏تنزيل الصوت‏";
 "Downloading audio..." = "‏جارِ تنزيل الصوت...‏";
 "Enable read receipts" = "‏تفعيل مؤشرات القراءة‏";
@@ -850,7 +850,6 @@
 "Read receipts will no longer be blocked for this chat." = "‏لن يتم حظر مؤشرات القراءة لهذه الدردشة بعد الآن.‏";
 "Remove" = "‏إزالة‏";
 "Remove from block list" = "‏إزالة من قائمة الحظر‏";
-"Remove from block list?" = "‏إزالة من قائمة الحظر؟‏";
 "Remove from exclude list" = "‏إزالة من قائمة الاستبعاد‏";
 "Removed" = "‏تمت الإزالة‏";
 "Removed from list" = "‏تمت الإزالة من القائمة‏";
@@ -870,7 +869,6 @@
 "%@ can't be converted" = "‏تعذر تحويل %@‏";
 "iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "‏تعذر على واجهات صوت iOS معالجة هذا الملف%@%@\n\nيمكنك محاولة إرساله إلى Instagram كما هو — قد يقبله الخادم، أو قد يفشل بصمت.\n\nلطلب دعم أصلي، افتح تذكرة:‏";
 "Un-exclude chat" = "‏إلغاء استبعاد الدردشة‏";
-"Un-exclude chat?" = "‏إلغاء استبعاد الدردشة؟‏";
 "Un-exclude story seen" = "‏إلغاء استبعاد مشاهدة القصة‏";
 "Un-excluded" = "‏تم إلغاء الاستبعاد‏";
 "Unblocked" = "‏تم إلغاء الحظر‏";
@@ -900,9 +898,7 @@
 "Comments shown" = "‏تم إظهار التعليقات‏";
 "Copied text to clipboard" = "‏تم نسخ النص إلى الحافظة‏";
 "Copy" = "‏نسخ‏";
-"Copy all" = "‏نسخ الكل‏";
 "Copy bio" = "‏نسخ البايو‏";
-"Copy from profile" = "‏نسخ من الملف الشخصي‏";
 "Copy name" = "‏نسخ الاسم‏";
 "Could not find cover image" = "‏تعذر العثور على صورة الغلاف‏";
 "Current: %@" = "‏الحالي: %@‏";
@@ -924,12 +920,10 @@
 "Saved locations" = "‏المواقع المحفوظة‏";
 "Select color" = "‏اختيار اللون‏";
 "Set location" = "‏تعيين الموقع‏";
-"Settings…" = "‏الإعدادات…‏";
 "Turn Location Services on in Settings → Privacy to use your current location." = "‏فعّل خدمات الموقع من الإعدادات ← الخصوصية لاستخدام موقعك الحالي.‏";
 "Type emoji..." = "‏اكتب إيموجي...‏";
 
 "Theme" = "‏السمة‏";
-"Appearance" = "‏المظهر‏";
 "Light" = "‏فاتح‏";
 "Dark" = "‏داكن‏";
 "OLED" = "OLED";
@@ -951,7 +945,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE ANALYZER                              //
-// Settings → General → Profile Analyzer                                    //
+// Settings → Profile Analyzer                                              //
 //////////////////////////////////////////////////////////////////////////////
 
 "%lu followers · %lu following" = "‏%lu متابع · %lu يتابع‏";
@@ -960,12 +954,11 @@
 "Analysis failed" = "‏فشل التحليل‏";
 "Another analysis is already running" = "‏هناك تحليل آخر قيد التشغيل بالفعل‏";
 "Available after your next scan" = "‏متاحة بعد التحليل التالي‏";
-"Cancelled" = "‏تم الإلغاء‏";
+"Categories" = "‏الفئات‏";
 "Couldn't fetch profile information" = "‏تعذّر جلب معلومات الملف الشخصي‏";
 "Fetching followers (%lu/%ld)…" = "‏جاري جلب المتابعين (%lu/%ld)…‏";
 "Fetching following (%lu/%ld)…" = "‏جاري جلب المتابَعين (%lu/%ld)…‏";
 "Fetching profile info…" = "‏جاري جلب معلومات الملف الشخصي…‏";
-"Categories" = "‏الفئات‏";
 "First scan: %@" = "‏أول تحليل: %@‏";
 "Follower count exceeds %ld — analysis disabled to avoid rate limits." = "‏عدد المتابعين يتجاوز %ld — التحليل معطّل لتجنب حدود المعدل.‏";
 "Gained since last scan" = "‏اكتسبتهم منذ آخر تحليل‏";
@@ -978,12 +971,7 @@
 "No active Instagram session found" = "‏لا توجد جلسة Instagram نشطة‏";
 "No scan yet" = "‏لا يوجد تحليل بعد‏";
 "Not following you back" = "‏لا يتابعونك بالمقابل‏";
-"OK" = "‏حسنًا‏";
-"Updated %@ (%ld keys). Restart to apply." = "‏تم تحديث %@ (%ld مفاتيح). أعد التشغيل للتطبيق.";
-"Restart now" = "إعادة التشغيل الآن";
-"File is empty or not a valid .strings file." = "الملف فارغ أو ليس ملف .strings صالح.";
-"Error" = "خطأ";
-"Could not write file." = "تعذر كتابة الملف.";
+"OK" = "‏حسناً‏";
 "Private account" = "‏حساب خاص‏";
 "Profile Analyzer" = "‏محلل الملف الشخصي‏";
 "Profile picture changed" = "‏تم تغيير صورة الملف الشخصي‏";
@@ -993,7 +981,6 @@
 "Reset analyzer data?" = "‏إعادة تعيين بيانات المحلل؟‏";
 "Run analysis" = "‏تشغيل التحليل‏";
 "Run your first analysis" = "‏شغّل أول تحليل لك‏";
-"Search username or name" = "‏ابحث باسم المستخدم أو الاسم‏";
 "Since last scan" = "‏منذ آخر تحليل‏";
 "Starting…" = "‏يبدأ…‏";
 "They follow you, you don't follow back" = "‏يتابعونك، لكنك لا تتابعهم‏";
@@ -1050,8 +1037,8 @@
 "Inspect the full payload" = "‏افحص البيانات الكاملة‏";
 "Keep scan history" = "‏الاحتفاظ بسجل التحليلات‏";
 "Large accounts are blocked: analysis is disabled above 13,000 followers to avoid Instagram rate-limiting the whole app." = "‏الحسابات الكبيرة محظورة: يتم تعطيل التحليل فوق 13,000 متابع لتجنّب قيام Instagram بتحديد معدل التطبيق بأكمله.‏";
-"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "‏لا يتم رفع أي شيء — كل البيانات تبقى على هذا الجهاز ويمكن مسحها من أيقونة سلة المهملات.‏";
 "Not verified only" = "‏غير الموثقة فقط‏";
+"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "‏لا يتم رفع أي شيء — كل البيانات تبقى على هذا الجهاز ويمكن مسحها من أيقونة سلة المهملات.‏";
 "Nothing was applied." = "‏لم يتم تطبيق شيء.‏";
 "Posts" = "‏المنشورات‏";
 "Preferences" = "‏التفضيلات‏";
@@ -1076,8 +1063,29 @@
 "Username A → Z" = "‏اسم المستخدم أ ← ي‏";
 "Username Z → A" = "‏اسم المستخدم ي ← أ‏";
 "Verified only" = "‏الموثقة فقط‏";
-"When on, scans compare against your first scan so new/lost followers and profile updates don't disappear between scans." = "‏عند التفعيل، تُقارن التحليلات بتحليلك الأول فلا يختفي المتابعون الجدد/المفقودون وتحديثات الملفات الشخصية بين التحليلات.‏";
-
+"Tracking" = "‏التتبّع‏";
+"Visited profiles" = "‏الحسابات المُشاهَدة‏";
+"Profiles you've opened recently" = "‏الحسابات التي فتحتها مؤخرًا‏";
+"Tracking off — enable below to log visits" = "‏التتبّع متوقّف — فعّله أدناه لتسجيل الزيارات‏";
+"Track visited profiles" = "‏تتبّع الحسابات المُشاهَدة‏";
+"Logs every profile you open. Stays on-device." = "‏يسجّل كل حساب تفتحه. يبقى على الجهاز فقط.‏";
+"Compare every scan against your first one" = "‏قارن كل تحليل بأول تحليل قمت به‏";
+"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "‏يقارن «الاحتفاظ بالسجل» كل تحليل بأول تحليل. أمّا «تتبّع الزيارات» فيسجّل كل حساب تفتحه لتراجعه هنا.‏";
+"just now" = "‏الآن‏";
+"%dm ago" = "‏منذ %d د‏";
+"%dh ago" = "‏منذ %d س‏";
+"%dd ago" = "‏منذ %d ي‏";
+"Visited" = "‏المُشاهَد‏";
+"Today" = "‏اليوم‏";
+"Last 7 days" = "‏آخر 7 أيام‏";
+"Last 30 days" = "‏آخر 30 يومًا‏";
+"Most recent" = "‏الأحدث‏";
+"Oldest first" = "‏الأقدم أولاً‏";
+"Most visited" = "‏الأكثر مشاهدة‏";
+"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "‏اختر ما تريد حذفه. اللقطات تحذف الفروق منذ آخر تحليل؛ الحسابات المُشاهَدة تمحو سجل الزيارات.‏";
+"Reset snapshots" = "‏إعادة تعيين اللقطات‏";
+"Clear visited profiles" = "‏مسح الحسابات المُشاهَدة‏";
+"Reset everything" = "‏إعادة تعيين كل شيء‏";
 //////////////////////////////////////////////////////////////////////////////
 //                         SETTINGS VIEWS & DIALOGS                         //
 // Excluded-lists managers, backup/restore flows, in-picker labels.         //
@@ -1085,18 +1093,17 @@
 
 "Add chat" = "‏إضافة دردشة‏";
 "Add custom domain" = "‏إضافة نطاق مخصص‏";
-"Add preset…" = "‏إضافة إعداد مسبق…‏";
 "Add to list?" = "‏إضافة للقائمة؟‏";
 "Add user" = "‏إضافة مستخدم‏";
 "Apply" = "‏تطبيق‏";
 "Apply to" = "‏تطبيق على‏";
 "Chats" = "‏الدردشات‏";
+"Colored" = "‏ملوّن‏";
 "Could not read file." = "‏تعذرت قراءة الملف.‏";
 "Could not resolve user ID" = "‏تعذر تحليل معرف المستخدم‏";
 "Could not write temporary file." = "‏تعذرت كتابة الملف المؤقت.‏";
 "Current location" = "‏الموقع الحالي‏";
 "Custom" = "‏مخصص‏";
-"Date Format" = "‏تنسيق التاريخ‏";
 "Delete" = "‏حذف‏";
 "Enable fake location" = "‏تفعيل الموقع الوهمي‏";
 "Enter username" = "‏أدخل اسم المستخدم‏";
@@ -1118,7 +1125,6 @@
 "No DM thread found with @%@" = "‏لم يتم العثور على محادثة رسائل مع @%@‏";
 "Off" = "‏إيقاف‏";
 "On" = "‏تشغيل‏";
-"Colored" = "‏ملوّن‏";
 "Presets" = "‏الإعدادات المسبقة‏";
 "Recently added" = "‏المُضاف مؤخراً‏";
 "Remove from list" = "‏إزالة من القائمة‏";
@@ -1177,23 +1183,37 @@
 "Copy video URL" = "‏نسخ رابط الفيديو‏";
 "Could not access reel media" = "‏تعذر الوصول إلى وسائط ريلز‏";
 "Could not access reel photo" = "‏تعذر الوصول إلى صورة مقطع ريلز‏";
-"Could not extract photo url from post" = "‏تعذر استخراج رابط الصورة من المنشور‏";
-"Could not extract photo url from reel" = "‏تعذر استخراج رابط الصورة من مقطع ريلز‏";
-"Could not extract photo url from story" = "‏تعذر استخراج رابط الصورة من القصة‏";
-"Could not extract video url from post" = "‏تعذر استخراج رابط الفيديو من المنشور‏";
-"Could not extract video url from reel" = "‏تعذر استخراج رابط الفيديو من مقطع ريلز‏";
-"Could not extract video url from story" = "‏تعذر استخراج رابط الفيديو من القصة‏";
+"Could not write file." = "تعذر كتابة الملف.";
 "Download Quality" = "‏جودة التنزيل‏";
+"Error" = "خطأ";
 "Extras" = "Extras";
 "FFmpegKit Debug" = "‏تصحيح أخطاء FFmpegKit‏";
+"File is empty or not a valid .strings file." = "الملف فارغ أو ليس ملف .strings صالح.";
 "Later" = "‏لاحقًا‏";
 "No!" = "‏لا!‏";
-"OK" = "‏حسناً‏";
 "Restart" = "‏إعادة تشغيل‏";
+"Restart now" = "إعادة التشغيل الآن";
 "Restart required" = "‏إعادة التشغيل مطلوبة‏";
-"username" = "‏اسم المستخدم‏";
+"Updated %@ (%ld keys). Restart to apply." = "‏تم تحديث %@ (%ld مفاتيح). أعد التشغيل للتطبيق.";
 "Yes" = "‏نعم‏";
 "You must restart the app to apply this change" = "‏يجب عليك إعادة تشغيل التطبيق لتطبيق هذا التغيير‏";
+"Add language" = "‏إضافة لغة‏";
+"Enter the language code (e.g. fr, de, ja)" = "‏أدخل رمز اللغة (مثل fr، de، ja)‏";
+"Update localization" = "‫تحديث الترجمة‬";
+"Pick a language to update, or add a new one" = "‫اختر لغة لتحديثها، أو أضف لغة جديدة‬";
+"English .strings file not found" = "‫لم يتم العثور على ملف .strings الإنجليزي‬";
+"Loading" = "‫جارٍ التحميل‬";
+"Next" = "‏التالي‏";
+"Preset" = "‏إعداد مسبق‏";
+"(unset)" = "‏(غير محدد)‏";
+"  • Keep-deleted: OFF" = "‏  • الاحتفاظ بالمحذوف: إيقاف‏";
+"  • Keep-deleted: ON" = "‏  • الاحتفاظ بالمحذوف: تشغيل‏";
+"KD: OFF" = "‏الاحتفاظ: إيقاف‏";
+"Downloading %lu of %lu" = "‏جارِ تنزيل %lu من %lu‏";
+"%lu active • tap to cancel" = "‏%lu نشط • انقر للإلغاء‏";
+"Downloading %d%%" = "‏جارِ التنزيل %d%%‏";
+"Download all and share?" = "‏تنزيل الكل ومشاركته؟‏";
+"Save all to Photos?" = "‏حفظ الكل في الصور؟‏";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               ABOUT / CREDITS                            //
@@ -1212,6 +1232,7 @@
 "Portuguese (Brazil) translation" = "الترجمة البرتغالية (البرازيل)";
 "Turkish translation" = "الترجمة التركية";
 "Code contributions" = "مساهمات في الكود";
+"Following feed mode (from InstaSane)" = "‏وضع يوميات المتابَعين (من InstaSane)‏";
 "latest" = "‏الأحدث‏";
 "Links" = "‏الروابط‏";
 "No releases" = "‏لا توجد إصدارات‏";
@@ -1269,240 +1290,203 @@
 "Video quality" = "‏جودة الفيديو‏";
 "Which quality to download" = "‏الجودة المراد تنزيلها‏";
 
-"Composer doesn't accept GIFs" = "‏المُؤلِّف لا يقبل صور GIF‏";
-"Copy GIF link" = "‏نسخ رابط GIF‏";
-"Custom GIF in comments" = "‏GIF مخصص في التعليقات‏";
-"Failed to build GIF model" = "‏فشل في إنشاء نموذج GIF‏";
-"GIF link copied" = "‏تم نسخ رابط GIF‏";
-"Invalid Giphy URL" = "‏رابط Giphy غير صالح‏";
-"Long-press the GIF button to paste any Giphy URL" = "‏اضغط مطولاً على زر GIF للصق أي رابط Giphy‏";
-"Paste Giphy Link" = "‏لصق رابط Giphy‏";
-"Paste a giphy.com URL or media ID" = "‏الصق رابط giphy.com أو معرف الوسائط‏";
-"Send" = "‏إرسال‏";
-
-"Tracking" = "‏التتبّع‏";
-"Visited profiles" = "‏الحسابات المُشاهَدة‏";
-"Profiles you've opened recently" = "‏الحسابات التي فتحتها مؤخرًا‏";
-"Tracking off — enable below to log visits" = "‏التتبّع متوقّف — فعّله أدناه لتسجيل الزيارات‏";
-"Track visited profiles" = "‏تتبّع الحسابات المُشاهَدة‏";
-"Logs every profile you open. Stays on-device." = "‏يسجّل كل حساب تفتحه. يبقى على الجهاز فقط.‏";
-"Compare every scan against your first one" = "‏قارن كل تحليل بأول تحليل قمت به‏";
-"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "‏يقارن «الاحتفاظ بالسجل» كل تحليل بأول تحليل. أمّا «تتبّع الزيارات» فيسجّل كل حساب تفتحه لتراجعه هنا.‏";
-"just now" = "‏الآن‏";
-"%dm ago" = "‏منذ %d د‏";
-"%dh ago" = "‏منذ %d س‏";
-"%dd ago" = "‏منذ %d ي‏";
-"Visited" = "‏المُشاهَد‏";
-"Today" = "‏اليوم‏";
-"Last 7 days" = "‏آخر 7 أيام‏";
-"Last 30 days" = "‏آخر 30 يومًا‏";
-"Most recent" = "‏الأحدث‏";
-"Oldest first" = "‏الأقدم أولًا‏";
-"Most visited" = "‏الأكثر مشاهدة‏";
-"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "‏اختر ما تريد حذفه. اللقطات تحذف الفروق منذ آخر تحليل؛ الحسابات المُشاهَدة تمحو سجل الزيارات.‏";
-"Reset snapshots" = "‏إعادة تعيين اللقطات‏";
-"Clear visited profiles" = "‏مسح الحسابات المُشاهَدة‏";
-"Reset everything" = "‏إعادة تعيين كل شيء‏";
-
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //                          ACTION MENU CONFIG                              //
-// Configure-menu screen, profile action button, action catalog labels.    //
+// Profile action button: per-section toggles, reorder handles, default-tap //
+// behavior, reset confirmations, action catalog labels.                    //
 //////////////////////////////////////////////////////////////////////////////
 
-"Audio & visibility" = "Audio & visibility";
-"Bio" = "Bio";
-"bio" = "bio";
-"Bulk download" = "Bulk download";
-"Collapse this section's actions behind a single entry" = "Collapse this section's actions behind a single entry";
-"Configure: %@" = "Configure: %@";
-"Copied %@" = "Copied %@";
-"Copy ID" = "Copy ID";
-"Copy Info" = "Copy Info";
-"Copy media URL" = "Copy media URL";
-"Copy profile link" = "Copy profile link";
-"Copy username" = "Copy username";
-"DM disappearing media" = "DM disappearing media";
-"Download" = "Download";
-"Download all to Gallery" = "Download all to Gallery";
-"Download to Gallery" = "Download to Gallery";
-"Exclude/include user" = "Exclude/include user";
-"Feed settings" = "Feed settings";
-"Followers: %@" = "Followers: %@";
-"Following: %@" = "Following: %@";
-"ID" = "ID";
-"Info" = "Info";
-"Mute / unmute audio" = "Mute / unmute audio";
-"name" = "name";
-"Picture not found" = "Picture not found";
-"Private profile" = "Private profile";
-"profile link" = "profile link";
-"Profile info" = "Profile info";
-"Profile link" = "Profile link";
-"Profile settings" = "Profile settings";
-"Profile unavailable" = "Profile unavailable";
-"Public profile" = "Public profile";
-"Reels settings" = "Reels settings";
-"Reorder sections" = "Reorder sections";
-"Reset to defaults" = "Reset to defaults";
-"Reset to defaults?" = "Reset to defaults?";
-"RyukGram profile actions" = "RyukGram profile actions";
-"Save picture" = "Save picture";
-"Save picture to Gallery" = "Save picture to Gallery";
-"Share picture" = "Share picture";
-"Show as submenu" = "Show as submenu";
-"Stories settings" = "Stories settings";
-"This will restore the default sections, order, and toggles for this menu." = "This will restore the default sections, order, and toggles for this menu.";
-"Username" = "Username";
-"View picture" = "View picture";
-"What happens on a single tap. Long-press always opens the full menu." = "What happens on a single tap. Long-press always opens the full menu.";
-"Profile action button" = "Profile action button";
-"Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions" = "Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions";
-"Configure menu" = "Configure menu";
-"Configure profile menu" = "Configure profile menu";
-"Reorder, enable/disable, set default tap, show date" = "Reorder, enable/disable, set default tap, show date";
-"Reorder, enable/disable, set default tap" = "Reorder, enable/disable, set default tap";
+"Long-press gestures" = "‏إيماءات الضغط المطول‏";
+"Inserts a button in the profile navigation header" = "‏يدرج زرًا في رأس التنقل بالملف الشخصي‏";
+"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "‏يضيف زر إجراء ريوك غرام إلى رأس الملف الشخصي مع خيارات نسخ وعرض الصورة ومشاركة وحفظ ومعلومات الملف. يؤدي النقر إلى فتح القائمة افتراضيًا؛ يمكنك تغيير سلوك النقر من قائمة التهيئة.‏";
+"Configure menu" = "‏تهيئة القائمة‏";
+"Reorder, enable/disable, set default tap, show date" = "‏إعادة الترتيب، تفعيل/تعطيل، ضبط النقر الافتراضي، إظهار التاريخ‏";
+"Reorder, enable/disable, set default tap" = "‏إعادة الترتيب، تفعيل/تعطيل، ضبط النقر الافتراضي‏";
+"RyukGram profile actions" = "‏إجراءات ريوك غرام للملف الشخصي‏";
+"Reorder sections" = "‏إعادة ترتيب الأقسام‏";
+"Drag the ≡ handle to reorder sections." = "‏اسحب مقبض ≡ لإعادة ترتيب الأقسام.‏";
+"Drag the ≡ handle to reorder. Toggle a row off to hide it from the menu. Mark a section as a submenu to collapse its actions behind a single entry." = "‏اسحب مقبض ≡ لإعادة الترتيب. أوقف الصف لإخفائه من القائمة. حدّد قسمًا كقائمة فرعية لطي إجراءاته خلف خيار واحد.‏";
+"Show as submenu" = "‏إظهار كقائمة فرعية‏";
+"Collapse this section's actions behind a single entry" = "‏طي إجراءات هذا القسم خلف خيار واحد‏";
+"Configure: %@" = "‏تهيئة: %@‏";
+"What happens on a single tap. Long-press always opens the full menu." = "‏ما الذي يحدث عند النقر المفرد. الضغط المطول يفتح القائمة الكاملة دائمًا.‏";
+"Reset to defaults" = "‏إعادة التعيين إلى الافتراضي‏";
+"Reset to defaults?" = "‏إعادة التعيين إلى الافتراضي؟‏";
+"This will restore the default sections, order, and toggles for this menu." = "‏سيؤدي هذا إلى استعادة الأقسام والترتيب والمفاتيح الافتراضية لهذه القائمة.‏";
+"Audio & visibility" = "‏الصوت والرؤية‏";
+"DM disappearing media" = "‏الوسائط المختفية في الرسائل الخاصة‏";
+"Bulk download" = "‏تنزيل جماعي‏";
+"Feed settings" = "‏إعدادات اليوميات‏";
+"Reels settings" = "‏إعدادات ريلز‏";
+"Profile settings" = "‏إعدادات الملف الشخصي‏";
+"Stories settings" = "‏إعدادات القصص‏";
+"Copy ID" = "‏نسخ المعرف‏";
+"Copy Info" = "‏نسخ المعلومات‏";
+"Copy all info" = "‫نسخ كل المعلومات‬";
+"Copy media URL" = "‏نسخ رابط الوسائط‏";
+"Copy profile link" = "‏نسخ رابط الملف الشخصي‏";
+"Copy username" = "‏نسخ اسم المستخدم‏";
+"Download" = "‏تنزيل‏";
+"Download to Gallery" = "‏تنزيل إلى المعرض‏";
+"Download all to Gallery" = "‏تنزيل الكل إلى المعرض‏";
+"Nothing to download" = "‏لا يوجد شيء للتنزيل‏";
+"Exclude/include user" = "‏استبعاد/تضمين المستخدم‏";
+"Mute / unmute audio" = "‏كتم / إلغاء كتم الصوت‏";
+"Save picture to Gallery" = "‏حفظ الصورة في المعرض‏";
+"Share picture" = "‏مشاركة الصورة‏";
+"View picture" = "‏عرض الصورة‏";
+"Bio" = "‏البايو‏";
+"ID" = "‏المعرف‏";
+"Info" = "‏المعلومات‏";
+"Profile info" = "‫معلومات الملف الشخصي‬";
+"Profile link" = "‏رابط الملف الشخصي‏";
+"Picture not found" = "‏الصورة غير موجودة‏";
+"Private profile" = "‏ملف شخصي خاص‏";
+"Profile unavailable" = "‏الملف الشخصي غير متاح‏";
+"Public profile" = "‏ملف شخصي عام‏";
+"Username" = "‏اسم المستخدم‏";
+"Followers: %@" = "‏المتابِعون: %@‏";
+"Following: %@" = "‏المتابَعون: %@‏";
+"Copied %@" = "‏تم نسخ %@‏";
 
-////////////////////////////////////////////////////////////////////////
-//                          PHASE 1 FOLLOW-UPS                              //
+//////////////////////////////////////////////////////////////////////////////
+//                                 GALLERY                                  //
+// On-device media library: enable + save mode, browsing, filters, sort,    //
+// delete tools, picker entries, and the Photos/Gallery download submenu.   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Long-press gestures" = "Long-press gestures";
-"Inserts a button in the profile navigation header" = "Inserts a button in the profile navigation header";
-"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu.";
-"Download all to Gallery?" = "Download all to Gallery?";
-"Download all to Photos?" = "Download all to Photos?";
-"Nothing to download" = "Nothing to download";
-
-////////////////////////////////////////////////////////////////////////
-//                              GALLERY                                     //
-// On-device media library + save mode preferences.                         //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browse, filter, sort, delete saved media" = "Browse, filter, sort, delete saved media";
-"Enable gallery" = "Enable gallery";
-"Gallery" = "Gallery";
-"Gallery only" = "Gallery only";
-"On-device library of everything you've downloaded through RyukGram" = "On-device library of everything you've downloaded through RyukGram";
-"Open Gallery" = "Open Gallery";
-"Photos + Gallery" = "Photos + Gallery";
-"Photos only" = "Photos only";
-"Save mode" = "Save mode";
-"Save to Gallery?" = "Save to Gallery?";
-"Saved to Gallery" = "Saved to Gallery";
-"Show gallery entries in download menus and unlock the library page below" = "Show gallery entries in download menus and unlock the library page below";
-"When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search." = "When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search.";
-"Where 'Download to Photos' actually writes when gallery is on" = "Where 'Download to Photos' actually writes when gallery is on";
-
-////////////////////////////////////////////////////////////////////////
-//                          GALLERY (PHASE 2.1)                             //
-//////////////////////////////////////////////////////////////////////////////
-
-"Gallery save mode" = "Gallery save mode";
+"Enable gallery" = "‏تفعيل المعرض‏";
+"Show gallery entries in download menus and unlock the gallery button" = "‏إظهار خيارات المعرض في قوائم التنزيل وفتح زر المعرض‏";
+"Gallery" = "‏المعرض‏";
+"Gallery Settings" = "‏إعدادات المعرض‏";
+"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "‏مكتبة على الجهاز للوسائط التي تم تنزيلها عبر ريوك غرام. يحدد وضع الحفظ المكان الذي يكتب فيه 'تنزيل إلى الصور' فعليًا.‏";
 "Hold DM tab to open gallery" = "‫اضغط على تبويب الرسائل لفتح المعرض‬";
 "Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "‫اضغط مطولاً على زر الرسائل في شريط التبويب السفلي لفتح معرض ريوك غرام‬";
+"Gallery save mode" = "‏وضع الحفظ في المعرض‏";
+"Where 'Download to Photos' actually writes when gallery is on" = "‏المكان الذي يكتب فيه 'تنزيل إلى الصور' فعليًا عند تفعيل المعرض‏";
+"Photos only" = "‏الصور فقط‏";
+"Gallery only" = "‏المعرض فقط‏";
+"Photos + Gallery" = "‏الصور + المعرض‏";
+"Save to Gallery?" = "‏حفظ في المعرض؟‏";
+"Saved to Gallery" = "‏تم الحفظ في المعرض‏";
+"Save all to Gallery?" = "‏حفظ الكل في المعرض؟‏";
+"Saved %lu items to Gallery" = "‏تم حفظ %lu من العناصر في المعرض‏";
+"Saving to Gallery..." = "‏جارِ الحفظ في المعرض...‏";
+"to Gallery" = "‏إلى المعرض‏";
+"Browsing" = "‏التصفح‏";
+"Manage" = "‏إدارة‏";
+"Storage" = "‏التخزين‏";
+"Total files" = "‏إجمالي الملفات‏";
+"Total size" = "‏الحجم الإجمالي‏";
+"Show favorites at top" = "‏إظهار المفضلة في الأعلى‏";
+"When enabled, favorites are pinned above other files inside the current sort and folder context." = "‏عند التفعيل، يتم تثبيت المفضلة فوق الملفات الأخرى ضمن سياق الفرز والمجلد الحالي.‏";
+"Images" = "‏الصور‏";
+"Videos" = "‏الفيديوهات‏";
+"GIFs" = "‏صور جيف (GIFs)‏";
+"Options" = "‏الخيارات‏";
+"Clear filters" = "‏مسح المرشحات‏";
+"Favorites only" = "‏المفضلة فقط‏";
+"By source" = "‏حسب المصدر‏";
+"By type" = "‏حسب النوع‏";
+"By user" = "‏حسب المستخدم‏";
+"Source" = "‏المصدر‏";
+"Source user" = "‏المستخدم المصدر‏";
+"Type" = "‏النوع‏";
+"Search users" = "‏بحث عن المستخدمين‏";
+"Newest first" = "‏الأحدث أولاً‏";
+"Largest first" = "‏الأكبر أولاً‏";
+"Smallest first" = "‏الأصغر أولاً‏";
+"Name A-Z" = "‏الاسم أ-ي‏";
+"Name Z-A" = "‏الاسم ي-أ‏";
+"Images first" = "‏الصور أولاً‏";
+"Videos first" = "‏الفيديوهات أولاً‏";
+"Delete files" = "‏حذف الملفات‏";
+"Delete %@?" = "‏حذف %@؟‏";
+"Delete from Gallery?" = "‏حذف من المعرض؟‏";
+"Deleted from Gallery" = "‏تم الحذف من المعرض‏";
+"This will permanently remove this file from the gallery." = "‏سيؤدي هذا إلى إزالة هذا الملف نهائيًا من المعرض.‏";
+"This will permanently remove %ld file(s)." = "‏سيؤدي هذا إلى إزالة %ld من الملفات نهائيًا.‏";
+"Delete all files" = "‏حذف جميع الملفات‏";
+"Delete all images" = "‏حذف جميع الصور‏";
+"Delete all videos" = "‏حذف جميع الفيديوهات‏";
+"Delete by user" = "‏حذف حسب المستخدم‏";
+"Delete feed posts" = "‏حذف منشورات اليوميات‏";
+"Delete profile pictures" = "‏حذف صور الملف الشخصي‏";
+"Delete reels" = "‏حذف ريلز‏";
+"Delete stories" = "‏حذف القصص‏";
+"Delete thumbnails" = "‏حذف الصور المصغّرة‏";
+"Delete DM media" = "‏حذف وسائط الرسائل الخاصة‏";
+"All files deleted" = "‏تم حذف جميع الملفات‏";
+"Files deleted" = "‏تم حذف الملفات‏";
+"Images deleted" = "‏تم حذف الصور‏";
+"Videos deleted" = "‏تم حذف الفيديوهات‏";
+"Feed posts deleted" = "‏تم حذف منشورات اليوميات‏";
+"Profile pictures deleted" = "‏تم حذف صور الملف الشخصي‏";
+"Reels deleted" = "‏تم حذف ريلز‏";
+"Stories deleted" = "‏تم حذف القصص‏";
+"Thumbnails deleted" = "‏تم حذف الصور المصغّرة‏";
+"DM media deleted" = "‏تم حذف وسائط الرسائل الخاصة‏";
+"User files deleted" = "‏تم حذف ملفات المستخدم‏";
+"No files to delete" = "‏لا توجد ملفات للحذف‏";
+"Failed" = "‏فشل‏";
+"Failed to delete" = "‏فشل الحذف‏";
+"Unable to open original post" = "‏تعذر فتح المنشور الأصلي‏";
+"Unable to open profile" = "‏تعذر فتح الملف الشخصي‏";
+"Unknown user" = "‏مستخدم غير معروف‏";
+"(unknown)" = "‏(غير معروف)‏";
+"The original content may no longer exist." = "‫قد لا يكون المحتوى الأصلي موجوداً بعد الآن.‬";
+"Select All" = "‫تحديد الكل‬";
+"Deselect All" = "‫إلغاء تحديد الكل‬";
+"Share selected" = "‏مشاركة المحدد‏";
+"Move selected" = "‏نقل المحدد‏";
+"Favorite selected" = "‏تفضيل المحدد‏";
+"Delete selected" = "‏حذف المحدد‏";
+"Deleted selected files" = "‫تم حذف الملفات المحددة‬";
+"List view" = "‏عرض قائمة‏";
+"Grid view" = "‏عرض شبكي‏";
+"More" = "‏المزيد‏";
+"Favorite" = "‏تفضيل‏";
+"Unfavorite" = "‏إلغاء التفضيل‏";
+"Rename" = "‏إعادة تسمية‏";
+"Move to Folder" = "‏نقل إلى مجلد‏";
+"Open Original Post" = "‏فتح المنشور الأصلي‏";
+"Open Profile" = "‏فتح الملف الشخصي‏";
+"No files in Gallery" = "‏لا توجد ملفات في المعرض‏";
+"Save media from the preview screen\nto see it here." = "‏احفظ الوسائط من شاشة المعاينة\nلتظهر هنا.‏";
+"No matching files" = "‏لا توجد ملفات مطابقة‏";
+"Delete Selected Files?" = "‏حذف الملفات المحددة؟‏";
+"This will permanently remove %ld file%@ from the gallery." = "‏سيؤدي هذا إلى إزالة %ld %@ نهائيًا من المعرض.‏";
+"New Folder" = "‏مجلد جديد‏";
+"New folder…" = "‏مجلد جديد…‏";
+"Folder name" = "‏اسم المجلد‏";
+"Create" = "‏إنشاء‏";
+"Create & Move" = "‏إنشاء ونقل‏";
+"Rename Folder" = "‏إعادة تسمية المجلد‏";
+"Delete Folder" = "‏حذف المجلد‏";
+"Delete Folder?" = "‏حذف المجلد؟‏";
+"This folder is empty." = "‏هذا المجلد فارغ.‏";
+"This folder contains %ld file(s). They will be moved to the parent folder." = "‏يحتوي هذا المجلد على %ld من الملفات. سيتم نقلها إلى المجلد الأصلي.‏";
+"Root" = "‏الجذر‏";
+"DMs" = "‏الرسائل‏";
+"Thumb" = "‏مصغّرة‏";
+"Story" = "‏القصة‏";
+"Comment" = "‏تعليق‏";
+"Other" = "‏أخرى‏";
+"Pick audio" = "‏اختيار صوت‏";
+"Audio from RyukGram Gallery" = "‏صوت من معرض ريوك غرام‏";
+"Share" = "‏مشاركة‏";
+
+//////////////////////////////////////////////////////////////////////////////
+//                              HOME SHORTCUT                               //
+// Extra button on the home top bar (right of the create-post +) — picks    //
+// between Gallery, Changelog, etc. Configure-screen and the row reorderer. //
+//////////////////////////////////////////////////////////////////////////////
+
 "Home shortcut button" = "‫زر اختصار الصفحة الرئيسية‬";
-"Changelog" = "‫سجل التغييرات‬";
-"Show gallery entries in download menus and unlock the gallery button" = "Show gallery entries in download menus and unlock the gallery button";
-"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (PHASE 2 REVAMP)                           //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browsing" = "Browsing";
-"Clear filters" = "Clear filters";
-"Delete files" = "Delete files";
-"Favorites only" = "Favorites only";
-"Gallery Settings" = "Gallery Settings";
-"Images" = "Images";
-"Manage" = "Manage";
-"Show favorites at top" = "Show favorites at top";
-"Storage" = "Storage";
-"Total files" = "Total files";
-"Total size" = "Total size";
-"Videos" = "Videos";
-"When enabled, favorites are pinned above other files inside the current sort and folder context." = "When enabled, favorites are pinned above other files inside the current sort and folder context.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DELETE + REVAMP 2)                        //
-//////////////////////////////////////////////////////////////////////////////
-
-"All files deleted" = "All files deleted";
-"By source" = "By source";
-"By type" = "By type";
-"By user" = "By user";
-"DM media deleted" = "DM media deleted";
-"Delete %@?" = "Delete %@?";
-"Delete DM media" = "Delete DM media";
-"Delete all files" = "Delete all files";
-"Delete all images" = "Delete all images";
-"Delete all videos" = "Delete all videos";
-"Delete by user" = "Delete by user";
-"Delete feed posts" = "Delete feed posts";
-"Delete profile pictures" = "Delete profile pictures";
-"Delete reels" = "Delete reels";
-"Delete stories" = "Delete stories";
-"Delete thumbnails" = "Delete thumbnails";
-"Feed posts deleted" = "Feed posts deleted";
-"Files deleted" = "Files deleted";
-"Images deleted" = "Images deleted";
-"No files to delete" = "No files to delete";
-"Profile pictures deleted" = "Profile pictures deleted";
-"Reels deleted" = "Reels deleted";
-"Search..." = "Search...";
-"Stories deleted" = "Stories deleted";
-"This will permanently remove %ld file(s)." = "This will permanently remove %ld file(s).";
-"Thumbnails deleted" = "Thumbnails deleted";
-"Unable to open original post" = "Unable to open original post";
-"Unable to open profile" = "Unable to open profile";
-"Unknown user" = "Unknown user";
-"User files deleted" = "User files deleted";
-"Videos deleted" = "Videos deleted";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (SORT + FILTER)                            //
-//////////////////////////////////////////////////////////////////////////////
-
-"Images first" = "Images first";
-"Largest first" = "Largest first";
-"Name A-Z" = "Name A-Z";
-"Name Z-A" = "Name Z-A";
-"Newest first" = "Newest first";
-"Oldest first" = "Oldest first";
-"Options" = "Options";
-"Smallest first" = "Smallest first";
-"Source" = "Source";
-"Source user" = "Source user";
-"Type" = "Type";
-"Videos first" = "Videos first";
-
+"Adds a button to the home top bar, right of the create-post +. Off entirely turns it off." = "‏يضيف زرًا إلى الشريط العلوي للصفحة الرئيسية، يمين زر إنشاء المنشور +. الإيقاف يعطّله كليًا.‏";
 "Configure the extra button on the home top bar" = "‫اضبط الزر الإضافي في الشريط العلوي للصفحة الرئيسية‬";
 "Show button" = "‫إظهار الزر‬";
-"Icon" = "‫الأيقونة‬";
-
 "Auto" = "‫تلقائي‬";
+"Icon" = "‫الأيقونة‬";
 "Drag the ≡ handle to reorder. Toggle a row off to hide that destination. With one action enabled tapping fires it; with two or more, tapping presents a menu." = "‫اسحب مقبض ≡ لإعادة الترتيب. أوقف صفًا لإخفاء تلك الوجهة. عند تفعيل إجراء واحد ينفذه الضغط؛ عند تفعيل اثنين أو أكثر يعرض الضغط قائمة.‬";
-
-"Copy all info" = "‫نسخ كل المعلومات‬";
-"profile info" = "‫معلومات الملف الشخصي‬";
-
-"Start media muted" = "‫بدء الوسائط بدون صوت‬";
-"Expanded videos open with sound off" = "‫تُفتح مقاطع الفيديو الموسعة بدون صوت‬";
-
-"Enhanced media resolution" = "‫دقة وسائط محسّنة‬";
-"Spoof device profile so IG serves higher-quality images" = "‫انتحل ملف الجهاز ليقدم إنستغرام صورًا أعلى جودة‬";
-
-"Media saving" = "‫حفظ الوسائط‬";
-
-//////////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DOWNLOAD MENU + PICKERS)                  //
-//////////////////////////////////////////////////////////////////////////////
-
-"GIFs" = "GIFs";
-"to Gallery" = "to Gallery";
-"Share" = "Share";
-"Pick audio" = "Pick audio";
-"Audio from RyukGram Gallery" = "Audio from RyukGram Gallery";
-"Main feed" = "Main feed";
-"Choose Instagram's default feed or force the Following feed" = "Choose Instagram's default feed or force the Following feed";
-"Following feed mode (from InstaSane)" = "Following feed mode (from InstaSane)";
+"Changelog" = "‫سجل التغييرات‬";

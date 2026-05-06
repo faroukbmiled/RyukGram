@@ -285,7 +285,7 @@ static inline UIImage *SCIIcon(NSString *name) {
 - (void)showBulkProgress:(NSUInteger)completed total:(NSUInteger)total {
 	NSUInteger safeTotal = MAX(total, 1);
 
-	self.textLabel.text = [NSString stringWithFormat:@"Downloading %lu of %lu", (unsigned long)MIN(completed + 1, safeTotal), (unsigned long)safeTotal];
+	self.textLabel.text = [NSString stringWithFormat:SCILocalized(@"Downloading %lu of %lu"), (unsigned long)MIN(completed + 1, safeTotal), (unsigned long)safeTotal];
 	self.subtitleLabel.text = SCILocalized(@"Tap to cancel");
 	self.subtitleLabel.hidden = NO;
 	self.progressBar.hidden = NO;
@@ -313,7 +313,7 @@ static inline UIImage *SCIIcon(NSString *name) {
 	[self sciSetIcon:@"arrow.down.to.line.circle.fill" color:nil];
 	self.textLabel.text = top.title ?: SCILocalized(@"Downloading...");
 	self.subtitleLabel.hidden = NO;
-	self.subtitleLabel.text = self.slots.count > 1 ? [NSString stringWithFormat:@"%lu active • tap to cancel", (unsigned long)self.slots.count] : SCILocalized(@"Tap to cancel");
+	self.subtitleLabel.text = self.slots.count > 1 ? [NSString stringWithFormat:SCILocalized(@"%lu active • tap to cancel"), (unsigned long)self.slots.count] : SCILocalized(@"Tap to cancel");
 	self.progressBar.hidden = NO;
 	[self.progressBar setProgress:SCIClamp(top.progress) animated:YES];
 }
@@ -476,7 +476,7 @@ static inline UIImage *SCIIcon(NSString *name) {
 	float safeProgress = SCIClamp(progress);
 
 	[self.pill updateTicket:self.ticketId progress:safeProgress];
-	[self.pill updateTicket:self.ticketId text:[NSString stringWithFormat:@"Downloading %d%%", (int)(safeProgress * 100.0f)]];
+	[self.pill updateTicket:self.ticketId text:[NSString stringWithFormat:SCILocalized(@"Downloading %d%%"), (int)(safeProgress * 100.0f)]];
 }
 
 - (void)downloadDidFinishWithError:(NSError *)error {

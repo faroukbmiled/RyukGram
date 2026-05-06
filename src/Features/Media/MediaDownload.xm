@@ -68,7 +68,7 @@ static BOOL sciLegacyGestureEnabled() {
     }
 
     NSURL *photoUrl = [SCIUtils getPhotoUrl:photo];
-    if (!photoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract photo url from post")]; return; }
+    if (!photoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract photo URL")]; return; }
 
     initDownloaders();
     [imageDownloadDelegate downloadFileWithURL:photoUrl
@@ -93,7 +93,7 @@ static BOOL sciLegacyGestureEnabled() {
     if (sender && sender.state != UIGestureRecognizerStateBegan) return;
 
     NSURL *videoUrl = [SCIUtils getVideoUrlForMedia:[self mediaCellFeedItem]];
-    if (!videoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video url from post")]; return; }
+    if (!videoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video URL")]; return; }
 
     initDownloaders();
     [videoDownloadDelegate downloadFileWithURL:videoUrl
@@ -121,7 +121,7 @@ static BOOL sciLegacyGestureEnabled() {
     if (sender.state != UIGestureRecognizerStateBegan) return;
 
     NSURL *photoUrl = [SCIUtils getPhotoUrlForMedia:[self item]];
-    if (!photoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract photo url from story")]; return; }
+    if (!photoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract photo URL")]; return; }
 
     initDownloaders();
     [imageDownloadDelegate downloadFileWithURL:photoUrl
@@ -146,7 +146,7 @@ static BOOL sciLegacyGestureEnabled() {
     if (sender.state != UIGestureRecognizerStateBegan) return;
 
     NSURL *videoUrl = [SCIUtils getVideoUrlForMedia:self.item];
-    if (!videoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video url from story")]; return; }
+    if (!videoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video URL")]; return; }
 
     initDownloaders();
     [videoDownloadDelegate downloadFileWithURL:videoUrl
@@ -199,7 +199,7 @@ static BOOL sciLegacyGestureEnabled() {
 		videoUrl = [SCIUtils getVideoUrl:rawVideo];
 	}
 	if (!videoUrl) {
-		[SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video url from story")];
+		[SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video URL")];
 		return;
 	}
 	initDownloaders();
@@ -230,7 +230,7 @@ static BOOL sciLegacyGestureEnabled() {
         if (!_photo) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not access reel photo")]; return; }
 
         NSURL *photoUrl = [SCIUtils getPhotoUrl:_photo];
-        if (!photoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract photo url from reel")]; return; }
+        if (!photoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract photo URL")]; return; }
 
         initDownloaders();
         [imageDownloadDelegate downloadFileWithURL:photoUrl
@@ -277,7 +277,7 @@ static BOOL sciLegacyGestureEnabled() {
         if (!media) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not access reel media")]; return; }
 
         NSURL *videoUrl = [SCIUtils getVideoUrlForMedia:media];
-        if (!videoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video url from reel")]; return; }
+        if (!videoUrl) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video URL")]; return; }
 
         initDownloaders();
         [videoDownloadDelegate downloadFileWithURL:videoUrl
@@ -350,6 +350,6 @@ static BOOL sciLegacyGestureEnabled() {
     initDownloaders();
     [imageDownloadDelegate downloadFileWithURL:imageUrl
                                  fileExtension:[[imageUrl lastPathComponent] pathExtension]
-                                      hudLabel:@"Loading"];
+                                      hudLabel:SCILocalized(@"Loading")];
 }
 %end

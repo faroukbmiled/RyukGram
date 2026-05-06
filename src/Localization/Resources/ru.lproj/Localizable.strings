@@ -67,11 +67,9 @@
 "settings.firstrun.title" = "Информация о настройках RyukGram";
 "settings.language.english_only" = "Сейчас RyukGram поставляется только с английским языком. Другие языки уже подключены и ждут перевода — помочь перевести приложение на свой язык можно по короткой инструкции в README.";
 "settings.language.help_translate" = "Помочь с переводом";
-"settings.language.ok" = "ОК";
 "settings.language.system" = "Системный язык";
 "settings.language.title" = "Язык";
 "settings.results.many" = "%lu результатов";
-"settings.results.none" = "Нет результатов";
 "settings.results.one" = "%lu результат";
 "settings.search.placeholder" = "Поиск по настройкам";
 "settings.title" = "Настройки RyukGram";
@@ -208,6 +206,8 @@
 "Action button" = "Кнопка действий";
 "Adds 'View profile picture' and 'View cover' to story tray long-press menus" = "Добавляет пункты \"Посмотреть фото профиля\" и \"Посмотреть обложку\" в меню удержания панели историй";
 "Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Добавляет кнопку действий RyukGram под каждым постом в ленте с пунктами скачать/поделиться/копировать/развернуть/репост. По умолчанию нажатие открывает меню; поведение можно изменить ниже.";
+"Choose Instagram's default feed or force the Following feed" = "Выберите ленту Instagram по умолчанию или принудительно используйте ленту Подписки";
+"Main feed" = "Главная лента";
 "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "Управляет тем, когда и как обновляется лента. Фоновое обновление срабатывает при возврате в приложение примерно через 10 минут. Обновление кнопкой Home срабатывает при нажатии на вкладку Home, когда вы уже на ней.";
 "Default tap action" = "Действие по нажатию";
 "Disable background refresh" = "Отключить фоновое обновление";
@@ -226,6 +226,11 @@
 "Hides the story tray at the top" = "Скрывает панель историй сверху";
 "Inserts a button row below like/comment/share on each post" = "Добавляет ряд кнопок под лайком/комментарием/поделиться у каждого поста";
 "Long press on media to expand in full-screen viewer" = "Удерживайте медиа, чтобы открыть во весь экран";
+"Start media muted" = "Запускать медиа без звука";
+"Expanded videos open with sound off" = "Развёрнутые видео открываются без звука";
+"Enhanced media resolution" = "Улучшенное разрешение медиа";
+"Media saving" = "Сохранение медиа";
+"Spoof device profile so IG serves higher-quality images" = "Подменяет профиль устройства, чтобы IG отдавал изображения высшего качества";
 "Media" = "Медиа";
 "Media zoom" = "Увеличение медиа";
 "No suggested for you" = "Без рекомендаций для вас";
@@ -241,10 +246,20 @@
 "Scroll to top without refreshing when tapping Home" = "Прокручивать вверх без обновления при нажатии Home";
 "Show action button" = "Показывать кнопку действий";
 "Show date" = "Показывать дату";
-"Adds the date as a small header at the top of the action menu" = "Добавляет дату в виде небольшого заголовка в верхней части меню действий";
 "Stories tray" = "Панель историй";
 "Tapping Home does nothing when already on feed" = "Нажатие Home ничего не делает, если вы уже в ленте";
 "Tray long-press actions" = "Действия удержания на панели";
+
+"Composer doesn't accept GIFs" = "Поле комментария не принимает GIF";
+"Copy GIF link" = "Копировать ссылку GIF";
+"Custom GIF in comments" = "Свой GIF в комментариях";
+"Failed to build GIF model" = "Не удалось создать модель GIF";
+"GIF link copied" = "Ссылка GIF скопирована";
+"Invalid Giphy URL" = "Неверная ссылка Giphy";
+"Long-press the GIF button to paste any Giphy URL" = "Удерживайте кнопку GIF, чтобы вставить любую ссылку Giphy";
+"Paste Giphy Link" = "Вставить ссылку Giphy";
+"Paste a giphy.com URL or media ID" = "Вставьте ссылку giphy.com или ID медиа";
+"Send" = "Отправить";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
@@ -292,7 +307,6 @@
 // Settings → Profile tab                                                   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Adds a button next to the burger menu on profiles to copy username, name or bio" = "Добавляет кнопку рядом с меню на профиле для копирования имени пользователя, имени или био";
 "Adds a view option to the highlight long-press menu to open the cover in full-screen" = "Добавляет пункт просмотра в меню удержания хайлайта, чтобы открыть обложку во весь экран";
 "Copy note on long press" = "Копировать заметку по удержанию";
 "Fake follower count" = "Поддельное число подписчиков";
@@ -309,7 +323,6 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "Жесты долгого нажатия на элементы профиля — отдельно от кнопок действий конкретных функций.";
 "Only affects your own profile header. Other users see the real numbers." = "Влияет только на заголовок вашего собственного профиля. Другие пользователи видят реальные числа.";
 "Post count" = "Число публикаций";
-"Profile copy button" = "Кнопка копирования в профиле";
 "Save profile picture" = "Сохранить фото профиля";
 "Show a checkmark next to your name on your own profile" = "Показывать галочку рядом с вашим именем в вашем профиле";
 "Shows whether the profile user follows you" = "Показывает, подписан ли пользователь профиля на вас";
@@ -335,7 +348,6 @@
 "Route saves into a dedicated album in Photos instead of the camera roll root" = "Сохранять в отдельный альбом в Фото вместо корня медиатеки";
 "Save action" = "Действие после сохранения";
 "Save to RyukGram album" = "Сохранять в альбом RyukGram";
-"Saving" = "Сохранение";
 "Show a confirmation dialog before starting a download" = "Показывать подтверждение перед началом скачивания";
 "What happens after the gesture downloads" = "Что происходит после скачивания жестом";
 "When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library." = "Когда включено \"Сохранять в альбом RyukGram\", скачивания и команда \"Сохранить в Фото\" из меню \"Поделиться\" будут сохраняться в отдельный альбом \"RyukGram\" в вашей медиатеке Фото.";
@@ -371,15 +383,14 @@
 "Marks a story as seen when you send a reply or emoji reaction, even with seen blocking on" = "Отмечает историю как просмотренную при отправке ответа или реакции эмодзи, даже если блокировка просмотров включена";
 "Marks stories as seen locally (grey ring) while still blocking the seen receipt on the server" = "Помечает истории как просмотренные локально (серое кольцо), при этом блокируя уведомление о просмотре на сервере";
 "Master toggle. When off, the list is ignored" = "Главный переключатель. Когда выключен, список игнорируется";
-"Other" = "Другое";
 "Playback" = "Воспроизведение";
 "Quick list button in stories" = "Кнопка быстрого списка в историях";
 "Search, sort, swipe to remove" = "Поиск, сортировка, свайп для удаления";
 "Seen receipts" = "Уведомления о просмотре";
 "Sending a reply or emoji reaction automatically advances to the next story" = "Отправка ответа или реакции эмодзи автоматически переключает на следующую историю";
-"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "Adds a 'View mentions' entry to the action button menu and story 3-dot menu";
-"Mentions overlay button" = "Mentions overlay button";
-"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels";
+"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "Добавляет пункт «Показать упоминания» в меню кнопки действий и в меню истории с тремя точками";
+"Mentions overlay button" = "Кнопка упоминаний поверх истории";
+"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "Добавляет кнопку рядом с кнопкой действия/глаза на оверлее истории. Появляется только если в текущей истории есть упоминания или прикреплённые посты/рилсы";
 "Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "Показывает кнопку глаза в историях для добавления и удаления пользователей из списка. Выкл. = только меню с тремя точками или долгое нажатие";
 "Stickers" = "Стикеры";
 "Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "Смотрите результаты опросов/викторин/слайдера до взаимодействия — вы по-прежнему можете нажать для голосования. «Принудительно добавить устаревшие» возвращает стикеры викторины и «Раскрыть» в редактор истории.";
@@ -423,8 +434,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Activity" = "Активность";
-"Allows typing and sending DMs longer than Instagram's limit" = "Позволяет вводить и отправлять сообщения длиннее лимита Instagram";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "Добавляет пункт \"Скачать\" в меню удержания голосовых сообщений, чтобы сохранять их как аудио M4A";
+"Allows typing and sending DMs longer than Instagram's limit" = "Позволяет вводить и отправлять сообщения длиннее лимита Instagram";
 "Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram" = "Добавляет пункт \"Отправить файл\" в меню плюса в DM. Поддерживаемые типы файлов могут быть ограничены Instagram";
 "Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages" = "Добавляет пункт \"Аудиофайл\" в меню плюса в DM для отправки аудиофайлов как голосовых сообщений";
 "Adds copy text, download GIF/audio to the note long-press menu" = "Добавляет копирование текста и скачивание GIF/аудио в меню удержания заметки";
@@ -465,7 +476,6 @@
 "Keep deleted messages" = "Сохранять удалённые сообщения";
 "Makes view-once messages behave like normal visual messages (loopable/pauseable)" = "Делает сообщения view-once похожими на обычные визуальные сообщения (можно зациклить/поставить на паузу)";
 "Note actions" = "Действия с заметками";
-"Preserve messages that others unsend" = "Сохранять сообщения, которые другие отзывают";
 "Preserves messages that others unsend" = "Сохраняет сообщения, которые другие отзывают";
 "Prevents accidental swipe-up activation of vanish mode" = "Предотвращает случайное включение режима Vanish свайпом вверх";
 "Quick list button in chats" = "Кнопка быстрого списка в чатах";
@@ -577,7 +587,7 @@
 "Shows an alert when you click the like button on reels to confirm the like" = "Показывает подтверждение при нажатии кнопки лайка на рилсах";
 "Shows an alert when you click the like button on stories to confirm the like" = "Показывает подтверждение при нажатии кнопки лайка на историях";
 "Shows an alert when you click the post comment button to confirm" = "Показывает подтверждение при нажатии кнопки отправки комментария";
-"Shows an alert when you click the repost button to confirm before resposting" = "Показывает подтверждение при нажатии кнопки репоста перед повторной публикацией";
+"Shows an alert when you click the repost button to confirm before reposting" = "Показывает подтверждение при нажатии кнопки репоста перед повторной публикацией";
 "Shows an alert when you click the unfollow button to confirm" = "Показывает подтверждение при нажатии кнопки отписки";
 
 //////////////////////////////////////////////////////////////////////////////
@@ -586,12 +596,12 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Backup & Restore" = "Резервная копия и восстановление";
-
 "Clear selected data" = "Очистить выбранные данные";
 "Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page." = "Экспортируйте или импортируйте настройки RyukGram, списки исключений и данные Анализатора профилей. Выберите любую комбинацию на каждой странице.";
 "Import" = "Импорт";
 "Load from a JSON file" = "Загрузить из файла JSON";
 "Save to a JSON file" = "Сохранить в файл JSON";
+
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
 // Settings → Advanced tab                                                  //
@@ -606,7 +616,6 @@
 "Clear" = "Очистить";
 "Clear cache" = "Очистить кэш";
 "Clear cache (%@)" = "Очистить кэш (%@)";
-"Clear cache?" = "Очистить кэш?";
 "Clearing cache…" = "Очистка кэша…";
 "Clearing still scans on demand." = "Очистка по-прежнему сканирует по запросу.";
 "Daily" = "Ежедневно";
@@ -729,11 +738,9 @@
 "Could not extract photo URL" = "Не удалось извлечь URL фото";
 "Could not extract video URL" = "Не удалось извлечь URL видео";
 "Done" = "Готово";
-"Download all (%lu)" = "Скачать всё (%lu)";
 "Download all stories and share?" = "Скачать все истории и поделиться?";
 "Download all to Photos" = "Скачать всё в Фото";
 "Download and share all" = "Скачать всё и поделиться";
-"Download and share?" = "Скачать и поделиться?";
 "Download failed" = "Ошибка скачивания";
 "Downloaded %lu items" = "Скачано элементов: %lu";
 "Downloading %@..." = "Скачивание %@...";
@@ -761,9 +768,7 @@
 "Preparing repost..." = "Подготовка репоста...";
 "Repost" = "Репост";
 "Repost unavailable" = "Репост недоступен";
-"Save all stories to Photos?" = "Сохранить все истории в Фото?";
 "Save failed" = "Ошибка сохранения";
-"Save to Photos?" = "Сохранить в Фото?";
 "Saved %lu items" = "Сохранено элементов: %lu";
 "Saved to Photos" = "Сохранено в Фото";
 "Saved to RyukGram" = "Сохранено в RyukGram";
@@ -785,7 +790,6 @@
 "Message from %@ was unsent" = "Сообщение от %@ было отозвано";
 "Add" = "Добавить";
 "Add to block list" = "Добавить в список блокировки";
-"Add to block list?" = "Добавить в список блокировки?";
 "Added to block list" = "Добавлено в список блокировки";
 "Added to exclude list" = "Добавлено в список исключений";
 "Audio not loaded yet. Play the message first and try again." = "Аудио ещё не загружено. Сначала воспроизведите сообщение и попробуйте снова.";
@@ -801,10 +805,8 @@
 "Could not find media" = "Не удалось найти медиа";
 "Could not find story media" = "Не удалось найти медиа истории";
 "Could not get audio data. Try again after refreshing the chat." = "Не удалось получить аудиоданные. Попробуйте снова после обновления чата.";
-"Could not get video URL" = "Не удалось получить URL видео";
 "Disable read receipts" = "Отключить уведомления о прочтении";
 "Disappearing media" = "Исчезающие медиа";
-"Done!" = "Готово!";
 "Download audio" = "Скачать аудио";
 "Downloading audio..." = "Скачивание аудио...";
 "Enable read receipts" = "Включить уведомления о прочтении";
@@ -848,7 +850,6 @@
 "Read receipts will no longer be blocked for this chat." = "Для этого чата уведомления о прочтении больше не будут блокироваться.";
 "Remove" = "Удалить";
 "Remove from block list" = "Убрать из списка блокировки";
-"Remove from block list?" = "Убрать из списка блокировки?";
 "Remove from exclude list" = "Удалить из списка исключений";
 "Removed" = "Удалено";
 "Removed from list" = "Удалено из списка";
@@ -868,7 +869,6 @@
 "%@ can't be converted" = "Не удалось преобразовать %@";
 "iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "Аудио API iOS не смогли обработать этот файл%@%@\n\nМожно попробовать отправить его в Instagram как есть — сервер IG может принять или тихо отклонить.\n\nЧтобы запросить нативную поддержку, создайте issue:";
 "Un-exclude chat" = "Убрать чат из исключений";
-"Un-exclude chat?" = "Убрать чат из исключений?";
 "Un-exclude story seen" = "Убрать просмотр истории из исключений";
 "Un-excluded" = "Исключение убрано";
 "Unblocked" = "Разблокировано";
@@ -898,9 +898,7 @@
 "Comments shown" = "Комментарии показаны";
 "Copied text to clipboard" = "Текст скопирован в буфер обмена";
 "Copy" = "Копировать";
-"Copy all" = "Копировать всё";
 "Copy bio" = "Копировать био";
-"Copy from profile" = "Копировать из профиля";
 "Copy name" = "Копировать имя";
 "Could not find cover image" = "Не удалось найти изображение обложки";
 "Current: %@" = "Текущее: %@";
@@ -922,12 +920,10 @@
 "Saved locations" = "Сохранённые местоположения";
 "Select color" = "Выбрать цвет";
 "Set location" = "Установить местоположение";
-"Settings…" = "Настройки…";
 "Turn Location Services on in Settings → Privacy to use your current location." = "Включите службы геолокации в Настройках → Конфиденциальность, чтобы использовать текущее местоположение.";
 "Type emoji..." = "Введите эмодзи...";
 
 "Theme" = "Тема";
-"Appearance" = "Оформление";
 "Light" = "Светлая";
 "Dark" = "Тёмная";
 "OLED" = "OLED";
@@ -949,7 +945,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE ANALYZER                              //
-// Settings → General → Profile Analyzer                                    //
+// Settings → Profile Analyzer                                              //
 //////////////////////////////////////////////////////////////////////////////
 
 "%lu followers · %lu following" = "%lu подписчиков · %lu подписок";
@@ -958,12 +954,11 @@
 "Analysis failed" = "Ошибка анализа";
 "Another analysis is already running" = "Другой анализ уже выполняется";
 "Available after your next scan" = "Доступно после следующего анализа";
-"Cancelled" = "Отменено";
+"Categories" = "Категории";
 "Couldn't fetch profile information" = "Не удалось получить информацию о профиле";
 "Fetching followers (%lu/%ld)…" = "Загрузка подписчиков (%lu/%ld)…";
 "Fetching following (%lu/%ld)…" = "Загрузка подписок (%lu/%ld)…";
 "Fetching profile info…" = "Загрузка информации профиля…";
-"Categories" = "Категории";
 "First scan: %@" = "Первый анализ: %@";
 "Follower count exceeds %ld — analysis disabled to avoid rate limits." = "Число подписчиков больше %ld — анализ отключён, чтобы не упереться в лимиты API.";
 "Gained since last scan" = "Появились с последнего анализа";
@@ -976,12 +971,7 @@
 "No active Instagram session found" = "Активная сессия Instagram не найдена";
 "No scan yet" = "Анализа ещё нет";
 "Not following you back" = "Не подписаны на вас в ответ";
-"OK" = "OK";
-"Updated %@ (%ld keys). Restart to apply." = "Обновлено %@ (%ld ключей). Перезапустите для применения.";
-"Restart now" = "Перезапустить сейчас";
-"File is empty or not a valid .strings file." = "Файл пуст или не является допустимым файлом .strings.";
-"Error" = "Ошибка";
-"Could not write file." = "Не удалось записать файл.";
+"OK" = "ОК";
 "Private account" = "Закрытый аккаунт";
 "Profile Analyzer" = "Анализ профиля";
 "Profile picture changed" = "Фото профиля изменено";
@@ -991,7 +981,6 @@
 "Reset analyzer data?" = "Сбросить данные анализа?";
 "Run analysis" = "Запустить анализ";
 "Run your first analysis" = "Запустите первый анализ";
-"Search username or name" = "Поиск по логину или имени";
 "Since last scan" = "С последнего анализа";
 "Starting…" = "Начинаем…";
 "They follow you, you don't follow back" = "Они подписаны на вас, вы — нет";
@@ -1048,8 +1037,8 @@
 "Inspect the full payload" = "Посмотреть полные данные";
 "Keep scan history" = "Сохранять историю анализов";
 "Large accounts are blocked: analysis is disabled above 13,000 followers to avoid Instagram rate-limiting the whole app." = "Большие аккаунты заблокированы: анализ отключён при количестве подписчиков больше 13 000, чтобы Instagram не ограничил всё приложение.";
-"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "Ничего не загружается — все данные остаются на этом устройстве и могут быть удалены по иконке корзины.";
 "Not verified only" = "Только неверифицированные";
+"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "Ничего не загружается — все данные остаются на этом устройстве и могут быть удалены по иконке корзины.";
 "Nothing was applied." = "Ничего не применено.";
 "Posts" = "Публикации";
 "Preferences" = "Настройки";
@@ -1074,8 +1063,29 @@
 "Username A → Z" = "Логин А → Я";
 "Username Z → A" = "Логин Я → А";
 "Verified only" = "Только верифицированные";
-"When on, scans compare against your first scan so new/lost followers and profile updates don't disappear between scans." = "Когда включено, каждый анализ сравнивается с первым — новые/потерянные подписчики и изменения профилей не теряются между анализами.";
-
+"Tracking" = "Отслеживание";
+"Visited profiles" = "Просмотренные профили";
+"Profiles you've opened recently" = "Недавно открытые профили";
+"Tracking off — enable below to log visits" = "Отслеживание выключено — включите ниже для записи посещений";
+"Track visited profiles" = "Отслеживать просмотренные профили";
+"Logs every profile you open. Stays on-device." = "Записывает каждый открываемый профиль. Хранится только на устройстве.";
+"Compare every scan against your first one" = "Сравнивать каждый анализ с первым";
+"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "«Сохранять историю» сравнивает каждый анализ с первым. «Отслеживать посещения» записывает каждый открытый профиль для просмотра здесь.";
+"just now" = "только что";
+"%dm ago" = "%d мин назад";
+"%dh ago" = "%d ч назад";
+"%dd ago" = "%d д назад";
+"Visited" = "Посещено";
+"Today" = "Сегодня";
+"Last 7 days" = "Последние 7 дней";
+"Last 30 days" = "Последние 30 дней";
+"Most recent" = "Сначала новые";
+"Oldest first" = "Сначала старые";
+"Most visited" = "Самые посещаемые";
+"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "Выберите, что удалить. Снимки удаляют изменения с последнего анализа; просмотренные профили очищают историю посещений.";
+"Reset snapshots" = "Сбросить снимки";
+"Clear visited profiles" = "Очистить просмотренные профили";
+"Reset everything" = "Сбросить всё";
 //////////////////////////////////////////////////////////////////////////////
 //                         SETTINGS VIEWS & DIALOGS                         //
 // Excluded-lists managers, backup/restore flows, in-picker labels.         //
@@ -1083,18 +1093,17 @@
 
 "Add chat" = "Добавить чат";
 "Add custom domain" = "Добавить свой домен";
-"Add preset…" = "Добавить пресет…";
 "Add to list?" = "Добавить в список?";
 "Add user" = "Добавить пользователя";
 "Apply" = "Применить";
 "Apply to" = "Применить к";
 "Chats" = "Чаты";
+"Colored" = "Цветной";
 "Could not read file." = "Не удалось прочитать файл.";
 "Could not resolve user ID" = "Не удалось определить ID пользователя";
 "Could not write temporary file." = "Не удалось записать временный файл.";
 "Current location" = "Текущее местоположение";
 "Custom" = "Свои";
-"Date Format" = "Формат даты";
 "Delete" = "Удалить";
 "Enable fake location" = "Включить поддельное местоположение";
 "Enter username" = "Введите имя пользователя";
@@ -1116,7 +1125,6 @@
 "No DM thread found with @%@" = "Диалог DM с @%@ не найден";
 "Off" = "Выкл.";
 "On" = "Вкл.";
-"Colored" = "Цветной";
 "Presets" = "Пресеты";
 "Recently added" = "Недавно добавленные";
 "Remove from list" = "Убрать из списка";
@@ -1175,23 +1183,37 @@
 "Copy video URL" = "Копировать URL видео";
 "Could not access reel media" = "Не удалось получить доступ к медиа рилса";
 "Could not access reel photo" = "Не удалось получить доступ к фото рилса";
-"Could not extract photo url from post" = "Не удалось извлечь URL фото из поста";
-"Could not extract photo url from reel" = "Не удалось извлечь URL фото из рилса";
-"Could not extract photo url from story" = "Не удалось извлечь URL фото из истории";
-"Could not extract video url from post" = "Не удалось извлечь URL видео из поста";
-"Could not extract video url from reel" = "Не удалось извлечь URL видео из рилса";
-"Could not extract video url from story" = "Не удалось извлечь URL видео из истории";
+"Could not write file." = "Не удалось записать файл.";
 "Download Quality" = "Качество загрузки";
+"Error" = "Ошибка";
 "Extras" = "Extras";
 "FFmpegKit Debug" = "Отладка FFmpegKit";
+"File is empty or not a valid .strings file." = "Файл пуст или не является допустимым файлом .strings.";
 "Later" = "Позже";
 "No!" = "Нет!";
-"OK" = "ОК";
 "Restart" = "Перезапустить";
+"Restart now" = "Перезапустить сейчас";
 "Restart required" = "Требуется перезапуск";
-"username" = "имя пользователя";
+"Updated %@ (%ld keys). Restart to apply." = "Обновлено %@ (%ld ключей). Перезапустите для применения.";
 "Yes" = "Да";
 "You must restart the app to apply this change" = "Чтобы применить это изменение, нужно перезапустить приложение";
+"Add language" = "Добавить язык";
+"Enter the language code (e.g. fr, de, ja)" = "Введите код языка (например, fr, de, ja)";
+"Update localization" = "Обновить локализацию";
+"Pick a language to update, or add a new one" = "Выберите язык для обновления или добавьте новый";
+"English .strings file not found" = "Английский файл .strings не найден";
+"Loading" = "Загрузка";
+"Next" = "Далее";
+"Preset" = "Пресет";
+"(unset)" = "(не задано)";
+"  • Keep-deleted: OFF" = "  • Хранить удалённые: ВЫКЛ.";
+"  • Keep-deleted: ON" = "  • Хранить удалённые: ВКЛ.";
+"KD: OFF" = "KD: ВЫКЛ.";
+"Downloading %lu of %lu" = "Скачивание %lu из %lu";
+"%lu active • tap to cancel" = "%lu активно • нажмите, чтобы отменить";
+"Downloading %d%%" = "Скачивание %d%%";
+"Download all and share?" = "Скачать всё и поделиться?";
+"Save all to Photos?" = "Сохранить всё в Фото?";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               ABOUT / CREDITS                            //
@@ -1210,6 +1232,7 @@
 "Portuguese (Brazil) translation" = "Перевод на португальский (Бразилия)";
 "Turkish translation" = "Турецкий перевод";
 "Code contributions" = "Вклад в код";
+"Following feed mode (from InstaSane)" = "Режим ленты Подписки (из InstaSane)";
 "latest" = "последняя";
 "Links" = "Ссылки";
 "No releases" = "Нет выпусков";
@@ -1220,8 +1243,8 @@
 "Russian translation" = "Русский перевод";
 "RyukGram developer" = "Разработчик RyukGram";
 "Join Telegram channel" = "Присоединиться к Telegram-каналу";
-"View on GitHub" = "Открыть на GitHub";
 "Source code" = "Исходный код";
+"View on GitHub" = "Открыть на GitHub";
 "Spanish translation" = "Испанский перевод";
 "Support the original SCInsta developer" = "Поддержать оригинального разработчика SCInsta";
 "Inspirations" = "Источники вдохновения";
@@ -1267,240 +1290,203 @@
 "Video quality" = "Качество видео";
 "Which quality to download" = "Какое качество скачивать";
 
-"Composer doesn't accept GIFs" = "Поле комментария не принимает GIF";
-"Copy GIF link" = "Копировать ссылку GIF";
-"Custom GIF in comments" = "Свой GIF в комментариях";
-"Failed to build GIF model" = "Не удалось создать модель GIF";
-"GIF link copied" = "Ссылка GIF скопирована";
-"Invalid Giphy URL" = "Неверная ссылка Giphy";
-"Long-press the GIF button to paste any Giphy URL" = "Удерживайте кнопку GIF, чтобы вставить любую ссылку Giphy";
-"Paste Giphy Link" = "Вставить ссылку Giphy";
-"Paste a giphy.com URL or media ID" = "Вставьте ссылку giphy.com или ID медиа";
-"Send" = "Отправить";
-
-"Tracking" = "Отслеживание";
-"Visited profiles" = "Просмотренные профили";
-"Profiles you've opened recently" = "Недавно открытые профили";
-"Tracking off — enable below to log visits" = "Отслеживание выключено — включите ниже для записи посещений";
-"Track visited profiles" = "Отслеживать просмотренные профили";
-"Logs every profile you open. Stays on-device." = "Записывает каждый открываемый профиль. Хранится только на устройстве.";
-"Compare every scan against your first one" = "Сравнивать каждый анализ с первым";
-"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "«Сохранять историю» сравнивает каждый анализ с первым. «Отслеживать посещения» записывает каждый открытый профиль для просмотра здесь.";
-"just now" = "только что";
-"%dm ago" = "%d мин назад";
-"%dh ago" = "%d ч назад";
-"%dd ago" = "%d д назад";
-"Visited" = "Посещено";
-"Today" = "Сегодня";
-"Last 7 days" = "Последние 7 дней";
-"Last 30 days" = "Последние 30 дней";
-"Most recent" = "Сначала новые";
-"Oldest first" = "Сначала старые";
-"Most visited" = "Самые посещаемые";
-"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "Выберите, что удалить. Снимки удаляют изменения с последнего анализа; просмотренные профили очищают историю посещений.";
-"Reset snapshots" = "Сбросить снимки";
-"Clear visited profiles" = "Очистить просмотренные профили";
-"Reset everything" = "Сбросить всё";
-
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //                          ACTION MENU CONFIG                              //
-// Configure-menu screen, profile action button, action catalog labels.    //
+// Profile action button: per-section toggles, reorder handles, default-tap //
+// behavior, reset confirmations, action catalog labels.                    //
 //////////////////////////////////////////////////////////////////////////////
 
-"Audio & visibility" = "Audio & visibility";
-"Bio" = "Bio";
-"bio" = "bio";
-"Bulk download" = "Bulk download";
-"Collapse this section's actions behind a single entry" = "Collapse this section's actions behind a single entry";
-"Configure: %@" = "Configure: %@";
-"Copied %@" = "Copied %@";
-"Copy ID" = "Copy ID";
-"Copy Info" = "Copy Info";
-"Copy media URL" = "Copy media URL";
-"Copy profile link" = "Copy profile link";
-"Copy username" = "Copy username";
-"DM disappearing media" = "DM disappearing media";
-"Download" = "Download";
-"Download all to Gallery" = "Download all to Gallery";
-"Download to Gallery" = "Download to Gallery";
-"Exclude/include user" = "Exclude/include user";
-"Feed settings" = "Feed settings";
-"Followers: %@" = "Followers: %@";
-"Following: %@" = "Following: %@";
+"Long-press gestures" = "Жесты длительного нажатия";
+"Inserts a button in the profile navigation header" = "Добавляет кнопку в навигационный заголовок профиля";
+"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Добавляет кнопку действий RyukGram в заголовок профиля с пунктами копирования, просмотра фото, поделиться, сохранить и сведения о профиле. По умолчанию нажатие открывает меню; поведение можно изменить в разделе «Настроить меню».";
+"Configure menu" = "Настроить меню";
+"Reorder, enable/disable, set default tap, show date" = "Изменение порядка, вкл./выкл., действие по умолчанию, показ даты";
+"Reorder, enable/disable, set default tap" = "Изменение порядка, вкл./выкл., действие по умолчанию";
+"RyukGram profile actions" = "Действия профиля RyukGram";
+"Reorder sections" = "Изменить порядок разделов";
+"Drag the ≡ handle to reorder sections." = "Перетаскивайте маркер ≡, чтобы изменить порядок разделов.";
+"Drag the ≡ handle to reorder. Toggle a row off to hide it from the menu. Mark a section as a submenu to collapse its actions behind a single entry." = "Перетаскивайте маркер ≡, чтобы изменить порядок. Выключите строку, чтобы скрыть её из меню. Отметьте раздел как подменю, чтобы свернуть его действия за одним пунктом.";
+"Show as submenu" = "Показывать как подменю";
+"Collapse this section's actions behind a single entry" = "Свернуть действия этого раздела за один пункт";
+"Configure: %@" = "Настроить: %@";
+"What happens on a single tap. Long-press always opens the full menu." = "Что происходит при одиночном нажатии. Долгое нажатие всегда открывает полное меню.";
+"Reset to defaults" = "Сбросить к значениям по умолчанию";
+"Reset to defaults?" = "Сбросить к значениям по умолчанию?";
+"This will restore the default sections, order, and toggles for this menu." = "Это восстановит разделы, порядок и переключатели этого меню по умолчанию.";
+"Audio & visibility" = "Аудио и видимость";
+"DM disappearing media" = "Исчезающие медиа в DM";
+"Bulk download" = "Массовое скачивание";
+"Feed settings" = "Настройки ленты";
+"Reels settings" = "Настройки рилсов";
+"Profile settings" = "Настройки профиля";
+"Stories settings" = "Настройки историй";
+"Copy ID" = "Копировать ID";
+"Copy Info" = "Копировать сведения";
+"Copy all info" = "Копировать всю информацию";
+"Copy media URL" = "Копировать ссылку на медиа";
+"Copy profile link" = "Копировать ссылку на профиль";
+"Copy username" = "Копировать логин";
+"Download" = "Скачать";
+"Download to Gallery" = "Скачать в Галерею";
+"Download all to Gallery" = "Скачать всё в Галерею";
+"Nothing to download" = "Нечего скачивать";
+"Exclude/include user" = "Исключить/включить пользователя";
+"Mute / unmute audio" = "Включить/выключить звук";
+"Save picture to Gallery" = "Сохранить фото в Галерею";
+"Share picture" = "Поделиться фото";
+"View picture" = "Просмотреть фото";
+"Bio" = "Био";
 "ID" = "ID";
-"Info" = "Info";
-"Mute / unmute audio" = "Mute / unmute audio";
-"name" = "name";
-"Picture not found" = "Picture not found";
-"Private profile" = "Private profile";
-"profile link" = "profile link";
-"Profile info" = "Profile info";
-"Profile link" = "Profile link";
-"Profile settings" = "Profile settings";
-"Profile unavailable" = "Profile unavailable";
-"Public profile" = "Public profile";
-"Reels settings" = "Reels settings";
-"Reorder sections" = "Reorder sections";
-"Reset to defaults" = "Reset to defaults";
-"Reset to defaults?" = "Reset to defaults?";
-"RyukGram profile actions" = "RyukGram profile actions";
-"Save picture" = "Save picture";
-"Save picture to Gallery" = "Save picture to Gallery";
-"Share picture" = "Share picture";
-"Show as submenu" = "Show as submenu";
-"Stories settings" = "Stories settings";
-"This will restore the default sections, order, and toggles for this menu." = "This will restore the default sections, order, and toggles for this menu.";
-"Username" = "Username";
-"View picture" = "View picture";
-"What happens on a single tap. Long-press always opens the full menu." = "What happens on a single tap. Long-press always opens the full menu.";
-"Profile action button" = "Profile action button";
-"Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions" = "Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions";
-"Configure menu" = "Configure menu";
-"Configure profile menu" = "Configure profile menu";
-"Reorder, enable/disable, set default tap, show date" = "Reorder, enable/disable, set default tap, show date";
-"Reorder, enable/disable, set default tap" = "Reorder, enable/disable, set default tap";
+"Info" = "Сведения";
+"Profile info" = "информация профиля";
+"Profile link" = "Ссылка на профиль";
+"Picture not found" = "Фото не найдено";
+"Private profile" = "Закрытый профиль";
+"Profile unavailable" = "Профиль недоступен";
+"Public profile" = "Открытый профиль";
+"Username" = "Логин";
+"Followers: %@" = "Подписчики: %@";
+"Following: %@" = "Подписки: %@";
+"Copied %@" = "Скопировано: %@";
 
-////////////////////////////////////////////////////////////////////////
-//                          PHASE 1 FOLLOW-UPS                              //
+//////////////////////////////////////////////////////////////////////////////
+//                                 GALLERY                                  //
+// On-device media library: enable + save mode, browsing, filters, sort,    //
+// delete tools, picker entries, and the Photos/Gallery download submenu.   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Long-press gestures" = "Long-press gestures";
-"Inserts a button in the profile navigation header" = "Inserts a button in the profile navigation header";
-"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu.";
-"Download all to Gallery?" = "Download all to Gallery?";
-"Download all to Photos?" = "Download all to Photos?";
-"Nothing to download" = "Nothing to download";
-
-////////////////////////////////////////////////////////////////////////
-//                              GALLERY                                     //
-// On-device media library + save mode preferences.                         //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browse, filter, sort, delete saved media" = "Browse, filter, sort, delete saved media";
-"Enable gallery" = "Enable gallery";
-"Gallery" = "Gallery";
-"Gallery only" = "Gallery only";
-"On-device library of everything you've downloaded through RyukGram" = "On-device library of everything you've downloaded through RyukGram";
-"Open Gallery" = "Open Gallery";
-"Photos + Gallery" = "Photos + Gallery";
-"Photos only" = "Photos only";
-"Save mode" = "Save mode";
-"Save to Gallery?" = "Save to Gallery?";
-"Saved to Gallery" = "Saved to Gallery";
-"Show gallery entries in download menus and unlock the library page below" = "Show gallery entries in download menus and unlock the library page below";
-"When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search." = "When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search.";
-"Where 'Download to Photos' actually writes when gallery is on" = "Where 'Download to Photos' actually writes when gallery is on";
-
-////////////////////////////////////////////////////////////////////////
-//                          GALLERY (PHASE 2.1)                             //
-//////////////////////////////////////////////////////////////////////////////
-
-"Gallery save mode" = "Gallery save mode";
+"Enable gallery" = "Включить Галерею";
+"Show gallery entries in download menus and unlock the gallery button" = "Показывать пункты Галереи в меню скачивания и разблокировать кнопку Галереи";
+"Gallery" = "Галерея";
+"Gallery Settings" = "Настройки Галереи";
+"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "Локальная библиотека медиа, скачанного через RyukGram. Режим сохранения определяет, куда фактически записывает «Скачать в Фото».";
 "Hold DM tab to open gallery" = "Удерживайте вкладку DM, чтобы открыть галерею";
 "Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "Удерживайте кнопку входящих в нижней панели, чтобы открыть галерею RyukGram";
+"Gallery save mode" = "Режим сохранения Галереи";
+"Where 'Download to Photos' actually writes when gallery is on" = "Куда фактически пишет «Скачать в Фото», когда Галерея включена";
+"Photos only" = "Только Фото";
+"Gallery only" = "Только Галерея";
+"Photos + Gallery" = "Фото + Галерея";
+"Save to Gallery?" = "Сохранить в Галерею?";
+"Saved to Gallery" = "Сохранено в Галерею";
+"Save all to Gallery?" = "Сохранить всё в Галерею?";
+"Saved %lu items to Gallery" = "Сохранено в Галерею: %lu";
+"Saving to Gallery..." = "Сохранение в Галерею…";
+"to Gallery" = "в Галерею";
+"Browsing" = "Просмотр";
+"Manage" = "Управление";
+"Storage" = "Хранилище";
+"Total files" = "Всего файлов";
+"Total size" = "Общий размер";
+"Show favorites at top" = "Показывать избранное сверху";
+"When enabled, favorites are pinned above other files inside the current sort and folder context." = "Когда включено, избранное закрепляется над остальными файлами в текущей сортировке и папке.";
+"Images" = "Изображения";
+"Videos" = "Видео";
+"GIFs" = "GIF";
+"Options" = "Параметры";
+"Clear filters" = "Сбросить фильтры";
+"Favorites only" = "Только избранное";
+"By source" = "По источнику";
+"By type" = "По типу";
+"By user" = "По пользователю";
+"Source" = "Источник";
+"Source user" = "Источник — пользователь";
+"Type" = "Тип";
+"Search users" = "Поиск пользователей";
+"Newest first" = "Сначала новые";
+"Largest first" = "Сначала большие";
+"Smallest first" = "Сначала маленькие";
+"Name A-Z" = "Имя А–Я";
+"Name Z-A" = "Имя Я–А";
+"Images first" = "Сначала изображения";
+"Videos first" = "Сначала видео";
+"Delete files" = "Удалить файлы";
+"Delete %@?" = "Удалить %@?";
+"Delete from Gallery?" = "Удалить из Галереи?";
+"Deleted from Gallery" = "Удалено из Галереи";
+"This will permanently remove this file from the gallery." = "Это безвозвратно удалит этот файл из галереи.";
+"This will permanently remove %ld file(s)." = "Это безвозвратно удалит файлов: %ld.";
+"Delete all files" = "Удалить все файлы";
+"Delete all images" = "Удалить все изображения";
+"Delete all videos" = "Удалить все видео";
+"Delete by user" = "Удалить по пользователю";
+"Delete feed posts" = "Удалить посты ленты";
+"Delete profile pictures" = "Удалить фото профилей";
+"Delete reels" = "Удалить рилсы";
+"Delete stories" = "Удалить истории";
+"Delete thumbnails" = "Удалить миниатюры";
+"Delete DM media" = "Удалить медиа из DM";
+"All files deleted" = "Все файлы удалены";
+"Files deleted" = "Файлы удалены";
+"Images deleted" = "Изображения удалены";
+"Videos deleted" = "Видео удалены";
+"Feed posts deleted" = "Посты ленты удалены";
+"Profile pictures deleted" = "Фото профилей удалены";
+"Reels deleted" = "Рилсы удалены";
+"Stories deleted" = "Истории удалены";
+"Thumbnails deleted" = "Миниатюры удалены";
+"DM media deleted" = "Медиа из DM удалены";
+"User files deleted" = "Файлы пользователя удалены";
+"No files to delete" = "Нет файлов для удаления";
+"Failed" = "Ошибка";
+"Failed to delete" = "Не удалось удалить";
+"Unable to open original post" = "Не удалось открыть исходный пост";
+"Unable to open profile" = "Не удалось открыть профиль";
+"Unknown user" = "Неизвестный пользователь";
+"(unknown)" = "(неизвестно)";
+"The original content may no longer exist." = "Исходный контент может больше не существовать.";
+"Select All" = "Выбрать все";
+"Deselect All" = "Снять выделение";
+"Share selected" = "Поделиться выбранным";
+"Move selected" = "Переместить выбранное";
+"Favorite selected" = "В избранное выбранное";
+"Delete selected" = "Удалить выбранное";
+"Deleted selected files" = "Выбранные файлы удалены";
+"List view" = "Списком";
+"Grid view" = "Сеткой";
+"More" = "Ещё";
+"Favorite" = "В избранное";
+"Unfavorite" = "Убрать из избранного";
+"Rename" = "Переименовать";
+"Move to Folder" = "Переместить в папку";
+"Open Original Post" = "Открыть оригинальный пост";
+"Open Profile" = "Открыть профиль";
+"No files in Gallery" = "В Галерее нет файлов";
+"Save media from the preview screen\nto see it here." = "Сохраняйте медиа с экрана предпросмотра,\nчтобы увидеть их здесь.";
+"No matching files" = "Нет подходящих файлов";
+"Delete Selected Files?" = "Удалить выбранные файлы?";
+"This will permanently remove %ld file%@ from the gallery." = "Это безвозвратно удалит из галереи файлов: %ld%@.";
+"New Folder" = "Новая папка";
+"New folder…" = "Новая папка…";
+"Folder name" = "Имя папки";
+"Create" = "Создать";
+"Create & Move" = "Создать и переместить";
+"Rename Folder" = "Переименовать папку";
+"Delete Folder" = "Удалить папку";
+"Delete Folder?" = "Удалить папку?";
+"This folder is empty." = "Эта папка пуста.";
+"This folder contains %ld file(s). They will be moved to the parent folder." = "В этой папке файлов: %ld. Они будут перемещены в родительскую папку.";
+"Root" = "Корень";
+"DMs" = "Сообщения";
+"Thumb" = "Миниатюра";
+"Story" = "История";
+"Comment" = "Комментарий";
+"Other" = "Другое";
+"Pick audio" = "Выбрать аудио";
+"Audio from RyukGram Gallery" = "Аудио из Галереи RyukGram";
+"Share" = "Поделиться";
+
+//////////////////////////////////////////////////////////////////////////////
+//                              HOME SHORTCUT                               //
+// Extra button on the home top bar (right of the create-post +) — picks    //
+// between Gallery, Changelog, etc. Configure-screen and the row reorderer. //
+//////////////////////////////////////////////////////////////////////////////
+
 "Home shortcut button" = "Кнопка ярлыка на главной";
-"Changelog" = "История изменений";
-"Show gallery entries in download menus and unlock the gallery button" = "Show gallery entries in download menus and unlock the gallery button";
-"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (PHASE 2 REVAMP)                           //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browsing" = "Browsing";
-"Clear filters" = "Clear filters";
-"Delete files" = "Delete files";
-"Favorites only" = "Favorites only";
-"Gallery Settings" = "Gallery Settings";
-"Images" = "Images";
-"Manage" = "Manage";
-"Show favorites at top" = "Show favorites at top";
-"Storage" = "Storage";
-"Total files" = "Total files";
-"Total size" = "Total size";
-"Videos" = "Videos";
-"When enabled, favorites are pinned above other files inside the current sort and folder context." = "When enabled, favorites are pinned above other files inside the current sort and folder context.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DELETE + REVAMP 2)                        //
-//////////////////////////////////////////////////////////////////////////////
-
-"All files deleted" = "All files deleted";
-"By source" = "By source";
-"By type" = "By type";
-"By user" = "By user";
-"DM media deleted" = "DM media deleted";
-"Delete %@?" = "Delete %@?";
-"Delete DM media" = "Delete DM media";
-"Delete all files" = "Delete all files";
-"Delete all images" = "Delete all images";
-"Delete all videos" = "Delete all videos";
-"Delete by user" = "Delete by user";
-"Delete feed posts" = "Delete feed posts";
-"Delete profile pictures" = "Delete profile pictures";
-"Delete reels" = "Delete reels";
-"Delete stories" = "Delete stories";
-"Delete thumbnails" = "Delete thumbnails";
-"Feed posts deleted" = "Feed posts deleted";
-"Files deleted" = "Files deleted";
-"Images deleted" = "Images deleted";
-"No files to delete" = "No files to delete";
-"Profile pictures deleted" = "Profile pictures deleted";
-"Reels deleted" = "Reels deleted";
-"Search..." = "Search...";
-"Stories deleted" = "Stories deleted";
-"This will permanently remove %ld file(s)." = "This will permanently remove %ld file(s).";
-"Thumbnails deleted" = "Thumbnails deleted";
-"Unable to open original post" = "Unable to open original post";
-"Unable to open profile" = "Unable to open profile";
-"Unknown user" = "Unknown user";
-"User files deleted" = "User files deleted";
-"Videos deleted" = "Videos deleted";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (SORT + FILTER)                            //
-//////////////////////////////////////////////////////////////////////////////
-
-"Images first" = "Images first";
-"Largest first" = "Largest first";
-"Name A-Z" = "Name A-Z";
-"Name Z-A" = "Name Z-A";
-"Newest first" = "Newest first";
-"Oldest first" = "Oldest first";
-"Options" = "Options";
-"Smallest first" = "Smallest first";
-"Source" = "Source";
-"Source user" = "Source user";
-"Type" = "Type";
-"Videos first" = "Videos first";
-
+"Adds a button to the home top bar, right of the create-post +. Off entirely turns it off." = "Добавляет кнопку на верхнюю панель главного экрана, справа от «+» создания поста. «Выкл.» полностью отключает её.";
 "Configure the extra button on the home top bar" = "Настройте дополнительную кнопку на верхней панели главной";
 "Show button" = "Показывать кнопку";
-"Icon" = "Значок";
-
 "Auto" = "Авто";
+"Icon" = "Значок";
 "Drag the ≡ handle to reorder. Toggle a row off to hide that destination. With one action enabled tapping fires it; with two or more, tapping presents a menu." = "Перетащите маркер ≡ для изменения порядка. Отключите строку, чтобы скрыть это направление. При одном включённом действии нажатие выполняет его; при двух и более — открывает меню.";
-
-"Copy all info" = "Копировать всю информацию";
-"profile info" = "информация профиля";
-
-"Start media muted" = "Запускать медиа без звука";
-"Expanded videos open with sound off" = "Развёрнутые видео открываются без звука";
-
-"Enhanced media resolution" = "Улучшенное разрешение медиа";
-"Spoof device profile so IG serves higher-quality images" = "Подменяет профиль устройства, чтобы IG отдавал изображения высшего качества";
-
-"Media saving" = "Сохранение медиа";
-
-//////////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DOWNLOAD MENU + PICKERS)                  //
-//////////////////////////////////////////////////////////////////////////////
-
-"GIFs" = "GIFs";
-"to Gallery" = "to Gallery";
-"Share" = "Share";
-"Pick audio" = "Pick audio";
-"Audio from RyukGram Gallery" = "Audio from RyukGram Gallery";
-"Main feed" = "Main feed";
-"Choose Instagram's default feed or force the Following feed" = "Choose Instagram's default feed or force the Following feed";
-"Following feed mode (from InstaSane)" = "Following feed mode (from InstaSane)";
+"Changelog" = "История изменений";

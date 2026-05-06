@@ -510,7 +510,7 @@ static void sciPrepareAndShowTrim(NSURL *url, UIViewController *threadVC) {
     [picker dismissViewControllerAnimated:YES completion:nil];
     NSURL *videoURL = info[UIImagePickerControllerMediaURL];
     if (!videoURL) {
-        [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not get video URL")];
+        [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not extract video URL")];
         return;
     }
     // Already trimmed by UIImagePickerController's built-in editor.

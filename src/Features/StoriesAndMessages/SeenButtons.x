@@ -246,7 +246,7 @@ static NSDictionary *sciEntryFromThreadVC(UIViewController *vc) {
     NSDictionary *entry = sciEntryFromThreadVC(nearestVC);
     if (!entry) return;
     UIAlertController *alert = [UIAlertController
-        alertControllerWithTitle:SCILocalized(@"Add to block list?")
+        alertControllerWithTitle:SCILocalized(@"Add to block list")
                          message:SCILocalized(@"Read receipts will be blocked for this chat.")
                   preferredStyle:UIAlertControllerStyleAlert];
     __weak typeof(self) weakSelf = self;
@@ -265,7 +265,7 @@ static NSDictionary *sciEntryFromThreadVC(UIViewController *vc) {
     if (!tid) return;
 
     BOOL bs = [SCIExcludedThreads isBlockSelectedMode];
-    NSString *alertTitle = bs ? SCILocalized(@"Remove from block list?") : SCILocalized(@"Un-exclude chat?");
+    NSString *alertTitle = bs ? SCILocalized(@"Remove from block list") : SCILocalized(@"Un-exclude chat");
     NSString *alertMsg = bs ? SCILocalized(@"Read receipts will no longer be blocked for this chat.")
                             : SCILocalized(@"This chat will resume normal read-receipt behavior.");
     UIAlertController *alert = [UIAlertController

@@ -104,7 +104,19 @@ NSString *const SCIAID_CopyAll             = @"copy_all";
 
 // MARK: - Catalog
 
+static NSDictionary<NSNumber *, NSArray *> *gSCIActionCatalogCache = nil;
+
 @implementation SCIActionCatalog
+
++ (void)initialize {
+    if (self == [SCIActionCatalog class]) {
+        [[NSNotificationCenter defaultCenter] addObserverForName:@"SCILanguageDidChange"
+                                                          object:nil queue:nil
+                                                      usingBlock:^(NSNotification *_) {
+            gSCIActionCatalogCache = nil;
+        }];
+    }
+}
 
 + (NSString *)slugForSource:(SCIActionSource)source {
     switch (source) {
@@ -165,9 +177,7 @@ NSString *const SCIAID_CopyAll             = @"copy_all";
 }
 
 + (NSArray<SCIActionDescriptor *> *)descriptorsForSource:(SCIActionSource)source {
-    static NSDictionary<NSNumber *, NSArray<SCIActionDescriptor *> *> *cache = nil;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
+    if (!gSCIActionCatalogCache) {
         SCIActionDescriptor *(^d)(NSString *, NSString *, NSString *, BOOL) =
             ^(NSString *i, NSString *t, NSString *sf, BOOL eligible) {
                 return [SCIActionDescriptor descriptorWithID:i title:t iconSF:sf
@@ -257,15 +267,15 @@ NSString *const SCIAID_CopyAll             = @"copy_all";
             d(SCIAID_ProfileInfoFollowing,  SCILocalized(@"Following"),              @"person.crop.circle.badge.plus",      NO),
         ];
 
-        cache = @{
+        gSCIActionCatalogCache = @{
             @(SCIActionSourceFeed):     feed,
             @(SCIActionSourceReels):    reels,
             @(SCIActionSourceStories):  stories,
             @(SCIActionSourceDM):       dm,
             @(SCIActionSourceProfile):  profile,
         };
-    });
-    return cache[@(source)] ?: @[];
+    }
+    return gSCIActionCatalogCache[@(source)] ?: @[];
 }
 
 + (SCIActionDescriptor *)descriptorForActionID:(NSString *)actionID source:(SCIActionSource)source {

@@ -160,7 +160,7 @@ static UIMenu *sciBuildMapMenu(void) {
                                           options:UIMenuOptionsDisplayInline children:presetItems];
 
     // Settings
-    UIAction *openSettings = [UIAction actionWithTitle:SCILocalized(@"Settings…")
+    UIAction *openSettings = [UIAction actionWithTitle:SCILocalized(@"Settings")
                                                  image:[UIImage systemImageNamed:@"gearshape.fill"]
                                             identifier:nil
                                                handler:^(__unused UIAction *x) {

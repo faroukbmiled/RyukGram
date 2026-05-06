@@ -117,7 +117,7 @@ static id new_prismMenuView_init3(id self, SEL _cmd, NSArray *elements, id heade
                                 fromVC:nil];
     };
 
-    id builder = ((InitFn)objc_msgSend)([builderClass alloc], @selector(initWithTitle:), @"Download");
+    id builder = ((InitFn)objc_msgSend)([builderClass alloc], @selector(initWithTitle:), SCILocalized(@"Download"));
     builder = ((WithFn)objc_msgSend)(builder, @selector(withImage:), [UIImage systemImageNamed:@"arrow.down.circle"]);
     builder = ((WithFn)objc_msgSend)(builder, @selector(withHandler:), handler);
     id menuItem = ((BuildFn)objc_msgSend)(builder, @selector(build));

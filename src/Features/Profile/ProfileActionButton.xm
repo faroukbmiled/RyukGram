@@ -63,15 +63,15 @@ static void sciExecuteCopyInfoAction(id user, NSString *aid) {
     if ([aid isEqualToString:SCIAID_CopyID]) {
         sciCopyAndToast([SCIProfileHelpers pkForUser:user], SCILocalized(@"ID"));
     } else if ([aid isEqualToString:SCIAID_CopyUsername]) {
-        sciCopyAndToast([SCIProfileHelpers usernameForUser:user], SCILocalized(@"username"));
+        sciCopyAndToast([SCIProfileHelpers usernameForUser:user], SCILocalized(@"Username"));
     } else if ([aid isEqualToString:SCIAID_CopyName]) {
-        sciCopyAndToast([SCIProfileHelpers fullNameForUser:user], SCILocalized(@"name"));
+        sciCopyAndToast([SCIProfileHelpers fullNameForUser:user], SCILocalized(@"Name"));
     } else if ([aid isEqualToString:SCIAID_CopyBio]) {
-        sciCopyAndToast([SCIProfileHelpers biographyForUser:user], SCILocalized(@"bio"));
+        sciCopyAndToast([SCIProfileHelpers biographyForUser:user], SCILocalized(@"Bio"));
     } else if ([aid isEqualToString:SCIAID_CopyLink]) {
-        sciCopyAndToast([SCIProfileHelpers profileLinkForUser:user].absoluteString, SCILocalized(@"profile link"));
+        sciCopyAndToast([SCIProfileHelpers profileLinkForUser:user].absoluteString, SCILocalized(@"Profile link"));
     } else if ([aid isEqualToString:SCIAID_CopyAll]) {
-        sciCopyAndToast(sciBuildAllInfoPayload(user), SCILocalized(@"profile info"));
+        sciCopyAndToast(sciBuildAllInfoPayload(user), SCILocalized(@"Profile info"));
     }
 }
 

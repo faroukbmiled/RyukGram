@@ -429,7 +429,7 @@
                                                                         }]
                                                 ],
                                                 [SCISetting navigationCellWithTitle:SCILocalized(@"Keep deleted messages")
-                                                                           subtitle:SCILocalized(@"Preserve messages that others unsend")
+                                                                           subtitle:SCILocalized(@"Preserves messages that others unsend")
                                                                                icon:nil
                                                                         navSections:@[@{
                                                                             @"header": @"",
@@ -688,7 +688,7 @@
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm follow") subtitle:SCILocalized(@"Shows an alert when you click the follow button to confirm the follow") defaultsKey:@"follow_confirm"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm unfollow") subtitle:SCILocalized(@"Shows an alert when you click the unfollow button to confirm") defaultsKey:@"unfollow_confirm"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm repost") subtitle:SCILocalized(@"Shows an alert when you click the repost button to confirm before resposting") defaultsKey:@"repost_confirm"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm repost") subtitle:SCILocalized(@"Shows an alert when you click the repost button to confirm before reposting") defaultsKey:@"repost_confirm"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm voice call") subtitle:SCILocalized(@"Shows an alert when you click the voice call button to confirm before calling") defaultsKey:@"voice_call_confirm"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm video call") subtitle:SCILocalized(@"Shows an alert when you click the video call button to confirm before calling") defaultsKey:@"video_call_confirm"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm voice messages") subtitle:SCILocalized(@"Shows an alert to confirm before sending a voice message") defaultsKey:@"voice_message_confirm"],
@@ -1228,7 +1228,7 @@
             return;
         }
         NSString *msg = [NSString stringWithFormat:SCILocalized(@"Free %@ of Instagram cache. A restart is recommended."), [SCICacheManager formattedSize:bytes]];
-        UIAlertController *a = [UIAlertController alertControllerWithTitle:SCILocalized(@"Clear cache?") message:msg preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *a = [UIAlertController alertControllerWithTitle:SCILocalized(@"Clear cache") message:msg preferredStyle:UIAlertControllerStyleAlert];
         [a addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Clear") style:UIAlertActionStyleDestructive handler:^(__unused UIAlertAction *x) {
             JGProgressHUD *hud = [[JGProgressHUD alloc] init];
             hud.textLabel.text = SCILocalized(@"Clearing cache…");
@@ -1354,7 +1354,7 @@ static void sciPresentTeenIconPicker(void) {
     NSString *path = [res pathForResource:@"en" ofType:@"lproj"];
     if (path) path = [path stringByAppendingPathComponent:@"Localizable.strings"];
     if (!path || ![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        [SCIUtils showErrorHUDWithDescription:@"English .strings file not found"];
+        [SCIUtils showErrorHUDWithDescription:SCILocalized(@"English .strings file not found")];
         return;
     }
     NSURL *url = [NSURL fileURLWithPath:path];
@@ -1371,8 +1371,8 @@ static void sciPresentTeenIconPicker(void) {
 + (void)presentLocalizationImport {
     NSArray *langs = SCIAvailableLanguages();
 
-    UIAlertController *picker = [UIAlertController alertControllerWithTitle:@"Update localization"
-                                                                    message:@"Pick a language to update, or add a new one"
+    UIAlertController *picker = [UIAlertController alertControllerWithTitle:SCILocalized(@"Update localization")
+                                                                    message:SCILocalized(@"Pick a language to update, or add a new one")
                                                              preferredStyle:UIAlertControllerStyleActionSheet];
     for (NSDictionary *lang in langs) {
         NSString *code = lang[@"code"];
@@ -1507,12 +1507,12 @@ static void sciPresentTeenIconPicker(void) {
 }
 
 + (void)promptNewLanguageCode {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add language"
-                                                                   message:@"Enter the language code (e.g. fr, de, ja)"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Add language")
+                                                                   message:SCILocalized(@"Enter the language code (e.g. fr, de, ja)")
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) { tf.placeholder = @"fr"; }];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Next" style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *a) {
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Next") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *a) {
         NSString *code = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if (code.length < 2 || code.length > 5) return;
         [self importStringsForLanguage:code];

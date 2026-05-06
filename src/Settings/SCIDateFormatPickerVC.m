@@ -79,7 +79,7 @@ static NSString *sciExampleForKey(NSString *key) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = SCILocalized(@"Date Format");
+    self.title = SCILocalized(@"Date format");
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleInsetGrouped];
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.dataSource = self;

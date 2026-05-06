@@ -317,7 +317,7 @@ static void hook_present(UIViewController *self, SEL _cmd, UIViewController *vc,
 
     typedef id (*InitFn)(id, SEL, id, id, NSInteger, id, id, id);
     id noteAction = ((InitFn)objc_msgSend)([actionCls alloc], initSel,
-        @"Note actions", nil, (NSInteger)0, handler, nil, nil);
+        SCILocalized(@"Note actions"), nil, (NSInteger)0, handler, nil, nil);
 
     if (noteActions && noteAction) {
         NSMutableArray *newActions = [actions mutableCopy];

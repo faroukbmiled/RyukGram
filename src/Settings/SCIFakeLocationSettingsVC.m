@@ -100,7 +100,7 @@ static NSString *const kPresets    = @"fake_location_presets";
             double lat = [[d objectForKey:kLat] doubleValue];
             double lon = [[d objectForKey:kLon] doubleValue];
             NSString *name = [d objectForKey:kName] ?: @"";
-            cell.textLabel.text = name.length ? name : @"(unset)";
+            cell.textLabel.text = name.length ? name : SCILocalized(@"(unset)");
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%.5f, %.5f", lat, lon];
             cell.detailTextLabel.font = [UIFont monospacedDigitSystemFontOfSize:12 weight:UIFontWeightRegular];
             cell.imageView.image = [UIImage systemImageNamed:@"location.fill"];
@@ -125,7 +125,7 @@ static NSString *const kPresets    = @"fake_location_presets";
         UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"p"];
         if (!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"p"];
         NSDictionary *p = presets[ip.row];
-        cell.textLabel.text = p[@"name"] ?: @"Preset";
+        cell.textLabel.text = p[@"name"] ?: SCILocalized(@"Preset");
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%.5f, %.5f",
             [p[@"lat"] doubleValue], [p[@"lon"] doubleValue]];
         cell.detailTextLabel.font = [UIFont monospacedDigitSystemFontOfSize:12 weight:UIFontWeightRegular];
@@ -137,7 +137,7 @@ static NSString *const kPresets    = @"fake_location_presets";
 
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"add"];
     if (!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"add"];
-    cell.textLabel.text = SCILocalized(@"Add preset…");
+    cell.textLabel.text = SCILocalized(@"Add preset");
     cell.textLabel.textColor = [UIColor systemBlueColor];
     cell.imageView.image = [UIImage systemImageNamed:@"plus.circle.fill"];
     cell.imageView.tintColor = [UIColor systemBlueColor];

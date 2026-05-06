@@ -392,7 +392,7 @@ typedef NS_ENUM(NSInteger, SCIPACellAction) {
     self.searchController.searchResultsUpdater = self;
     self.searchController.delegate = self;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.placeholder = SCILocalized(@"Search username or name");
+    self.searchController.searchBar.placeholder = SCILocalized(@"Search by username or name");
     self.navigationItem.searchController = self.searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
     self.definesPresentationContext = YES;
@@ -775,7 +775,7 @@ typedef NS_ENUM(NSInteger, SCIPACellAction) {
         user = self.filteredUsers[indexPath.row];
     }
 
-    cell.usernameLabel.text = user.username.length ? [NSString stringWithFormat:@"@%@", user.username] : @"(unknown)";
+    cell.usernameLabel.text = user.username.length ? [NSString stringWithFormat:@"@%@", user.username] : SCILocalized(@"(unknown)");
     cell.verifiedBadge.hidden = !user.isVerified;
 
     if (self.kind == SCIPAListKindProfileUpdate) {

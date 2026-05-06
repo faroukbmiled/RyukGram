@@ -119,7 +119,7 @@ static char rowStaticRef[] = "row";
         alertControllerWithTitle:SCILocalized(@"settings.language.title")
                          message:SCILocalized(@"settings.language.english_only")
                   preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"settings.language.ok") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"OK") style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"settings.language.help_translate") style:UIAlertActionStyleDefault
                                             handler:^(__unused UIAlertAction *a) {
         NSURL *url = [NSURL URLWithString:SCIRepoTranslateURL];
@@ -464,7 +464,7 @@ static char rowStaticRef[] = "row";
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if ([self isSearching]) {
         NSUInteger n = self.searchResults.count;
-        if (n == 0) return SCILocalized(@"settings.results.none");
+        if (n == 0) return SCILocalized(@"No results");
         NSString *fmt = n == 1 ? SCILocalized(@"settings.results.one") : SCILocalized(@"settings.results.many");
         return [NSString stringWithFormat:fmt, (unsigned long)n];
     }

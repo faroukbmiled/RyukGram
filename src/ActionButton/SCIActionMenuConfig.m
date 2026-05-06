@@ -19,6 +19,16 @@ static NSInteger  const kCfgCurrentVer   = 1;
 
 @implementation SCIActionMenuConfig
 
++ (void)initialize {
+    if (self == [SCIActionMenuConfig class]) {
+        [[NSNotificationCenter defaultCenter] addObserverForName:@"SCILanguageDidChange"
+                                                          object:nil queue:nil
+                                                      usingBlock:^(NSNotification *_) {
+            [SCIActionMenuConfig reloadAll];
+        }];
+    }
+}
+
 // MARK: - Cache
 
 + (NSMutableDictionary<NSNumber *, SCIActionMenuConfig *> *)cache {
@@ -76,13 +86,14 @@ static NSInteger  const kCfgCurrentVer   = 1;
     if (loaded.count == 0) {
         for (SCIActionConfigSection *s in defaultSections) [loaded addObject:[s copy]];
     } else {
-        // Backfill section-level metadata (title/icon) from defaults so a rename in the
-        // catalog flows through to existing users.
+        // Section title + icon are presentation-only — always sourced from the
+        // catalog so language switches and copy edits flow through (the stored
+        // title was once cached in the user's locale and would otherwise freeze).
         for (SCIActionConfigSection *s in loaded) {
             for (SCIActionConfigSection *def in defaultSections) {
                 if ([def.identifier isEqualToString:s.identifier]) {
-                    if (!s.title.length) s.title = def.title;
-                    if (!s.iconSF.length) s.iconSF = def.iconSF;
+                    s.title  = def.title;
+                    s.iconSF = def.iconSF;
                     break;
                 }
             }

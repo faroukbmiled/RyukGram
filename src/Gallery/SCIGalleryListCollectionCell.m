@@ -113,7 +113,7 @@ static CGFloat const kSCIGalleryListRowHeight = 88.0;
     self.moreButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.moreButton setImage:moreImg forState:UIControlStateNormal];
     self.moreButton.tintColor = [UIColor secondaryLabelColor];
-    self.moreButton.accessibilityLabel = @"More";
+    self.moreButton.accessibilityLabel = SCILocalized(@"More");
     self.moreButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     self.moreButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.contentView addSubview:self.moreButton];

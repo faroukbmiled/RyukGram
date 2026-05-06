@@ -1,7 +1,5 @@
-// Spanish translation by Furamako (@furamako)
-//
 /*
- *  RyukGram — Localizable.strings  (Spanish)
+ *  RyukGram — Localizable.strings  (English source of truth)
  *  -------------------------------------------------------------------------
  *
  *  Every user-facing string in RyukGram goes through the macro
@@ -69,11 +67,9 @@
 "settings.firstrun.title" = "Información de configuración de RyukGram";
 "settings.language.english_only" = "Por el momento, RyukGram solo está disponible en Inglés. ¡Las traducciones son bienvenidas!";
 "settings.language.help_translate" = "Ayudar a traducir";
-"settings.language.ok" = "OK";
 "settings.language.system" = "Por defecto del sistema";
 "settings.language.title" = "Idioma";
 "settings.results.many" = "%lu resultados";
-"settings.results.none" = "Sin resultados";
 "settings.results.one" = "%lu resultado";
 "settings.search.placeholder" = "Configuración de búsqueda";
 "settings.title" = "Configuración de RyukGram";
@@ -210,6 +206,8 @@
 "Action button" = "Botón de acción";
 "Adds 'View profile picture' and 'View cover' to story tray long-press menus" = "Añade las opciones 'Ver foto de perfil' y 'Ver portada' al menú que aparece al mantener pulsado en la bandeja de historias";
 "Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Añade un botón de acción de RyukGram debajo de cada publicación en el Feed (Inicio), con las opciones descargar, compartir, copiar, ampliar y repost. Tocar abre el menú de forma predeterminada.\nArriba puedes cambiar el comportamiento al tocar.";
+"Choose Instagram's default feed or force the Following feed" = "Elige el feed predeterminado de Instagram o fuerza el feed de Siguiendo";
+"Main feed" = "Feed principal";
 "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "Controla cuando y como se actualiza el Feed (Inicio). La actualización en segundo plano ocurre cuando vuelves a la aplicación después de unos 10 minutos. La actualización al pulsar el botón de Inicio se produce al tocar el botón mientras te encuentras en el Feed (Inicio)";
 "Default tap action" = "Acción al tocar";
 "Disable background refresh" = "Deshabilitar actualización en segundo plano";
@@ -228,6 +226,11 @@
 "Hides the story tray at the top" = "Oculta la bandeja de historias en la parte superior";
 "Inserts a button row below like/comment/share on each post" = "Inserta un botón en la fila de los botones me gusta, comentar y compartir en cada publicación";
 "Long press on media to expand in full-screen viewer" = "Mantener pulsado el contenido multimedia para ver en pantalla completa";
+"Start media muted" = "Iniciar contenido en silencio";
+"Expanded videos open with sound off" = "Los videos ampliados se abren sin sonido";
+"Enhanced media resolution" = "Resolución de medios mejorada";
+"Media saving" = "Guardar medios";
+"Spoof device profile so IG serves higher-quality images" = "Suplanta el perfil del dispositivo para que IG entregue imágenes de mayor calidad";
 "Media" = "Contenido multimedia";
 "Media zoom" = "Ampliar contenido multimedia";
 "No suggested for you" = "Sin 'Sugerencias para ti'";
@@ -243,10 +246,20 @@
 "Scroll to top without refreshing when tapping Home" = "Desplazarse hacia arriba sin actualizar al pulsar el botón de Inicio";
 "Show action button" = "Mostrar botón de acción";
 "Show date" = "Mostrar fecha";
-"Adds the date as a small header at the top of the action menu" = "Añade la fecha como un pequeño encabezado en la parte superior del menú de acciones";
 "Stories tray" = "Bandeja de historias";
 "Tapping Home does nothing when already on feed" = "Pulsar botón de Inicio no hace nada cuando te encuentres en la pestaña de Feed (Inicio)";
 "Tray long-press actions" = "Acciones al mantener pulsado en la bandeja";
+
+"Composer doesn't accept GIFs" = "El compositor no acepta GIFs";
+"Copy GIF link" = "Copiar enlace del GIF";
+"Custom GIF in comments" = "GIF personalizado en comentarios";
+"Failed to build GIF model" = "No se pudo crear el modelo GIF";
+"GIF link copied" = "Enlace del GIF copiado";
+"Invalid Giphy URL" = "URL de Giphy no válida";
+"Long-press the GIF button to paste any Giphy URL" = "Mantén pulsado el botón GIF para pegar cualquier URL de Giphy";
+"Paste Giphy Link" = "Pegar enlace de Giphy";
+"Paste a giphy.com URL or media ID" = "Pega una URL de giphy.com o un ID de medio";
+"Send" = "Enviar";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
@@ -294,7 +307,6 @@
 // Settings → Profile tab                                                   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Adds a button next to the burger menu on profiles to copy username, name or bio" = "Añade un botón junto al menú de hamburguesa (☰) en los perfiles para copiar nombre de usuario, nombre o presentación";
 "Adds a view option to the highlight long-press menu to open the cover in full-screen" = "Añade una opción de visualización en el menú que aparece al mantener pulsado sobre la historia destacada para abrir la portada en pantalla completa";
 "Copy note on long press" = "Copia la nota al mantener pulsado";
 "Fake follower count" = "Seguidores falsos";
@@ -311,7 +323,6 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "Los gestos al mantener pulsado en los elementos del perfil, se mantienen separados de los botones de acción específicos de cada función.";
 "Only affects your own profile header. Other users see the real numbers." = "Solo afecta al encabezado de tu propio perfil. Los demás usuarios ven los números reales.";
 "Post count" = "Número de publicaciones";
-"Profile copy button" = "Botón de copiar perfil";
 "Save profile picture" = "Guardar foto de perfil";
 "Show a checkmark next to your name on your own profile" = "Muestra una marca de verificación junto a tu nombre en tu propio perfil";
 "Shows whether the profile user follows you" = "Muestra si el usuario del perfil te sigue";
@@ -337,7 +348,6 @@
 "Route saves into a dedicated album in Photos instead of the camera roll root" = "Guarda en un álbum dedicado en Fotos, en vez de la Fototeca";
 "Save action" = "Acción después de guardar";
 "Save to RyukGram album" = "Guardar en álbum RyukGram";
-"Saving" = "Descargar";
 "Show a confirmation dialog before starting a download" = "Muestra un diálogo de confirmación antes de iniciar una descarga";
 "What happens after the gesture downloads" = "Lo que ocurre después de que termina la descarga";
 "When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library." = "Cuando \"Guardar en álbum RyukGram\" está activado, las descargas y elementos seleccionados en \"Guardar en Fotos\" se dirigen a un álbum llamado \"RyukGram\" en tu Fototeca.";
@@ -373,15 +383,14 @@
 "Marks a story as seen when you send a reply or emoji reaction, even with seen blocking on" = "Marca una historia como vista cuando envías una respuesta o una reacción con emoji, incluso con el bloqueo de aviso de visualización activado";
 "Marks stories as seen locally (grey ring) while still blocking the seen receipt on the server" = "Marca las historias como vistas localmente (círculo gris) mientras sigue bloqueando el recibo de visto en el servidor";
 "Master toggle. When off, the list is ignored" = "Control general. Cuando está desactivado, la lista es ignorada";
-"Other" = "Otros";
 "Playback" = "Reproducción";
 "Quick list button in stories" = "Botón de lista rápida en historias";
 "Search, sort, swipe to remove" = "Buscar y ordenar. Desliza para eliminar";
 "Seen receipts" = "Confirmación de visualización";
 "Sending a reply or emoji reaction automatically advances to the next story" = "Enviar una respuesta o una reacción con emoji automáticamente avanza a la siguiente historia";
-"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "Adds a 'View mentions' entry to the action button menu and story 3-dot menu";
-"Mentions overlay button" = "Mentions overlay button";
-"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels";
+"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "Añade la opción 'Ver menciones' al menú del botón de acción y al menú de los 3 puntos de las historias";
+"Mentions overlay button" = "Botón de menciones en la superposición";
+"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "Añade un botón junto al botón de acción / ojo en la superposición de las historias. Solo aparece cuando la historia actual contiene menciones o publicaciones / reels compartidos";
 "Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "Muestra un botón con forma de ojo (👁) en las historias para añadir o eliminar usuarios de la lista. Desactivado = Usar el menú de los 3 puntos o solo mantener pulsado";
 "Stickers" = "Stickers";
 "Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "Mira los resultados de encuestas/cuestionarios/deslizador antes de interactuar — aún puedes tocar para votar con normalidad. 'Forzar stickers clásicos' devuelve los stickers de cuestionario y revelado al editor de historias.";
@@ -425,8 +434,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Activity" = "Actividad";
-"Allows typing and sending DMs longer than Instagram's limit" = "Permite escribir y enviar mensajes más largos que el límite de Instagram";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "Añade una opción 'Descargar' al menú que aparece al mantener pulsado sobre los mensajes de voz para guardarlos como archivos M4A";
+"Allows typing and sending DMs longer than Instagram's limit" = "Permite escribir y enviar mensajes más largos que el límite de Instagram";
 "Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram" = "Añade una opción 'Enviar archivo' al menú ⊕ en las conversaciones.\nTipos de archivos soportados puede estar limitado por Instagram";
 "Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages" = "Añade una opción 'Archivo de audio' al menú ⊕ en las conversaciones para enviar archivos de audio como mensajes de voz";
 "Adds copy text, download GIF/audio to the note long-press menu" = "Añade las opciones copiar texto, descargar GIF/Audio al menú que aparece al mantener pulsada una nota";
@@ -467,7 +476,6 @@
 "Keep deleted messages" = "Mantener mensajes eliminados";
 "Makes view-once messages behave like normal visual messages (loopable/pauseable)" = "Hace que los mensajes para ver una vez se comporten como mensajes visuales normales (Búcle/Pausa)";
 "Note actions" = "Acciones en notas";
-"Preserve messages that others unsend" = "Guardar los mensajes que los demás eliminen";
 "Preserves messages that others unsend" = "Guarda los mensajes que los demás eliminen";
 "Prevents accidental swipe-up activation of vanish mode" = "Evita la activación accidental del modo vanish al deslizar hacia arriba";
 "Quick list button in chats" = "Botón de lista rápida en conversaciones";
@@ -579,7 +587,7 @@
 "Shows an alert when you click the like button on reels to confirm the like" = "Muestra una alerta para confirmar cuando tocas el botón de me gusta en reels";
 "Shows an alert when you click the like button on stories to confirm the like" = "Muestra una alerta para confirmar cuando tocas el botón de me gusta en historias";
 "Shows an alert when you click the post comment button to confirm" = "Muestra una alerta para confirmar cuando tocas el botón de publicar comentario";
-"Shows an alert when you click the repost button to confirm before resposting" = "Muestra una alerta para confirmar cuando tocas el botón de repost";
+"Shows an alert when you click the repost button to confirm before reposting" = "Muestra una alerta para confirmar cuando tocas el botón de repost";
 "Shows an alert when you click the unfollow button to confirm" = "Muestra una alerta para confirmar cuando tocas el botón de dejar de seguir";
 
 //////////////////////////////////////////////////////////////////////////////
@@ -588,12 +596,12 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Backup & Restore" = "Copia de seguridad & restauración";
-
 "Clear selected data" = "Borrar datos seleccionados";
 "Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page." = "Exporta o importa los ajustes de RyukGram, listas excluidas y datos del Analizador de perfil. Elige cualquier combinación en cada página.";
 "Import" = "Importar";
 "Load from a JSON file" = "Cargar desde un archivo JSON";
 "Save to a JSON file" = "Guardar en un archivo JSON";
+
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
 // Settings → Advanced tab                                                  //
@@ -608,7 +616,6 @@
 "Clear" = "Limpiar";
 "Clear cache" = "Limpiar caché";
 "Clear cache (%@)" = "Limpiar caché (%@)";
-"Clear cache?" = "¿Limpiar caché?";
 "Clearing cache…" = "Limpiando caché…";
 "Clearing still scans on demand." = "La limpieza sigue escaneando bajo demanda.";
 "Daily" = "Diario";
@@ -731,11 +738,9 @@
 "Could not extract photo URL" = "No se logró extraer enlace de fotos";
 "Could not extract video URL" = "No se logró extraer enlace de videos";
 "Done" = "Finalizado";
-"Download all (%lu)" = "Descargar todos (%lu)";
 "Download all stories and share?" = "¿Descargar todas las historias y compartir?";
 "Download all to Photos" = "Descargar todo en Fotos";
 "Download and share all" = "Descargar y compartir todo";
-"Download and share?" = "¿Descargar y compartir?";
 "Download failed" = "Descarga fallida";
 "Downloaded %lu items" = "Descargando %lu elementos";
 "Downloading %@..." = "Descargando %@...";
@@ -763,9 +768,7 @@
 "Preparing repost..." = "Preparando repost...";
 "Repost" = "Repost";
 "Repost unavailable" = "Repost no disponible";
-"Save all stories to Photos?" = "¿Guardar todas las historias en Fotos?";
 "Save failed" = "Error al guardar";
-"Save to Photos?" = "¿Guardar en Fotos?";
 "Saved %lu items" = "Guardados %lu elementos";
 "Saved to Photos" = "Guardado en Fotos";
 "Saved to RyukGram" = "Guardado en RyukGram";
@@ -787,7 +790,6 @@
 "Message from %@ was unsent" = "Se anuló un mensaje de %@";
 "Add" = "Añadir";
 "Add to block list" = "Añadir a la lista de bloqueo";
-"Add to block list?" = "¿Añadir a la lista de bloqueo?";
 "Added to block list" = "Añadido a la lista de bloqueo";
 "Added to exclude list" = "Añadido a la lista de excluidos";
 "Audio not loaded yet. Play the message first and try again." = "Audio aún no cargado. Reproduce el mensaje primero y vuelve a intentar.";
@@ -803,10 +805,8 @@
 "Could not find media" = "No se logró encontrar medios";
 "Could not find story media" = "No se logró encontrar medios para la historia";
 "Could not get audio data. Try again after refreshing the chat." = "No se encontró datos de audio. Intenta nuevamente luego de actualizar la conversación.";
-"Could not get video URL" = "No se encontró enlace al video";
 "Disable read receipts" = "Deshabilitar confirmación de lectura";
 "Disappearing media" = "Medios efímeros";
-"Done!" = "¡Finalizado!";
 "Download audio" = "Descargar audio";
 "Downloading audio..." = "Descargando audio...";
 "Enable read receipts" = "Habilitar confirmación de lectura";
@@ -850,7 +850,6 @@
 "Read receipts will no longer be blocked for this chat." = "Confirmación de lectura ya no estará bloqueado para este chat.";
 "Remove" = "Eliminar";
 "Remove from block list" = "Eliminar de la lista de bloqueo";
-"Remove from block list?" = "¿Eliminar de la lista de bloqueo?";
 "Remove from exclude list" = "Quitar de la lista de excluidos";
 "Removed" = "Eliminado";
 "Removed from list" = "Eliminado de la lista";
@@ -870,7 +869,6 @@
 "%@ can't be converted" = "No se puede convertir %@";
 "iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "Las APIs de audio de iOS no pudieron procesar este archivo%@%@\n\nPuedes intentar enviarlo a Instagram tal cual — el servidor de IG puede aceptarlo, o puede fallar silenciosamente.\n\nPara solicitar soporte nativo, abre un ticket:";
 "Un-exclude chat" = "No excluir conversación";
-"Un-exclude chat?" = "¿No excluir conversación?";
 "Un-exclude story seen" = "No excluir de visualización de la historia";
 "Un-excluded" = "No excluído";
 "Unblocked" = "Desbloqueado";
@@ -900,9 +898,7 @@
 "Comments shown" = "Comentarios mostrados";
 "Copied text to clipboard" = "Texto copiado al portapapeles";
 "Copy" = "Copiar";
-"Copy all" = "Copiar todo";
 "Copy bio" = "Copiar presentación";
-"Copy from profile" = "Copiar desde perfil";
 "Copy name" = "Copiar nombre";
 "Could not find cover image" = "No se encontró imagen de portada";
 "Current: %@" = "Actual: %@";
@@ -924,12 +920,10 @@
 "Saved locations" = "Ubicaciones guardadas";
 "Select color" = "Escoger color";
 "Set location" = "Establecer ubicación";
-"Settings…" = "Configuración…";
 "Turn Location Services on in Settings → Privacy to use your current location." = "Activa los servicios de ubicación en Ajustes → Privacidad para usar tu ubicación actual.";
 "Type emoji..." = "Introduce emoji...";
 
 "Theme" = "Tema";
-"Appearance" = "Apariencia";
 "Light" = "Claro";
 "Dark" = "Oscuro";
 "OLED" = "OLED";
@@ -951,7 +945,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE ANALYZER                              //
-// Settings → General → Profile Analyzer                                    //
+// Settings → Profile Analyzer                                              //
 //////////////////////////////////////////////////////////////////////////////
 
 "%lu followers · %lu following" = "%lu seguidores · %lu seguidos";
@@ -960,12 +954,11 @@
 "Analysis failed" = "Error en el análisis";
 "Another analysis is already running" = "Ya hay otro análisis en curso";
 "Available after your next scan" = "Disponible tras tu próximo análisis";
-"Cancelled" = "Cancelado";
+"Categories" = "Categorías";
 "Couldn't fetch profile information" = "No se pudo obtener la información del perfil";
 "Fetching followers (%lu/%ld)…" = "Obteniendo seguidores (%lu/%ld)…";
 "Fetching following (%lu/%ld)…" = "Obteniendo seguidos (%lu/%ld)…";
 "Fetching profile info…" = "Obteniendo información del perfil…";
-"Categories" = "Categorías";
 "First scan: %@" = "Primer análisis: %@";
 "Follower count exceeds %ld — analysis disabled to avoid rate limits." = "Número de seguidores supera %ld — análisis desactivado para evitar límites de la API.";
 "Gained since last scan" = "Ganados desde el último análisis";
@@ -979,11 +972,6 @@
 "No scan yet" = "Aún sin análisis";
 "Not following you back" = "No te siguen de vuelta";
 "OK" = "OK";
-"Updated %@ (%ld keys). Restart to apply." = "Actualizado %@ (%ld claves). Reinicia para aplicar.";
-"Restart now" = "Reiniciar ahora";
-"File is empty or not a valid .strings file." = "El archivo está vacío o no es un archivo .strings válido.";
-"Error" = "Error";
-"Could not write file." = "No se pudo escribir el archivo.";
 "Private account" = "Cuenta privada";
 "Profile Analyzer" = "Analizador de perfil";
 "Profile picture changed" = "Foto de perfil cambiada";
@@ -993,7 +981,6 @@
 "Reset analyzer data?" = "¿Restablecer datos del analizador?";
 "Run analysis" = "Ejecutar análisis";
 "Run your first analysis" = "Ejecuta tu primer análisis";
-"Search username or name" = "Buscar usuario o nombre";
 "Since last scan" = "Desde el último análisis";
 "Starting…" = "Iniciando…";
 "They follow you, you don't follow back" = "Te siguen, no los sigues de vuelta";
@@ -1050,8 +1037,8 @@
 "Inspect the full payload" = "Inspeccionar la carga completa";
 "Keep scan history" = "Conservar historial de análisis";
 "Large accounts are blocked: analysis is disabled above 13,000 followers to avoid Instagram rate-limiting the whole app." = "Las cuentas grandes están bloqueadas: el análisis se desactiva por encima de 13.000 seguidores para evitar que Instagram aplique un límite a toda la app.";
-"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "No se sube nada — todo queda en este dispositivo y puede borrarse desde el icono de la papelera.";
 "Not verified only" = "Solo no verificadas";
+"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "No se sube nada — todo queda en este dispositivo y puede borrarse desde el icono de la papelera.";
 "Nothing was applied." = "No se aplicó nada.";
 "Posts" = "Publicaciones";
 "Preferences" = "Preferencias";
@@ -1076,8 +1063,29 @@
 "Username A → Z" = "Usuario A → Z";
 "Username Z → A" = "Usuario Z → A";
 "Verified only" = "Solo verificadas";
-"When on, scans compare against your first scan so new/lost followers and profile updates don't disappear between scans." = "Cuando está activado, cada análisis se compara con el primero, así los seguidores nuevos/perdidos y los cambios de perfil no desaparecen entre análisis.";
-
+"Tracking" = "Seguimiento";
+"Visited profiles" = "Perfiles visitados";
+"Profiles you've opened recently" = "Perfiles que abriste recientemente";
+"Tracking off — enable below to log visits" = "Seguimiento desactivado — actívalo abajo para registrar visitas";
+"Track visited profiles" = "Rastrear perfiles visitados";
+"Logs every profile you open. Stays on-device." = "Registra cada perfil que abres. Se queda en el dispositivo.";
+"Compare every scan against your first one" = "Compara cada análisis con el primero";
+"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "Mantener historial compara cada análisis con el primero. Rastrear visitas registra cada perfil que abres para revisarlos aquí.";
+"just now" = "ahora mismo";
+"%dm ago" = "hace %d min";
+"%dh ago" = "hace %d h";
+"%dd ago" = "hace %d d";
+"Visited" = "Visitado";
+"Today" = "Hoy";
+"Last 7 days" = "Últimos 7 días";
+"Last 30 days" = "Últimos 30 días";
+"Most recent" = "Más reciente";
+"Oldest first" = "Más antiguos primero";
+"Most visited" = "Más visitado";
+"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "Elige qué eliminar. Las instantáneas borran las diferencias desde el último análisis; los perfiles visitados borran el historial de visitas.";
+"Reset snapshots" = "Restablecer instantáneas";
+"Clear visited profiles" = "Borrar perfiles visitados";
+"Reset everything" = "Restablecer todo";
 //////////////////////////////////////////////////////////////////////////////
 //                         SETTINGS VIEWS & DIALOGS                         //
 // Excluded-lists managers, backup/restore flows, in-picker labels.         //
@@ -1085,18 +1093,17 @@
 
 "Add chat" = "Añadir conversación";
 "Add custom domain" = "Añadir dominio personalizado";
-"Add preset…" = "Añadir ajuste preestablecido";
 "Add to list?" = "¿Añadir a la lista?";
 "Add user" = "Añadir usuario";
 "Apply" = "Aplicar";
 "Apply to" = "Aplicar a";
 "Chats" = "Conversaciones";
+"Colored" = "Coloreado";
 "Could not read file." = "No se logró leer el archivo.";
 "Could not resolve user ID" = "No se pudo resolver el ID del usuario";
 "Could not write temporary file." = "No se logró escribir el archivo temporal.";
 "Current location" = "Ubicación actual";
 "Custom" = "Personalizada";
-"Date Format" = "Formato de Fecha";
 "Delete" = "Eliminar";
 "Enable fake location" = "Habilitar ubicación falsa";
 "Enter username" = "Introducir nombre de usuario";
@@ -1118,7 +1125,6 @@
 "No DM thread found with @%@" = "No se encontró conversación con @%@";
 "Off" = "DESACTIVADO";
 "On" = "ACTIVADO";
-"Colored" = "Coloreado";
 "Presets" = "Preajustes";
 "Recently added" = "Añadidos recientemente";
 "Remove from list" = "Eliminar de la lista";
@@ -1177,23 +1183,37 @@
 "Copy video URL" = "Copiar enlace de video";
 "Could not access reel media" = "No se logró acceder a los medios del reel";
 "Could not access reel photo" = "No se logró acceder a la foto del reel";
-"Could not extract photo url from post" = "No se logró extraer foto de la publicación";
-"Could not extract photo url from reel" = "No se logró extraer enlace de la foto del reel";
-"Could not extract photo url from story" = "No se logró extraer enlace de la foto de la historia";
-"Could not extract video url from post" = "No se logró extraer enlace del video de la publicación";
-"Could not extract video url from reel" = "No se logró extraer enlace del video del reel";
-"Could not extract video url from story" = "No se logró extraer enlace del video de la historia";
+"Could not write file." = "No se pudo escribir el archivo.";
 "Download Quality" = "Calidad de descarga";
+"Error" = "Error";
 "Extras" = "Extras";
 "FFmpegKit Debug" = "FFmpegKit Debug";
+"File is empty or not a valid .strings file." = "El archivo está vacío o no es un archivo .strings válido.";
 "Later" = "Mas tarde";
 "No!" = "¡No!";
-"OK" = "OK";
 "Restart" = "Reiniciar";
+"Restart now" = "Reiniciar ahora";
 "Restart required" = "Reinicio requerido";
-"username" = "nombre de usuario";
+"Updated %@ (%ld keys). Restart to apply." = "Actualizado %@ (%ld claves). Reinicia para aplicar.";
 "Yes" = "Si";
 "You must restart the app to apply this change" = "Debes reiniciar la aplicación para aplicar este cambio";
+"Add language" = "Añadir idioma";
+"Enter the language code (e.g. fr, de, ja)" = "Introduce el código del idioma (p. ej. fr, de, ja)";
+"Update localization" = "Actualizar traducción";
+"Pick a language to update, or add a new one" = "Elige un idioma para actualizar o añade uno nuevo";
+"English .strings file not found" = "Archivo .strings en inglés no encontrado";
+"Loading" = "Cargando";
+"Next" = "Siguiente";
+"Preset" = "Preajuste";
+"(unset)" = "(sin definir)";
+"  • Keep-deleted: OFF" = "  • Mantener eliminados: DESACTIVADO";
+"  • Keep-deleted: ON" = "  • Mantener eliminados: ACTIVADO";
+"KD: OFF" = "ME: DESACTIVADO";
+"Downloading %lu of %lu" = "Descargando %lu de %lu";
+"%lu active • tap to cancel" = "%lu activas • toca para cancelar";
+"Downloading %d%%" = "Descargando %d%%";
+"Download all and share?" = "¿Descargar todo y compartir?";
+"Save all to Photos?" = "¿Guardar todo en Fotos?";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               ABOUT / CREDITS                            //
@@ -1212,6 +1232,7 @@
 "Portuguese (Brazil) translation" = "Traducción al portugués (Brasil)";
 "Turkish translation" = "Traducción al turco";
 "Code contributions" = "Contribuciones de código";
+"Following feed mode (from InstaSane)" = "Modo de feed de Siguiendo (de InstaSane)";
 "latest" = "última";
 "Links" = "Enlaces";
 "No releases" = "Sin versiones";
@@ -1222,8 +1243,8 @@
 "Russian translation" = "Traducción al ruso";
 "RyukGram developer" = "Desarrollador de RyukGram";
 "Join Telegram channel" = "Unirse al canal de Telegram";
-"View on GitHub" = "Ver en GitHub";
 "Source code" = "Código fuente";
+"View on GitHub" = "Ver en GitHub";
 "Spanish translation" = "Traducción al español";
 "Support the original SCInsta developer" = "Apoyar al desarrollador original de SCInsta";
 "Inspirations" = "Inspiraciones";
@@ -1269,240 +1290,203 @@
 "Video quality" = "Calidad de video";
 "Which quality to download" = "En qué calidad descargar";
 
-"Composer doesn't accept GIFs" = "El compositor no acepta GIFs";
-"Copy GIF link" = "Copiar enlace del GIF";
-"Custom GIF in comments" = "GIF personalizado en comentarios";
-"Failed to build GIF model" = "No se pudo crear el modelo GIF";
-"GIF link copied" = "Enlace del GIF copiado";
-"Invalid Giphy URL" = "URL de Giphy no válida";
-"Long-press the GIF button to paste any Giphy URL" = "Mantén pulsado el botón GIF para pegar cualquier URL de Giphy";
-"Paste Giphy Link" = "Pegar enlace de Giphy";
-"Paste a giphy.com URL or media ID" = "Pega una URL de giphy.com o un ID de medio";
-"Send" = "Enviar";
-
-"Tracking" = "Seguimiento";
-"Visited profiles" = "Perfiles visitados";
-"Profiles you've opened recently" = "Perfiles que abriste recientemente";
-"Tracking off — enable below to log visits" = "Seguimiento desactivado — actívalo abajo para registrar visitas";
-"Track visited profiles" = "Rastrear perfiles visitados";
-"Logs every profile you open. Stays on-device." = "Registra cada perfil que abres. Se queda en el dispositivo.";
-"Compare every scan against your first one" = "Compara cada análisis con el primero";
-"Keep history compares each scan against your first one. Track visits records every profile you open so you can review them here." = "Mantener historial compara cada análisis con el primero. Rastrear visitas registra cada perfil que abres para revisarlos aquí.";
-"just now" = "ahora mismo";
-"%dm ago" = "hace %d min";
-"%dh ago" = "hace %d h";
-"%dd ago" = "hace %d d";
-"Visited" = "Visitado";
-"Today" = "Hoy";
-"Last 7 days" = "Últimos 7 días";
-"Last 30 days" = "Últimos 30 días";
-"Most recent" = "Más reciente";
-"Oldest first" = "Más antiguo primero";
-"Most visited" = "Más visitado";
-"Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "Elige qué eliminar. Las instantáneas borran las diferencias desde el último análisis; los perfiles visitados borran el historial de visitas.";
-"Reset snapshots" = "Restablecer instantáneas";
-"Clear visited profiles" = "Borrar perfiles visitados";
-"Reset everything" = "Restablecer todo";
-
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //                          ACTION MENU CONFIG                              //
-// Configure-menu screen, profile action button, action catalog labels.    //
+// Profile action button: per-section toggles, reorder handles, default-tap //
+// behavior, reset confirmations, action catalog labels.                    //
 //////////////////////////////////////////////////////////////////////////////
 
-"Audio & visibility" = "Audio & visibility";
-"Bio" = "Bio";
-"bio" = "bio";
-"Bulk download" = "Bulk download";
-"Collapse this section's actions behind a single entry" = "Collapse this section's actions behind a single entry";
-"Configure: %@" = "Configure: %@";
-"Copied %@" = "Copied %@";
-"Copy ID" = "Copy ID";
-"Copy Info" = "Copy Info";
-"Copy media URL" = "Copy media URL";
-"Copy profile link" = "Copy profile link";
-"Copy username" = "Copy username";
-"DM disappearing media" = "DM disappearing media";
-"Download" = "Download";
-"Download all to Gallery" = "Download all to Gallery";
-"Download to Gallery" = "Download to Gallery";
-"Exclude/include user" = "Exclude/include user";
-"Feed settings" = "Feed settings";
-"Followers: %@" = "Followers: %@";
-"Following: %@" = "Following: %@";
+"Long-press gestures" = "Gestos al mantener pulsado";
+"Inserts a button in the profile navigation header" = "Inserta un botón en la cabecera de navegación del perfil";
+"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Añade un botón de acción de RyukGram en la cabecera del perfil con las opciones copiar, ver foto, compartir, guardar y datos del perfil. Tocar abre el menú de forma predeterminada; cambia el comportamiento al tocar en Configurar menú.";
+"Configure menu" = "Configurar menú";
+"Reorder, enable/disable, set default tap, show date" = "Reordenar, activar/desactivar, definir acción al tocar, mostrar fecha";
+"Reorder, enable/disable, set default tap" = "Reordenar, activar/desactivar, definir acción al tocar";
+"RyukGram profile actions" = "Acciones de perfil de RyukGram";
+"Reorder sections" = "Reordenar secciones";
+"Drag the ≡ handle to reorder sections." = "Arrastra el manejador ≡ para reordenar las secciones.";
+"Drag the ≡ handle to reorder. Toggle a row off to hide it from the menu. Mark a section as a submenu to collapse its actions behind a single entry." = "Arrastra el manejador ≡ para reordenar. Desactiva una fila para ocultarla del menú. Marca una sección como submenú para agrupar sus acciones en una sola entrada.";
+"Show as submenu" = "Mostrar como submenú";
+"Collapse this section's actions behind a single entry" = "Agrupa las acciones de esta sección en una sola entrada";
+"Configure: %@" = "Configurar: %@";
+"What happens on a single tap. Long-press always opens the full menu." = "Lo que ocurre al tocar una vez. Mantener pulsado siempre abre el menú completo.";
+"Reset to defaults" = "Restablecer valores predeterminados";
+"Reset to defaults?" = "¿Restablecer valores predeterminados?";
+"This will restore the default sections, order, and toggles for this menu." = "Esto restaurará las secciones, el orden y los interruptores predeterminados de este menú.";
+"Audio & visibility" = "Audio y visibilidad";
+"DM disappearing media" = "Medios efímeros en mensajes";
+"Bulk download" = "Descarga masiva";
+"Feed settings" = "Ajustes del Feed (Inicio)";
+"Reels settings" = "Ajustes de Reels";
+"Profile settings" = "Ajustes de perfil";
+"Stories settings" = "Ajustes de historias";
+"Copy ID" = "Copiar ID";
+"Copy Info" = "Copiar información";
+"Copy all info" = "Copiar toda la información";
+"Copy media URL" = "Copiar URL del contenido";
+"Copy profile link" = "Copiar enlace del perfil";
+"Copy username" = "Copiar nombre de usuario";
+"Download" = "Descargar";
+"Download to Gallery" = "Descargar en Galería";
+"Download all to Gallery" = "Descargar todo en Galería";
+"Nothing to download" = "Nada que descargar";
+"Exclude/include user" = "Excluir / incluir usuario";
+"Mute / unmute audio" = "Silenciar / activar sonido";
+"Save picture to Gallery" = "Guardar foto en Galería";
+"Share picture" = "Compartir foto";
+"View picture" = "Ver foto";
+"Bio" = "Biografía";
 "ID" = "ID";
-"Info" = "Info";
-"Mute / unmute audio" = "Mute / unmute audio";
-"name" = "name";
-"Picture not found" = "Picture not found";
-"Private profile" = "Private profile";
-"profile link" = "profile link";
-"Profile info" = "Profile info";
-"Profile link" = "Profile link";
-"Profile settings" = "Profile settings";
-"Profile unavailable" = "Profile unavailable";
-"Public profile" = "Public profile";
-"Reels settings" = "Reels settings";
-"Reorder sections" = "Reorder sections";
-"Reset to defaults" = "Reset to defaults";
-"Reset to defaults?" = "Reset to defaults?";
-"RyukGram profile actions" = "RyukGram profile actions";
-"Save picture" = "Save picture";
-"Save picture to Gallery" = "Save picture to Gallery";
-"Share picture" = "Share picture";
-"Show as submenu" = "Show as submenu";
-"Stories settings" = "Stories settings";
-"This will restore the default sections, order, and toggles for this menu." = "This will restore the default sections, order, and toggles for this menu.";
-"Username" = "Username";
-"View picture" = "View picture";
-"What happens on a single tap. Long-press always opens the full menu." = "What happens on a single tap. Long-press always opens the full menu.";
-"Profile action button" = "Profile action button";
-"Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions" = "Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions";
-"Configure menu" = "Configure menu";
-"Configure profile menu" = "Configure profile menu";
-"Reorder, enable/disable, set default tap, show date" = "Reorder, enable/disable, set default tap, show date";
-"Reorder, enable/disable, set default tap" = "Reorder, enable/disable, set default tap";
+"Info" = "Información";
+"Profile info" = "información del perfil";
+"Profile link" = "Enlace del perfil";
+"Picture not found" = "Foto no encontrada";
+"Private profile" = "Perfil privado";
+"Profile unavailable" = "Perfil no disponible";
+"Public profile" = "Perfil público";
+"Username" = "Nombre de usuario";
+"Followers: %@" = "Seguidores: %@";
+"Following: %@" = "Siguiendo: %@";
+"Copied %@" = "%@ copiado";
 
-////////////////////////////////////////////////////////////////////////
-//                          PHASE 1 FOLLOW-UPS                              //
+//////////////////////////////////////////////////////////////////////////////
+//                                 GALLERY                                  //
+// On-device media library: enable + save mode, browsing, filters, sort,    //
+// delete tools, picker entries, and the Photos/Gallery download submenu.   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Long-press gestures" = "Long-press gestures";
-"Inserts a button in the profile navigation header" = "Inserts a button in the profile navigation header";
-"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu.";
-"Download all to Gallery?" = "Download all to Gallery?";
-"Download all to Photos?" = "Download all to Photos?";
-"Nothing to download" = "Nothing to download";
-
-////////////////////////////////////////////////////////////////////////
-//                              GALLERY                                     //
-// On-device media library + save mode preferences.                         //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browse, filter, sort, delete saved media" = "Browse, filter, sort, delete saved media";
-"Enable gallery" = "Enable gallery";
-"Gallery" = "Gallery";
-"Gallery only" = "Gallery only";
-"On-device library of everything you've downloaded through RyukGram" = "On-device library of everything you've downloaded through RyukGram";
-"Open Gallery" = "Open Gallery";
-"Photos + Gallery" = "Photos + Gallery";
-"Photos only" = "Photos only";
-"Save mode" = "Save mode";
-"Save to Gallery?" = "Save to Gallery?";
-"Saved to Gallery" = "Saved to Gallery";
-"Show gallery entries in download menus and unlock the library page below" = "Show gallery entries in download menus and unlock the library page below";
-"When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search." = "When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search.";
-"Where 'Download to Photos' actually writes when gallery is on" = "Where 'Download to Photos' actually writes when gallery is on";
-
-////////////////////////////////////////////////////////////////////////
-//                          GALLERY (PHASE 2.1)                             //
-//////////////////////////////////////////////////////////////////////////////
-
-"Gallery save mode" = "Gallery save mode";
+"Enable gallery" = "Activar galería";
+"Show gallery entries in download menus and unlock the gallery button" = "Muestra las opciones de galería en los menús de descarga y desbloquea el botón de galería";
+"Gallery" = "Galería";
+"Gallery Settings" = "Ajustes de Galería";
+"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "Biblioteca en el dispositivo del contenido descargado mediante RyukGram. El modo de guardado decide dónde escribe realmente 'Descargar en Fotos'.";
 "Hold DM tab to open gallery" = "Mantén pulsado DM para abrir la galería";
 "Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "Mantén pulsado el botón de mensajes en la barra inferior para abrir la galería de RyukGram";
+"Gallery save mode" = "Modo de guardado de Galería";
+"Where 'Download to Photos' actually writes when gallery is on" = "Dónde escribe realmente 'Descargar en Fotos' cuando la galería está activada";
+"Photos only" = "Solo Fotos";
+"Gallery only" = "Solo Galería";
+"Photos + Gallery" = "Fotos + Galería";
+"Save to Gallery?" = "¿Guardar en Galería?";
+"Saved to Gallery" = "Guardado en Galería";
+"Save all to Gallery?" = "¿Guardar todo en Galería?";
+"Saved %lu items to Gallery" = "Guardados %lu elementos en Galería";
+"Saving to Gallery..." = "Guardando en Galería...";
+"to Gallery" = "en Galería";
+"Browsing" = "Navegación";
+"Manage" = "Gestionar";
+"Storage" = "Almacenamiento";
+"Total files" = "Archivos totales";
+"Total size" = "Tamaño total";
+"Show favorites at top" = "Mostrar favoritos arriba";
+"When enabled, favorites are pinned above other files inside the current sort and folder context." = "Cuando está activo, los favoritos se fijan por encima del resto de archivos dentro del orden y la carpeta actuales.";
+"Images" = "Imágenes";
+"Videos" = "Vídeos";
+"GIFs" = "GIFs";
+"Options" = "Opciones";
+"Clear filters" = "Limpiar filtros";
+"Favorites only" = "Solo favoritos";
+"By source" = "Por origen";
+"By type" = "Por tipo";
+"By user" = "Por usuario";
+"Source" = "Origen";
+"Source user" = "Usuario de origen";
+"Type" = "Tipo";
+"Search users" = "Buscar usuarios";
+"Newest first" = "Más recientes primero";
+"Largest first" = "Más grandes primero";
+"Smallest first" = "Más pequeños primero";
+"Name A-Z" = "Nombre A-Z";
+"Name Z-A" = "Nombre Z-A";
+"Images first" = "Imágenes primero";
+"Videos first" = "Videos primero";
+"Delete files" = "Eliminar archivos";
+"Delete %@?" = "¿Eliminar %@?";
+"Delete from Gallery?" = "¿Eliminar de la Galería?";
+"Deleted from Gallery" = "Eliminado de la Galería";
+"This will permanently remove this file from the gallery." = "Esto eliminará permanentemente este archivo de la galería.";
+"This will permanently remove %ld file(s)." = "Esto eliminará permanentemente %ld archivo(s).";
+"Delete all files" = "Eliminar todos los archivos";
+"Delete all images" = "Eliminar todas las imágenes";
+"Delete all videos" = "Eliminar todos los videos";
+"Delete by user" = "Eliminar por usuario";
+"Delete feed posts" = "Eliminar publicaciones del Feed (Inicio)";
+"Delete profile pictures" = "Eliminar fotos de perfil";
+"Delete reels" = "Eliminar reels";
+"Delete stories" = "Eliminar historias";
+"Delete thumbnails" = "Eliminar miniaturas";
+"Delete DM media" = "Eliminar contenido de mensajes";
+"All files deleted" = "Todos los archivos eliminados";
+"Files deleted" = "Archivos eliminados";
+"Images deleted" = "Imágenes eliminadas";
+"Videos deleted" = "Videos eliminados";
+"Feed posts deleted" = "Publicaciones del Feed (Inicio) eliminadas";
+"Profile pictures deleted" = "Fotos de perfil eliminadas";
+"Reels deleted" = "Reels eliminados";
+"Stories deleted" = "Historias eliminadas";
+"Thumbnails deleted" = "Miniaturas eliminadas";
+"DM media deleted" = "Contenido de mensajes eliminado";
+"User files deleted" = "Archivos del usuario eliminados";
+"No files to delete" = "No hay archivos que eliminar";
+"Failed" = "Error";
+"Failed to delete" = "Error al eliminar";
+"Unable to open original post" = "No se puede abrir la publicación original";
+"Unable to open profile" = "No se puede abrir el perfil";
+"Unknown user" = "Usuario desconocido";
+"(unknown)" = "(desconocido)";
+"The original content may no longer exist." = "Es posible que el contenido original ya no exista.";
+"Select All" = "Seleccionar todo";
+"Deselect All" = "Anular selección";
+"Share selected" = "Compartir selección";
+"Move selected" = "Mover selección";
+"Favorite selected" = "Marcar selección como favoritos";
+"Delete selected" = "Eliminar selección";
+"Deleted selected files" = "Archivos seleccionados eliminados";
+"List view" = "Vista de lista";
+"Grid view" = "Vista de cuadrícula";
+"More" = "Más";
+"Favorite" = "Favorito";
+"Unfavorite" = "Quitar de favoritos";
+"Rename" = "Cambiar nombre";
+"Move to Folder" = "Mover a carpeta";
+"Open Original Post" = "Abrir publicación original";
+"Open Profile" = "Abrir perfil";
+"No files in Gallery" = "No hay archivos en la galería";
+"Save media from the preview screen\nto see it here." = "Guarda contenido desde la pantalla de vista previa\npara verlo aquí.";
+"No matching files" = "No hay archivos coincidentes";
+"Delete Selected Files?" = "¿Eliminar archivos seleccionados?";
+"This will permanently remove %ld file%@ from the gallery." = "Esto eliminará permanentemente %ld archivo%@ de la galería.";
+"New Folder" = "Nueva carpeta";
+"New folder…" = "Nueva carpeta…";
+"Folder name" = "Nombre de la carpeta";
+"Create" = "Crear";
+"Create & Move" = "Crear y mover";
+"Rename Folder" = "Cambiar nombre de la carpeta";
+"Delete Folder" = "Eliminar carpeta";
+"Delete Folder?" = "¿Eliminar carpeta?";
+"This folder is empty." = "Esta carpeta está vacía.";
+"This folder contains %ld file(s). They will be moved to the parent folder." = "Esta carpeta contiene %ld archivo(s). Se moverán a la carpeta superior.";
+"Root" = "Raíz";
+"DMs" = "Mensajes";
+"Thumb" = "Miniatura";
+"Story" = "Historia";
+"Comment" = "Comentario";
+"Other" = "Otro";
+"Pick audio" = "Elegir audio";
+"Audio from RyukGram Gallery" = "Audio desde la Galería de RyukGram";
+"Share" = "Compartir";
+
+//////////////////////////////////////////////////////////////////////////////
+//                              HOME SHORTCUT                               //
+// Extra button on the home top bar (right of the create-post +) — picks    //
+// between Gallery, Changelog, etc. Configure-screen and the row reorderer. //
+//////////////////////////////////////////////////////////////////////////////
+
 "Home shortcut button" = "Botón de acceso directo en inicio";
-"Changelog" = "Registro de cambios";
-"Show gallery entries in download menus and unlock the gallery button" = "Show gallery entries in download menus and unlock the gallery button";
-"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (PHASE 2 REVAMP)                           //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browsing" = "Browsing";
-"Clear filters" = "Clear filters";
-"Delete files" = "Delete files";
-"Favorites only" = "Favorites only";
-"Gallery Settings" = "Gallery Settings";
-"Images" = "Images";
-"Manage" = "Manage";
-"Show favorites at top" = "Show favorites at top";
-"Storage" = "Storage";
-"Total files" = "Total files";
-"Total size" = "Total size";
-"Videos" = "Videos";
-"When enabled, favorites are pinned above other files inside the current sort and folder context." = "When enabled, favorites are pinned above other files inside the current sort and folder context.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DELETE + REVAMP 2)                        //
-//////////////////////////////////////////////////////////////////////////////
-
-"All files deleted" = "All files deleted";
-"By source" = "By source";
-"By type" = "By type";
-"By user" = "By user";
-"DM media deleted" = "DM media deleted";
-"Delete %@?" = "Delete %@?";
-"Delete DM media" = "Delete DM media";
-"Delete all files" = "Delete all files";
-"Delete all images" = "Delete all images";
-"Delete all videos" = "Delete all videos";
-"Delete by user" = "Delete by user";
-"Delete feed posts" = "Delete feed posts";
-"Delete profile pictures" = "Delete profile pictures";
-"Delete reels" = "Delete reels";
-"Delete stories" = "Delete stories";
-"Delete thumbnails" = "Delete thumbnails";
-"Feed posts deleted" = "Feed posts deleted";
-"Files deleted" = "Files deleted";
-"Images deleted" = "Images deleted";
-"No files to delete" = "No files to delete";
-"Profile pictures deleted" = "Profile pictures deleted";
-"Reels deleted" = "Reels deleted";
-"Search..." = "Search...";
-"Stories deleted" = "Stories deleted";
-"This will permanently remove %ld file(s)." = "This will permanently remove %ld file(s).";
-"Thumbnails deleted" = "Thumbnails deleted";
-"Unable to open original post" = "Unable to open original post";
-"Unable to open profile" = "Unable to open profile";
-"Unknown user" = "Unknown user";
-"User files deleted" = "User files deleted";
-"Videos deleted" = "Videos deleted";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (SORT + FILTER)                            //
-//////////////////////////////////////////////////////////////////////////////
-
-"Images first" = "Images first";
-"Largest first" = "Largest first";
-"Name A-Z" = "Name A-Z";
-"Name Z-A" = "Name Z-A";
-"Newest first" = "Newest first";
-"Oldest first" = "Oldest first";
-"Options" = "Options";
-"Smallest first" = "Smallest first";
-"Source" = "Source";
-"Source user" = "Source user";
-"Type" = "Type";
-"Videos first" = "Videos first";
-
+"Adds a button to the home top bar, right of the create-post +. Off entirely turns it off." = "Añade un botón a la barra superior de inicio, a la derecha del + de crear publicación. Desactivado por completo lo desactiva.";
 "Configure the extra button on the home top bar" = "Configura el botón extra de la barra superior de inicio";
 "Show button" = "Mostrar botón";
-"Icon" = "Icono";
-
 "Auto" = "Automático";
+"Icon" = "Icono";
 "Drag the ≡ handle to reorder. Toggle a row off to hide that destination. With one action enabled tapping fires it; with two or more, tapping presents a menu." = "Arrastra el manejador ≡ para reordenar. Desactiva una fila para ocultar ese destino. Con una acción activa, tocar la ejecuta; con dos o más, tocar muestra un menú.";
-
-"Copy all info" = "Copiar toda la información";
-"profile info" = "información del perfil";
-
-"Start media muted" = "Iniciar contenido en silencio";
-"Expanded videos open with sound off" = "Los videos ampliados se abren sin sonido";
-
-"Enhanced media resolution" = "Resolución de medios mejorada";
-"Spoof device profile so IG serves higher-quality images" = "Suplanta el perfil del dispositivo para que IG entregue imágenes de mayor calidad";
-
-"Media saving" = "Guardar medios";
-
-//////////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DOWNLOAD MENU + PICKERS)                  //
-//////////////////////////////////////////////////////////////////////////////
-
-"GIFs" = "GIFs";
-"to Gallery" = "to Gallery";
-"Share" = "Share";
-"Pick audio" = "Pick audio";
-"Audio from RyukGram Gallery" = "Audio from RyukGram Gallery";
-"Main feed" = "Main feed";
-"Choose Instagram's default feed or force the Following feed" = "Choose Instagram's default feed or force the Following feed";
-"Following feed mode (from InstaSane)" = "Following feed mode (from InstaSane)";
+"Changelog" = "Registro de cambios";

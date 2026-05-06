@@ -587,31 +587,31 @@ NSString *SCIFileNameForMedia(NSURL *fileURL,
 
 + (NSString *)labelForSource:(SCIGallerySource)source {
     switch (source) {
-        case SCIGallerySourceFeed:      return @"Feed";
-        case SCIGallerySourceStories:   return @"Stories";
-        case SCIGallerySourceReels:     return @"Reels";
-        case SCIGallerySourceProfile:   return @"Profile";
-        case SCIGallerySourceDMs:       return @"DMs";
-        case SCIGallerySourceThumbnail: return @"Thumb";
-        case SCIGallerySourceNotes:     return @"Notes";
-        case SCIGallerySourceComments:  return @"Comments";
+        case SCIGallerySourceFeed:      return SCILocalized(@"Feed");
+        case SCIGallerySourceStories:   return SCILocalized(@"Stories");
+        case SCIGallerySourceReels:     return SCILocalized(@"Reels");
+        case SCIGallerySourceProfile:   return SCILocalized(@"Profile");
+        case SCIGallerySourceDMs:       return SCILocalized(@"DMs");
+        case SCIGallerySourceThumbnail: return SCILocalized(@"Thumb");
+        case SCIGallerySourceNotes:     return SCILocalized(@"Notes");
+        case SCIGallerySourceComments:  return SCILocalized(@"Comments");
         case SCIGallerySourceOther:
-        default:                      return @"Other";
+        default:                      return SCILocalized(@"Other");
     }
 }
 
 + (NSString *)shortLabelForSource:(SCIGallerySource)source {
     switch (source) {
         case SCIGallerySourceFeed:      return @"Feed";
-        case SCIGallerySourceStories:   return @"Story";
+        case SCIGallerySourceStories:   return SCILocalized(@"Story");
         case SCIGallerySourceReels:     return @"Reel";
         case SCIGallerySourceProfile:   return @"Profile";
         case SCIGallerySourceDMs:       return @"DMs";
-        case SCIGallerySourceThumbnail: return @"Thumb";
+        case SCIGallerySourceThumbnail: return SCILocalized(@"Thumb");
         case SCIGallerySourceNotes:     return @"Notes";
-        case SCIGallerySourceComments:  return @"Comment";
+        case SCIGallerySourceComments:  return SCILocalized(@"Comment");
         case SCIGallerySourceOther:
-        default:                      return @"Other";
+        default:                      return SCILocalized(@"Other");
     }
 }
 

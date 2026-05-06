@@ -201,7 +201,7 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
     if (self.pickerMode && self.pickerTitleOverride.length && self.currentFolderPath.length == 0) {
         text = self.pickerTitleOverride;
     } else {
-        text = self.currentFolderPath.length > 0 ? [self.currentFolderPath lastPathComponent] : @"Gallery";
+        text = self.currentFolderPath.length > 0 ? [self.currentFolderPath lastPathComponent] : SCILocalized(@"Gallery");
     }
     self.navigationItem.titleView = nil;
     self.title = text;
@@ -216,7 +216,7 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
     controller.obscuresBackgroundDuringPresentation = NO;
     controller.hidesNavigationBarDuringPresentation = NO;
     controller.searchResultsUpdater = self;
-    controller.searchBar.placeholder = SCILocalized(@"Search...");
+    controller.searchBar.placeholder = SCILocalized(@"Search");
     self.searchController = controller;
     self.navigationItem.searchController = controller;
     // Search bar collapses under the title until the user scrolls up or
@@ -253,11 +253,11 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
         NSArray<SCIGalleryFile *> *files = [self visibleGalleryFiles];
         BOOL allSelected = files.count > 0 && self.selectedFileIDs.count == files.count;
         self.navigationItem.rightBarButtonItems = nil;
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:SCILocalized(@"Cancel")
                                                                                   style:UIBarButtonItemStylePlain
                                                                                  target:self
                                                                                  action:@selector(exitSelectionMode)];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:(allSelected ? @"Deselect All" : @"Select All")
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:(allSelected ? SCILocalized(@"Deselect All") : SCILocalized(@"Select All"))
                                                                                   style:UIBarButtonItemStylePlain
                                                                                  target:self
                                                                                  action:@selector(selectAllVisibleFiles)];
@@ -309,23 +309,23 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
     [self.bottomBarStack removeFromSuperview];
     self.bottomBarStack = nil;
 
-    UIButton *searchBtn = [self galleryBottomBarButtonWithResource:@"search" accessibility:@"Search"];
+    UIButton *searchBtn = [self galleryBottomBarButtonWithResource:@"search" accessibility:SCILocalized(@"Search")];
     [searchBtn addTarget:self action:@selector(activateSearch) forControlEvents:UIControlEventTouchUpInside];
 
     if (self.selectionMode) {
-        UIButton *shareBtn = [self galleryBottomBarButtonWithResource:@"share" accessibility:@"Share selected"];
+        UIButton *shareBtn = [self galleryBottomBarButtonWithResource:@"share" accessibility:SCILocalized(@"Share selected")];
         [shareBtn addTarget:self action:@selector(shareSelectedFiles) forControlEvents:UIControlEventTouchUpInside];
 
-        UIButton *saveBtn = [self galleryBottomBarButtonWithResource:@"download" accessibility:@"Save to Photos"];
+        UIButton *saveBtn = [self galleryBottomBarButtonWithResource:@"download" accessibility:SCILocalized(@"Save to Photos")];
         [saveBtn addTarget:self action:@selector(saveSelectedFilesToPhotos) forControlEvents:UIControlEventTouchUpInside];
 
-        UIButton *moveBtn = [self galleryBottomBarButtonWithResource:@"folder_move" accessibility:@"Move selected"];
+        UIButton *moveBtn = [self galleryBottomBarButtonWithResource:@"folder_move" accessibility:SCILocalized(@"Move selected")];
         [moveBtn addTarget:self action:@selector(moveSelectedFiles) forControlEvents:UIControlEventTouchUpInside];
 
-        UIButton *favoriteBtn = [self galleryBottomBarButtonWithResource:@"heart" accessibility:@"Favorite selected"];
+        UIButton *favoriteBtn = [self galleryBottomBarButtonWithResource:@"heart" accessibility:SCILocalized(@"Favorite selected")];
         [favoriteBtn addTarget:self action:@selector(toggleFavoriteForSelectedFiles) forControlEvents:UIControlEventTouchUpInside];
 
-        UIButton *deleteBtn = [self galleryBottomBarButtonWithResource:@"trash" accessibility:@"Delete selected"];
+        UIButton *deleteBtn = [self galleryBottomBarButtonWithResource:@"trash" accessibility:SCILocalized(@"Delete selected")];
         [deleteBtn addTarget:self action:@selector(deleteSelectedFiles) forControlEvents:UIControlEventTouchUpInside];
         deleteBtn.tintColor = [UIColor systemRedColor];
 
@@ -333,18 +333,18 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
         return;
     }
 
-    UIButton *filterBtn = [self galleryBottomBarButtonWithResource:@"filter" accessibility:@"Filter"];
+    UIButton *filterBtn = [self galleryBottomBarButtonWithResource:@"filter" accessibility:SCILocalized(@"Filter")];
     [filterBtn addTarget:self action:@selector(presentFilter) forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton *sortBtn = [self galleryBottomBarButtonWithResource:@"sort" accessibility:@"Sort"];
+    UIButton *sortBtn = [self galleryBottomBarButtonWithResource:@"sort" accessibility:SCILocalized(@"Sort")];
     [sortBtn addTarget:self action:@selector(presentSort) forControlEvents:UIControlEventTouchUpInside];
 
     NSString *toggleResource = self.viewMode == SCIGalleryViewModeGrid ? @"list" : @"grid";
-    NSString *toggleAX = self.viewMode == SCIGalleryViewModeGrid ? @"List view" : @"Grid view";
+    NSString *toggleAX = self.viewMode == SCIGalleryViewModeGrid ? SCILocalized(@"List view") : SCILocalized(@"Grid view");
     UIButton *toggleBtn = [self galleryBottomBarButtonWithResource:toggleResource accessibility:toggleAX];
     [toggleBtn addTarget:self action:@selector(toggleViewMode) forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton *folderBtn = [self galleryBottomBarButtonWithResource:@"folder" accessibility:@"New folder"];
+    UIButton *folderBtn = [self galleryBottomBarButtonWithResource:@"folder" accessibility:SCILocalized(@"New Folder")];
     [folderBtn addTarget:self action:@selector(presentCreateFolder) forControlEvents:UIControlEventTouchUpInside];
 
     NSArray<UIView *> *row = self.pickerMode
@@ -484,7 +484,7 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
 
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.translatesAutoresizingMaskIntoConstraints = NO;
-    label.text = @"No files in Gallery";
+    label.text = SCILocalized(@"No files in Gallery");
     label.textColor = [UIColor secondaryLabelColor];
     label.font = [UIFont systemFontOfSize:17 weight:UIFontWeightMedium];
     label.textAlignment = NSTextAlignmentCenter;
@@ -493,7 +493,7 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
 
     UILabel *subtitle = [[UILabel alloc] initWithFrame:CGRectZero];
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    subtitle.text = @"Save media from the preview screen\nto see it here.";
+    subtitle.text = SCILocalized(@"Save media from the preview screen\nto see it here.");
     subtitle.textColor = [UIColor tertiaryLabelColor];
     subtitle.font = [UIFont systemFontOfSize:14];
     subtitle.textAlignment = NSTextAlignmentCenter;
@@ -532,9 +532,9 @@ static NSInteger SCIGalleryItemCountForFolderPath(NSManagedObjectContext *contex
     self.collectionView.hidden = isEmpty;
 
     if (isEmpty && hasFilters) {
-        self.emptyStateLabel.text = @"No matching files";
+        self.emptyStateLabel.text = SCILocalized(@"No matching files");
     } else {
-        self.emptyStateLabel.text = @"No files in Gallery";
+        self.emptyStateLabel.text = SCILocalized(@"No files in Gallery");
     }
 }
 

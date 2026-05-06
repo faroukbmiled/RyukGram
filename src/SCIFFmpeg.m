@@ -144,7 +144,7 @@ static void sciLoadFFmpegKit(void) {
             [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Copy") style:UIAlertActionStyleDefault handler:^(UIAlertAction *a) {
                 [UIPasteboard generalPasteboard].string = copyMsg;
             }]];
-            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+            [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"OK") style:UIAlertActionStyleCancel handler:nil]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
                 while (root.presentedViewController) root = root.presentedViewController;

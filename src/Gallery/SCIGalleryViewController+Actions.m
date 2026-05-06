@@ -27,7 +27,7 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
 - (void)showGalleryOpenFailureMessage:(NSString *)title actionIdentifier:(NSString *)actionIdentifier {
     [SCIUtils showToastForActionIdentifier:actionIdentifier duration:2.0
                              title:title
-                          subtitle:@"The original content may no longer exist."
+                          subtitle:SCILocalized(@"The original content may no longer exist.")
                       iconResource:@"error_filled"
                               tone:SCIFeedbackPillToneError];
 }
@@ -129,7 +129,7 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
             }
         }
     }
-    self.navigationItem.rightBarButtonItem.title = (self.selectedFileIDs.count == files.count && files.count > 0) ? @"Deselect All" : @"Select All";
+    self.navigationItem.rightBarButtonItem.title = (self.selectedFileIDs.count == files.count && files.count > 0) ? SCILocalized(@"Deselect All") : SCILocalized(@"Select All");
     [self.collectionView reloadData];
 }
 
@@ -258,12 +258,12 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
         return;
     }
 
-    NSString *message = [NSString stringWithFormat:@"This will permanently remove %ld file%@ from the gallery.", (long)files.count, files.count == 1 ? @"" : @"s"];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Delete Selected Files?"
+    NSString *message = [NSString stringWithFormat:SCILocalized(@"This will permanently remove %ld file%@ from the gallery."), (long)files.count, files.count == 1 ? @"" : @"s"];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Delete Selected Files?")
                                                                   message:message
                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Delete"
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Delete")
                                               style:UIAlertActionStyleDestructive
                                             handler:^(__unused UIAlertAction *action) {
         NSError *firstError = nil;
@@ -276,14 +276,14 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
         }
         if (firstError) {
             [SCIUtils showToastForActionIdentifier:kSCIFeedbackActionGalleryDeleteSelected duration:2.0
-                                     title:@"Failed to delete"
+                                     title:SCILocalized(@"Failed to delete")
                                   subtitle:firstError.localizedDescription
                               iconResource:@"error_filled"
                                       tone:SCIFeedbackPillToneError];
             return;
         }
         [SCIUtils showToastForActionIdentifier:kSCIFeedbackActionGalleryDeleteSelected duration:1.5
-                                         title:@"Deleted selected files"
+                                         title:SCILocalized(@"Deleted selected files")
                                       subtitle:nil
                                   iconResource:@"circle_check_filled"
                                           tone:SCIFeedbackPillToneSuccess];
@@ -294,7 +294,7 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
 - (UIMenu *)fileActionsMenuForFile:(SCIGalleryFile *)file {
     __weak typeof(self) weakSelf = self;
 
-    NSString *favTitle = file.isFavorite ? @"Unfavorite" : @"Favorite";
+    NSString *favTitle = file.isFavorite ? SCILocalized(@"Unfavorite") : SCILocalized(@"Favorite");
     UIImage *favImg = file.isFavorite
         ? SCIGalleryActionIcon(@"heart_filled")
         : SCIGalleryActionIcon(@"heart");
@@ -308,19 +308,19 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
     }];
 
      UIImage *renameImg = SCIGalleryActionIcon(@"edit");
-    UIAction *renameAction = [UIAction actionWithTitle:@"Rename"
+    UIAction *renameAction = [UIAction actionWithTitle:SCILocalized(@"Rename")
                                                  image:renameImg
                                             identifier:nil
                                                handler:^(UIAction *a) { [weakSelf renameFile:file]; }];
 
      UIImage *moveImg = SCIGalleryActionIcon(@"folder_move");
-    UIAction *moveAction = [UIAction actionWithTitle:@"Move to Folder"
+    UIAction *moveAction = [UIAction actionWithTitle:SCILocalized(@"Move to Folder")
                                                image:moveImg
                                           identifier:nil
                                              handler:^(UIAction *a) { [weakSelf moveFile:file]; }];
 
      UIImage *shareImg = SCIGalleryActionIcon(@"share");
-    UIAction *shareAction = [UIAction actionWithTitle:@"Share"
+    UIAction *shareAction = [UIAction actionWithTitle:SCILocalized(@"Share")
                                                 image:shareImg
                                            identifier:nil
                                               handler:^(UIAction *a) {
@@ -339,7 +339,7 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
 
     UIAction *openOriginalAction = nil;
     if (file.hasOpenableOriginalMedia) {
-        openOriginalAction = [UIAction actionWithTitle:@"Open Original Post"
+        openOriginalAction = [UIAction actionWithTitle:SCILocalized(@"Open Original Post")
                                                  image:SCIGalleryActionIcon(@"external_link")
                                             identifier:nil
                                                handler:^(__unused UIAction *a) {
@@ -349,7 +349,7 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
 
     UIAction *openProfileAction = nil;
     if (file.hasOpenableProfile) {
-        openProfileAction = [UIAction actionWithTitle:@"Open Profile"
+        openProfileAction = [UIAction actionWithTitle:SCILocalized(@"Open Profile")
                                                 image:SCIGalleryActionIcon(@"profile")
                                            identifier:nil
                                               handler:^(__unused UIAction *a) {
@@ -358,7 +358,7 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
     }
 
     UIImage *deleteImg = SCIGalleryActionIcon(@"trash");
-    UIAction *deleteAction = [UIAction actionWithTitle:@"Delete"
+    UIAction *deleteAction = [UIAction actionWithTitle:SCILocalized(@"Delete")
                                                  image:deleteImg
                                             identifier:nil
                                                handler:^(UIAction *a) {
@@ -421,13 +421,13 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
                                                    previewProvider:nil
                                                     actionProvider:^UIMenu *(NSArray<UIMenuElement *> *suggested) {
     UIImage *folderRenameImg = SCIGalleryActionIcon(@"edit");
-        UIAction *renameAction = [UIAction actionWithTitle:@"Rename Folder"
+        UIAction *renameAction = [UIAction actionWithTitle:SCILocalized(@"Rename Folder")
                                                      image:folderRenameImg
                                                 identifier:nil
                                                    handler:^(UIAction *a) { [weakSelf renameFolder:folderPath]; }];
 
     UIImage *folderDeleteImg = SCIGalleryActionIcon(@"trash");
-        UIAction *deleteAction = [UIAction actionWithTitle:@"Delete Folder"
+        UIAction *deleteAction = [UIAction actionWithTitle:SCILocalized(@"Delete Folder")
                                                      image:folderDeleteImg
                                                 identifier:nil
                                                    handler:^(UIAction *a) { [weakSelf deleteFolder:folderPath]; }];
@@ -437,15 +437,15 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
     }];
 }
 - (void)presentCreateFolder {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Folder"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"New Folder")
                                                                   message:nil
                                                            preferredStyle:UIAlertControllerStyleAlert];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) {
-        tf.placeholder = @"Folder name";
+        tf.placeholder = SCILocalized(@"Folder name");
         tf.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Create"
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Create")
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *a) {
         NSString *name = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:
@@ -496,15 +496,15 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
 }
 
 - (void)renameFolder:(NSString *)folderPath {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rename Folder"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Rename Folder")
                                                                   message:nil
                                                            preferredStyle:UIAlertControllerStyleAlert];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) {
         tf.text = [folderPath lastPathComponent];
         tf.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Rename"
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Rename")
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *a) {
         NSString *newName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:
@@ -565,14 +565,14 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
     NSInteger count = [ctx countForFetchRequest:req error:nil];
 
     NSString *msg = count == 0
-        ? @"This folder is empty."
-        : [NSString stringWithFormat:@"This folder contains %ld file(s). They will be moved to the parent folder.", (long)count];
+        ? SCILocalized(@"This folder is empty.")
+        : [NSString stringWithFormat:SCILocalized(@"This folder contains %ld file(s). They will be moved to the parent folder."), (long)count];
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Delete Folder?"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Delete Folder?")
                                                                   message:msg
                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Delete"
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Delete")
                                               style:UIAlertActionStyleDestructive
                                             handler:^(UIAlertAction *a) {
         [self performDeleteFolder:folderPath];
@@ -608,14 +608,14 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
     [self updateEmptyState];
 }
 - (void)renameFile:(SCIGalleryFile *)file {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rename"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Rename")
                                                                   message:nil
                                                            preferredStyle:UIAlertControllerStyleAlert];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) {
         tf.text = [file displayName];
     }];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Save"
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Save")
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *a) {
         NSString *newName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:
@@ -637,11 +637,11 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
 
 - (void)presentMoveSheetForFiles:(NSArray<SCIGalleryFile *> *)files {
     NSArray<NSString *> *allFolders = [self allFolderPaths];
-    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"Move to Folder"
+    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:SCILocalized(@"Move to Folder")
                                                                   message:nil
                                                            preferredStyle:UIAlertControllerStyleActionSheet];
 
-    [sheet addAction:[UIAlertAction actionWithTitle:@"Root"
+    [sheet addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Root")
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *a) {
         [self assignFolderPath:nil toFiles:files];
@@ -655,15 +655,15 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
         }]];
     }
 
-    [sheet addAction:[UIAlertAction actionWithTitle:@"New folder…"
+    [sheet addAction:[UIAlertAction actionWithTitle:SCILocalized(@"New folder…")
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *a) {
-        UIAlertController *createAlert = [UIAlertController alertControllerWithTitle:@"New Folder"
+        UIAlertController *createAlert = [UIAlertController alertControllerWithTitle:SCILocalized(@"New Folder")
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-        [createAlert addTextFieldWithConfigurationHandler:^(UITextField *tf) { tf.placeholder = @"Folder name"; }];
-        [createAlert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-        [createAlert addAction:[UIAlertAction actionWithTitle:@"Create & Move"
+        [createAlert addTextFieldWithConfigurationHandler:^(UITextField *tf) { tf.placeholder = SCILocalized(@"Folder name"); }];
+        [createAlert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+        [createAlert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Create & Move")
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction *x) {
             NSString *name = [createAlert.textFields.firstObject.text stringByTrimmingCharactersInSet:
@@ -675,7 +675,7 @@ static UIImage *SCIGalleryActionIcon(NSString *resourceName) {
         [self presentViewController:createAlert animated:YES completion:nil];
     }]];
 
-    [sheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [sheet addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:sheet animated:YES completion:nil];
 }
 

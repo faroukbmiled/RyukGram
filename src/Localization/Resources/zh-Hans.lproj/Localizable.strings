@@ -67,11 +67,9 @@
 "settings.firstrun.title" = "RyukGram 设定资讯";
 "settings.language.english_only" = "RyukGram 目前仅内建英文。其他语言已接好接线等待翻译 — 请依 README 的简短指南协助翻译。";
 "settings.language.help_translate" = "协助翻译";
-"settings.language.ok" = "确定";
 "settings.language.system" = "系统预设";
 "settings.language.title" = "语言";
 "settings.results.many" = "%lu 笔结果";
-"settings.results.none" = "无结果";
 "settings.results.one" = "%lu 笔结果";
 "settings.search.placeholder" = "搜寻设定";
 "settings.title" = "RyukGram 设定";
@@ -208,6 +206,8 @@
 "Action button" = "动作按钮";
 "Adds 'View profile picture' and 'View cover' to story tray long-press menus" = "在限时动态长按选单中新增「查看大头贴」和「查看封面」";
 "Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "在每则动态消息贴文下方新增 RyukGram 动作按钮，包含下载／分享／复制／展开／转贴选项。预设点击会开启选单；可于下方更改点击行为。";
+"Choose Instagram's default feed or force the Following feed" = "选择 Instagram 的默认动态或强制使用「正在关注」动态";
+"Main feed" = "主动态";
 "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "控制动态消息的刷新时间与方式。背景刷新会在约 10 分钟后返回应用时执行。首页按钮刷新会在已在首页标签时点击该标签执行。";
 "Default tap action" = "预设点击动作";
 "Disable background refresh" = "停用背景刷新";
@@ -226,6 +226,11 @@
 "Hides the story tray at the top" = "隐藏顶部限时动态列";
 "Inserts a button row below like/comment/share on each post" = "在每则贴文的赞／留言／分享下方插入按钮列";
 "Long press on media to expand in full-screen viewer" = "长按媒体以在全萤幕检视器中展开";
+"Start media muted" = "媒体静音启动";
+"Expanded videos open with sound off" = "展开的视频以静音方式打开";
+"Enhanced media resolution" = "增强媒体分辨率";
+"Media saving" = "媒体保存";
+"Spoof device profile so IG serves higher-quality images" = "伪装设备配置使 IG 提供更高质量的图像";
 "Media" = "媒体";
 "Media zoom" = "媒体缩放";
 "No suggested for you" = "没有为您推荐";
@@ -241,7 +246,6 @@
 "Scroll to top without refreshing when tapping Home" = "点击首页时卷动至顶端但不重新整理";
 "Show action button" = "显示操作按钮";
 "Show date" = "显示日期";
-"Adds the date as a small header at the top of the action menu" = "在操作菜单顶部加入日期作为小标题";
 "Stories tray" = "限时动态列";
 "Tapping Home does nothing when already on feed" = "已在动态页时点击首页不执行任何操作";
 "Tray long-press actions" = "限时动态列长按操作";
@@ -303,7 +307,6 @@
 // Settings → Profile tab                                                   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Adds a button next to the burger menu on profiles to copy username, name or bio" = "在个人档案的汉堡选单旁新增按钮，可复制用户名、名称或简介";
 "Adds a view option to the highlight long-press menu to open the cover in full-screen" = "在精选长按选单新增检视选项，可全萤幕开启封面";
 "Copy note on long press" = "长按复制备注";
 "Fake follower count" = "伪造粉丝数";
@@ -320,7 +323,6 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "个人档案元素的长按手势 — 与每项功能的操作按钮分开维护。";
 "Only affects your own profile header. Other users see the real numbers." = "仅影响你自己的个人档案页首。其他用户看到的是真实数字。";
 "Post count" = "贴文数";
-"Profile copy button" = "个人档案复制按钮";
 "Save profile picture" = "储存个人档案图片";
 "Show a checkmark next to your name on your own profile" = "在你自己的个人档案名称旁显示打勾符号";
 "Shows whether the profile user follows you" = "显示该用户是否追踪你";
@@ -346,7 +348,6 @@
 "Route saves into a dedicated album in Photos instead of the camera roll root" = "将储存路径导向专用相簿，而非相机胶卷根目录";
 "Save action" = "储存动作";
 "Save to RyukGram album" = "储存至 RyukGram 相簿";
-"Saving" = "下载与储存";
 "Show a confirmation dialog before starting a download" = "开始下载前显示确认对话框";
 "What happens after the gesture downloads" = "手势下载后的动作";
 "When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library." = "启用 \"储存至 RyukGram 相簿\" 时，下载及分享选单中的 \"储存至照片\" 将导向你照片库中的专用 \"RyukGram\" 相簿。";
@@ -382,15 +383,14 @@
 "Marks a story as seen when you send a reply or emoji reaction, even with seen blocking on" = "发送回复或表情反应时标记故事为已查看，即使启用已查看封锁";
 "Marks stories as seen locally (grey ring) while still blocking the seen receipt on the server" = "在本机标记限时动态为已观看（灰圈），同时仍封锁伺服器端的已读回条";
 "Master toggle. When off, the list is ignored" = "主开关。关闭时忽略列表";
-"Other" = "其他";
 "Playback" = "播放";
 "Quick list button in stories" = "故事中的快速列表按钮";
 "Search, sort, swipe to remove" = "搜寻、排序、滑动移除";
 "Seen receipts" = "已读回条";
 "Sending a reply or emoji reaction automatically advances to the next story" = "发送回复或表情反应后自动跳到下一则故事";
-"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "Adds a 'View mentions' entry to the action button menu and story 3-dot menu";
-"Mentions overlay button" = "Mentions overlay button";
-"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels";
+"Adds a 'View mentions' entry to the action button menu and story 3-dot menu" = "在操作按钮菜单和限时动态三点菜单中新增「查看提及」选项";
+"Mentions overlay button" = "提及浮层按钮";
+"Adds a button next to the action/eye button on the story overlay. Only appears when the current story has mentions or shared posts/reels" = "在限时动态浮层的操作/眼睛按钮旁新增一个按钮。仅当当前限时动态包含提及或分享的帖子/短视频时显示";
 "Shows an eye button on stories to add/remove users from the list. Off = use the 3-dot menu or long-press only" = "在故事上显示眼睛按钮以新增/移除用户。关闭 = 仅使用三点选单或长按";
 "Stickers" = "贴图";
 "Peek at poll/quiz/slider results before interacting — you can still tap to vote normally. Force legacy adds the Quiz and Reveal stickers back to the story composer." = "在互动前预览投票/测验/滑块结果 — 仍可正常点击投票。“强制显示旧版”会将测验与揭晓贴纸加回快拍编辑器。";
@@ -434,8 +434,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 "Activity" = "活动";
-"Allows typing and sending DMs longer than Instagram's limit" = "允许输入和发送超过 Instagram 限制的私信";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "在语音讯息的长按选单中新增「下载」选项，以储存为 M4A 音讯档";
+"Allows typing and sending DMs longer than Instagram's limit" = "允许输入和发送超过 Instagram 限制的私信";
 "Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram" = "在私讯的加号选单中新增「传送档案」选项。支援的档案类型可能受 Instagram 限制";
 "Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages" = "在私讯的加号选单中新增「音讯档案」选项，以语音讯息形式传送音讯档案";
 "Adds copy text, download GIF/audio to the note long-press menu" = "在备注的长按选单中新增复制文字、下载 GIF/音讯功能";
@@ -476,7 +476,6 @@
 "Keep deleted messages" = "保留已删除讯息";
 "Makes view-once messages behave like normal visual messages (loopable/pauseable)" = "让一次观看讯息行为如一般视觉讯息（可循环/暂停）";
 "Note actions" = "备注操作";
-"Preserve messages that others unsend" = "保留他人收回的讯息";
 "Preserves messages that others unsend" = "保留他人收回的讯息";
 "Prevents accidental swipe-up activation of vanish mode" = "防止误触上滑启用 Vanish 模式";
 "Quick list button in chats" = "聊天中的快速列表按钮";
@@ -588,7 +587,7 @@
 "Shows an alert when you click the like button on reels to confirm the like" = "点击 Reels 的按赞按钮时显示确认提示";
 "Shows an alert when you click the like button on stories to confirm the like" = "点击限时动态按赞按钮时显示确认警告";
 "Shows an alert when you click the post comment button to confirm" = "点击发布留言按钮时显示确认提示";
-"Shows an alert when you click the repost button to confirm before resposting" = "点击转贴按钮前显示确认提示";
+"Shows an alert when you click the repost button to confirm before reposting" = "点击转贴按钮前显示确认提示";
 "Shows an alert when you click the unfollow button to confirm" = "点击取消追踪按钮时显示确认提示";
 
 //////////////////////////////////////////////////////////////////////////////
@@ -617,7 +616,6 @@
 "Clear" = "清除";
 "Clear cache" = "清除快取";
 "Clear cache (%@)" = "清除快取 (%@)";
-"Clear cache?" = "要清除快取吗？";
 "Clearing cache…" = "清除快取中…";
 "Clearing still scans on demand." = "关闭时仍会按需扫描。";
 "Daily" = "每日";
@@ -740,11 +738,9 @@
 "Could not extract photo URL" = "无法撷取照片网址";
 "Could not extract video URL" = "无法撷取影片网址";
 "Done" = "完成";
-"Download all (%lu)" = "全部下载 (%lu)";
 "Download all stories and share?" = "下载所有限时动态并分享？";
 "Download all to Photos" = "全部下载到「照片」";
 "Download and share all" = "全部下载并分享";
-"Download and share?" = "下载并分享？";
 "Download failed" = "下载失败";
 "Downloaded %lu items" = "已下载 %lu 项目";
 "Downloading %@..." = "正在下载 %@...";
@@ -772,9 +768,7 @@
 "Preparing repost..." = "准备重新发布...";
 "Repost" = "重新发布";
 "Repost unavailable" = "无法重新发布";
-"Save all stories to Photos?" = "要将所有限时动态储存到「照片」吗？";
 "Save failed" = "储存失败";
-"Save to Photos?" = "要储存到「照片」吗？";
 "Saved %lu items" = "已储存 %lu 项目";
 "Saved to Photos" = "已储存至照片";
 "Saved to RyukGram" = "已储存至 RyukGram";
@@ -796,7 +790,6 @@
 "Message from %@ was unsent" = "%@ 的消息已撤回";
 "Add" = "新增";
 "Add to block list" = "加入封锁名单";
-"Add to block list?" = "要加入封锁名单吗？";
 "Added to block list" = "已加入封锁名单";
 "Added to exclude list" = "已加入排除清单";
 "Audio not loaded yet. Play the message first and try again." = "音讯尚未载入。请先播放讯息后再试。";
@@ -812,10 +805,8 @@
 "Could not find media" = "找不到媒体";
 "Could not find story media" = "找不到故事媒体";
 "Could not get audio data. Try again after refreshing the chat." = "无法取得音讯资料。请刷新聊天后再试。";
-"Could not get video URL" = "无法取得影片网址";
 "Disable read receipts" = "停用已读回条";
 "Disappearing media" = "消失讯息媒体";
-"Done!" = "完成！";
 "Download audio" = "下载音讯";
 "Downloading audio..." = "音讯下载中...";
 "Enable read receipts" = "启用已读回条";
@@ -859,7 +850,6 @@
 "Read receipts will no longer be blocked for this chat." = "此聊天将不再封锁已读回条。";
 "Remove" = "移除";
 "Remove from block list" = "从封锁清单移除";
-"Remove from block list?" = "确定要从封锁清单移除？";
 "Remove from exclude list" = "从排除清单移除";
 "Removed" = "已移除";
 "Removed from list" = "已从清单移除";
@@ -879,7 +869,6 @@
 "%@ can't be converted" = "无法转换 %@";
 "iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is — IG's server may accept it, or it may silently fail.\n\nTo request native support, open an issue:" = "iOS 音频 API 无法处理此文件%@%@\n\n你可以尝试直接发送到 Instagram — IG 服务器可能接受，也可能默默失败。\n\n如要请求原生支持，请打开 issue：";
 "Un-exclude chat" = "取消排除聊天";
-"Un-exclude chat?" = "确定要取消排除聊天？";
 "Un-exclude story seen" = "取消排除故事已读";
 "Un-excluded" = "已取消排除";
 "Unblocked" = "已解除封锁";
@@ -909,9 +898,7 @@
 "Comments shown" = "留言已显示";
 "Copied text to clipboard" = "文字已复制到剪贴簿";
 "Copy" = "复制";
-"Copy all" = "全部复制";
 "Copy bio" = "复制个人简介";
-"Copy from profile" = "从个人档案复制";
 "Copy name" = "复制名称";
 "Could not find cover image" = "找不到封面图片";
 "Current: %@" = "目前：%@";
@@ -933,12 +920,10 @@
 "Saved locations" = "已储存位置";
 "Select color" = "选择颜色";
 "Set location" = "设定位置";
-"Settings…" = "设定…";
 "Turn Location Services on in Settings → Privacy to use your current location." = "请在设定 → 隐私中开启定位服务以使用目前位置。";
 "Type emoji..." = "输入表情符号…";
 
 "Theme" = "主题";
-"Appearance" = "外观";
 "Light" = "浅色";
 "Dark" = "深色";
 "OLED" = "OLED";
@@ -969,7 +954,6 @@
 "Analysis failed" = "分析失败";
 "Another analysis is already running" = "已经有另一个分析正在执行";
 "Available after your next scan" = "将于下次扫描后提供";
-"Cancelled" = "已取消";
 "Categories" = "类别";
 "Couldn't fetch profile information" = "无法取得个人资料资讯";
 "Fetching followers (%lu/%ld)…" = "正在取得粉丝 (%lu/%ld)…";
@@ -997,7 +981,6 @@
 "Reset analyzer data?" = "要重设分析器资料吗？";
 "Run analysis" = "执行分析";
 "Run your first analysis" = "执行首次分析";
-"Search username or name" = "搜寻使用者名称或名称";
 "Since last scan" = "自上次扫描后";
 "Starting…" = "开始中…";
 "They follow you, you don't follow back" = "对方追踪你，你未回追";
@@ -1080,7 +1063,6 @@
 "Username A → Z" = "使用者名称 A → Z";
 "Username Z → A" = "使用者名称 Z → A";
 "Verified only" = "仅限已认证";
-"When on, scans compare against your first scan so new/lost followers and profile updates don't disappear between scans." = "启用时，扫描会与首次扫描比较，让新增/失去的粉丝及个人档案更新不会在扫描之间消失。";
 "Tracking" = "追踪";
 "Visited profiles" = "浏览过的个人资料";
 "Profiles you've opened recently" = "你最近打开的个人资料";
@@ -1098,7 +1080,7 @@
 "Last 7 days" = "最近 7 天";
 "Last 30 days" = "最近 30 天";
 "Most recent" = "最新";
-"Oldest first" = "最旧优先";
+"Oldest first" = "最早优先";
 "Most visited" = "最常浏览";
 "Pick what to remove. Snapshots drop the since-last-scan diffs; visited profiles wipes the visit history." = "选择要移除的内容。快照会删除自上次扫描以来的差异；浏览过的个人资料会清除浏览记录。";
 "Reset snapshots" = "重置快照";
@@ -1111,7 +1093,6 @@
 
 "Add chat" = "新增聊天";
 "Add custom domain" = "新增自订网域";
-"Add preset…" = "新增预设…";
 "Add to list?" = "要加入清单吗？";
 "Add user" = "新增使用者";
 "Apply" = "套用";
@@ -1123,7 +1104,6 @@
 "Could not write temporary file." = "无法写入暂存档案。";
 "Current location" = "目前位置";
 "Custom" = "自订";
-"Date Format" = "日期格式";
 "Delete" = "删除";
 "Enable fake location" = "启用假位置";
 "Enter username" = "输入使用者名称";
@@ -1197,18 +1177,12 @@
 
 "720p • progressive • fastest" = "720p • 渐进式 • 最快";
 "Are you sure?" = "你确定吗？";
-"Bundle" = "Bundle";
+"Bundle" = "合集";
 "Copy audio URL" = "复制音讯网址";
 "Copy quality info" = "复制品质资讯";
 "Copy video URL" = "复制影片网址";
 "Could not access reel media" = "无法存取 Reels 媒体";
 "Could not access reel photo" = "无法存取 Reels 照片";
-"Could not extract photo url from post" = "无法从贴文撷取照片网址";
-"Could not extract photo url from reel" = "无法从 Reels 撷取照片网址";
-"Could not extract photo url from story" = "无法从限时动态撷取照片网址";
-"Could not extract video url from post" = "无法从贴文撷取影片网址";
-"Could not extract video url from reel" = "无法从 Reels 撷取影片网址";
-"Could not extract video url from story" = "无法从限时动态撷取影片网址";
 "Could not write file." = "无法写入文件。";
 "Download Quality" = "下载品质";
 "Error" = "错误";
@@ -1217,14 +1191,29 @@
 "File is empty or not a valid .strings file." = "文件为空或不是有效的 .strings 文件。";
 "Later" = "稍后";
 "No!" = "不要！";
-"OK" = "OK";
 "Restart" = "重新启动";
 "Restart now" = "立即重新启动";
 "Restart required" = "需要重新启动";
 "Updated %@ (%ld keys). Restart to apply." = "已更新 %@（%ld 个键）。重新启动以应用。";
-"username" = "使用者名称";
 "Yes" = "是";
 "You must restart the app to apply this change" = "您必须重新启动应用程式以套用此变更";
+"Add language" = "添加语言";
+"Enter the language code (e.g. fr, de, ja)" = "输入语言代码（例如 fr、de、ja）";
+"Update localization" = "更新翻译";
+"Pick a language to update, or add a new one" = "选择要更新的语言,或添加新语言";
+"English .strings file not found" = "未找到英文 .strings 文件";
+"Loading" = "加载中";
+"Next" = "下一步";
+"Preset" = "预设";
+"(unset)" = "（未设置）";
+"  • Keep-deleted: OFF" = "  • 保留已删除：关闭";
+"  • Keep-deleted: ON" = "  • 保留已删除：开启";
+"KD: OFF" = "KD：关闭";
+"Downloading %lu of %lu" = "正在下载第 %lu 项，共 %lu 项";
+"%lu active • tap to cancel" = "%lu 个进行中 • 点按取消";
+"Downloading %d%%" = "正在下载 %d%%";
+"Download all and share?" = "下载全部并分享？";
+"Save all to Photos?" = "全部保存到「照片」？";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               ABOUT / CREDITS                            //
@@ -1243,6 +1232,7 @@
 "Portuguese (Brazil) translation" = "葡萄牙语（巴西）翻译";
 "Turkish translation" = "土耳其语翻译";
 "Code contributions" = "代码贡献";
+"Following feed mode (from InstaSane)" = "正在关注动态模式（来自 InstaSane）";
 "latest" = "最新";
 "Links" = "连结";
 "No releases" = "无版本发行";
@@ -1300,205 +1290,203 @@
 "Video quality" = "影片品质";
 "Which quality to download" = "选择下载的品质";
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //                          ACTION MENU CONFIG                              //
-// Configure-menu screen, profile action button, action catalog labels.    //
+// Profile action button: per-section toggles, reorder handles, default-tap //
+// behavior, reset confirmations, action catalog labels.                    //
 //////////////////////////////////////////////////////////////////////////////
 
-"Audio & visibility" = "Audio & visibility";
-"Bio" = "Bio";
-"bio" = "bio";
-"Bulk download" = "Bulk download";
-"Collapse this section's actions behind a single entry" = "Collapse this section's actions behind a single entry";
-"Configure: %@" = "Configure: %@";
-"Copied %@" = "Copied %@";
-"Copy ID" = "Copy ID";
-"Copy Info" = "Copy Info";
-"Copy media URL" = "Copy media URL";
-"Copy profile link" = "Copy profile link";
-"Copy username" = "Copy username";
-"DM disappearing media" = "DM disappearing media";
-"Download" = "Download";
-"Download all to Gallery" = "Download all to Gallery";
-"Download to Gallery" = "Download to Gallery";
-"Exclude/include user" = "Exclude/include user";
-"Feed settings" = "Feed settings";
-"Followers: %@" = "Followers: %@";
-"Following: %@" = "Following: %@";
+"Long-press gestures" = "长按手势";
+"Inserts a button in the profile navigation header" = "在个人资料导航栏中插入一个按钮";
+"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "在个人资料标题栏新增 RyukGram 操作按钮，包含复制、查看图片、分享、保存和资料信息选项。默认点击打开菜单；可在「配置菜单」中更改点击行为。";
+"Configure menu" = "配置菜单";
+"Reorder, enable/disable, set default tap, show date" = "重新排序、启用/禁用、设置默认点击、显示日期";
+"Reorder, enable/disable, set default tap" = "重新排序、启用/禁用、设置默认点击";
+"RyukGram profile actions" = "RyukGram 个人资料操作";
+"Reorder sections" = "重新排序分区";
+"Drag the ≡ handle to reorder sections." = "拖动 ≡ 手柄以重新排序分区。";
+"Drag the ≡ handle to reorder. Toggle a row off to hide it from the menu. Mark a section as a submenu to collapse its actions behind a single entry." = "拖动 ≡ 手柄以重新排序。关闭某行可在菜单中隐藏。将分区标记为子菜单可将其操作折叠到单个条目下。";
+"Show as submenu" = "显示为子菜单";
+"Collapse this section's actions behind a single entry" = "将此分区的操作折叠到单个条目下";
+"Configure: %@" = "配置：%@";
+"What happens on a single tap. Long-press always opens the full menu." = "单击时执行的操作。长按始终会打开完整菜单。";
+"Reset to defaults" = "恢复默认";
+"Reset to defaults?" = "要恢复默认吗？";
+"This will restore the default sections, order, and toggles for this menu." = "这将恢复此菜单的默认分区、顺序和开关设置。";
+"Audio & visibility" = "音频与可见性";
+"DM disappearing media" = "私信阅后即焚媒体";
+"Bulk download" = "批量下载";
+"Feed settings" = "动态设置";
+"Reels settings" = "短视频设置";
+"Profile settings" = "个人资料设置";
+"Stories settings" = "限时动态设置";
+"Copy ID" = "复制 ID";
+"Copy Info" = "复制信息";
+"Copy all info" = "复制所有信息";
+"Copy media URL" = "复制媒体网址";
+"Copy profile link" = "复制个人资料链接";
+"Copy username" = "复制用户名";
+"Download" = "下载";
+"Download to Gallery" = "下载到图库";
+"Download all to Gallery" = "全部下载到图库";
+"Nothing to download" = "无可下载内容";
+"Exclude/include user" = "排除/包含用户";
+"Mute / unmute audio" = "静音/取消静音";
+"Save picture to Gallery" = "保存图片到图库";
+"Share picture" = "分享图片";
+"View picture" = "查看图片";
+"Bio" = "简介";
 "ID" = "ID";
-"Info" = "Info";
-"Mute / unmute audio" = "Mute / unmute audio";
-"name" = "name";
-"Picture not found" = "Picture not found";
-"Private profile" = "Private profile";
-"profile link" = "profile link";
-"Profile info" = "Profile info";
-"Profile link" = "Profile link";
-"Profile settings" = "Profile settings";
-"Profile unavailable" = "Profile unavailable";
-"Public profile" = "Public profile";
-"Reels settings" = "Reels settings";
-"Reorder sections" = "Reorder sections";
-"Reset to defaults" = "Reset to defaults";
-"Reset to defaults?" = "Reset to defaults?";
-"RyukGram profile actions" = "RyukGram profile actions";
-"Save picture" = "Save picture";
-"Save picture to Gallery" = "Save picture to Gallery";
-"Share picture" = "Share picture";
-"Show as submenu" = "Show as submenu";
-"Stories settings" = "Stories settings";
-"This will restore the default sections, order, and toggles for this menu." = "This will restore the default sections, order, and toggles for this menu.";
-"Username" = "Username";
-"View picture" = "View picture";
-"What happens on a single tap. Long-press always opens the full menu." = "What happens on a single tap. Long-press always opens the full menu.";
-"Profile action button" = "Profile action button";
-"Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions" = "Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions";
-"Configure menu" = "Configure menu";
-"Configure profile menu" = "Configure profile menu";
-"Reorder, enable/disable, set default tap, show date" = "Reorder, enable/disable, set default tap, show date";
-"Reorder, enable/disable, set default tap" = "Reorder, enable/disable, set default tap";
+"Info" = "信息";
+"Profile info" = "个人资料信息";
+"Profile link" = "个人资料链接";
+"Picture not found" = "找不到图片";
+"Private profile" = "私密资料";
+"Profile unavailable" = "个人资料不可用";
+"Public profile" = "公开资料";
+"Username" = "用户名";
+"Followers: %@" = "粉丝：%@";
+"Following: %@" = "关注：%@";
+"Copied %@" = "已复制 %@";
 
-////////////////////////////////////////////////////////////////////////
-//                          PHASE 1 FOLLOW-UPS                              //
+//////////////////////////////////////////////////////////////////////////////
+//                                 GALLERY                                  //
+// On-device media library: enable + save mode, browsing, filters, sort,    //
+// delete tools, picker entries, and the Photos/Gallery download submenu.   //
 //////////////////////////////////////////////////////////////////////////////
 
-"Long-press gestures" = "Long-press gestures";
-"Inserts a button in the profile navigation header" = "Inserts a button in the profile navigation header";
-"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu.";
-"Download all to Gallery?" = "Download all to Gallery?";
-"Download all to Photos?" = "Download all to Photos?";
-"Nothing to download" = "Nothing to download";
-
-////////////////////////////////////////////////////////////////////////
-//                              GALLERY                                     //
-// On-device media library + save mode preferences.                         //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browse, filter, sort, delete saved media" = "Browse, filter, sort, delete saved media";
-"Enable gallery" = "Enable gallery";
-"Gallery" = "Gallery";
-"Gallery only" = "Gallery only";
-"On-device library of everything you've downloaded through RyukGram" = "On-device library of everything you've downloaded through RyukGram";
-"Open Gallery" = "Open Gallery";
-"Photos + Gallery" = "Photos + Gallery";
-"Photos only" = "Photos only";
-"Save mode" = "Save mode";
-"Save to Gallery?" = "Save to Gallery?";
-"Saved to Gallery" = "Saved to Gallery";
-"Show gallery entries in download menus and unlock the library page below" = "Show gallery entries in download menus and unlock the library page below";
-"When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search." = "When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search.";
-"Where 'Download to Photos' actually writes when gallery is on" = "Where 'Download to Photos' actually writes when gallery is on";
-
-////////////////////////////////////////////////////////////////////////
-//                          GALLERY (PHASE 2.1)                             //
-//////////////////////////////////////////////////////////////////////////////
-
-"Gallery save mode" = "Gallery save mode";
+"Enable gallery" = "启用图库";
+"Show gallery entries in download menus and unlock the gallery button" = "在下载菜单中显示图库条目并解锁图库按钮";
+"Gallery" = "图库";
+"Gallery Settings" = "图库设置";
+"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "通过 RyukGram 下载的媒体的本机库。保存模式决定「下载到照片」实际写入的位置。";
 "Hold DM tab to open gallery" = "长按 DM 标签打开图库";
 "Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "长按底部标签栏中的收件箱按钮打开 RyukGram 图库";
+"Gallery save mode" = "图库保存模式";
+"Where 'Download to Photos' actually writes when gallery is on" = "启用图库时「下载到照片」实际写入的位置";
+"Photos only" = "仅照片";
+"Gallery only" = "仅图库";
+"Photos + Gallery" = "照片 + 图库";
+"Save to Gallery?" = "要保存到图库吗？";
+"Saved to Gallery" = "已保存到图库";
+"Save all to Gallery?" = "要全部保存到图库吗？";
+"Saved %lu items to Gallery" = "已保存 %lu 项到图库";
+"Saving to Gallery..." = "正在保存到图库...";
+"to Gallery" = "到图库";
+"Browsing" = "浏览";
+"Manage" = "管理";
+"Storage" = "存储";
+"Total files" = "文件总数";
+"Total size" = "总大小";
+"Show favorites at top" = "收藏置顶";
+"When enabled, favorites are pinned above other files inside the current sort and folder context." = "启用后，收藏会在当前排序和文件夹中置顶显示，位于其他文件之上。";
+"Images" = "图片";
+"Videos" = "视频";
+"GIFs" = "GIF";
+"Options" = "选项";
+"Clear filters" = "清除筛选";
+"Favorites only" = "仅收藏";
+"By source" = "按来源";
+"By type" = "按类型";
+"By user" = "按用户";
+"Source" = "来源";
+"Source user" = "来源用户";
+"Type" = "类型";
+"Search users" = "搜索用户";
+"Newest first" = "最新优先";
+"Largest first" = "最大优先";
+"Smallest first" = "最小优先";
+"Name A-Z" = "名称 A-Z";
+"Name Z-A" = "名称 Z-A";
+"Images first" = "图片优先";
+"Videos first" = "视频优先";
+"Delete files" = "删除文件";
+"Delete %@?" = "要删除 %@ 吗？";
+"Delete from Gallery?" = "要从图库删除吗？";
+"Deleted from Gallery" = "已从图库删除";
+"This will permanently remove this file from the gallery." = "这将从图库中永久删除此文件。";
+"This will permanently remove %ld file(s)." = "这将永久删除 %ld 个文件。";
+"Delete all files" = "删除所有文件";
+"Delete all images" = "删除所有图片";
+"Delete all videos" = "删除所有视频";
+"Delete by user" = "按用户删除";
+"Delete feed posts" = "删除动态帖子";
+"Delete profile pictures" = "删除头像";
+"Delete reels" = "删除短视频";
+"Delete stories" = "删除限时动态";
+"Delete thumbnails" = "删除缩略图";
+"Delete DM media" = "删除私信媒体";
+"All files deleted" = "已删除所有文件";
+"Files deleted" = "文件已删除";
+"Images deleted" = "图片已删除";
+"Videos deleted" = "视频已删除";
+"Feed posts deleted" = "动态帖子已删除";
+"Profile pictures deleted" = "头像已删除";
+"Reels deleted" = "短视频已删除";
+"Stories deleted" = "限时动态已删除";
+"Thumbnails deleted" = "缩略图已删除";
+"DM media deleted" = "私信媒体已删除";
+"User files deleted" = "用户文件已删除";
+"No files to delete" = "无可删除文件";
+"Failed" = "失败";
+"Failed to delete" = "删除失败";
+"Unable to open original post" = "无法打开原始帖子";
+"Unable to open profile" = "无法打开个人资料";
+"Unknown user" = "未知用户";
+"(unknown)" = "（未知）";
+"The original content may no longer exist." = "原始内容可能已不存在。";
+"Select All" = "全选";
+"Deselect All" = "取消全选";
+"Share selected" = "分享所选";
+"Move selected" = "移动所选";
+"Favorite selected" = "收藏所选";
+"Delete selected" = "删除所选";
+"Deleted selected files" = "已删除所选文件";
+"List view" = "列表视图";
+"Grid view" = "网格视图";
+"More" = "更多";
+"Favorite" = "收藏";
+"Unfavorite" = "取消收藏";
+"Rename" = "重命名";
+"Move to Folder" = "移动到文件夹";
+"Open Original Post" = "打开原帖子";
+"Open Profile" = "打开个人主页";
+"No files in Gallery" = "图库中没有文件";
+"Save media from the preview screen\nto see it here." = "在预览界面保存媒体\n即可在此查看。";
+"No matching files" = "没有匹配的文件";
+"Delete Selected Files?" = "删除所选文件？";
+"This will permanently remove %ld file%@ from the gallery." = "这将从图库中永久删除 %ld 个文件%@。";
+"New Folder" = "新建文件夹";
+"New folder…" = "新建文件夹…";
+"Folder name" = "文件夹名称";
+"Create" = "创建";
+"Create & Move" = "创建并移动";
+"Rename Folder" = "重命名文件夹";
+"Delete Folder" = "删除文件夹";
+"Delete Folder?" = "删除文件夹？";
+"This folder is empty." = "此文件夹为空。";
+"This folder contains %ld file(s). They will be moved to the parent folder." = "此文件夹包含 %ld 个文件。它们将被移动到上级文件夹。";
+"Root" = "根目录";
+"DMs" = "私信";
+"Thumb" = "缩略图";
+"Story" = "限时动态";
+"Comment" = "留言";
+"Other" = "其他";
+"Pick audio" = "选择音频";
+"Audio from RyukGram Gallery" = "来自 RyukGram 图库的音频";
+"Share" = "分享";
+
+//////////////////////////////////////////////////////////////////////////////
+//                              HOME SHORTCUT                               //
+// Extra button on the home top bar (right of the create-post +) — picks    //
+// between Gallery, Changelog, etc. Configure-screen and the row reorderer. //
+//////////////////////////////////////////////////////////////////////////////
+
 "Home shortcut button" = "主页快捷按钮";
-"Changelog" = "更新日志";
-"Show gallery entries in download menus and unlock the gallery button" = "Show gallery entries in download menus and unlock the gallery button";
-"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (PHASE 2 REVAMP)                           //
-//////////////////////////////////////////////////////////////////////////////
-
-"Browsing" = "Browsing";
-"Clear filters" = "Clear filters";
-"Delete files" = "Delete files";
-"Favorites only" = "Favorites only";
-"Gallery Settings" = "Gallery Settings";
-"Images" = "Images";
-"Manage" = "Manage";
-"Show favorites at top" = "Show favorites at top";
-"Storage" = "Storage";
-"Total files" = "Total files";
-"Total size" = "Total size";
-"Videos" = "Videos";
-"When enabled, favorites are pinned above other files inside the current sort and folder context." = "When enabled, favorites are pinned above other files inside the current sort and folder context.";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DELETE + REVAMP 2)                        //
-//////////////////////////////////////////////////////////////////////////////
-
-"All files deleted" = "All files deleted";
-"By source" = "By source";
-"By type" = "By type";
-"By user" = "By user";
-"DM media deleted" = "DM media deleted";
-"Delete %@?" = "Delete %@?";
-"Delete DM media" = "Delete DM media";
-"Delete all files" = "Delete all files";
-"Delete all images" = "Delete all images";
-"Delete all videos" = "Delete all videos";
-"Delete by user" = "Delete by user";
-"Delete feed posts" = "Delete feed posts";
-"Delete profile pictures" = "Delete profile pictures";
-"Delete reels" = "Delete reels";
-"Delete stories" = "Delete stories";
-"Delete thumbnails" = "Delete thumbnails";
-"Feed posts deleted" = "Feed posts deleted";
-"Files deleted" = "Files deleted";
-"Images deleted" = "Images deleted";
-"No files to delete" = "No files to delete";
-"Profile pictures deleted" = "Profile pictures deleted";
-"Reels deleted" = "Reels deleted";
-"Search..." = "Search...";
-"Stories deleted" = "Stories deleted";
-"This will permanently remove %ld file(s)." = "This will permanently remove %ld file(s).";
-"Thumbnails deleted" = "Thumbnails deleted";
-"Unable to open original post" = "Unable to open original post";
-"Unable to open profile" = "Unable to open profile";
-"Unknown user" = "Unknown user";
-"User files deleted" = "User files deleted";
-"Videos deleted" = "Videos deleted";
-
-////////////////////////////////////////////////////////////////////////
-//                       GALLERY (SORT + FILTER)                            //
-//////////////////////////////////////////////////////////////////////////////
-
-"Images first" = "Images first";
-"Largest first" = "Largest first";
-"Name A-Z" = "Name A-Z";
-"Name Z-A" = "Name Z-A";
-"Newest first" = "Newest first";
-"Oldest first" = "Oldest first";
-"Options" = "Options";
-"Smallest first" = "Smallest first";
-"Source" = "Source";
-"Source user" = "Source user";
-"Type" = "Type";
-"Videos first" = "Videos first";
-
+"Adds a button to the home top bar, right of the create-post +. Off entirely turns it off." = "在首页顶栏新增一个按钮，位于发布帖子的「+」右侧。完全关闭则禁用此功能。";
 "Configure the extra button on the home top bar" = "配置主页顶栏的额外按钮";
 "Show button" = "显示按钮";
-"Icon" = "图标";
-
 "Auto" = "自动";
+"Icon" = "图标";
 "Drag the ≡ handle to reorder. Toggle a row off to hide that destination. With one action enabled tapping fires it; with two or more, tapping presents a menu." = "拖动 ≡ 手柄重新排序。关闭某行以隐藏该目的地。启用一项操作时点击直接触发；启用两项或以上时点击显示菜单。";
-
-"Copy all info" = "复制所有信息";
-"profile info" = "个人资料信息";
-
-"Start media muted" = "媒体静音启动";
-"Expanded videos open with sound off" = "展开的视频以静音方式打开";
-
-"Enhanced media resolution" = "增强媒体分辨率";
-"Spoof device profile so IG serves higher-quality images" = "伪装设备配置使 IG 提供更高质量的图像";
-
-"Media saving" = "媒体保存";
-
-//////////////////////////////////////////////////////////////////////////////
-//                       GALLERY (DOWNLOAD MENU + PICKERS)                  //
-//////////////////////////////////////////////////////////////////////////////
-
-"GIFs" = "GIFs";
-"to Gallery" = "to Gallery";
-"Share" = "Share";
-"Pick audio" = "Pick audio";
-"Audio from RyukGram Gallery" = "Audio from RyukGram Gallery";
-"Main feed" = "Main feed";
-"Choose Instagram's default feed or force the Following feed" = "Choose Instagram's default feed or force the Following feed";
-"Following feed mode (from InstaSane)" = "Following feed mode (from InstaSane)";
+"Changelog" = "更新日志";

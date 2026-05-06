@@ -119,7 +119,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCILocalized(@"Add chat")
                                                                    message:SCILocalized(@"Enter username of the DM thread")
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) { tf.placeholder = SCILocalized(@"username"); tf.autocapitalizationType = UITextAutocapitalizationTypeNone; }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *tf) { tf.placeholder = SCILocalized(@"Username"); tf.autocapitalizationType = UITextAutocapitalizationTypeNone; }];
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Search") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *a) {
         NSString *q = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -253,8 +253,8 @@
     NSString *subtitle = [unames componentsJoinedByString:@", "];
 
     SCIKeepDeletedOverride mode = [e[@"keepDeletedOverride"] integerValue];
-    NSString *kdLabel = (mode == SCIKeepDeletedOverrideExcluded) ? @"  • Keep-deleted: OFF"
-                      : (mode == SCIKeepDeletedOverrideIncluded) ? @"  • Keep-deleted: ON"
+    NSString *kdLabel = (mode == SCIKeepDeletedOverrideExcluded) ? SCILocalized(@"  • Keep-deleted: OFF")
+                      : (mode == SCIKeepDeletedOverrideIncluded) ? SCILocalized(@"  • Keep-deleted: ON")
                       : @"";
     if (kdLabel.length) subtitle = [subtitle stringByAppendingString:kdLabel];
 
@@ -335,7 +335,7 @@
     NSString *tid = e[@"threadId"];
     SCIKeepDeletedOverride mode = [e[@"keepDeletedOverride"] integerValue];
     SCIKeepDeletedOverride next = (mode + 1) % 3;
-    NSString *title = (next == SCIKeepDeletedOverrideExcluded) ? @"KD: OFF"
+    NSString *title = (next == SCIKeepDeletedOverrideExcluded) ? SCILocalized(@"KD: OFF")
                     : (next == SCIKeepDeletedOverrideIncluded) ? SCILocalized(@"KD: ON")
                     : SCILocalized(@"KD: default");
     UIContextualAction *toggle = [UIContextualAction

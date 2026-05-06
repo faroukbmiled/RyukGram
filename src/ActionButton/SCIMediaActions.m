@@ -816,7 +816,7 @@ static void sciConfirmThen(NSString *title, void(^block)(void)) {
 }
 
 + (void)downloadAndShareMedia:(id)media fromView:(UIView *)sourceView {
-    sciConfirmThen(SCILocalized(@"Download and share?"), ^{
+    sciConfirmThen(SCILocalized(@"Download and share"), ^{
         [self downloadHDMedia:media action:share fromView:sourceView];
     });
 }
@@ -826,7 +826,7 @@ static void sciConfirmThen(NSString *title, void(^block)(void)) {
 }
 
 + (void)downloadAndSaveMedia:(id)media fromView:(UIView *)sourceView {
-    sciConfirmThen(SCILocalized(@"Save to Photos?"), ^{
+    sciConfirmThen(SCILocalized(@"Save to Photos"), ^{
         [self downloadHDMedia:media action:saveToPhotos fromView:sourceView];
     });
 }
@@ -1109,7 +1109,7 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
 
 + (void)downloadAllAndShareMedia:(id)carouselMedia {
     [self downloadAllChildrenOfMedia:carouselMedia
-                        progressTitle:@"Download all and share?"
+                        progressTitle:SCILocalized(@"Download all and share?")
                                  done:^(NSArray<NSURL *> *files) {
         if (!files.count) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Nothing to share")]; return; }
         UIViewController *top = topMostController();
@@ -1127,7 +1127,7 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
 
 + (void)downloadAllAndSaveMedia:(id)carouselMedia {
     [self downloadAllChildrenOfMedia:carouselMedia
-                        progressTitle:@"Save all to Photos?"
+                        progressTitle:SCILocalized(@"Save all to Photos?")
                                  done:^(NSArray<NSURL *> *files) {
         if (!files.count) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Nothing to save")]; return; }
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
@@ -1588,7 +1588,7 @@ static id sciCarouselParentMedia(id media, UIView *sourceView) {
                 }
                 if (!urls.count) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Nothing to download")]; return; }
                 stampStemForMedia(capturedMedias.firstObject);
-                [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all to Photos?") done:^(NSArray<NSURL *> *files) {
+                [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all to Photos") done:^(NSArray<NSURL *> *files) {
                     [SCIMediaActions bulkSaveFiles:files];
                 }];
             }];
@@ -1620,7 +1620,7 @@ static id sciCarouselParentMedia(id media, UIView *sourceView) {
                     return;
                 }
                 stampStemForMedia(capturedMedias.firstObject);
-                [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all to Gallery?") done:^(NSArray<NSURL *> *files) {
+                [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all to Gallery") done:^(NSArray<NSURL *> *files) {
                     if (!files.count) return;
                     NSMutableArray<SCIGallerySaveMetadata *> *perFile = [NSMutableArray arrayWithCapacity:files.count];
                     for (NSUInteger i = 0; i < files.count; i++) {
