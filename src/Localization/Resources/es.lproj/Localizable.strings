@@ -1503,11 +1503,6 @@
 "Share" = "Share";
 "Pick audio" = "Pick audio";
 "Audio from RyukGram Gallery" = "Audio from RyukGram Gallery";
-
-//////////////////////////////////////////////////////////////////////////////
-//                       FEED — MAIN FEED PICKER (PR #19)                   //
-//////////////////////////////////////////////////////////////////////////////
-
 "Main feed" = "Main feed";
 "Choose Instagram's default feed or force the Following feed" = "Choose Instagram's default feed or force the Following feed";
 "Following feed mode (from InstaSane)" = "Following feed mode (from InstaSane)";
