@@ -318,6 +318,7 @@ $ ./build.sh <sideload/sidestore/rootless/rootful>
 - [Instaoled](https://t.me/ciesIPAs) by @VAXMG — OLED theme inspiration
 - [@euoradan](https://t.me/euoradan) (Radan) — experimental Instagram feature flag research
 - [@Mikasa-san](https://github.com/Mikasa-san) — code contributions
+- [@n3d1117](https://github.com/n3d1117) (Edoardo) — Following feed mode (ported from [InstaSane](https://github.com/n3d1117/InstaSane))
 - [@erupts0](https://github.com/erupts0) (John) — testing and feature suggestions
 - [BillyCurtis/OpenInstagramSafariExtension](https://github.com/BillyCurtis/OpenInstagramSafariExtension) — base for the bundled Safari extension
 - [@asdfzxcvbn](https://github.com/asdfzxcvbn) — [ipapatch](https://github.com/asdfzxcvbn/ipapatch) and [zxPluginsInject](https://github.com/asdfzxcvbn/zxPluginsInject)
