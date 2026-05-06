@@ -75,6 +75,7 @@ static NSDictionary *sciDefaultsDictionary(void) {
         @"disable_bg_refresh": @(NO),
         @"disable_home_refresh": @(NO),
         @"disable_home_scroll": @(NO),
+        @"main_feed_mode": @"default",
         @"disable_reels_tab_refresh": @(NO),
         @"dm_full_last_active": @(NO),
         @"bypass_dm_char_limit": @(NO),
