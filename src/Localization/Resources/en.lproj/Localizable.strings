@@ -208,6 +208,8 @@
 "Action button" = "Action button";
 "Adds 'View profile picture' and 'View cover' to story tray long-press menus" = "Adds 'View profile picture' and 'View cover' to story tray long-press menus";
 "Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below.";
+"Choose Instagram's default feed or force the Following feed" = "Choose Instagram's default feed or force the Following feed";
+"Main feed" = "Main feed";
 "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it.";
 "Default tap action" = "Default tap action";
 "Disable background refresh" = "Disable background refresh";
