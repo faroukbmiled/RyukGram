@@ -70,11 +70,14 @@ static NSDictionary *sciDefaultsDictionary(void) {
         @"save_profile": @(YES),
         // Per-context action buttons (new in 1.1.6)
         @"feed_media_zoom": @(NO),
+        @"media_zoom_start_muted": @(NO),
+        @"enhanced_media_resolution": @(NO),
         @"disable_bg_refresh": @(NO),
         @"disable_home_refresh": @(NO),
         @"disable_home_scroll": @(NO),
         @"disable_reels_tab_refresh": @(NO),
         @"dm_full_last_active": @(NO),
+        @"bypass_dm_char_limit": @(NO),
         @"send_file": @(NO),
         @"note_actions": @(NO),
         @"note_copy_on_hold": @(NO),
@@ -95,6 +98,36 @@ static NSDictionary *sciDefaultsDictionary(void) {
         @"dm_visual_action_button": @(YES),
         @"dm_visual_action_default": @"menu",
         @"action_button_icon": @"ellipsis.circle",
+        // Per-source action menu configs (sections, ordering, disabled, collapsible).
+        // Empty dict = use catalog defaults (loaded lazily). See SCIActionMenuConfig.
+        @"action_menu_cfg_feed": @{},
+        @"action_menu_cfg_reels": @{},
+        @"action_menu_cfg_stories": @{},
+        @"action_menu_cfg_dm": @{},
+        @"action_menu_cfg_profile": @{},
+        // New profile action button (replaces legacy profile_copy_button).
+        @"action_button_profile_enabled": @(NO),
+        @"action_button_profile_default_action": @"menu",
+        @"action_button_profile_default_copy_info_action": @"copy_username",
+        // Gallery — RyukGram-managed media library on disk.
+        // Master gate. When YES, gallery menu entries appear and the gallery
+        // settings nav row is interactive.
+        @"sci_gallery_enabled": @(NO),
+        // How "Download to Photos" routes when gallery is enabled.
+        //   off            — Photos only (default)
+        //   mirror         — Photos + log to gallery
+        //   gallery_only   — gallery only, skip Photos
+        @"gallery_save_mode": @"off",
+        // Gallery view prefs (sort, view mode, favorites pinning).
+        @"gallery_sort_mode": @(0),
+        @"gallery_view_mode": @(0),
+        @"show_favorites_at_top": @(NO),
+        @"dm_tab_long_press_gallery": @(NO),
+        // Home feed top-bar shortcut button. Master gate; "auto" icon derives
+        // from the active actions; actions is an ordered [{id, enabled}] list.
+        @"home_shortcut_enabled": @(NO),
+        @"home_shortcut_icon": @"auto",
+        @"home_shortcut_actions": @[],
         @"dm_visual_seen_button": @(YES),
         @"dm_visual_audio_toggle": @(NO),
         // Legacy long-press gesture (off by default — kept for users who prefer it)

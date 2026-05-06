@@ -3,13 +3,28 @@
 #import "../../InstagramHeaders.h"
 #import "../../Utils.h"
 #import "../../Downloader/Download.h"
+#import "../../UI/SCIDownloadMenu.h"
+#import "../../Gallery/SCIGalleryFile.h"
+#import "../../Gallery/SCIGallerySaveMetadata.h"
+#import "../../ActionButton/SCIMediaActions.h"
+#import "SCIDirectUserResolver.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <substrate.h>
 
-@interface SCIDownloadDelegate (NotesExt)
-- (void)downloadDidFinishWithFileURL:(NSURL *)fileURL;
-@end
+static SCIGallerySaveMetadata *sciNotesMetadataForNote(id note) {
+    SCIGallerySaveMetadata *md = [SCIGallerySaveMetadata new];
+    md.source = (int16_t)SCIGallerySourceNotes;
+    if (!note) return md;
+    @try {
+        id uf = [note valueForKey:@"userFields"];
+        md.sourceUsername = sciDirectUserResolverUsernameFromUser(uf);
+        md.sourceUserPK = sciDirectUserResolverPKFromUser(uf);
+        md.sourceProfileURLString = sciDirectUserResolverProfilePicURLStringFromUser(uf);
+    } @catch (__unused id e) {}
+    md.sourceMediaPK = sciDirectUserResolverPKFromUser(note);
+    return md;
+}
 
 // Find the note model matching a username from visible tray cells
 static id sciFindNoteForUser(UIView *root, NSString *username) {
@@ -148,8 +163,6 @@ static void sciResolveAudioURL(id track, void (^completion)(NSURL *)) {
     } @catch (__unused id e) { completion(nil); }
 }
 
-static SCIDownloadDelegate *sciNoteDl = nil;
-
 static void (*orig_present)(UIViewController *, SEL, UIViewController *, BOOL, id);
 static void hook_present(UIViewController *self, SEL _cmd, UIViewController *vc, BOOL animated, id completion) {
     if (![NSStringFromClass([vc class]) isEqualToString:@"IGActionSheetController"]) {
@@ -246,7 +259,8 @@ static void hook_present(UIViewController *self, SEL _cmd, UIViewController *vc,
             }]];
         }
 
-        // GIF: save via downloader (respects RyukGram album)
+        SCIGallerySaveMetadata *noteMD = sciNotesMetadataForNote(note);
+
         UIImage *gifImage = sciGIFImageFromCell(cell);
         if (gifImage) {
             [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Save GIF")
@@ -256,8 +270,16 @@ static void hook_present(UIViewController *self, SEL _cmd, UIViewController *vc,
                 NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:
                     [NSString stringWithFormat:@"note_gif_%@.png", [[NSUUID UUID] UUIDString]]];
                 [data writeToFile:path atomically:YES];
-                sciNoteDl = [[SCIDownloadDelegate alloc] initWithAction:saveToPhotos showProgress:NO];
-                [sciNoteDl downloadDidFinishWithFileURL:[NSURL fileURLWithPath:path]];
+                NSURL *fileURL = [NSURL fileURLWithPath:path];
+                [SCIMediaActions setCurrentFilenameStem:
+                    [SCIMediaActions filenameStemForUsername:noteMD.sourceUsername contextLabel:@"note-gif"]];
+                [SCIDownloadMenu presentForURL:fileURL
+                                          mode:SCIDownloadMenuModeLocalFile
+                                 fileExtension:@"png"
+                                      hudLabel:SCILocalized(@"Save GIF")
+                                      metadata:noteMD
+                                       isAudio:NO
+                                        fromVC:nil];
             }]];
         }
 
@@ -270,8 +292,17 @@ static void hook_present(UIViewController *self, SEL _cmd, UIViewController *vc,
                         [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Audio URL not available")];
                         return;
                     }
-                    sciNoteDl = [[SCIDownloadDelegate alloc] initWithAction:share showProgress:NO];
-                    [sciNoteDl downloadFileWithURL:audioURL fileExtension:@"m4a" hudLabel:nil];
+                    NSString *ext = [[audioURL.path pathExtension] lowercaseString];
+                    if (!SCIGalleryExtensionIsAudio(ext)) ext = @"m4a";
+                    [SCIMediaActions setCurrentFilenameStem:
+                        [SCIMediaActions filenameStemForUsername:noteMD.sourceUsername contextLabel:@"note-audio"]];
+                    [SCIDownloadMenu presentForURL:audioURL
+                                              mode:SCIDownloadMenuModeRemoteURL
+                                     fileExtension:ext
+                                          hudLabel:SCILocalized(@"Download audio")
+                                          metadata:noteMD
+                                           isAudio:YES
+                                            fromVC:nil];
                 });
             }]];
         }

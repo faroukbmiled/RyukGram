@@ -1,18 +1,54 @@
 #import "SCIMediaActions.h"
 #import "SCIMediaViewer.h"
 #import "SCIRepostSheet.h"
+#import "SCIActionMenuConfig.h"
+#import "SCIActionCatalog.h"
 #import "../SCIDashParser.h"
 #import "../SCIFFmpeg.h"
 #import "../SCIQualityPicker.h"
 #import "../Utils.h"
 #import "../Downloader/Download.h"
 #import "../PhotoAlbum.h"
+#import "../Gallery/SCIGalleryFile.h"
+#import "../Gallery/SCIGallerySaveMetadata.h"
+#import "../Gallery/SCIGalleryOriginController.h"
 #import "../Features/StoriesAndMessages/SCIExcludedStoryUsers.h"
 #import "../Features/StoriesAndMessages/OverlayHelpers.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <Photos/Photos.h>
 #import <AVFoundation/AVFoundation.h>
+
+// One-shot metadata stamped before a download fires; sciMakeDownloader picks
+// it up + clears. Lets callers tag a download for gallery logging without
+// threading metadata through every overload.
+static SCIGallerySaveMetadata *sciPendingGalleryMetadata = nil;
+
+static SCIGallerySource sciGallerySourceFromContext(SCIActionContext ctx) {
+    switch (ctx) {
+        case SCIActionContextFeed:    return SCIGallerySourceFeed;
+        case SCIActionContextReels:   return SCIGallerySourceReels;
+        case SCIActionContextStories: return SCIGallerySourceStories;
+    }
+    return SCIGallerySourceOther;
+}
+
+static void sciStampGalleryMetadataForMedia(id media, SCIActionContext ctx) {
+    SCIGallerySaveMetadata *m = [[SCIGallerySaveMetadata alloc] init];
+    m.source = (int16_t)sciGallerySourceFromContext(ctx);
+    @try { [SCIGalleryOriginController populateMetadata:m fromMedia:media]; }
+    @catch (__unused id e) {}
+    sciPendingGalleryMetadata = m;
+}
+
+static SCIActionSource sciSourceFromContext(SCIActionContext ctx) {
+    switch (ctx) {
+        case SCIActionContextFeed:    return SCIActionSourceFeed;
+        case SCIActionContextReels:   return SCIActionSourceReels;
+        case SCIActionContextStories: return SCIActionSourceStories;
+    }
+    return SCIActionSourceFeed;
+}
 
 // Retain the active download delegate so ARC doesn't kill it mid-download.
 // Replaced on each new download — one active download at a time.
@@ -193,9 +229,16 @@ static id sciFieldCache(id obj, NSString *key) {
 	return value;
 }
 
-// Fresh download delegate (one active download at a time).
+// Fresh download delegate (one active download at a time). Consumes any
+// metadata stamped via sciStampGalleryMetadataForMedia before the call so the
+// download routes through Download.m's gallery logic.
 static SCIDownloadDelegate *sciMakeDownloader(DownloadAction action, BOOL progress) {
-    return [[SCIDownloadDelegate alloc] initWithAction:action showProgress:progress];
+    SCIDownloadDelegate *d = [[SCIDownloadDelegate alloc] initWithAction:action showProgress:progress];
+    if (sciPendingGalleryMetadata) {
+        d.pendingGallerySaveMetadata = sciPendingGalleryMetadata;
+        sciPendingGalleryMetadata = nil;
+    }
+    return d;
 }
 
 // Route a download through the confirm dialog if the pref is on.
@@ -220,8 +263,12 @@ static void sciConfirmThen(NSString *title, void(^block)(void)) {
 }
 
 + (NSString *)filenameStemForMedia:(id)media contextLabel:(NSString *)ctxLabel {
+    return [self filenameStemForUsername:sciUsernameForMedia(media) contextLabel:ctxLabel];
+}
+
++ (NSString *)filenameStemForUsername:(NSString *)username contextLabel:(NSString *)ctxLabel {
     @try {
-        NSString *user = sciSanitizeFilenameComponent(sciUsernameForMedia(media));
+        NSString *user = sciSanitizeFilenameComponent(username);
         NSString *userPart = user.length ? [@"@" stringByAppendingString:user] : @"media";
         NSString *ctxPart = sciSanitizeFilenameComponent(ctxLabel);
         if (!ctxPart.length) ctxPart = @"media";
@@ -455,8 +502,26 @@ static void sciConfirmThen(NSString *title, void(^block)(void)) {
                 [pill finishTicket:ticket errorMessage:SCILocalized(@"Audio extract failed")];
                 return;
             }
-            [pill finishTicket:ticket successMessage:SCILocalized(@"Audio ready")];
             NSURL *fileURL = [NSURL fileURLWithPath:outPath];
+            if (action == saveToGallery) {
+                NSError *err = nil;
+                SCIGallerySaveMetadata *m = sciPendingGalleryMetadata;
+                sciPendingGalleryMetadata = nil;
+                SCIGallerySource src = m ? (SCIGallerySource)m.source : SCIGallerySourceOther;
+                SCIGalleryFile *f = [SCIGalleryFile saveFileToGallery:fileURL
+                                                                source:src
+                                                             mediaType:SCIGalleryMediaTypeAudio
+                                                            folderPath:nil
+                                                              metadata:m
+                                                                 error:&err];
+                if (f && !err) {
+                    [pill finishTicket:ticket successMessage:SCILocalized(@"Saved to Gallery")];
+                } else {
+                    [pill finishTicket:ticket errorMessage:err.localizedDescription ?: SCILocalized(@"Failed to save")];
+                }
+                return;
+            }
+            [pill finishTicket:ticket successMessage:SCILocalized(@"Audio ready")];
             switch (action) {
                 case quickLook: [SCIUtils showQuickLookVC:@[fileURL]]; break;
                 case share:
@@ -636,8 +701,9 @@ static void sciConfirmThen(NSString *title, void(^block)(void)) {
             return;
         }
 
-        // saveToPhotos finishes the ticket after the PH completion fires.
-        if (action != saveToPhotos) {
+        // saveToPhotos / saveToGallery finish the ticket after their
+        // completion fires.
+        if (action != saveToPhotos && action != saveToGallery) {
             [pill finishTicket:ticket successMessage:SCILocalized(@"HD download complete")];
         }
 
@@ -648,6 +714,24 @@ static void sciConfirmThen(NSString *title, void(^block)(void)) {
             case quickLook:
                 [SCIUtils showQuickLookVC:@[outputURL]];
                 break;
+            case saveToGallery: {
+                NSError *err = nil;
+                SCIGallerySaveMetadata *m = sciPendingGalleryMetadata;
+                sciPendingGalleryMetadata = nil;
+                SCIGallerySource src = m ? (SCIGallerySource)m.source : SCIGallerySourceOther;
+                SCIGalleryFile *f = [SCIGalleryFile saveFileToGallery:outputURL
+                                                                source:src
+                                                             mediaType:SCIGalleryMediaTypeVideo
+                                                            folderPath:nil
+                                                              metadata:m
+                                                                 error:&err];
+                if (f && !err) {
+                    [pill finishTicket:ticket successMessage:SCILocalized(@"Saved to Gallery")];
+                } else {
+                    [pill finishTicket:ticket errorMessage:err.localizedDescription ?: @"Failed to save"];
+                }
+                break;
+            }
             case saveToPhotos: {
                 [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                     if (status != PHAuthorizationStatusAuthorized) {
@@ -744,6 +828,94 @@ static void sciConfirmThen(NSString *title, void(^block)(void)) {
 + (void)downloadAndSaveMedia:(id)media fromView:(UIView *)sourceView {
     sciConfirmThen(SCILocalized(@"Save to Photos?"), ^{
         [self downloadHDMedia:media action:saveToPhotos fromView:sourceView];
+    });
+}
+
++ (void)downloadAndSaveMediaToGallery:(id)media fromView:(UIView *)sourceView {
+    sciConfirmThen(SCILocalized(@"Save to Gallery?"), ^{
+        [self downloadHDMedia:media action:saveToGallery fromView:sourceView];
+    });
+}
+
++ (void)downloadAllAndSaveMediaToGallery:(id)carouselMedia context:(SCIActionContext)ctx {
+    [self downloadAllChildrenOfMedia:carouselMedia
+                        progressTitle:SCILocalized(@"Save all to Gallery?")
+                                 done:^(NSArray<NSURL *> *files) {
+        if (!files.count) {
+            [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Nothing to save")];
+            return;
+        }
+
+        SCIGallerySaveMetadata *metadata = [[SCIGallerySaveMetadata alloc] init];
+        metadata.source = (int16_t)sciGallerySourceFromContext(ctx);
+        metadata.skipDedup = YES;
+        @try { [SCIGalleryOriginController populateMetadata:metadata fromMedia:carouselMedia]; }
+        @catch (__unused id e) {}
+
+        NSArray<SCIGallerySaveMetadata *> *perFile = nil;
+        [self bulkSaveFilesToGallery:files perFileMetadata:perFile defaultMetadata:metadata];
+    }];
+}
+
+// Save files into the gallery one at a time, yielding to the runloop between
+// iterations so the pill stays smooth. Per-file metadata array (when given)
+// MUST match files.count; otherwise defaultMetadata is used for every file.
++ (void)bulkSaveFilesToGallery:(NSArray<NSURL *> *)files
+                  perFileMetadata:(NSArray<SCIGallerySaveMetadata *> *)perFile
+                  defaultMetadata:(SCIGallerySaveMetadata *)defaultMetadata {
+    if (!files.count) return;
+    SCIDownloadPillView *pill = [SCIDownloadPillView shared];
+    [pill resetState];
+    UIView *host = [UIApplication sharedApplication].keyWindow ?: topMostController().view;
+    if (host) [pill showInView:host];
+    pill.textLabel.text = SCILocalized(@"Saving to Gallery...");
+    [pill showBulkProgress:0 total:files.count];
+
+    [self _bulkGallerySaveStep:files
+                          index:0
+                        success:0
+                  perFileMetadata:perFile
+                  defaultMetadata:defaultMetadata
+                            pill:pill];
+}
+
++ (void)_bulkGallerySaveStep:(NSArray<NSURL *> *)files
+                         index:(NSUInteger)idx
+                       success:(NSUInteger)success
+                 perFileMetadata:(NSArray<SCIGallerySaveMetadata *> *)perFile
+                 defaultMetadata:(SCIGallerySaveMetadata *)defaultMetadata
+                           pill:(SCIDownloadPillView *)pill {
+    if (idx >= files.count) {
+        [pill showSuccess:[NSString stringWithFormat:SCILocalized(@"Saved %lu items to Gallery"),
+                                                     (unsigned long)success]];
+        [pill dismissAfterDelay:1.5];
+        return;
+    }
+
+    [pill showBulkProgress:idx total:files.count];
+
+    NSURL *fileURL = files[idx];
+    SCIGallerySaveMetadata *m = (perFile && idx < perFile.count) ? perFile[idx] : defaultMetadata;
+    NSString *ext = [fileURL.pathExtension lowercaseString];
+    BOOL isVideo = [@[@"mp4", @"mov", @"m4v", @"webm"] containsObject:ext];
+    NSError *err = nil;
+    SCIGalleryFile *f = [SCIGalleryFile saveFileToGallery:fileURL
+                                                    source:(SCIGallerySource)m.source
+                                                 mediaType:(isVideo ? SCIGalleryMediaTypeVideo : SCIGalleryMediaTypeImage)
+                                                folderPath:nil
+                                                  metadata:m
+                                                     error:&err];
+    NSUInteger nextSuccess = success + ((f && !err) ? 1 : 0);
+    if (err) NSLog(@"[RyukGram][Gallery] Bulk save error: %@", err);
+
+    // Yield to the runloop so progress updates render before the next file.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self _bulkGallerySaveStep:files
+                              index:idx + 1
+                            success:nextSuccess
+                      perFileMetadata:perFile
+                      defaultMetadata:defaultMetadata
+                                pill:pill];
     });
 }
 
@@ -948,9 +1120,7 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
             vc.popoverPresentationController.sourceRect =
                 CGRectMake(top.view.bounds.size.width/2.0, top.view.bounds.size.height/2.0, 1, 1);
         }
-        if ([SCIUtils getBoolPref:@"save_to_ryukgram_album"]) {
-            [SCIPhotoAlbum watchForNextSavedAsset];
-        }
+        [SCIPhotoAlbum armWatcherIfEnabled];
         [top presentViewController:vc animated:YES completion:nil];
     }];
 }
@@ -1022,156 +1192,256 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
 
 // MARK: - Menu builder
 
+// MARK: - Story-reel sibling discovery
+
+// For multi-item story reels, gather every IGMedia in the current viewer's
+// queue. Returns an empty array if the source view isn't inside a story viewer
+// or there's only one item in the reel.
+static NSArray *sciStoryReelMedias(UIView *sourceView) {
+    if (!sourceView) return @[];
+
+    UIViewController *storyVC = [SCIUtils nearestViewControllerForView:sourceView];
+    if (!storyVC) {
+        UIResponder *r = sourceView;
+        while (r) {
+            if ([NSStringFromClass([r class]) containsString:@"StoryViewer"]) {
+                storyVC = (UIViewController *)r; break;
+            }
+            r = [r nextResponder];
+        }
+    }
+    if (!storyVC) return @[];
+
+    UIResponder *r = storyVC;
+    Class svCls = NSClassFromString(@"IGStoryViewerViewController");
+    while (r && !(svCls && [r isKindOfClass:svCls])) r = [r nextResponder];
+    if (!r) r = (UIResponder *)storyVC;
+
+    id vm = nil;
+    if ([r respondsToSelector:@selector(currentViewModel)]) {
+        vm = ((id(*)(id,SEL))objc_msgSend)(r, @selector(currentViewModel));
+    }
+    if (!vm) return @[];
+
+    NSArray *reelItems = nil;
+    for (NSString *sel in @[@"items", @"storyItems", @"reelItems", @"mediaItems", @"allItems"]) {
+        if ([vm respondsToSelector:NSSelectorFromString(sel)]) {
+            @try {
+                id val = ((id(*)(id,SEL))objc_msgSend)(vm, NSSelectorFromString(sel));
+                if ([val isKindOfClass:[NSArray class]] && [(NSArray *)val count] > 1) {
+                    reelItems = val; break;
+                }
+            } @catch (__unused id e) {}
+        }
+    }
+
+    if (!reelItems) {
+        Class mc = NSClassFromString(@"IGMedia");
+        unsigned int cnt = 0;
+        Ivar *ivs = class_copyIvarList(object_getClass(vm), &cnt);
+        for (unsigned int i = 0; i < cnt; i++) {
+            const char *type = ivar_getTypeEncoding(ivs[i]);
+            if (!type || type[0] != '@') continue;
+            @try {
+                id val = object_getIvar(vm, ivs[i]);
+                if ([val isKindOfClass:[NSArray class]] && [(NSArray *)val count] > 1) {
+                    id first = [(NSArray *)val firstObject];
+                    if ((mc && [first isKindOfClass:mc]) ||
+                        (first && [first respondsToSelector:@selector(media)])) {
+                        reelItems = val; break;
+                    }
+                }
+            } @catch (__unused id e) {}
+        }
+        if (ivs) free(ivs);
+    }
+
+    if (reelItems.count <= 1) return @[];
+
+    NSMutableArray *medias = [NSMutableArray array];
+    Class mc = NSClassFromString(@"IGMedia");
+    for (id item in reelItems) {
+        if (mc && [item isKindOfClass:mc]) {
+            [medias addObject:item];
+            continue;
+        }
+        for (NSString *sel in @[@"media", @"storyItem", @"item", @"mediaItem"]) {
+            if ([item respondsToSelector:NSSelectorFromString(sel)]) {
+                @try {
+                    id m = ((id(*)(id,SEL))objc_msgSend)(item, NSSelectorFromString(sel));
+                    if (m && mc && [m isKindOfClass:mc]) { [medias addObject:m]; break; }
+                } @catch (__unused id e) {}
+            }
+        }
+    }
+    return medias.count > 1 ? medias : @[];
+}
+
+// Resolve carousel parent media: walks up sourceView's superviews looking for
+// an `_mediaPassthrough` ivar (reels) or sibling cells holding the carousel
+// parent (feed). Returns `media` itself when no parent is found.
+static id sciCarouselParentMedia(id media, UIView *sourceView) {
+    if (!media || [SCIMediaActions isCarouselMedia:media]) return media;
+
+    // Path 1: _mediaPassthrough ivar (reels).
+    UIView *v = sourceView;
+    while (v) {
+        Ivar mpi = class_getInstanceVariable([v class], "_mediaPassthrough");
+        if (mpi) {
+            id pm = object_getIvar(v, mpi);
+            if (pm && [SCIMediaActions isCarouselMedia:pm]) return pm;
+        }
+        v = v.superview;
+    }
+
+    // Path 2: sibling IGFeedItemPageCell in the collection view (feed).
+    v = sourceView;
+    UICollectionViewCell *ufiCell = nil;
+    UICollectionView *cv = nil;
+    while (v) {
+        if (!ufiCell && [v isKindOfClass:[UICollectionViewCell class]])
+            ufiCell = (UICollectionViewCell *)v;
+        if ([v isKindOfClass:[UICollectionView class]]) {
+            cv = (UICollectionView *)v; break;
+        }
+        v = v.superview;
+    }
+    if (ufiCell && cv) {
+        NSIndexPath *ufiPath = [cv indexPathForCell:ufiCell];
+        if (ufiPath) {
+            Class mc = NSClassFromString(@"IGMedia");
+            for (UICollectionViewCell *cell in cv.visibleCells) {
+                NSIndexPath *p = [cv indexPathForCell:cell];
+                if (!p || p.section != ufiPath.section || cell == ufiCell) continue;
+                if (![NSStringFromClass([cell class]) containsString:@"Page"]) continue;
+                Ivar mi = class_getInstanceVariable(object_getClass(cell), "_media");
+                if (!mi) continue;
+                @try {
+                    id pm = object_getIvar(cell, mi);
+                    if (pm && mc && [pm isKindOfClass:mc] && [SCIMediaActions isCarouselMedia:pm]) {
+                        return pm;
+                    }
+                } @catch (__unused id e) {}
+            }
+        }
+    }
+
+    return media;
+}
+
+
+// MARK: - Menu builder
+
 + (NSArray<SCIAction *> *)actionsForContext:(SCIActionContext)ctx
                                       media:(id)media
                                    fromView:(UIView *)sourceView {
-    NSMutableArray<SCIAction *> *out = [NSMutableArray array];
+    SCIActionSource source = sciSourceFromContext(ctx);
+    SCIActionMenuConfig *config = [SCIActionMenuConfig configForSource:source];
 
-    NSString *datePref = sciDatePrefKeyForContext(ctx);
-    if (datePref && [SCIUtils getBoolPref:datePref]) {
-        NSString *dateStr = sciFormatDateHeader(sciExtractDateFromMedia(media));
-        if (dateStr.length) [out addObject:[SCIAction headerWithTitle:dateStr]];
+    NSString *dateHeader = nil;
+    if (config.showDate) {
+        dateHeader = sciFormatDateHeader(sciExtractDateFromMedia(media));
     }
 
     NSString *ctxLabel = [self contextLabelForContext:ctx];
-    // Stamp the filename stem before a download fires.
     void (^stampStemForMedia)(id) = ^(id m) {
         [SCIMediaActions setCurrentFilenameStem:[SCIMediaActions filenameStemForMedia:m contextLabel:ctxLabel]];
     };
 
-    // Resolve parent media for carousel detection + bulk actions.
-    id parentMedia = media;
-    if (media && ![self isCarouselMedia:media]) {
-        // Path 1: _mediaPassthrough ivar (reels)
-        UIView *v = sourceView;
-        while (v) {
-            Ivar mpi = class_getInstanceVariable([v class], "_mediaPassthrough");
-            if (mpi) {
-                id pm = object_getIvar(v, mpi);
-                if (pm && [self isCarouselMedia:pm]) { parentMedia = pm; break; }
-            }
-            v = v.superview;
-        }
-
-        // Path 2: sibling IGFeedItemPageCell in the collection view (feed)
-        if (parentMedia == media) {
-            v = sourceView;
-            UICollectionViewCell *ufiCell = nil;
-            UICollectionView *cv = nil;
-            while (v) {
-                if (!ufiCell && [v isKindOfClass:[UICollectionViewCell class]])
-                    ufiCell = (UICollectionViewCell *)v;
-                if ([v isKindOfClass:[UICollectionView class]]) { cv = (UICollectionView *)v; break; }
-                v = v.superview;
-            }
-            if (ufiCell && cv) {
-                NSIndexPath *ufiPath = [cv indexPathForCell:ufiCell];
-                if (ufiPath) {
-                    Class mc = NSClassFromString(@"IGMedia");
-                    for (UICollectionViewCell *cell in cv.visibleCells) {
-                        NSIndexPath *p = [cv indexPathForCell:cell];
-                        if (!p || p.section != ufiPath.section || cell == ufiCell) continue;
-                        if (![NSStringFromClass([cell class]) containsString:@"Page"]) continue;
-                        Ivar mi = class_getInstanceVariable(object_getClass(cell), "_media");
-                        if (!mi) continue;
-                        @try {
-                            id pm = object_getIvar(cell, mi);
-                            if (pm && mc && [pm isKindOfClass:mc] && [self isCarouselMedia:pm]) {
-                                parentMedia = pm;
-                                break;
-                            }
-                        } @catch (__unused id e) {}
-                    }
-                }
-            }
-        }
-    }
-
-    NSString *caption = parentMedia ? [self captionForMedia:parentMedia] : nil;
+    id parentMedia = sciCarouselParentMedia(media, sourceView);
     BOOL isCarousel = parentMedia ? [self isCarouselMedia:parentMedia] : NO;
+    NSString *caption = parentMedia ? [self captionForMedia:parentMedia] : nil;
+
+    NSArray *storyMedias = (ctx == SCIActionContextStories && !isCarousel)
+        ? sciStoryReelMedias(sourceView)
+        : @[];
+    BOOL hasBulk = isCarousel || storyMedias.count > 1;
+
     __weak UIView *weakSource = sourceView;
 
-    // --- Section 1: navigation ---
-    [out addObject:[SCIAction actionWithTitle:SCILocalized(@"Expand")
+    SCIAction *(^resolve)(NSString *) = ^SCIAction *(NSString *aid) {
+        if ([aid isEqualToString:SCIAID_Expand]) {
+            return [SCIAction actionWithTitle:SCILocalized(@"Expand")
                                          icon:@"arrow.up.left.and.arrow.down.right"
                                       handler:^{
-        if (isCarousel) {
-            NSArray *children = [SCIMediaActions carouselChildrenForMedia:parentMedia];
-            NSMutableArray *items = [NSMutableArray array];
-            for (id child in children) {
-                NSURL *v = [SCIUtils getVideoUrlForMedia:(IGMedia *)child];
-                NSURL *p = [SCIUtils getPhotoUrlForMedia:(IGMedia *)child];
-                if (!v && !p) p = [SCIMediaActions bestURLForMedia:child];
-                if (v || p) {
-                    [items addObject:[SCIMediaViewerItem itemWithVideoURL:v photoURL:p caption:caption]];
+                if (isCarousel) {
+                    NSArray *children = [SCIMediaActions carouselChildrenForMedia:parentMedia];
+                    NSMutableArray *items = [NSMutableArray array];
+                    for (id child in children) {
+                        NSURL *vURL = [SCIUtils getVideoUrlForMedia:(IGMedia *)child];
+                        NSURL *p = [SCIUtils getPhotoUrlForMedia:(IGMedia *)child];
+                        if (!vURL && !p) p = [SCIMediaActions bestURLForMedia:child];
+                        if (vURL || p) [items addObject:[SCIMediaViewerItem itemWithVideoURL:vURL photoURL:p caption:caption]];
+                    }
+                    NSUInteger startIdx = 0;
+                    if (media != parentMedia) {
+                        NSUInteger idx = [children indexOfObjectIdenticalTo:media];
+                        if (idx != NSNotFound) startIdx = idx;
+                    }
+                    if (items.count) {
+                        [SCIMediaViewer showItems:items startIndex:startIdx];
+                    } else {
+                        [SCIMediaActions expandMedia:media fromView:weakSource caption:caption];
+                    }
+                } else {
+                    [SCIMediaActions expandMedia:media fromView:weakSource caption:caption];
                 }
-            }
-            // Find current page index to start there
-            NSUInteger startIdx = 0;
-            if (media != parentMedia) {
-                NSUInteger idx = [children indexOfObjectIdenticalTo:media];
-                if (idx != NSNotFound) startIdx = idx;
-            }
-            if (items.count) {
-                [SCIMediaViewer showItems:items startIndex:startIdx];
-            } else {
-                [SCIMediaActions expandMedia:media fromView:weakSource caption:caption];
-            }
-        } else {
-            [SCIMediaActions expandMedia:media fromView:weakSource caption:caption];
+            }];
         }
-    }]];
 
-    if (ctx == SCIActionContextReels || (ctx == SCIActionContextFeed && [SCIUtils getVideoUrlForMedia:(IGMedia *)media])) {
-        [out addObject:[SCIAction actionWithTitle:SCILocalized(@"View cover")
-                                             icon:@"photo"
-                                          handler:^{
-            NSURL *cover = [SCIMediaActions coverURLForMedia:media];
-            if (!cover) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"No cover image")]; return; }
-            [SCIMediaViewer showWithVideoURL:nil photoURL:cover caption:nil];
-        }]];
-    }
+        if ([aid isEqualToString:SCIAID_ViewCover]) {
+            BOOL hasCover = (ctx == SCIActionContextReels) ||
+                            (ctx == SCIActionContextFeed && [SCIUtils getVideoUrlForMedia:(IGMedia *)media] != nil);
+            if (!hasCover) return nil;
+            return [SCIAction actionWithTitle:SCILocalized(@"View cover")
+                                         icon:@"photo"
+                                      handler:^{
+                NSURL *cover = [SCIMediaActions coverURLForMedia:media];
+                if (!cover) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"No cover image")]; return; }
+                [SCIMediaViewer showWithVideoURL:nil photoURL:cover caption:nil];
+            }];
+        }
 
-    // Repost = save to Photos → open IG's native creation flow
-    [out addObject:[SCIAction actionWithTitle:SCILocalized(@"Repost")
+        if ([aid isEqualToString:SCIAID_Repost]) {
+            return [SCIAction actionWithTitle:SCILocalized(@"Repost")
                                          icon:@"arrow.2.squarepath"
                                       handler:^{
-        NSURL *vidURL = [SCIUtils getVideoUrlForMedia:(IGMedia *)media];
-        NSURL *imgURL = [SCIUtils getPhotoUrlForMedia:(IGMedia *)media];
-        [SCIRepostSheet repostWithVideoURL:vidURL photoURL:imgURL];
-    }]];
+                NSURL *vidURL = [SCIUtils getVideoUrlForMedia:(IGMedia *)media];
+                NSURL *imgURL = [SCIUtils getPhotoUrlForMedia:(IGMedia *)media];
+                [SCIRepostSheet repostWithVideoURL:vidURL photoURL:imgURL];
+            }];
+        }
 
-    if (ctx == SCIActionContextStories) {
-        if ([SCIUtils getBoolPref:@"view_story_mentions"]) {
-            [out addObject:[SCIAction actionWithTitle:SCILocalized(@"View mentions")
-                                                 icon:@"at"
-                                              handler:^{
+        if ([aid isEqualToString:SCIAID_ViewMentions]) {
+            if (ctx != SCIActionContextStories) return nil;
+            if (![SCIUtils getBoolPref:@"view_story_mentions"]) return nil;
+            return [SCIAction actionWithTitle:SCILocalized(@"View mentions")
+                                         icon:@"at"
+                                      handler:^{
                 UIView *v = weakSource;
                 UIViewController *host = [SCIUtils nearestViewControllerForView:v];
-                if (!host) return;
-                sciShowStoryMentions(host, v);
-            }]];
+                if (host) sciShowStoryMentions(host, v);
+            }];
         }
 
-        // Mute / unmute story audio
-        if ([SCIUtils getBoolPref:@"story_audio_toggle"]) {
+        if ([aid isEqualToString:SCIAID_ToggleAudio]) {
+            if (ctx != SCIActionContextStories) return nil;
+            if (![SCIUtils getBoolPref:@"story_audio_toggle"]) return nil;
             BOOL audioOn = sciIsStoryAudioEnabled();
-            NSString *audioTitle = audioOn ? SCILocalized(@"Mute audio") : SCILocalized(@"Unmute audio");
-            NSString *audioIcon = audioOn ? @"speaker.wave.2" : @"speaker.slash";
-            [out addObject:[SCIAction actionWithTitle:audioTitle
-                                                 icon:audioIcon
-                                              handler:^{ sciToggleStoryAudio(); }]];
+            NSString *title = audioOn ? SCILocalized(@"Mute audio") : SCILocalized(@"Unmute audio");
+            NSString *icon = audioOn ? @"speaker.wave.2" : @"speaker.slash";
+            return [SCIAction actionWithTitle:title icon:icon handler:^{ sciToggleStoryAudio(); }];
         }
-    }
 
-    // Story user list management (add/remove from exclusion list).
-    if (ctx == SCIActionContextStories && [SCIUtils getBoolPref:@"enable_story_user_exclusions"]) {
-        extern NSDictionary *sciOwnerInfoForView(UIView *);
-        extern void sciRefreshAllVisibleOverlays(UIViewController *);
-        extern __weak UIViewController *sciActiveStoryViewerVC;
-        NSDictionary *ownerInfo = sourceView ? sciOwnerInfoForView(sourceView) : nil;
-        NSString *ownerPK = ownerInfo[@"pk"];
-        if (ownerPK.length) {
+        if ([aid isEqualToString:SCIAID_ExcludeUser]) {
+            if (ctx != SCIActionContextStories) return nil;
+            if (![SCIUtils getBoolPref:@"enable_story_user_exclusions"]) return nil;
+            extern NSDictionary *sciOwnerInfoForView(UIView *);
+            extern void sciRefreshAllVisibleOverlays(UIViewController *);
+            extern __weak UIViewController *sciActiveStoryViewerVC;
+            NSDictionary *ownerInfo = weakSource ? sciOwnerInfoForView(weakSource) : nil;
+            NSString *ownerPK = ownerInfo[@"pk"];
+            if (!ownerPK.length) return nil;
             BOOL inList = [SCIExcludedStoryUsers isInList:ownerPK];
             BOOL bs = [SCIExcludedStoryUsers isBlockSelectedMode];
             NSString *addLabel = bs ? SCILocalized(@"Add to block list") : SCILocalized(@"Exclude from seen");
@@ -1181,7 +1451,7 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
             NSString *capturedPK = [ownerPK copy];
             NSString *capturedUser = [ownerInfo[@"username"] ?: @"" copy];
             NSString *capturedName = [ownerInfo[@"fullName"] ?: @"" copy];
-            [out addObject:[SCIAction actionWithTitle:title icon:icon handler:^{
+            return [SCIAction actionWithTitle:title icon:icon handler:^{
                 if (inList) {
                     [SCIExcludedStoryUsers removePK:capturedPK];
                     [SCIUtils showToastForDuration:2.0 title:bs ? SCILocalized(@"Unblocked") : SCILocalized(@"Removed from list")];
@@ -1190,211 +1460,223 @@ static UIView *sciFindSubviewOfClass(UIView *root, NSString *className, int maxD
                     [SCIUtils showToastForDuration:2.0 title:bs ? SCILocalized(@"Added to block list") : SCILocalized(@"Added to exclude list")];
                 }
                 sciRefreshAllVisibleOverlays(sciActiveStoryViewerVC);
-            }]];
+            }];
         }
-    }
 
-    if (ctx != SCIActionContextStories) {
-        // Caption lives on the parent media (not on carousel children).
-        [out addObject:[SCIAction actionWithTitle:SCILocalized(@"Copy caption")
-                                             icon:@"text.quote"
-                                          handler:^{
-            [SCIMediaActions copyCaptionForMedia:parentMedia];
-        }]];
-    }
-
-    NSString *settingsTitle = [NSString stringWithFormat:SCILocalized(@"%@ settings"),
-                               sciSettingsTitleForContext(ctx)];
-    [out addObject:[SCIAction actionWithTitle:settingsTitle
-                                         icon:@"gearshape"
+        if ([aid isEqualToString:SCIAID_CopyCaption]) {
+            if (ctx == SCIActionContextStories) return nil;
+            return [SCIAction actionWithTitle:SCILocalized(@"Copy caption")
+                                         icon:@"text.quote"
                                       handler:^{
-        [SCIMediaActions openSettingsForContext:ctx fromView:weakSource];
-    }]];
-
-    // Section 2 — bulk download (carousels or multi-story reels)
-    if (isCarousel) {
-        // Bulk actions use the PARENT media (all children), not the current page
-        id bulkMedia = parentMedia;
-        [out addObject:[SCIAction separator]];
-        NSArray<SCIAction *> *bulkChildren = @[
-            [SCIAction actionWithTitle:SCILocalized(@"Copy all URLs") icon:@"doc.on.doc" handler:^{
-                [SCIMediaActions copyAllURLsForMedia:bulkMedia];
-            }],
-            [SCIAction actionWithTitle:SCILocalized(@"Download and share all") icon:@"square.and.arrow.up.on.square" handler:^{
-                stampStemForMedia(bulkMedia);
-                [SCIMediaActions downloadAllAndShareMedia:bulkMedia];
-            }],
-            [SCIAction actionWithTitle:SCILocalized(@"Download all to Photos") icon:@"square.and.arrow.down.on.square" handler:^{
-                stampStemForMedia(bulkMedia);
-                [SCIMediaActions downloadAllAndSaveMedia:bulkMedia];
-            }],
-        ];
-        NSUInteger childCount = [self carouselChildrenForMedia:bulkMedia].count;
-        NSString *bulkTitle = childCount > 0
-            ? [NSString stringWithFormat:SCILocalized(@"Download all (%lu)"), (unsigned long)childCount]
-            : @"Download all";
-        [out addObject:[SCIAction actionWithTitle:bulkTitle
-                                             icon:@"square.stack.3d.down.right"
-                                         children:bulkChildren]];
-    }
-
-    // Multi-story reel bulk actions
-    if (ctx == SCIActionContextStories && !isCarousel) {
-        // Read reel items from the story VC
-        NSArray *reelItems = nil;
-        UIViewController *storyVC = [SCIUtils nearestViewControllerForView:sourceView];
-        if (!storyVC) {
-            UIResponder *r = sourceView;
-            while (r) {
-                if ([NSStringFromClass([r class]) containsString:@"StoryViewer"]) {
-                    storyVC = (UIViewController *)r; break;
-                }
-                r = [r nextResponder];
-            }
-        }
-        if (storyVC) {
-            // Walk to IGStoryViewerViewController
-            UIResponder *r = storyVC;
-            Class svCls = NSClassFromString(@"IGStoryViewerViewController");
-            while (r && !(svCls && [r isKindOfClass:svCls])) r = [r nextResponder];
-            if (!r) r = (UIResponder *)storyVC;
-
-            id vm = nil;
-            if ([r respondsToSelector:@selector(currentViewModel)])
-                vm = ((id(*)(id,SEL))objc_msgSend)(r, @selector(currentViewModel));
-
-            if (vm) {
-                // Try selectors
-                for (NSString *sel in @[@"items", @"storyItems", @"reelItems", @"mediaItems", @"allItems"]) {
-                    if ([vm respondsToSelector:NSSelectorFromString(sel)]) {
-                        @try {
-                            id val = ((id(*)(id,SEL))objc_msgSend)(vm, NSSelectorFromString(sel));
-                            if ([val isKindOfClass:[NSArray class]] && [(NSArray *)val count] > 1) {
-                                reelItems = val;
-                                break;
-                            }
-                        } @catch (__unused id e) {}
-                    }
-                }
-
-                // Scan vm ivars for arrays
-                if (!reelItems) {
-                    Class mc = NSClassFromString(@"IGMedia");
-                    unsigned int cnt = 0;
-                    Ivar *ivs = class_copyIvarList(object_getClass(vm), &cnt);
-                    for (unsigned int i = 0; i < cnt; i++) {
-                        const char *type = ivar_getTypeEncoding(ivs[i]);
-                        if (!type || type[0] != '@') continue;
-                        @try {
-                            id val = object_getIvar(vm, ivs[i]);
-                            if ([val isKindOfClass:[NSArray class]] && [(NSArray *)val count] > 1) {
-                                id first = [(NSArray *)val firstObject];
-                                if ((mc && [first isKindOfClass:mc]) ||
-                                    (first && [first respondsToSelector:@selector(media)])) {
-                                    reelItems = val;
-                                    break;
-                                }
-                            }
-                        } @catch (__unused id e) {}
-                    }
-                    if (ivs) free(ivs);
-                }
-            }
+                [SCIMediaActions copyCaptionForMedia:parentMedia];
+            }];
         }
 
-        if (reelItems.count > 1) {
-            // Extract IGMedia from each item (may be wrapped)
-            NSMutableArray *storyMedias = [NSMutableArray array];
-            Class mc = NSClassFromString(@"IGMedia");
-            for (id item in reelItems) {
-                if (mc && [item isKindOfClass:mc]) {
-                    [storyMedias addObject:item];
-                } else {
-                    // Try to extract
-                    for (NSString *sel in @[@"media", @"storyItem", @"item", @"mediaItem"]) {
-                        if ([item respondsToSelector:NSSelectorFromString(sel)]) {
-                            @try {
-                                id m = ((id(*)(id,SEL))objc_msgSend)(item, NSSelectorFromString(sel));
-                                if (m && mc && [m isKindOfClass:mc]) { [storyMedias addObject:m]; break; }
-                            } @catch (__unused id e) {}
-                        }
-                    }
-                }
-            }
-
-            if (storyMedias.count > 1) {
-                [out addObject:[SCIAction separator]];
-
-                NSArray *capturedMedias = [storyMedias copy];
-                NSArray<SCIAction *> *storyBulk = @[
-                    [SCIAction actionWithTitle:SCILocalized(@"Copy all URLs") icon:@"doc.on.doc" handler:^{
-                        NSMutableArray *urls = [NSMutableArray array];
-                        for (id m in capturedMedias) {
-                            NSURL *u = [SCIMediaActions bestURLForMedia:m];
-                            if (u) [urls addObject:u.absoluteString];
-                        }
-                        if (urls.count) {
-                            [[UIPasteboard generalPasteboard] setString:[urls componentsJoinedByString:@"\n"]];
-                            [SCIUtils showToastForDuration:1.5 title:[NSString stringWithFormat:SCILocalized(@"Copied %lu URLs"), (unsigned long)urls.count]];
-                        }
-                    }],
-                    [SCIAction actionWithTitle:SCILocalized(@"Download and share all") icon:@"square.and.arrow.up.on.square" handler:^{
-                        NSMutableArray *urls = [NSMutableArray array];
-                        for (id m in capturedMedias) {
-                            NSURL *u = [SCIMediaActions bestURLForMedia:m];
-                            if (u) [urls addObject:u];
-                        }
-                        if (!urls.count) return;
-                        stampStemForMedia(capturedMedias.firstObject);
-                        [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all stories and share?") done:^(NSArray<NSURL *> *files) {
-                            if (!files.count) return;
-                            UIViewController *top = topMostController();
-                            UIActivityViewController *vc = [[UIActivityViewController alloc]
-                                initWithActivityItems:files applicationActivities:nil];
-                            [top presentViewController:vc animated:YES completion:nil];
-                        }];
-                    }],
-                    [SCIAction actionWithTitle:SCILocalized(@"Download all to Photos") icon:@"square.and.arrow.down.on.square" handler:^{
-                        NSMutableArray *urls = [NSMutableArray array];
-                        for (id m in capturedMedias) {
-                            NSURL *u = [SCIMediaActions bestURLForMedia:m];
-                            if (u) [urls addObject:u];
-                        }
-                        if (!urls.count) return;
-                        stampStemForMedia(capturedMedias.firstObject);
-                        [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Save all stories to Photos?") done:^(NSArray<NSURL *> *files) {
-                            [SCIMediaActions bulkSaveFiles:files];
-                        }];
-                    }],
-                ];
-                [out addObject:[SCIAction actionWithTitle:[NSString stringWithFormat:SCILocalized(@"Download all (%lu)"), (unsigned long)storyMedias.count]
-                                                     icon:@"square.stack.3d.down.right"
-                                                 children:storyBulk]];
-            }
-        }
-    }
-
-    // --- Section 3: current media actions ---
-    [out addObject:[SCIAction separator]];
-    [out addObject:[SCIAction actionWithTitle:SCILocalized(@"Copy download URL")
+        if ([aid isEqualToString:SCIAID_CopyURL]) {
+            return [SCIAction actionWithTitle:SCILocalized(@"Copy media URL")
                                          icon:@"link"
                                       handler:^{
-        [SCIMediaActions copyURLForMedia:media];
-    }]];
-    [out addObject:[SCIAction actionWithTitle:SCILocalized(@"Download and share")
+                [SCIMediaActions copyURLForMedia:media];
+            }];
+        }
+
+        if ([aid isEqualToString:SCIAID_DownloadShare]) {
+            return [SCIAction actionWithTitle:SCILocalized(@"Download and share")
                                          icon:@"square.and.arrow.up"
                                       handler:^{
-        stampStemForMedia(media);
-        [SCIMediaActions downloadAndShareMedia:media];
-    }]];
-    [out addObject:[SCIAction actionWithTitle:SCILocalized(@"Download to Photos")
+                stampStemForMedia(media);
+                sciStampGalleryMetadataForMedia(media, ctx);
+                [SCIMediaActions downloadAndShareMedia:media];
+            }];
+        }
+
+        if ([aid isEqualToString:SCIAID_DownloadSave]) {
+            return [SCIAction actionWithTitle:SCILocalized(@"Download to Photos")
                                          icon:@"square.and.arrow.down"
                                       handler:^{
-        stampStemForMedia(media);
-        [SCIMediaActions downloadAndSaveMedia:media];
-    }]];
+                stampStemForMedia(media);
+                sciStampGalleryMetadataForMedia(media, ctx);
+                [SCIMediaActions downloadAndSaveMedia:media];
+            }];
+        }
 
-    return [out copy];
+        if ([aid isEqualToString:SCIAID_DownloadGallery]) {
+            if (![SCIUtils getBoolPref:@"sci_gallery_enabled"]) return nil;
+            return [SCIAction actionWithTitle:SCILocalized(@"Download to Gallery")
+                                         icon:@"photo.on.rectangle.angled"
+                                      handler:^{
+                stampStemForMedia(media);
+                sciStampGalleryMetadataForMedia(media, ctx);
+                [SCIMediaActions downloadAndSaveMediaToGallery:media fromView:weakSource];
+            }];
+        }
+
+        if ([aid isEqualToString:SCIAID_BulkCopyURLs]) {
+            if (!hasBulk) return nil;
+            id bulkSource = isCarousel ? parentMedia : nil;
+            NSArray *capturedMedias = isCarousel ? nil : storyMedias;
+            return [SCIAction actionWithTitle:SCILocalized(@"Copy all URLs")
+                                         icon:@"doc.on.doc"
+                                      handler:^{
+                if (bulkSource) {
+                    [SCIMediaActions copyAllURLsForMedia:bulkSource];
+                    return;
+                }
+                NSMutableArray *urls = [NSMutableArray array];
+                for (id m in capturedMedias) {
+                    NSURL *u = [SCIMediaActions bestURLForMedia:m];
+                    if (u) [urls addObject:u.absoluteString];
+                }
+                if (!urls.count) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"No URLs found")]; return; }
+                [[UIPasteboard generalPasteboard] setString:[urls componentsJoinedByString:@"\n"]];
+                [SCIUtils showToastForDuration:1.5 title:[NSString stringWithFormat:SCILocalized(@"Copied %lu URLs"), (unsigned long)urls.count]];
+            }];
+        }
+
+        if ([aid isEqualToString:SCIAID_BulkDownloadShare]) {
+            if (!hasBulk) return nil;
+            if (isCarousel) {
+                id bulkSource = parentMedia;
+                return [SCIAction actionWithTitle:SCILocalized(@"Download and share all")
+                                             icon:@"square.and.arrow.up.on.square"
+                                          handler:^{
+                    stampStemForMedia(bulkSource);
+                    [SCIMediaActions downloadAllAndShareMedia:bulkSource];
+                }];
+            }
+            NSArray *capturedMedias = storyMedias;
+            return [SCIAction actionWithTitle:SCILocalized(@"Download and share all")
+                                         icon:@"square.and.arrow.up.on.square"
+                                      handler:^{
+                NSMutableArray *urls = [NSMutableArray array];
+                for (id m in capturedMedias) {
+                    NSURL *u = [SCIMediaActions bestURLForMedia:m];
+                    if (u) [urls addObject:u];
+                }
+                if (!urls.count) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Nothing to download")]; return; }
+                stampStemForMedia(capturedMedias.firstObject);
+                [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all stories and share?") done:^(NSArray<NSURL *> *files) {
+                    if (!files.count) return;
+                    UIViewController *top = topMostController();
+                    UIActivityViewController *vc = [[UIActivityViewController alloc]
+                                                      initWithActivityItems:files applicationActivities:nil];
+                    [SCIPhotoAlbum armWatcherIfEnabled];
+                    [top presentViewController:vc animated:YES completion:nil];
+                }];
+            }];
+        }
+
+        if ([aid isEqualToString:SCIAID_BulkDownloadSave]) {
+            if (!hasBulk) return nil;
+            if (isCarousel) {
+                id bulkSource = parentMedia;
+                return [SCIAction actionWithTitle:SCILocalized(@"Download all to Photos")
+                                             icon:@"square.and.arrow.down.on.square"
+                                          handler:^{
+                    stampStemForMedia(bulkSource);
+                    [SCIMediaActions downloadAllAndSaveMedia:bulkSource];
+                }];
+            }
+            NSArray *capturedMedias = storyMedias;
+            return [SCIAction actionWithTitle:SCILocalized(@"Download all to Photos")
+                                         icon:@"square.and.arrow.down.on.square"
+                                      handler:^{
+                NSMutableArray *urls = [NSMutableArray array];
+                for (id m in capturedMedias) {
+                    NSURL *u = [SCIMediaActions bestURLForMedia:m];
+                    if (u) [urls addObject:u];
+                }
+                if (!urls.count) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Nothing to download")]; return; }
+                stampStemForMedia(capturedMedias.firstObject);
+                [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all to Photos?") done:^(NSArray<NSURL *> *files) {
+                    [SCIMediaActions bulkSaveFiles:files];
+                }];
+            }];
+        }
+
+        if ([aid isEqualToString:SCIAID_BulkDownloadGallery]) {
+            if (!hasBulk) return nil;
+            if (![SCIUtils getBoolPref:@"sci_gallery_enabled"]) return nil;
+            if (isCarousel) {
+                id bulkSource = parentMedia;
+                return [SCIAction actionWithTitle:SCILocalized(@"Download all to Gallery")
+                                             icon:@"square.stack.3d.down.right"
+                                          handler:^{
+                    stampStemForMedia(bulkSource);
+                    [SCIMediaActions downloadAllAndSaveMediaToGallery:bulkSource context:ctx];
+                }];
+            }
+            NSArray *capturedMedias = storyMedias;
+            return [SCIAction actionWithTitle:SCILocalized(@"Download all to Gallery")
+                                         icon:@"square.stack.3d.down.right"
+                                      handler:^{
+                NSMutableArray *urls = [NSMutableArray array];
+                for (id m in capturedMedias) {
+                    NSURL *u = [SCIMediaActions bestURLForMedia:m];
+                    if (u) [urls addObject:u];
+                }
+                if (!urls.count) {
+                    [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Nothing to download")];
+                    return;
+                }
+                stampStemForMedia(capturedMedias.firstObject);
+                [SCIMediaActions bulkDownloadURLs:urls title:SCILocalized(@"Download all to Gallery?") done:^(NSArray<NSURL *> *files) {
+                    if (!files.count) return;
+                    NSMutableArray<SCIGallerySaveMetadata *> *perFile = [NSMutableArray arrayWithCapacity:files.count];
+                    for (NSUInteger i = 0; i < files.count; i++) {
+                        SCIGallerySaveMetadata *m = [[SCIGallerySaveMetadata alloc] init];
+                        m.source = (int16_t)sciGallerySourceFromContext(ctx);
+                        m.skipDedup = YES;
+                        if (i < capturedMedias.count) {
+                            @try { [SCIGalleryOriginController populateMetadata:m fromMedia:capturedMedias[i]]; }
+                            @catch (__unused id e) {}
+                        }
+                        [perFile addObject:m];
+                    }
+                    [SCIMediaActions bulkSaveFilesToGallery:files
+                                            perFileMetadata:perFile
+                                            defaultMetadata:perFile.firstObject];
+                }];
+            }];
+        }
+
+        if ([aid isEqualToString:SCIAID_Settings]) {
+            NSString *settingsTitle = [NSString stringWithFormat:SCILocalized(@"%@ settings"),
+                                       sciSettingsTitleForContext(ctx)];
+            return [SCIAction actionWithTitle:settingsTitle
+                                         icon:@"gearshape"
+                                      handler:^{
+                [SCIMediaActions openSettingsForContext:ctx fromView:weakSource];
+            }];
+        }
+
+        return nil;
+    };
+
+    return [SCIActionMenu actionsForConfig:config dateHeader:dateHeader resolver:resolve];
+}
+
+static BOOL sciFireActionWithIDInList(NSArray<SCIAction *> *items, NSString *aid) {
+    for (SCIAction *a in items) {
+        if (a.isSeparator) continue;
+        if (a.children.count) {
+            if (sciFireActionWithIDInList(a.children, aid)) return YES;
+        }
+        if (a.actionID.length && [a.actionID isEqualToString:aid] && a.handler) {
+            a.handler();
+            return YES;
+        }
+    }
+    return NO;
+}
+
++ (BOOL)executeActionForContext:(SCIActionContext)ctx
+                       actionID:(NSString *)aid
+                          media:(id)media
+                       fromView:(UIView *)sourceView {
+    if (!aid.length || [aid isEqualToString:@"menu"]) return NO;
+    NSArray<SCIAction *> *flat = [self actionsForContext:ctx media:media fromView:sourceView];
+    return sciFireActionWithIDInList(flat, aid);
 }
 
 

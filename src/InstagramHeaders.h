@@ -343,8 +343,16 @@
 @interface IGHomeFeedHeaderView : UIView
 @end
 
-@interface IGHomeFeedHeaderViewController
+@interface IGHomeFeedHeaderViewController : UIViewController
 - (void)headerDidLongPressLogo:(id)arg1;
+@end
+
+// Trailing-cluster button (+, heart, DM) in IGHomeFeedHeaderView.
+@interface IGBadgeButton : UIControl
+@end
+
+// IG's NSMutableURLRequest subclass.
+@interface IGURLRequest : NSMutableURLRequest
 @end
 
 @interface IGSearchBarDonutButton : UIView

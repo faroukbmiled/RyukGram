@@ -87,6 +87,12 @@
                     return;
                 }
 
+                // File the new asset into RyukGram album when the pref is on.
+                // Fire-and-forget — the IG creator handoff doesn't depend on it.
+                if ([SCIUtils getBoolPref:@"save_to_ryukgram_album"]) {
+                    [SCIPhotoAlbum addAssetWithLocalIdentifier:localId completion:nil];
+                }
+
                 [pill showSuccess:SCILocalized(@"Opening creator...")];
                 [pill dismissAfterDelay:1.0];
 

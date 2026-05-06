@@ -66,6 +66,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - No suggested threads posts
 - Disable video autoplay
 - Media zoom — long press media to expand in full-screen viewer **\***
+- Start media muted — expanded videos open with sound off **\***
 - Custom date format — feed, notes/comments/stories, and DMs **\***
 - Disable background refresh, home button refresh, and home button scroll **\***
 - Disable reels tab button refresh **\***
@@ -126,10 +127,19 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
   - Audio-only and raw photo download options **\***
   - Fallback to 720p without FFmpegKit **\***
 - Download pill with progress bar and bulk counter **\***
-- Save to RyukGram album **\***
+- Save to RyukGram album — every download + share-sheet "Save to Photos" routes into a dedicated album **\***
+- Enhanced media resolution — IG's CDN ships higher-quality images **\***
 - Download confirmation dialog **\***
-- Output filenames formatted as `@username_context_timestamp` **\***
+- Output filenames formatted as `@username_context_timestamp` across every save surface (feed / reels / DMs / notes / comments / disappearing media) **\***
 - Legacy long-press gesture (deprecated, customizable finger count + hold time) **\***
+
+### Gallery **\***
+- On-device gallery — every download can mirror into an in-app library **\***
+- Stores images, videos, audio (m4a/aac/mp3/ogg/opus/...) and animated GIFs **\***
+- Filter chips by type, source (feed / reels / stories / DMs / profile / notes / comments) and uploader; favorites; folders **\***
+- In-app preview carousel — image / video / audio scrubber / GIF playback **\***
+- Audio + GIF picker — DM Upload Audio and (in future surfaces) Comment GIF can pull straight from the gallery **\***
+- "Download to Gallery" submenu on every download surface when the gallery is enabled, with Photos / Gallery / Share options for audio **\***
 
 ### Stories and messages
 - Keep deleted messages **\***
@@ -151,11 +161,13 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Disable vanish mode swipe **\***
 - Hide voice/video call buttons (independent toggles) **\***
 - Hide send to group chat in the share sheet **\***
+- Bypass DM character limit **\***
 - Pin recipients on long-press in the share sheet — pinned chats render at the top **\***
 - Unlimited replay of direct stories **\***
 - Full last active date **\***
 - Send files in DMs (experimental) **\***
-- Notes actions — copy text, download GIF/audio **\***
+- Hold the DM tab button to open the on-device gallery **\***
+- Notes actions — copy text, download GIF / audio (Photos or Gallery) **\***
 - Copy note text on long press **\***
 - Disable view-once limitations
 - Disable screenshot detection
@@ -190,6 +202,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Messages-only mode — inbox + profile only, launch straight into inbox **\***
   - Hide tab bar sub-toggle — floating settings gear replaces it **\***
 - Launch tab — pick which tab the app opens to **\***
+- Home shortcut button — extra button on the home top bar with a configurable multi-action menu **\***
 
 ### Confirm actions
 - Confirm like: Posts/Stories
@@ -224,6 +237,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 - Search bar with breadcrumbs across nested pages
 - Pause playback when opening settings **\***
 - Quick-access via long-press on feed tab **\***
+- Native Instagram icons throughout settings and in-app menus **\***
 
 ### Advanced experimental features **\***
 - Toggle hidden Instagram experiments: QuickSnap (Instants), Direct Notes reply types, Friend Map, Homecoming, Prism

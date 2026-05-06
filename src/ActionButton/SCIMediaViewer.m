@@ -1,5 +1,6 @@
 #import "SCIMediaViewer.h"
 #import "../Utils.h"
+#import "../PhotoAlbum.h"
 #import "../SCIImageCache.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
@@ -13,6 +14,18 @@
     SCIMediaViewerItem *i = [SCIMediaViewerItem new];
     i.videoURL = videoURL;
     i.photoURL = photoURL;
+    i.caption = caption;
+    return i;
+}
++ (instancetype)itemWithAudioURL:(NSURL *)audioURL caption:(NSString *)caption {
+    SCIMediaViewerItem *i = [SCIMediaViewerItem new];
+    i.audioURL = audioURL;
+    i.caption = caption;
+    return i;
+}
++ (instancetype)itemWithAnimatedImageURL:(NSURL *)animatedURL caption:(NSString *)caption {
+    SCIMediaViewerItem *i = [SCIMediaViewerItem new];
+    i.animatedImageURL = animatedURL;
     i.caption = caption;
     return i;
 }
@@ -90,9 +103,15 @@
 #pragma mark - Single video page
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Apple's AVPlayerViewController owns the entire video chrome here. The
+// container hides its own top + bottom bars while a video page is on screen
+// (see updateChrome) so the two UIs never fight.
+
 @interface _SCIVideoPageVC : UIViewController
 @property (nonatomic, strong) NSURL *videoURL;
 @property (nonatomic, strong) AVPlayerViewController *playerVC;
+@property (nonatomic, strong) AVQueuePlayer *queuePlayer;
+@property (nonatomic, strong) AVPlayerLooper *looper;
 @end
 
 @implementation _SCIVideoPageVC
@@ -101,10 +120,23 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
 
-    AVPlayer *player = [AVPlayer playerWithURL:self.videoURL];
-    self.playerVC = [[AVPlayerViewController alloc] init];
-    self.playerVC.player = player;
+    // Audio plays even when the silent switch is on.
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                            mode:AVAudioSessionModeMoviePlayback
+                                         options:0
+                                           error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+
+    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:self.videoURL];
+    self.queuePlayer = [AVQueuePlayer queuePlayerWithItems:@[item]];
+    self.queuePlayer.muted = [SCIUtils getBoolPref:@"media_zoom_start_muted"];
+    self.looper = [AVPlayerLooper playerLooperWithPlayer:self.queuePlayer templateItem:item];
+
+    self.playerVC = [AVPlayerViewController new];
+    self.playerVC.player = self.queuePlayer;
     self.playerVC.showsPlaybackControls = YES;
+    self.playerVC.videoGravity = AVLayerVideoGravityResizeAspect;
+    self.playerVC.allowsPictureInPicturePlayback = YES;
 
     [self addChildViewController:self.playerVC];
     self.playerVC.view.frame = self.view.bounds;
@@ -112,12 +144,182 @@
     [self.view addSubview:self.playerVC.view];
     [self.playerVC didMoveToParentViewController:self];
 
-    [player play];
+    [self.queuePlayer play];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.playerVC.player pause];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.queuePlayer pause];
+    self.queuePlayer = nil;
+    self.looper = nil;
+    [[AVAudioSession sharedInstance] setActive:NO
+                                   withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
+                                         error:nil];
+}
+
+@end
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+#pragma mark - Audio page
+// ═══════════════════════════════════════════════════════════════════════════
+
+@interface _SCIAudioPageVC : UIViewController
+@property (nonatomic, strong) NSURL *audioURL;
+@property (nonatomic, strong) AVPlayerViewController *playerVC;
+@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, strong) UIImageView *glyphView;
+@property (nonatomic, strong) UILabel *titleLabel;
+@end
+
+@implementation _SCIAudioPageVC
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
+
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                            mode:AVAudioSessionModeDefault
+                                         options:0
+                                           error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+
+    self.player = [AVPlayer playerWithURL:self.audioURL];
+
+    self.playerVC = [AVPlayerViewController new];
+    self.playerVC.player = self.player;
+    self.playerVC.showsPlaybackControls = YES;
+    self.playerVC.allowsPictureInPicturePlayback = NO;
+    self.playerVC.view.backgroundColor = [UIColor clearColor];
+    [self addChildViewController:self.playerVC];
+
+    self.glyphView = [UIImageView new];
+    self.glyphView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.glyphView.contentMode = UIViewContentModeScaleAspectFit;
+    self.glyphView.tintColor = [UIColor colorWithWhite:1.0 alpha:0.18];
+    UIImageSymbolConfiguration *cfg = [UIImageSymbolConfiguration configurationWithPointSize:200 weight:UIImageSymbolWeightBold];
+    self.glyphView.image = [UIImage systemImageNamed:@"waveform" withConfiguration:cfg];
+    [self.view addSubview:self.glyphView];
+
+    self.titleLabel = [UILabel new];
+    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
+    self.titleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.text = self.audioURL.lastPathComponent;
+    [self.view addSubview:self.titleLabel];
+
+    self.playerVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.playerVC.view];
+    [self.playerVC didMoveToParentViewController:self];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [self.glyphView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.glyphView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-60],
+        [self.glyphView.widthAnchor constraintEqualToConstant:220],
+        [self.glyphView.heightAnchor constraintEqualToConstant:220],
+
+        [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:24],
+        [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-24],
+        [self.titleLabel.topAnchor constraintEqualToAnchor:self.glyphView.bottomAnchor constant:12],
+
+        [self.playerVC.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:24],
+        [self.playerVC.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-24],
+        [self.playerVC.view.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-32],
+        [self.playerVC.view.heightAnchor constraintEqualToConstant:120],
+    ]];
+
+    [self.player play];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.player pause];
+    self.player = nil;
+}
+
+@end
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+#pragma mark - Animated image page (GIF / animated WebP)
+// ═══════════════════════════════════════════════════════════════════════════
+
+@interface _SCIAnimatedPageVC : UIViewController
+@property (nonatomic, strong) NSURL *animatedURL;
+@property (nonatomic, strong) UIImageView *imageView;
+@end
+
+@implementation _SCIAnimatedPageVC
+
+// ImageIO frame extraction with per-frame delay → UIImageView.animationImages.
++ (void)loadAnimatedURL:(NSURL *)url completion:(void (^)(NSArray<UIImage *> *frames, NSTimeInterval duration))completion {
+    if (!url) { completion(nil, 0); return; }
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        CGImageSourceRef src = CGImageSourceCreateWithURL((__bridge CFURLRef)url, NULL);
+        if (!src) { dispatch_async(dispatch_get_main_queue(), ^{ completion(nil, 0); }); return; }
+        size_t count = CGImageSourceGetCount(src);
+        if (count == 0) { CFRelease(src); dispatch_async(dispatch_get_main_queue(), ^{ completion(nil, 0); }); return; }
+
+        NSMutableArray<UIImage *> *frames = [NSMutableArray arrayWithCapacity:count];
+        NSTimeInterval total = 0;
+        for (size_t i = 0; i < count; i++) {
+            CGImageRef cg = CGImageSourceCreateImageAtIndex(src, i, NULL);
+            if (!cg) continue;
+            UIImage *img = [UIImage imageWithCGImage:cg];
+            CGImageRelease(cg);
+            if (img) [frames addObject:img];
+
+            NSTimeInterval delay = 0.1;
+            CFDictionaryRef props = CGImageSourceCopyPropertiesAtIndex(src, i, NULL);
+            if (props) {
+                CFDictionaryRef gif = CFDictionaryGetValue(props, kCGImagePropertyGIFDictionary);
+                if (gif) {
+                    NSNumber *un = CFDictionaryGetValue(gif, kCGImagePropertyGIFUnclampedDelayTime);
+                    if (![un respondsToSelector:@selector(doubleValue)] || un.doubleValue <= 0) {
+                        un = CFDictionaryGetValue(gif, kCGImagePropertyGIFDelayTime);
+                    }
+                    if ([un respondsToSelector:@selector(doubleValue)] && un.doubleValue > 0) delay = un.doubleValue;
+                }
+                CFRelease(props);
+            }
+            total += delay;
+        }
+        CFRelease(src);
+        if (total < 0.04) total = MAX(0.04, frames.count * 0.05);
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(frames, total); });
+    });
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
+
+    self.imageView = [UIImageView new];
+    self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:self.imageView];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.imageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [self.imageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+        [self.imageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.imageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+    ]];
+
+    __weak typeof(self) weakSelf = self;
+    [_SCIAnimatedPageVC loadAnimatedURL:self.animatedURL completion:^(NSArray<UIImage *> *frames, NSTimeInterval duration) {
+        if (!weakSelf || !frames.count) return;
+        weakSelf.imageView.animationImages = frames;
+        weakSelf.imageView.animationDuration = duration;
+        weakSelf.imageView.animationRepeatCount = 0;
+        weakSelf.imageView.image = frames.firstObject;
+        [weakSelf.imageView startAnimating];
+    }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.imageView stopAnimating];
 }
 
 @end
@@ -137,6 +339,8 @@
 @property (nonatomic, strong) UIButton *shareBtn;
 @property (nonatomic, strong) UIView *bottomBar;
 @property (nonatomic, strong) UILabel *captionLabel;
+@property (nonatomic, strong) UIView *topShade;
+@property (nonatomic, strong) CAGradientLayer *topShadeLayer;
 @property (nonatomic, assign) BOOL chromeVisible;
 @property (nonatomic, assign) BOOL captionExpanded;
 @end
@@ -165,10 +369,31 @@
     [self.view addSubview:self.pageVC.view];
     [self.pageVC didMoveToParentViewController:self];
 
-    // Top bar
+    // Top bar — subtle dark gradient so white icons stay readable over light photos.
     self.topBar = [[UIView alloc] init];
     self.topBar.translatesAutoresizingMaskIntoConstraints = NO;
+    self.topBar.userInteractionEnabled = YES;
     [self.view addSubview:self.topBar];
+
+    self.topShade = [UIView new];
+    self.topShade.translatesAutoresizingMaskIntoConstraints = NO;
+    self.topShade.userInteractionEnabled = NO;
+    [self.view insertSubview:self.topShade belowSubview:self.topBar];
+    self.topShadeLayer = [CAGradientLayer layer];
+    self.topShadeLayer.colors = @[
+        (id)[[[UIColor blackColor] colorWithAlphaComponent:0.55] CGColor],
+        (id)[[UIColor clearColor] CGColor],
+    ];
+    self.topShadeLayer.startPoint = CGPointMake(0.5, 0.0);
+    self.topShadeLayer.endPoint = CGPointMake(0.5, 1.0);
+    [self.topShade.layer addSublayer:self.topShadeLayer];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [self.topShade.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [self.topShade.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.topShade.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.topShade.heightAnchor constraintEqualToConstant:120.0],
+    ]];
 
     UIImageSymbolConfiguration *cfg = [UIImageSymbolConfiguration configurationWithPointSize:17 weight:UIImageSymbolWeightSemibold];
 
@@ -247,19 +472,39 @@
     [self updateChrome];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.topShadeLayer.frame = self.topShade.bounds;
+}
+
 - (void)updateChrome {
     SCIMediaViewerItem *item = self.items[self.currentIndex];
+    BOOL isVideo = (item.videoURL != nil);
 
-    // Counter (hide for single items)
+    // Counter — always visible when there's more than one item, including
+    // on video pages so the user always knows where they are.
     if (self.items.count > 1) {
-        self.counterLabel.text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)(self.currentIndex + 1), (unsigned long)self.items.count];
+        self.counterLabel.text = [NSString stringWithFormat:@"%lu / %lu",
+                                   (unsigned long)(self.currentIndex + 1),
+                                   (unsigned long)self.items.count];
         self.counterLabel.hidden = NO;
     } else {
         self.counterLabel.hidden = YES;
     }
 
-    // Caption
-    if (item.caption.length) {
+    // On video pages, hide our close + share buttons + gradient shade so
+    // AVPlayerViewController's chrome doesn't fight us. The counter stays.
+    BOOL hideForVideo = isVideo;
+    [UIView animateWithDuration:0.18 animations:^{
+        self.closeBtn.alpha = hideForVideo ? 0.0 : 1.0;
+        self.shareBtn.alpha = hideForVideo ? 0.0 : 1.0;
+        self.topShade.alpha = hideForVideo ? 0.0 : 1.0;
+    }];
+    self.closeBtn.userInteractionEnabled = !hideForVideo;
+    self.shareBtn.userInteractionEnabled = !hideForVideo;
+
+    BOOL hideCaption = isVideo;
+    if (item.caption.length && !hideCaption) {
         self.captionLabel.text = item.caption;
         self.bottomBar.hidden = NO;
     } else {
@@ -272,6 +517,7 @@
     [UIView animateWithDuration:0.25 animations:^{
         CGFloat a = self.chromeVisible ? 1.0 : 0.0;
         self.topBar.alpha = a;
+        self.topShade.alpha = a;
         self.bottomBar.alpha = a;
     }];
 }
@@ -324,10 +570,10 @@
 }
 
 - (void)closeTapped {
-    // Pause any playing video
+    // Pause any playing video before tearing down.
     UIViewController *current = self.pageVC.viewControllers.firstObject;
     if ([current isKindOfClass:[_SCIVideoPageVC class]]) {
-        [(((_SCIVideoPageVC *)current).playerVC.player) pause];
+        [((_SCIVideoPageVC *)current).queuePlayer pause];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -358,11 +604,21 @@ static NSString *sciSniffImageExt(NSData *data, BOOL *needsTranscode) {
     UIViewController *current = self.pageVC.viewControllers.firstObject;
     BOOL isPhoto = [current isKindOfClass:[_SCIPhotoPageVC class]];
 
+    // Audio + animated GIF — local file URL passes straight to the share sheet.
+    if (item.audioURL || item.animatedImageURL) {
+        NSURL *url = item.audioURL ?: item.animatedImageURL;
+        UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:nil];
+        vc.popoverPresentationController.sourceView = self.shareBtn;
+        [self presentViewController:vc animated:YES completion:nil];
+        return;
+    }
+
     if (!isPhoto) {
         NSURL *url = item.videoURL ?: item.photoURL;
         if (!url) return;
         UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:nil];
         vc.popoverPresentationController.sourceView = self.shareBtn;
+        [SCIPhotoAlbum armWatcherIfEnabled];
         [self presentViewController:vc animated:YES completion:nil];
         return;
     }
@@ -406,6 +662,7 @@ static NSString *sciSniffImageExt(NSData *data, BOOL *needsTranscode) {
         vc.completionWithItemsHandler = ^(UIActivityType _Nullable type, BOOL completed, NSArray *items, NSError *err) {
             if (toClean) [[NSFileManager defaultManager] removeItemAtURL:toClean error:nil];
         };
+        [SCIPhotoAlbum armWatcherIfEnabled];
         [strongSelf presentViewController:vc animated:YES completion:nil];
     }];
 }
@@ -419,6 +676,16 @@ static NSString *sciSniffImageExt(NSData *data, BOOL *needsTranscode) {
     if (item.videoURL) {
         _SCIVideoPageVC *vc = [[_SCIVideoPageVC alloc] init];
         vc.videoURL = item.videoURL;
+        vc.view.tag = (NSInteger)idx;
+        return vc;
+    } else if (item.audioURL) {
+        _SCIAudioPageVC *vc = [[_SCIAudioPageVC alloc] init];
+        vc.audioURL = item.audioURL;
+        vc.view.tag = (NSInteger)idx;
+        return vc;
+    } else if (item.animatedImageURL) {
+        _SCIAnimatedPageVC *vc = [[_SCIAnimatedPageVC alloc] init];
+        vc.animatedURL = item.animatedImageURL;
         vc.view.tag = (NSInteger)idx;
         return vc;
     } else if (item.photoURL) {
@@ -448,15 +715,21 @@ static NSString *sciSniffImageExt(NSData *data, BOOL *needsTranscode) {
     UIViewController *current = pvc.viewControllers.firstObject;
     self.currentIndex = (NSUInteger)current.view.tag;
 
-    // Pause previous video
     for (UIViewController *p in prev) {
         if ([p isKindOfClass:[_SCIVideoPageVC class]]) {
-            [((_SCIVideoPageVC *)p).playerVC.player pause];
+            [((_SCIVideoPageVC *)p).queuePlayer pause];
+        } else if ([p isKindOfClass:[_SCIAudioPageVC class]]) {
+            [((_SCIAudioPageVC *)p).player pause];
+        } else if ([p isKindOfClass:[_SCIAnimatedPageVC class]]) {
+            [((_SCIAnimatedPageVC *)p).imageView stopAnimating];
         }
     }
-    // Play new video
     if ([current isKindOfClass:[_SCIVideoPageVC class]]) {
-        [((_SCIVideoPageVC *)current).playerVC.player play];
+        [((_SCIVideoPageVC *)current).queuePlayer play];
+    } else if ([current isKindOfClass:[_SCIAudioPageVC class]]) {
+        [((_SCIAudioPageVC *)current).player play];
+    } else if ([current isKindOfClass:[_SCIAnimatedPageVC class]]) {
+        [((_SCIAnimatedPageVC *)current).imageView startAnimating];
     }
 
     [self updateChrome];
@@ -478,6 +751,7 @@ static NSString *sciSniffImageExt(NSData *data, BOOL *needsTranscode) {
     dispatch_async(dispatch_get_main_queue(), ^{
         AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
         playerVC.player = [AVPlayer playerWithURL:url];
+        playerVC.player.muted = [SCIUtils getBoolPref:@"media_zoom_start_muted"];
         playerVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [topMostController() presentViewController:playerVC animated:YES completion:^{
             [playerVC.player play];

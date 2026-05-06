@@ -1,99 +1,106 @@
 #import "SCISymbol.h"
+#import "../UI/SCIIcon.h"
 #import "../Localization/SCILocalization.h"
 
 @interface SCISymbol ()
 
 @property (nonatomic, copy, readwrite) NSString *name;
+@property (nonatomic, copy, readwrite, nullable) NSString *igName;
 @property (nonatomic, copy, readwrite) UIColor *color;
 @property (nonatomic, readwrite) CGFloat size;
 @property (nonatomic, readwrite) UIImageSymbolWeight weight;
 
-- (instancetype)init;
-
 @end
-
-///
 
 @implementation SCISymbol
 
-// MARK: - Instance methods
-
 - (instancetype)init {
     self = [super init];
-    
     if (self) {
         self.name = @"";
         self.color = [UIColor labelColor];
         self.weight = UIImageSymbolWeightRegular;
         self.size = 15.0;
     }
-    
     return self;
 }
 
 - (UIImage *)image {
-    UIImage *symbol = [UIImage systemImageNamed:self.name];
+    // FB asset (explicit igName, else friendly map for self.name) sized
+    // slightly larger than text so it reads at parity with SF symbols.
+    NSString *fbName = self.igName.length ? self.igName : self.name;
+    UIImage *fb = [SCIIcon fbImageNamed:fbName pointSize:(self.size > 0 ? self.size + 6.0 : 0)];
+    if (fb) return fb;
 
-    // Fallback to PNGs in RyukGram.bundle, template-rendered so the cell's
-    // tintColor recolors them the same way SF Symbols get tinted.
-    if (!symbol) {
-        NSBundle *resource = SCILocalizationBundle();
-        UIImage *bundled = resource ? [UIImage imageNamed:self.name
-                                                 inBundle:resource
-                            compatibleWithTraitCollection:nil]
-                                    : nil;
-        return [bundled imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    // SF with Dynamic-Type-aware config (settings cells scale with text size).
+    UIImage *sym = [SCIIcon sfImageNamed:self.name];
+    if (sym && self.size > 0) {
+        UIImageSymbolConfiguration *cfg = [UIImageSymbolConfiguration configurationWithTextStyle:UIFontTextStyleTitle1];
+        cfg = [cfg configurationByApplyingConfiguration:
+               [UIImageSymbolConfiguration configurationWithPointSize:self.size weight:self.weight]];
+        return [sym imageWithConfiguration:cfg];
     }
+    if (sym) return sym;
 
-    if (self.size || (self.size && self.weight)) {
-        UIImageSymbolConfiguration *symbolConfig = [UIImageSymbolConfiguration configurationWithTextStyle:UIFontTextStyleTitle1];
-        symbolConfig = [symbolConfig configurationByApplyingConfiguration:
-                        [UIImageSymbolConfiguration configurationWithPointSize:self.size weight:self.weight]];
-
-        return [symbol imageWithConfiguration:symbolConfig];
-    }
-
-    return symbol;
+    NSBundle *bundle = SCILocalizationBundle();
+    UIImage *bundled = bundle ? [UIImage imageNamed:self.name inBundle:bundle compatibleWithTraitCollection:nil] : nil;
+    return [bundled imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
-// MARK: - Class methods
+// MARK: - Factories
 
 + (instancetype)symbolWithName:(NSString *)name {
-    SCISymbol *symbol = [[self alloc] init];
-    
-    symbol.name = name;
-
-    return symbol;
+    SCISymbol *s = [self new];
+    s.name = name;
+    return s;
 }
 
 + (instancetype)symbolWithName:(NSString *)name color:(UIColor *)color {
-    SCISymbol *symbol = [[self alloc] init];
-    
-    symbol.name = name;
-    symbol.color = color;
-
-    return symbol;
+    SCISymbol *s = [self new];
+    s.name = name;
+    s.color = color;
+    return s;
 }
 
 + (instancetype)symbolWithName:(NSString *)name color:(UIColor *)color size:(CGFloat)size {
-    SCISymbol *symbol = [[self alloc] init];
-    
-    symbol.name = name;
-    symbol.color = color;
-    symbol.size = size;
-    
-    return symbol;
+    SCISymbol *s = [self new];
+    s.name = name;
+    s.color = color;
+    s.size = size;
+    return s;
 }
 
 + (instancetype)symbolWithName:(NSString *)name color:(UIColor *)color size:(CGFloat)size weight:(UIImageSymbolWeight)weight {
-    SCISymbol *symbol = [[self alloc] init];
-    
-    symbol.name = name;
-    symbol.color = color;
-    symbol.size = size;
-    symbol.weight = weight;
-    
-    return symbol;
+    SCISymbol *s = [self new];
+    s.name = name;
+    s.color = color;
+    s.size = size;
+    s.weight = weight;
+    return s;
+}
+
++ (instancetype)symbolWithIGName:(NSString *)igName fallback:(NSString *)name {
+    SCISymbol *s = [self new];
+    s.igName = igName;
+    s.name = name ?: @"";
+    return s;
+}
+
++ (instancetype)symbolWithIGName:(NSString *)igName fallback:(NSString *)name color:(UIColor *)color {
+    SCISymbol *s = [self new];
+    s.igName = igName;
+    s.name = name ?: @"";
+    s.color = color;
+    return s;
+}
+
++ (instancetype)symbolWithIGName:(NSString *)igName fallback:(NSString *)name color:(UIColor *)color size:(CGFloat)size {
+    SCISymbol *s = [self new];
+    s.igName = igName;
+    s.name = name ?: @"";
+    s.color = color;
+    s.size = size;
+    return s;
 }
 
 @end

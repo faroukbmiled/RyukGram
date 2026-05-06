@@ -1,6 +1,7 @@
 // Shared helpers for StoryOverlayButtons.xm and DMOverlayButtons.xm.
 
 #import "StoryHelpers.h"
+#import "../../Gallery/SCIGallerySaveMetadata.h"
 
 // Disjoint tag spaces so viewWithTag: can't cross-hit between surfaces.
 #define SCI_STORY_EYE_TAG       1339
@@ -37,7 +38,13 @@ NSURL * _Nullable sciDMMediaURL(UIViewController *dmVC, BOOL *outIsVideo);
 void sciDMExpandMedia(UIViewController *dmVC);
 void sciDMShareMedia(UIViewController *dmVC);
 void sciDMDownloadMedia(UIViewController *dmVC);
+void sciDMDownloadMediaToGallery(UIViewController *dmVC);
 void sciDMMarkCurrentAsViewed(UIViewController *dmVC);
+
+// DM message → save metadata (sender PK + username + profile pic via the
+// shared user resolver).
+SCIGallerySaveMetadata *sciDMMetadataFromMessage(id msg);
+SCIGallerySaveMetadata *sciDMMetadataForVC(UIViewController *dmVC);
 
 // Opens RyukGram settings on the Messages tab.
 void sciOpenMessagesSettings(UIView *source);

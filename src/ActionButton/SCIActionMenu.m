@@ -1,4 +1,7 @@
 #import "SCIActionMenu.h"
+#import "../UI/SCIIcon.h"
+#import "SCIActionMenuConfig.h"
+#import "SCIActionCatalog.h"
 
 #pragma mark - SCIAction
 
@@ -58,6 +61,14 @@
     return a;
 }
 
++ (instancetype)infoRowWithTitle:(NSString *)title icon:(NSString *)icon {
+    SCIAction *a = [SCIAction new];
+    a.title = title ?: @"";
+    a.systemIconName = icon;
+    a.disabled = YES;
+    return a;
+}
+
 @end
 
 
@@ -66,12 +77,10 @@
 @implementation SCIActionMenu
 
 + (UIImage *)imageForIcon:(NSString *)name {
-    if (!name.length) return nil;
-    UIImageSymbolConfiguration *cfg = [UIImageSymbolConfiguration configurationWithPointSize:16 weight:UIImageSymbolWeightRegular];
-    return [UIImage systemImageNamed:name withConfiguration:cfg];
+    // Action button menus stay SF-only.
+    return [SCIIcon sfImageNamed:name pointSize:16];
 }
 
-// Convert SCIAction to UIMenuElement.
 + (UIMenuElement *)elementForAction:(SCIAction *)action {
     if (action.children.count) {
         NSMutableArray<UIMenuElement *> *kids = [NSMutableArray arrayWithCapacity:action.children.count];
@@ -109,6 +118,47 @@
 
 + (UIMenu *)buildMenuWithActions:(NSArray<SCIAction *> *)actions {
     return [self buildMenuWithActions:actions title:nil];
+}
+
++ (NSArray<SCIAction *> *)actionsForConfig:(SCIActionMenuConfig *)config
+                                  dateHeader:(NSString *)dateHeader
+                                    resolver:(SCIAction * _Nullable (^)(NSString *))resolver {
+    NSMutableArray<SCIAction *> *out = [NSMutableArray array];
+    if (!config || !resolver) return out;
+
+    if (dateHeader.length) {
+        [out addObject:[SCIAction headerWithTitle:dateHeader]];
+    }
+
+    BOOL anyEmitted = (out.count > 0);
+    for (SCIActionConfigSection *section in config.sections) {
+        // Resolve all enabled actions of this section first so we can decide
+        // whether the section produces anything before flushing a separator.
+        NSMutableArray<SCIAction *> *resolved = [NSMutableArray arrayWithCapacity:section.actionIDs.count];
+        for (NSString *aid in section.actionIDs) {
+            if ([config isActionDisabled:aid]) continue;
+            SCIAction *action = resolver(aid);
+            if (action) {
+                if (!action.actionID.length) action.actionID = aid;
+                [resolved addObject:action];
+            }
+        }
+        if (resolved.count == 0) continue;
+
+        if (section.collapsible) {
+            if (anyEmitted) [out addObject:[SCIAction separator]];
+            NSString *icon = section.iconSF.length ? section.iconSF : @"folder";
+            NSString *title = section.title.length ? section.title : @"";
+            [out addObject:[SCIAction actionWithTitle:title icon:icon children:resolved]];
+            anyEmitted = YES;
+        } else {
+            if (anyEmitted) [out addObject:[SCIAction separator]];
+            [out addObjectsFromArray:resolved];
+            anyEmitted = YES;
+        }
+    }
+
+    return out;
 }
 
 + (UIMenu *)buildMenuWithActions:(NSArray<SCIAction *> *)actions title:(NSString *)title {

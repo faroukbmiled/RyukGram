@@ -2,12 +2,17 @@
 
 #import <UIKit/UIKit.h>
 
-/// One media item to display.
+/// One media item to display. Set exactly one URL property — viewer dispatches
+/// to a video / photo / audio / animated-image page based on which is set.
 @interface SCIMediaViewerItem : NSObject
-@property (nonatomic, strong) NSURL *videoURL;   // nil for photos
-@property (nonatomic, strong) NSURL *photoURL;   // nil for videos
+@property (nonatomic, strong) NSURL *videoURL;
+@property (nonatomic, strong) NSURL *photoURL;
+@property (nonatomic, strong) NSURL *audioURL;
+@property (nonatomic, strong) NSURL *animatedImageURL;
 @property (nonatomic, copy)   NSString *caption;
 + (instancetype)itemWithVideoURL:(NSURL *)videoURL photoURL:(NSURL *)photoURL caption:(NSString *)caption;
++ (instancetype)itemWithAudioURL:(NSURL *)audioURL caption:(NSString *)caption;
++ (instancetype)itemWithAnimatedImageURL:(NSURL *)animatedURL caption:(NSString *)caption;
 @end
 
 @interface SCIMediaViewer : NSObject

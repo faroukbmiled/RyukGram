@@ -25,6 +25,9 @@
 + (BOOL)getBoolPref:(NSString *)key;
 + (double)getDoublePref:(NSString *)key;
 + (NSString *)getStringPref:(NSString *)key;
++ (NSDictionary *)getDictPref:(NSString *)key;
++ (NSArray *)getArrayPref:(NSString *)key;
++ (void)setPref:(id)value forKey:(NSString *)key;
 
 // Registered SCInsta defaults (set once at app launch by Tweak.x). Used by
 // the settings backup so any new pref is included automatically.
@@ -41,6 +44,21 @@
 
 // Colours
 + (UIColor *)SCIColor_Primary;
++ (UIColor *)SCIColor_InstagramBackground;
++ (UIColor *)SCIColor_InstagramSecondaryBackground;
++ (UIColor *)SCIColor_InstagramTertiaryBackground;
++ (UIColor *)SCIColor_InstagramGroupedBackground;
++ (UIColor *)SCIColor_InstagramPrimaryText;
++ (UIColor *)SCIColor_InstagramSecondaryText;
++ (UIColor *)SCIColor_InstagramTertiaryText;
++ (UIColor *)SCIColor_InstagramSeparator;
++ (UIColor *)SCIColor_InstagramFavorite;
++ (UIColor *)SCIColor_InstagramDestructive;
++ (UIColor *)SCIColor_InstagramPressedBackground;
+
+// Instagram deep links
++ (BOOL)openInstagramProfileForUsername:(NSString *)username;
++ (BOOL)openInstagramMediaURL:(NSURL *)url;
 
 // Errors
 + (NSError *)errorWithDescription:(NSString *)errorDesc;
@@ -50,6 +68,13 @@
 + (JGProgressHUD *)showErrorHUDWithDescription:(NSString *)errorDesc dismissAfterDelay:(CGFloat)dismissDelay;
 
 // Media
+// IGAPIStorableObject's snake_case Pando _fieldCache dict. Many IG fields
+// aren't exposed through KVC (the resolver returns NSNull for absent keys);
+// reading the dict directly is the reliable path. Returns nil when obj has
+// no _fieldCache ivar or the value is missing.
++ (NSDictionary *)fieldCacheForObject:(id)obj;
++ (id)fieldCacheValue:(id)obj forKey:(NSString *)key;
+
 + (NSURL *)getPhotoUrl:(IGPhoto *)photo;
 + (NSURL *)getPhotoUrlForMedia:(IGMedia *)media;
 

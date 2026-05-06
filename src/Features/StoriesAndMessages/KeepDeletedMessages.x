@@ -1,6 +1,7 @@
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
 #import "SCIExcludedThreads.h"
+#import "SCIDirectUserResolver.h"
 #import <objc/runtime.h>
 #import <substrate.h>
 
@@ -42,20 +43,6 @@ static BOOL sciIndicateUnsentEnabled() {
 
 static NSString *sciCurrentUserPk(void);
 
-static NSString *sciPkFromIGUser(id user) {
-    if (!user) return nil;
-    @try {
-        for (NSString *key in @[@"pk", @"instagramUserID", @"instagramUserId", @"userID", @"userId", @"identifier"]) {
-            @try {
-                id v = [user valueForKey:key];
-                if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) return v;
-                if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v stringValue];
-            } @catch (__unused id e) {}
-        }
-    } @catch (__unused id e) {}
-    return nil;
-}
-
 // IGDirectCacheUpdatesApplicator is per-IGUserSession; its _user ivar
 // identifies the owning account of any delta passing through.
 static NSString *sciOwningPkFromApplicator(id applicator) {
@@ -63,73 +50,13 @@ static NSString *sciOwningPkFromApplicator(id applicator) {
     @try {
         Ivar uIvar = class_getInstanceVariable([applicator class], "_user");
         if (!uIvar) return nil;
-        id user = object_getIvar(applicator, uIvar);
-        return sciPkFromIGUser(user);
+        return sciDirectUserResolverPKFromUser(object_getIvar(applicator, uIvar));
     } @catch (__unused id e) {}
     return nil;
 }
 
-// Resolves username for a pk via applicator._userMap._objectMap._objects.
-// Reads run on IGUserMap._queue when available — NSMapTable isn't
-// thread-safe and IG mutates the map from its own queue. Falls back to a
-// direct read if the queue ivar is missing or isn't a dispatch_queue.
-static NSString *sciUsernameForPkViaApplicator(id applicator, NSString *pk) {
-    if (!applicator || pk.length == 0) return nil;
-    @try {
-        Ivar umIv = class_getInstanceVariable([applicator class], "_userMap");
-        id userMap = umIv ? object_getIvar(applicator, umIv) : nil;
-        if (!userMap) return nil;
-        Ivar omIv = class_getInstanceVariable([userMap class], "_objectMap");
-        id objMap = omIv ? object_getIvar(userMap, omIv) : nil;
-        if (!objMap) return nil;
-        Ivar oIv = class_getInstanceVariable([objMap class], "_objects");
-        id store = oIv ? object_getIvar(objMap, oIv) : nil;
-        if (!store) return nil;
-
-        Ivar qIv = class_getInstanceVariable([userMap class], "_queue");
-        id qObj = qIv ? object_getIvar(userMap, qIv) : nil;
-        Class dqCls = NSClassFromString(@"OS_dispatch_queue");
-        dispatch_queue_t userQueue = (dqCls && [qObj isKindOfClass:dqCls]) ? (dispatch_queue_t)qObj : nil;
-
-        __block NSString *result = nil;
-        dispatch_block_t lookup = ^{
-            id user = nil;
-            if ([store isKindOfClass:[NSMapTable class]]) {
-                NSMapTable *mt = (NSMapTable *)store;
-                user = [mt objectForKey:pk];
-                if (!user) user = [mt objectForKey:@([pk longLongValue])];
-                if (!user) {
-                    for (id candidate in [mt objectEnumerator]) {
-                        @try {
-                            id cpk = [candidate valueForKey:@"pk"];
-                            NSString *cpkStr = nil;
-                            if ([cpk isKindOfClass:[NSString class]]) cpkStr = cpk;
-                            else if ([cpk isKindOfClass:[NSNumber class]]) cpkStr = [(NSNumber *)cpk stringValue];
-                            if (cpkStr && [cpkStr isEqualToString:pk]) { user = candidate; break; }
-                        } @catch (__unused id e) {}
-                    }
-                }
-            } else if ([store isKindOfClass:[NSDictionary class]]) {
-                user = ((NSDictionary *)store)[pk];
-                if (!user) user = ((NSDictionary *)store)[@([pk longLongValue])];
-            }
-            if (!user) return;
-            @try {
-                id un = [user valueForKey:@"username"];
-                if ([un isKindOfClass:[NSString class]] && [(NSString *)un length] > 0) result = un;
-            } @catch (__unused id e) {}
-        };
-
-        if (userQueue) {
-            @try { dispatch_sync(userQueue, lookup); }
-            @catch (__unused id e) { lookup(); } // queue dead/blocked — best-effort direct read
-        } else {
-            lookup();
-        }
-        return result;
-    } @catch (__unused id e) {}
-    return nil;
-}
+// Username lookup uses SCIDirectUserResolver — our applyUpdates hook stamps
+// the active applicator before delegating, so the cache stays in sync.
 
 // Lazy-loads per-pk dict from defaults; one-shot legacy migration folds the
 // old flat key into the current pk's bucket.
@@ -283,14 +210,8 @@ static NSString *sciCurrentUserPk(void) {
             if (!session) continue;
             id user = nil;
             @try { user = [session valueForKey:@"user"]; } @catch (__unused id e) {}
-            if (!user) continue;
-            for (NSString *key in @[@"pk", @"instagramUserID", @"instagramUserId", @"userID", @"userId", @"identifier"]) {
-                @try {
-                    id v = [user valueForKey:key];
-                    if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) return v;
-                    if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v stringValue];
-                } @catch (__unused id e) {}
-            }
+            NSString *pk = sciDirectUserResolverPKFromUser(user);
+            if (pk.length) return pk;
         }
     } @catch (__unused id e) {}
     return nil;
@@ -597,6 +518,10 @@ static void sciRefreshVisibleCellIndicators() {
 
 static void (*orig_applyUpdates)(id self, SEL _cmd, id updates, id completion, id userAccess);
 static void new_applyUpdates(id self, SEL _cmd, id updates, id completion, id userAccess) {
+    // Stamp the active applicator unconditionally — the shared user resolver
+    // reads from it even when keep-deleted is off.
+    sciDirectUserResolverSetActiveApplicator(self);
+
     if (!sciKeepDeletedEnabled()) {
         orig_applyUpdates(self, _cmd, updates, completion, userAccess);
         return;
@@ -622,7 +547,7 @@ static void new_applyUpdates(id self, SEL _cmd, id updates, id completion, id us
         NSString *senderName = repSid ? sciGetSenderNameMap()[repSid] : nil;
         NSString *senderPk = repSid ? sciGetSenderMap()[repSid] : nil;
         if (!senderName.length && senderPk.length) {
-            senderName = sciUsernameForPkViaApplicator(self, senderPk);
+            senderName = sciDirectUserResolverUsernameForPK(senderPk);
             if (senderName.length && repSid) sciTrackSenderName(repSid, senderName);
         }
         NSString *deleterName = senderName;

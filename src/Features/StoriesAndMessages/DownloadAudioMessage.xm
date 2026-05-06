@@ -1,15 +1,19 @@
 // Download voice messages from DMs. Detects audio messages via the
 // menuConfiguration hook, then injects a Download item into the long-press
-// PrismMenu. Tries to convert to .m4a; falls back to the source extension
-// (e.g. .ogg from web users) if AVFoundation can't decode the format.
+// PrismMenu. Routes through SCIDownloadMenu (Photos / Gallery / Share).
 
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
+#import "../../Downloader/Download.h"
+#import "../../UI/SCIDownloadMenu.h"
+#import "../../Gallery/SCIGalleryFile.h"
+#import "../../Gallery/SCIGallerySaveMetadata.h"
+#import "../../ActionButton/SCIMediaActions.h"
+#import "OverlayHelpers.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <substrate.h>
 #import <AVFoundation/AVFoundation.h>
-#import "../../Downloader/Download.h"
 
 typedef id (*SCIMsgSendId)(id, SEL);
 static inline id sciDAF(id obj, SEL sel) {
@@ -44,8 +48,7 @@ static id sciLastAudioViewModel = nil;
 
 %end
 
-// PrismMenu uses Swift classes with mangled names — hook via MSHookMessageEx in %ctor.
-
+// PrismMenu uses Swift classes with mangled names — hooked from %ctor.
 static id (*orig_prismMenuView_init3)(id, SEL, NSArray *, id, BOOL);
 
 static id new_prismMenuView_init3(id self, SEL _cmd, NSArray *elements, id header, BOOL edr) {
@@ -90,72 +93,28 @@ static id new_prismMenuView_init3(id self, SEL _cmd, NSArray *elements, id heade
             return;
         }
 
-        UIView *topView = [UIApplication sharedApplication].keyWindow;
-        SCIDownloadPillView *pill = [[SCIDownloadPillView alloc] init];
-        [pill setText:SCILocalized(@"Downloading audio...")];
-        [pill showInView:topView];
+        SCIGallerySaveMetadata *md = sciDMMetadataFromMessage(capturedVM);
+        @try {
+            id mediaId = sciDAF(serverAudio, @selector(mediaId));
+            if ([mediaId respondsToSelector:@selector(stringValue)]) md.sourceMediaPK = [mediaId stringValue];
+            else if ([mediaId isKindOfClass:[NSString class]]) md.sourceMediaPK = mediaId;
+        } @catch (__unused id e) {}
 
-        NSURLSessionDownloadTask *task = [[NSURLSession sharedSession]
-            downloadTaskWithURL:playbackURL
-            completionHandler:^(NSURL *tempURL, NSURLResponse *response, NSError *error) {
-            if (error || !tempURL) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [pill dismiss];
-                    [SCIUtils showErrorHUDWithDescription:error.localizedDescription ?: @"Download failed. Try again."];
-                });
-                return;
-            }
+        // Server can return Ogg/Opus — keep the source extension when it's a
+        // known audio container, default m4a otherwise.
+        NSString *urlExt = [[playbackURL.path pathExtension] lowercaseString];
+        if (!SCIGalleryExtensionIsAudio(urlExt)) urlExt = @"m4a";
 
-            // Try to convert to .m4a; on failure (e.g. Ogg/Opus) keep the source extension.
-            NSString *urlExt = [[playbackURL.path pathExtension] lowercaseString];
-            if (urlExt.length == 0) urlExt = @"m4a";
+        [SCIMediaActions setCurrentFilenameStem:
+            [SCIMediaActions filenameStemForUsername:md.sourceUsername contextLabel:@"voice"]];
 
-            NSString *mediaId = sciDAF(serverAudio, @selector(mediaId)) ?: @"voice_message";
-            NSString *srcPath = [NSTemporaryDirectory() stringByAppendingPathComponent:
-                [NSString stringWithFormat:@"tmp_%@.%@", mediaId, urlExt]];
-            NSURL *srcURL = [NSURL fileURLWithPath:srcPath];
-            [[NSFileManager defaultManager] removeItemAtURL:srcURL error:nil];
-            [[NSFileManager defaultManager] moveItemAtURL:tempURL toURL:srcURL error:nil];
-
-            void (^present)(NSURL *) = ^(NSURL *url) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [pill setText:SCILocalized(@"Done!")];
-                    [pill dismissAfterDelay:0.5];
-                    [SCIUtils showShareVC:url];
-                });
-            };
-
-            NSString *m4aPath = [NSTemporaryDirectory() stringByAppendingPathComponent:
-                [NSString stringWithFormat:@"audio_%@.m4a", mediaId]];
-            NSURL *m4aURL = [NSURL fileURLWithPath:m4aPath];
-            [[NSFileManager defaultManager] removeItemAtURL:m4aURL error:nil];
-
-            AVAsset *asset = [AVAsset assetWithURL:srcURL];
-            AVAssetExportSession *exp = [AVAssetExportSession
-                exportSessionWithAsset:asset presetName:AVAssetExportPresetAppleM4A];
-            exp.outputURL = m4aURL;
-            exp.outputFileType = AVFileTypeAppleM4A;
-
-            [exp exportAsynchronouslyWithCompletionHandler:^{
-                if (exp.status == AVAssetExportSessionStatusCompleted) {
-                    [[NSFileManager defaultManager] removeItemAtURL:srcURL error:nil];
-                    present(m4aURL);
-                    return;
-                }
-                // Conversion failed — keep the original with its real extension.
-                [[NSFileManager defaultManager] removeItemAtURL:m4aURL error:nil];
-                NSString *outPath = [NSTemporaryDirectory() stringByAppendingPathComponent:
-                    [NSString stringWithFormat:@"audio_%@.%@", mediaId, urlExt]];
-                NSURL *outURL = [NSURL fileURLWithPath:outPath];
-                [[NSFileManager defaultManager] removeItemAtURL:outURL error:nil];
-                if (![[NSFileManager defaultManager] moveItemAtURL:srcURL toURL:outURL error:nil]) {
-                    present(srcURL);
-                    return;
-                }
-                present(outURL);
-            }];
-        }];
-        [task resume];
+        [SCIDownloadMenu presentForURL:playbackURL
+                                  mode:SCIDownloadMenuModeRemoteURL
+                         fileExtension:urlExt
+                              hudLabel:SCILocalized(@"Download audio")
+                              metadata:md
+                               isAudio:YES
+                                fromVC:nil];
     };
 
     id builder = ((InitFn)objc_msgSend)([builderClass alloc], @selector(initWithTitle:), @"Download");
@@ -164,7 +123,7 @@ static id new_prismMenuView_init3(id self, SEL _cmd, NSArray *elements, id heade
     id menuItem = ((BuildFn)objc_msgSend)(builder, @selector(build));
     if (!menuItem) return orig_prismMenuView_init3(self, _cmd, elements, header, edr);
 
-    // Wrap in IGDSPrismMenuElement: clone _subtype from a sibling, attach the menuItem.
+    // Wrap in IGDSPrismMenuElement: clone _subtype from a sibling, attach the item.
     id templateEl = elements[0];
     id newElement = [[templateEl class] new];
     Ivar subtypeIvar = class_getInstanceVariable([templateEl class], "_subtype");

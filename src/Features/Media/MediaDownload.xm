@@ -16,6 +16,7 @@
 #import "../../Utils.h"
 #import "../../Downloader/Download.h"
 #import "../../ActionButton/SCIMediaViewer.h"
+#import "../Profile/SCIProfileHelpers.h"
 #import <objc/runtime.h>
 
 static SCIDownloadDelegate *imageDownloadDelegate;
@@ -291,78 +292,19 @@ static BOOL sciLegacyGestureEnabled() {
 
 /* * Profile pictures * */
 
-// Get profile info by walking up to IGProfileViewController
-static NSString *sciProfileCaption(UIView *view) {
-    Class profileCls = NSClassFromString(@"IGProfileViewController");
-    Class userCls = NSClassFromString(@"IGUser");
-    UIResponder *r = view;
-    while (r) {
-        if (profileCls && [r isKindOfClass:profileCls]) {
-            id user = nil;
-            for (NSString *key in @[@"user", @"userGQL", @"profileUser"]) {
-                @try { user = [(UIViewController *)r valueForKey:key]; } @catch (__unused id e) {}
-                if (user) break;
-            }
-            if (!user && userCls) {
-                unsigned int cnt = 0;
-                Ivar *ivars = class_copyIvarList([r class], &cnt);
-                for (unsigned int i = 0; i < cnt; i++) {
-                    id v = object_getIvar(r, ivars[i]);
-                    if (v && [v isKindOfClass:userCls]) { user = v; break; }
-                }
-                if (ivars) free(ivars);
-            }
-            if (user) {
-                NSString *name = nil, *username = nil, *bio = nil;
-                @try { username = [user valueForKey:@"username"]; } @catch (__unused id e) {}
-                @try { name = [user valueForKey:@"fullName"]; } @catch (__unused id e) {}
-                if (!name) @try { name = [user valueForKey:@"name"]; } @catch (__unused id e) {}
-                @try { bio = [user valueForKey:@"biography"]; } @catch (__unused id e) {}
-
-                NSMutableString *caption = [NSMutableString string];
-                if (name.length) [caption appendString:name];
-                if (username.length) {
-                    if (caption.length) [caption appendString:@"\n"];
-                    [caption appendFormat:@"@%@", username];
-                }
-                if (bio.length) {
-                    if (caption.length) [caption appendString:@"\n\n"];
-                    [caption appendString:bio];
-                }
-                return caption.length ? caption : nil;
-            }
-        }
-        r = [r nextResponder];
-    }
-    return nil;
-}
-
-// Profile photo zoom — intercepts IG's profile pic long press
+// Profile photo zoom — intercepts IG's profile pic long press. Routes through
+// SCIProfileHelpers so we get HD via /users/{pk}/info/ + retained download.
 %hook IGProfilePhotoCoinFlipUI.IGProfilePhotoCoinFlipView
 
 - (void)viewLongPressedWithGesture:(UILongPressGestureRecognizer *)gesture {
     if (![SCIUtils getBoolPref:@"zoom_profile_photo"]) { %orig; return; }
     if (gesture.state != UIGestureRecognizerStateBegan) { %orig; return; }
 
-    // Find the IGProfilePictureImageView inside us
     UIView *source = gesture.view;
-    NSMutableArray *q = [NSMutableArray arrayWithObject:source];
-    int scanned = 0;
-    while (q.count && scanned < 30) {
-        UIView *cur = q.firstObject; [q removeObjectAtIndex:0]; scanned++;
-        if ([cur isKindOfClass:NSClassFromString(@"IGProfilePictureImageView")]) {
-            IGImageView *imgView = MSHookIvar<IGImageView *>(cur, "_imageView");
-            if (imgView) {
-                IGImageSpecifier *spec = imgView.imageSpecifier;
-                NSURL *url = spec ? spec.url : nil;
-                if (url) {
-                    NSString *caption = sciProfileCaption(cur);
-                    [SCIMediaViewer showWithVideoURL:nil photoURL:url caption:caption];
-                    return;
-                }
-            }
-        }
-        for (UIView *s in cur.subviews) [q addObject:s];
+    id user = [SCIProfileHelpers userForView:source];
+    if (user) {
+        [SCIProfileHelpers viewPictureForUser:user];
+        return;
     }
 
     %orig;
@@ -385,23 +327,26 @@ static NSString *sciProfileCaption(UIView *view) {
 %new - (void)handleLongPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state != UIGestureRecognizerStateBegan) return;
 
-    IGImageView *_imageView = MSHookIvar<IGImageView *>(self, "_imageView");
-    if (!_imageView) return;
+    id user = [SCIProfileHelpers userForView:self];
 
-    IGImageSpecifier *imageSpecifier = _imageView.imageSpecifier;
-    if (!imageSpecifier) return;
-
-    NSURL *imageUrl = imageSpecifier.url;
-    if (!imageUrl) return;
-
-    // Zoom: open in full-screen viewer with profile info
     if ([SCIUtils getBoolPref:@"zoom_profile_photo"]) {
-        NSString *caption = sciProfileCaption(self);
-        [SCIMediaViewer showWithVideoURL:nil photoURL:imageUrl caption:caption];
+        if (user) { [SCIProfileHelpers viewPictureForUser:user]; return; }
+        // Fallback when not on a profile page (story tray, etc.) — use the
+        // image-view's own URL, no HD upgrade available.
+        IGImageView *_imageView = MSHookIvar<IGImageView *>(self, "_imageView");
+        IGImageSpecifier *spec = _imageView.imageSpecifier;
+        NSURL *url = spec ? spec.url : nil;
+        if (url) [SCIMediaViewer showWithVideoURL:nil photoURL:url caption:nil];
         return;
     }
 
-    // Legacy: direct download
+    if (user) { [SCIProfileHelpers savePictureForUser:user]; return; }
+
+    // Legacy fallback: direct download of low-res URL.
+    IGImageView *_imageView = MSHookIvar<IGImageView *>(self, "_imageView");
+    IGImageSpecifier *imageSpecifier = _imageView.imageSpecifier;
+    NSURL *imageUrl = imageSpecifier ? imageSpecifier.url : nil;
+    if (!imageUrl) return;
     initDownloaders();
     [imageDownloadDelegate downloadFileWithURL:imageUrl
                                  fileExtension:[[imageUrl lastPathComponent] pathExtension]

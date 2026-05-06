@@ -3,8 +3,12 @@
 
 #import "OverlayHelpers.h"
 #import "../../SCIChrome.h"
+#import "../../UI/SCIIcon.h"
 #import "../../ActionButton/SCIActionIcon.h"
 #import "../../ActionButton/SCIMediaViewer.h"
+#import "../../ActionButton/SCIActionMenu.h"
+#import "../../ActionButton/SCIActionMenuConfig.h"
+#import "../../ActionButton/SCIActionCatalog.h"
 
 // Per-button weak ref to the owning DM VC so handlers skip the responder walk.
 static const void *kSCIDMOwnerVCKey = &kSCIDMOwnerVCKey;
@@ -32,31 +36,58 @@ static inline void SCIDMRemoveButton(UIView *overlay, NSInteger tag) {
 
 static NSArray<UIMenuElement *> *sciDMActionMenuItems(UIViewController *dmVC, UIView *sourceView) {
 	__weak UIView *weakSource = sourceView;
+	__weak UIViewController *weakVC = dmVC;
 
-	return @[
-		[UIAction actionWithTitle:SCILocalized(@"Expand") image:[UIImage systemImageNamed:@"arrow.up.left.and.arrow.down.right"] identifier:nil handler:^(__unused UIAction *a) {
-			sciDMExpandMedia(dmVC);
-		}],
-		[UIAction actionWithTitle:SCILocalized(@"Messages settings") image:[UIImage systemImageNamed:@"gearshape"] identifier:nil handler:^(__unused UIAction *a) {
-			sciOpenMessagesSettings(weakSource);
-		}],
-		[UIAction actionWithTitle:SCILocalized(@"Download and share") image:[UIImage systemImageNamed:@"square.and.arrow.up"] identifier:nil handler:^(__unused UIAction *a) {
-			sciDMShareMedia(dmVC);
-		}],
-		[UIAction actionWithTitle:SCILocalized(@"Download to Photos") image:[UIImage systemImageNamed:@"square.and.arrow.down"] identifier:nil handler:^(__unused UIAction *a) {
-			sciDMDownloadMedia(dmVC);
-		}]
-	];
+	SCIActionMenuConfig *cfg = [SCIActionMenuConfig configForSource:SCIActionSourceDM];
+
+	SCIAction *(^resolve)(NSString *) = ^SCIAction *(NSString *aid) {
+		if ([aid isEqualToString:SCIAID_Expand]) {
+			return [SCIAction actionWithTitle:SCILocalized(@"Expand") icon:@"arrow.up.left.and.arrow.down.right" handler:^{
+				if (weakVC) sciDMExpandMedia(weakVC);
+			}];
+		}
+		if ([aid isEqualToString:SCIAID_DownloadShare]) {
+			return [SCIAction actionWithTitle:SCILocalized(@"Download and share") icon:@"square.and.arrow.up" handler:^{
+				if (weakVC) sciDMShareMedia(weakVC);
+			}];
+		}
+		if ([aid isEqualToString:SCIAID_DownloadSave]) {
+			return [SCIAction actionWithTitle:SCILocalized(@"Download to Photos") icon:@"square.and.arrow.down" handler:^{
+				if (weakVC) sciDMDownloadMedia(weakVC);
+			}];
+		}
+		if ([aid isEqualToString:SCIAID_DownloadGallery]) {
+			if (![SCIUtils getBoolPref:@"sci_gallery_enabled"]) return nil;
+			return [SCIAction actionWithTitle:SCILocalized(@"Download to Gallery") icon:@"photo.on.rectangle.angled" handler:^{
+				if (weakVC) sciDMDownloadMediaToGallery(weakVC);
+			}];
+		}
+		if ([aid isEqualToString:SCIAID_DMMarkSeen]) {
+			return [SCIAction actionWithTitle:SCILocalized(@"Mark as viewed") icon:@"eye" handler:^{
+				if (weakVC) sciDMMarkCurrentAsViewed(weakVC);
+			}];
+		}
+		if ([aid isEqualToString:SCIAID_Settings]) {
+			return [SCIAction actionWithTitle:SCILocalized(@"Messages settings") icon:@"gearshape" handler:^{
+				sciOpenMessagesSettings(weakSource);
+			}];
+		}
+		return nil;
+	};
+
+	NSArray<SCIAction *> *flat = [SCIActionMenu actionsForConfig:cfg dateHeader:nil resolver:resolve];
+	UIMenu *built = [SCIActionMenu buildMenuWithActions:flat];
+	return built.children;
 }
 
 static NSArray<UIMenuElement *> *sciDMEyeMenuItems(UIViewController *dmVC, UIView *sourceView) {
 	__weak UIView *weakSource = sourceView;
 
 	return @[
-		[UIAction actionWithTitle:SCILocalized(@"Mark as viewed") image:[UIImage systemImageNamed:@"eye"] identifier:nil handler:^(__unused UIAction *a) {
+		[UIAction actionWithTitle:SCILocalized(@"Mark as viewed") image:[SCIIcon imageNamed:@"eye"] identifier:nil handler:^(__unused UIAction *a) {
 			sciDMMarkCurrentAsViewed(dmVC);
 		}],
-		[UIAction actionWithTitle:SCILocalized(@"Messages settings") image:[UIImage systemImageNamed:@"gearshape"] identifier:nil handler:^(__unused UIAction *a) {
+		[UIAction actionWithTitle:SCILocalized(@"Messages settings") image:[SCIIcon imageNamed:@"gearshape"] identifier:nil handler:^(__unused UIAction *a) {
 			sciOpenMessagesSettings(weakSource);
 		}]
 	];
@@ -112,12 +143,20 @@ static void sciDMApplyTapMenu(UIButton *button, __weak UIViewController *weakDMV
 
 	NSString *tap = SCIDMDefaultAction();
 
-	if ([tap isEqualToString:@"expand"]) {
+	// Legacy values from older builds — translate before dispatch.
+	if ([tap isEqualToString:@"download_photos"]) tap = SCIAID_DownloadSave;
+	if ([tap isEqualToString:@"copy_link"])       tap = SCIAID_CopyURL;
+
+	if ([tap isEqualToString:SCIAID_Expand]) {
 		sciDMExpandMedia(dmVC);
-	} else if ([tap isEqualToString:@"download_share"]) {
+	} else if ([tap isEqualToString:SCIAID_DownloadShare]) {
 		sciDMShareMedia(dmVC);
-	} else if ([tap isEqualToString:@"download_photos"]) {
+	} else if ([tap isEqualToString:SCIAID_DownloadSave]) {
 		sciDMDownloadMedia(dmVC);
+	} else if ([tap isEqualToString:SCIAID_DownloadGallery]) {
+		sciDMDownloadMediaToGallery(dmVC);
+	} else if ([tap isEqualToString:SCIAID_DMMarkSeen]) {
+		sciDMMarkCurrentAsViewed(dmVC);
 	}
 }
 
@@ -252,7 +291,8 @@ static void sciDMInstallButtons(UIViewController *dmVC) {
 	SCIDMRemoveButton(overlay, SCI_DM_EYE_TAG);
 
 	if (SCIDMEyeEnabled()) {
-		SCIChromeButton *button = SCIDMButton(@"eye", 18.0, 36.0, SCI_DM_EYE_TAG);
+		SCIChromeButton *button = SCIDMButton(@"", 18.0, 36.0, SCI_DM_EYE_TAG);
+		[button setIconResource:@"eye" pointSize:18.0]; // IG-styled eye glyph
 		objc_setAssociatedObject(button, kSCIDMOwnerVCKey, dmVC, OBJC_ASSOCIATION_ASSIGN);
 
 		[button addTarget:delegate action:@selector(eyeTapped:) forControlEvents:UIControlEventTouchUpInside];

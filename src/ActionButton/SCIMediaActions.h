@@ -22,6 +22,11 @@ typedef NS_ENUM(NSInteger, SCIActionContext) {
 // `@username_context_yyyyMMdd_HHmmss` (sanitized). UUID fallback on failure.
 + (NSString *)filenameStemForMedia:(nullable id)media contextLabel:(NSString *)ctxLabel;
 
+// Same shape, raw inputs — for features without an IGMedia (DM voice, notes,
+// disappearing media). Empty username falls back to "media".
++ (NSString *)filenameStemForUsername:(nullable NSString *)username
+                          contextLabel:(NSString *)ctxLabel;
+
 // "feed" / "reels" / "stories".
 + (NSString *)contextLabelForContext:(SCIActionContext)ctx;
 
@@ -73,6 +78,9 @@ typedef NS_ENUM(NSInteger, SCIActionContext) {
 /// Download the best URL for the media and save to Photos (respects album pref).
 + (void)downloadAndSaveMedia:(id)media;
 
+/// Download the best URL and save to the RyukGram gallery only (skips Photos).
++ (void)downloadAndSaveMediaToGallery:(id)media fromView:(nullable UIView *)sourceView;
+
 /// Copy the direct CDN URL for the media to the clipboard.
 + (void)copyURLForMedia:(id)media;
 
@@ -93,6 +101,17 @@ typedef NS_ENUM(NSInteger, SCIActionContext) {
 
 /// Download every child of a carousel and save to Photos.
 + (void)downloadAllAndSaveMedia:(id)carouselMedia;
+
+/// Download every child of a carousel and copy each one into the RyukGram
+/// gallery (skips Photos). Honors source from `ctx`.
++ (void)downloadAllAndSaveMediaToGallery:(id)carouselMedia context:(SCIActionContext)ctx;
+
+/// Save an array of already-downloaded local file URLs into the gallery,
+/// updating the shared download pill with per-file progress. Per-file
+/// metadata array is optional; falls back to defaultMetadata when shorter.
++ (void)bulkSaveFilesToGallery:(NSArray<NSURL *> *)files
+                  perFileMetadata:(nullable NSArray<id> *)perFileMetadata
+                  defaultMetadata:(nullable id)defaultMetadata;
 
 /// Copy newline-joined CDN URLs for every child of a carousel.
 + (void)copyAllURLsForMedia:(id)carouselMedia;
@@ -115,6 +134,14 @@ typedef NS_ENUM(NSInteger, SCIActionContext) {
 + (NSArray<SCIAction *> *)actionsForContext:(SCIActionContext)ctx
                                       media:(nullable id)media
                                    fromView:(UIView *)sourceView;
+
+/// Build the menu for `ctx`/`media`/`sourceView` and fire the handler whose
+/// SCIAction.actionID matches `aid`. Returns YES if a handler ran. Used by
+/// the action button's default-tap path so we don't duplicate dispatch logic.
++ (BOOL)executeActionForContext:(SCIActionContext)ctx
+                       actionID:(NSString *)aid
+                          media:(nullable id)media
+                       fromView:(UIView *)sourceView;
 
 @end
 

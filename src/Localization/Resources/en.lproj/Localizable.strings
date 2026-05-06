@@ -226,6 +226,11 @@
 "Hides the story tray at the top" = "Hides the story tray at the top";
 "Inserts a button row below like/comment/share on each post" = "Inserts a button row below like/comment/share on each post";
 "Long press on media to expand in full-screen viewer" = "Long press on media to expand in full-screen viewer";
+"Start media muted" = "Start media muted";
+"Expanded videos open with sound off" = "Expanded videos open with sound off";
+"Enhanced media resolution" = "Enhanced media resolution";
+"Media saving" = "Media saving";
+"Spoof device profile so IG serves higher-quality images" = "Spoof device profile so IG serves higher-quality images";
 "Media" = "Media";
 "Media zoom" = "Media zoom";
 "No suggested for you" = "No suggested for you";
@@ -245,7 +250,6 @@
 "Stories tray" = "Stories tray";
 "Tapping Home does nothing when already on feed" = "Tapping Home does nothing when already on feed";
 "Tray long-press actions" = "Tray long-press actions";
-"What happens on a single tap. Long-press always opens the full menu" = "What happens on a single tap. Long-press always opens the full menu";
 
 "Composer doesn't accept GIFs" = "Composer doesn't accept GIFs";
 "Copy GIF link" = "Copy GIF link";
@@ -436,12 +440,14 @@
 
 "Activity" = "Activity";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio";
+"Allows typing and sending DMs longer than Instagram's limit" = "Allows typing and sending DMs longer than Instagram's limit";
 "Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram" = "Adds a 'Send File' option to the plus menu in DMs. Supported file types may be limited by Instagram";
 "Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages" = "Adds an 'Audio File' option to the plus menu in DMs to send audio files as voice messages";
 "Adds copy text, download GIF/audio to the note long-press menu" = "Adds copy text, download GIF/audio to the note long-press menu";
 "Block all: all chats blocked — listed chats are exceptions.\nBlock selected: only listed chats are blocked — everything else is normal.\nBoth lists are saved independently. Long-press a chat in the inbox to add or remove." = "Block all: all chats blocked — listed chats are exceptions.\nBlock selected: only listed chats are blocked — everything else is normal.\nBoth lists are saved independently. Long-press a chat in the inbox to add or remove.";
 "Block keep-deleted for excluded chats" = "Block keep-deleted for excluded chats";
 "Block keep-deleted for unlisted chats" = "Block keep-deleted for unlisted chats";
+"Bypass DM character limit" = "Bypass DM character limit";
 "Chat list" = "Chat list";
 "Confirmation dialog before clearing preserved messages" = "Confirmation dialog before clearing preserved messages";
 "Copies note text directly on long press without opening the menu" = "Copies note text directly on long press without opening the menu";
@@ -777,6 +783,7 @@
 "Saved %lu items" = "Saved %lu items";
 "Saved to Photos" = "Saved to Photos";
 "Saved to RyukGram" = "Saved to RyukGram";
+"Saving..." = "Saving...";
 "Tap to cancel" = "Tap to cancel";
 "Unmute audio" = "Unmute audio";
 "View cover" = "View cover";
@@ -1297,3 +1304,194 @@
 "Use highest resolution available" = "Use highest resolution available";
 "Video quality" = "Video quality";
 "Which quality to download" = "Which quality to download";
+
+//////////////////////////////////////////////////////////////////////////////
+//                          ACTION MENU CONFIG                              //
+// Configure-menu screen, profile action button, action catalog labels.    //
+//////////////////////////////////////////////////////////////////////////////
+
+"Audio & visibility" = "Audio & visibility";
+"Bio" = "Bio";
+"bio" = "bio";
+"Bulk download" = "Bulk download";
+"Collapse this section's actions behind a single entry" = "Collapse this section's actions behind a single entry";
+"Configure: %@" = "Configure: %@";
+"Copied %@" = "Copied %@";
+"Copy ID" = "Copy ID";
+"Copy Info" = "Copy Info";
+"Copy media URL" = "Copy media URL";
+"Copy profile link" = "Copy profile link";
+"Copy all info" = "Copy all info";
+"profile info" = "profile info";
+"Copy username" = "Copy username";
+"DM disappearing media" = "DM disappearing media";
+"Download" = "Download";
+"Download all to Gallery" = "Download all to Gallery";
+"Download to Gallery" = "Download to Gallery";
+"Exclude/include user" = "Exclude/include user";
+"Feed settings" = "Feed settings";
+"Followers: %@" = "Followers: %@";
+"Following: %@" = "Following: %@";
+"ID" = "ID";
+"Info" = "Info";
+"Mute / unmute audio" = "Mute / unmute audio";
+"name" = "name";
+"Picture not found" = "Picture not found";
+"Private profile" = "Private profile";
+"profile link" = "profile link";
+"Profile info" = "Profile info";
+"Profile link" = "Profile link";
+"Profile settings" = "Profile settings";
+"Profile unavailable" = "Profile unavailable";
+"Public profile" = "Public profile";
+"Reels settings" = "Reels settings";
+"Reorder sections" = "Reorder sections";
+"Reset to defaults" = "Reset to defaults";
+"Reset to defaults?" = "Reset to defaults?";
+"RyukGram profile actions" = "RyukGram profile actions";
+"Save picture" = "Save picture";
+"Save picture to Gallery" = "Save picture to Gallery";
+"Share picture" = "Share picture";
+"Show as submenu" = "Show as submenu";
+"Stories settings" = "Stories settings";
+"This will restore the default sections, order, and toggles for this menu." = "This will restore the default sections, order, and toggles for this menu.";
+"Username" = "Username";
+"View picture" = "View picture";
+"What happens on a single tap. Long-press always opens the full menu." = "What happens on a single tap. Long-press always opens the full menu.";
+"Profile action button" = "Profile action button";
+"Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions" = "Adds a configurable button on profile pages with copy, view picture, share, save, and profile-info actions";
+"Configure menu" = "Configure menu";
+"Configure profile menu" = "Configure profile menu";
+"Reorder, enable/disable, set default tap, show date" = "Reorder, enable/disable, set default tap, show date";
+"Reorder, enable/disable, set default tap" = "Reorder, enable/disable, set default tap";
+
+//////////////////////////////////////////////////////////////////////////////
+//                          PHASE 1 FOLLOW-UPS                              //
+//////////////////////////////////////////////////////////////////////////////
+
+"Long-press gestures" = "Long-press gestures";
+"Inserts a button in the profile navigation header" = "Inserts a button in the profile navigation header";
+"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu." = "Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu.";
+"Download all to Gallery?" = "Download all to Gallery?";
+"Download all to Photos?" = "Download all to Photos?";
+"Nothing to download" = "Nothing to download";
+
+//////////////////////////////////////////////////////////////////////////////
+//                              GALLERY                                     //
+// On-device media library + save mode preferences.                         //
+//////////////////////////////////////////////////////////////////////////////
+
+"Browse, filter, sort, delete saved media" = "Browse, filter, sort, delete saved media";
+"Enable gallery" = "Enable gallery";
+"Gallery" = "Gallery";
+"Gallery only" = "Gallery only";
+"On-device library of everything you've downloaded through RyukGram" = "On-device library of everything you've downloaded through RyukGram";
+"Open Gallery" = "Open Gallery";
+"Photos + Gallery" = "Photos + Gallery";
+"Photos only" = "Photos only";
+"Save mode" = "Save mode";
+"Save to Gallery?" = "Save to Gallery?";
+"Saved to Gallery" = "Saved to Gallery";
+"Show gallery entries in download menus and unlock the library page below" = "Show gallery entries in download menus and unlock the library page below";
+"When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search." = "When enabled, downloaded media gets logged into a built-in library you can browse, filter by source, and search.";
+"Where 'Download to Photos' actually writes when gallery is on" = "Where 'Download to Photos' actually writes when gallery is on";
+
+//////////////////////////////////////////////////////////////////////////////
+//                          GALLERY (PHASE 2.1)                             //
+//////////////////////////////////////////////////////////////////////////////
+
+"Gallery save mode" = "Gallery save mode";
+"Hold DM tab to open gallery" = "Hold DM tab to open gallery";
+"Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "Long-press the inbox button in the bottom tab bar to open RyukGram gallery";
+"Home shortcut button" = "Home shortcut button";
+"Configure the extra button on the home top bar" = "Configure the extra button on the home top bar";
+"Show button" = "Show button";
+"Auto" = "Auto";
+"Drag the ≡ handle to reorder. Toggle a row off to hide that destination. With one action enabled tapping fires it; with two or more, tapping presents a menu." = "Drag the ≡ handle to reorder. Toggle a row off to hide that destination. With one action enabled tapping fires it; with two or more, tapping presents a menu.";
+"Icon" = "Icon";
+"Changelog" = "Changelog";
+"Show gallery entries in download menus and unlock the gallery button" = "Show gallery entries in download menus and unlock the gallery button";
+"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes." = "On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes.";
+
+//////////////////////////////////////////////////////////////////////////////
+//                       GALLERY (PHASE 2 REVAMP)                           //
+//////////////////////////////////////////////////////////////////////////////
+
+"Browsing" = "Browsing";
+"Clear filters" = "Clear filters";
+"Delete files" = "Delete files";
+"Favorites only" = "Favorites only";
+"Gallery Settings" = "Gallery Settings";
+"Images" = "Images";
+"Manage" = "Manage";
+"Show favorites at top" = "Show favorites at top";
+"Storage" = "Storage";
+"Total files" = "Total files";
+"Total size" = "Total size";
+"Videos" = "Videos";
+"When enabled, favorites are pinned above other files inside the current sort and folder context." = "When enabled, favorites are pinned above other files inside the current sort and folder context.";
+
+//////////////////////////////////////////////////////////////////////////////
+//                       GALLERY (DELETE + REVAMP 2)                        //
+//////////////////////////////////////////////////////////////////////////////
+
+"All files deleted" = "All files deleted";
+"By source" = "By source";
+"By type" = "By type";
+"By user" = "By user";
+"DM media deleted" = "DM media deleted";
+"Delete %@?" = "Delete %@?";
+"Delete DM media" = "Delete DM media";
+"Delete all files" = "Delete all files";
+"Delete all images" = "Delete all images";
+"Delete all videos" = "Delete all videos";
+"Delete by user" = "Delete by user";
+"Delete feed posts" = "Delete feed posts";
+"Delete profile pictures" = "Delete profile pictures";
+"Delete reels" = "Delete reels";
+"Delete stories" = "Delete stories";
+"Delete thumbnails" = "Delete thumbnails";
+"Feed posts deleted" = "Feed posts deleted";
+"Files deleted" = "Files deleted";
+"Images deleted" = "Images deleted";
+"No files to delete" = "No files to delete";
+"Profile pictures deleted" = "Profile pictures deleted";
+"Reels deleted" = "Reels deleted";
+"Search..." = "Search...";
+"Stories deleted" = "Stories deleted";
+"This will permanently remove %ld file(s)." = "This will permanently remove %ld file(s).";
+"Thumbnails deleted" = "Thumbnails deleted";
+"Unable to open original post" = "Unable to open original post";
+"Unable to open profile" = "Unable to open profile";
+"Unknown user" = "Unknown user";
+"User files deleted" = "User files deleted";
+"Videos deleted" = "Videos deleted";
+
+//////////////////////////////////////////////////////////////////////////////
+//                       GALLERY (SORT + FILTER)                            //
+//////////////////////////////////////////////////////////////////////////////
+
+"Images first" = "Images first";
+"Largest first" = "Largest first";
+"Name A-Z" = "Name A-Z";
+"Name Z-A" = "Name Z-A";
+"Newest first" = "Newest first";
+"Oldest first" = "Oldest first";
+"Options" = "Options";
+"Smallest first" = "Smallest first";
+"Source" = "Source";
+"Source user" = "Source user";
+"Type" = "Type";
+"Videos first" = "Videos first";
+
+//////////////////////////////////////////////////////////////////////////////
+//                       GALLERY (DOWNLOAD MENU + PICKERS)                  //
+// Submenu rows for Photos vs Gallery, gallery picker titles, and the      //
+// extended type/source filters that came with the audio + GIF rollout.    //
+//////////////////////////////////////////////////////////////////////////////
+
+"GIFs" = "GIFs";
+"to Gallery" = "to Gallery";
+"Share" = "Share";
+"Pick audio" = "Pick audio";
+"Audio from RyukGram Gallery" = "Audio from RyukGram Gallery";

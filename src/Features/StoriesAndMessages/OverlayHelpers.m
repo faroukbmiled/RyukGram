@@ -1,6 +1,108 @@
 #import "OverlayHelpers.h"
 #import "../../ActionButton/SCIMediaViewer.h"
+#import "../../ActionButton/SCIMediaActions.h"
 #import "../../Downloader/Download.h"
+#import "../../Gallery/SCIGalleryFile.h"
+#import "../../Gallery/SCIGallerySaveMetadata.h"
+#import "SCIDirectUserResolver.h"
+
+// MARK: - DM sender metadata
+
+static NSString *sciStringFromAny(id v) {
+    if ([v isKindOfClass:[NSString class]] && [(NSString *)v length] > 0) return v;
+    if ([v isKindOfClass:[NSNumber class]]) return [(NSNumber *)v stringValue];
+    return nil;
+}
+
+static id sciActiveUserSession(void) {
+    @try {
+        for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {
+            if (![scene isKindOfClass:[UIWindowScene class]]) continue;
+            for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+                @try {
+                    id session = [window valueForKey:@"userSession"];
+                    if (session) return session;
+                } @catch (__unused id e) {}
+            }
+        }
+    } @catch (__unused id e) {}
+    return nil;
+}
+
+// Resolves to IGUser via the shared cache, with session.user as the
+// self-authored fallback.
+static id sciResolveUserForPK(NSString *pk) {
+    if (!pk.length) return nil;
+    id user = sciDirectUserResolverUserForPK(pk);
+    if (user) return user;
+
+    id session = sciActiveUserSession();
+    if (!session) return nil;
+    @try {
+        id selfUser = [session valueForKey:@"user"];
+        NSString *selfPK = sciDirectUserResolverPKFromUser(selfUser);
+        if (selfPK && [selfPK isEqualToString:pk]) return selfUser;
+    } @catch (__unused id e) {}
+    return nil;
+}
+
+// IGDevirtualizedValueObject resolves its accessors via forwardInvocation —
+// respondsToSelector: lies but methodSignatureForSelector: tells the truth.
+static id sciCall0(id obj, SEL sel) {
+    if (!obj || !sel) return nil;
+    @try {
+        if (![obj respondsToSelector:sel] && ![obj methodSignatureForSelector:sel]) return nil;
+        typedef id (*Fn)(id, SEL);
+        return ((Fn)objc_msgSend)(obj, sel);
+    } @catch (__unused id e) { return nil; }
+}
+
+// IGDirectVisualMessage._message → IGDirectUIMessage.metadata.senderPk.
+// IGDirectAudioMessageViewModel.messageMetadata.senderPk. Both funnel here.
+static NSString *sciSenderPKFromMessageObject(id msg) {
+    if (!msg) return nil;
+    Ivar inner = class_getInstanceVariable([msg class], "_message");
+    if (inner) {
+        id wrapped = object_getIvar(msg, inner);
+        if (wrapped) msg = wrapped;
+    }
+    for (NSString *sel in @[@"metadata", @"messageMetadata"]) {
+        id mdObj = sciCall0(msg, NSSelectorFromString(sel));
+        if (!mdObj) continue;
+        NSString *pk = sciStringFromAny(sciCall0(mdObj, @selector(senderPk)));
+        if (pk.length) return pk;
+    }
+    return sciStringFromAny(sciCall0(msg, @selector(senderPk)));
+}
+
+SCIGallerySaveMetadata *sciDMMetadataFromMessage(id msg) {
+    SCIGallerySaveMetadata *md = [SCIGallerySaveMetadata new];
+    md.source = (int16_t)SCIGallerySourceDMs;
+    if (!msg) return md;
+
+    NSString *senderPK = sciSenderPKFromMessageObject(msg);
+    if (!senderPK.length) return md;
+
+    md.sourceUserPK = senderPK;
+    id user = sciResolveUserForPK(senderPK);
+    if (user) {
+        md.sourceUsername = sciDirectUserResolverUsernameFromUser(user);
+        md.sourceProfileURLString = sciDirectUserResolverProfilePicURLStringFromUser(user);
+    }
+    return md;
+}
+
+SCIGallerySaveMetadata *sciDMMetadataForVC(UIViewController *dmVC) {
+    SCIGallerySaveMetadata *md = [SCIGallerySaveMetadata new];
+    md.source = (int16_t)SCIGallerySourceDMs;
+    if (!dmVC) return md;
+
+    Ivar dsIvar = class_getInstanceVariable([dmVC class], "_dataSource");
+    id ds = dsIvar ? object_getIvar(dmVC, dsIvar) : nil;
+    Ivar msgIvar = ds ? class_getInstanceVariable([ds class], "_currentMessage") : nil;
+    id msg = msgIvar ? object_getIvar(ds, msgIvar) : nil;
+    return sciDMMetadataFromMessage(msg);
+}
 
 // MARK: - Context detection
 
@@ -75,7 +177,7 @@ NSURL *sciDMMediaURL(UIViewController *dmVC, BOOL *outIsVideo) {
 
 // MARK: - DM actions
 
-// Strong refs — SCIDownloadDelegate needs to outlive the download.
+// Strong refs so the delegate outlives the URLSession callbacks.
 static SCIDownloadDelegate *sciDMShareDelegate = nil;
 static SCIDownloadDelegate *sciDMDownloadDelegate = nil;
 
@@ -87,11 +189,21 @@ void sciDMExpandMedia(UIViewController *dmVC) {
     else         [SCIMediaViewer showWithVideoURL:nil photoURL:url caption:nil];
 }
 
+// Stamps `@sender_dm_<ts>` for Photos/share/gallery saves and returns the
+// metadata so the gallery branch sees the same sender attribution.
+static SCIGallerySaveMetadata *sciDMMetadataAndStem(UIViewController *dmVC) {
+    SCIGallerySaveMetadata *md = sciDMMetadataForVC(dmVC);
+    [SCIMediaActions setCurrentFilenameStem:
+        [SCIMediaActions filenameStemForUsername:md.sourceUsername contextLabel:@"dm"]];
+    return md;
+}
+
 void sciDMShareMedia(UIViewController *dmVC) {
     BOOL isVideo = NO;
     NSURL *url = sciDMMediaURL(dmVC, &isVideo);
     if (!url) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not find media")]; return; }
     sciDMShareDelegate = [[SCIDownloadDelegate alloc] initWithAction:share showProgress:YES];
+    sciDMShareDelegate.pendingGallerySaveMetadata = sciDMMetadataAndStem(dmVC);
     [sciDMShareDelegate downloadFileWithURL:url fileExtension:(isVideo ? @"mp4" : @"jpg") hudLabel:nil];
 }
 
@@ -100,11 +212,21 @@ void sciDMDownloadMedia(UIViewController *dmVC) {
     NSURL *url = sciDMMediaURL(dmVC, &isVideo);
     if (!url) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not find media")]; return; }
     sciDMDownloadDelegate = [[SCIDownloadDelegate alloc] initWithAction:saveToPhotos showProgress:YES];
+    sciDMDownloadDelegate.pendingGallerySaveMetadata = sciDMMetadataAndStem(dmVC);
     [sciDMDownloadDelegate downloadFileWithURL:url fileExtension:(isVideo ? @"mp4" : @"jpg") hudLabel:nil];
 }
 
-// Flips dmVisualMsgsViewedButtonEnabled for ~1s so VisualMsgModifier lets the
-// begin/end playback callbacks through, then restores.
+void sciDMDownloadMediaToGallery(UIViewController *dmVC) {
+    BOOL isVideo = NO;
+    NSURL *url = sciDMMediaURL(dmVC, &isVideo);
+    if (!url) { [SCIUtils showErrorHUDWithDescription:SCILocalized(@"Could not find media")]; return; }
+    sciDMDownloadDelegate = [[SCIDownloadDelegate alloc] initWithAction:saveToGallery showProgress:YES];
+    sciDMDownloadDelegate.pendingGallerySaveMetadata = sciDMMetadataAndStem(dmVC);
+    [sciDMDownloadDelegate downloadFileWithURL:url fileExtension:(isVideo ? @"mp4" : @"jpg") hudLabel:nil];
+}
+
+// Toggles dmVisualMsgsViewedButtonEnabled for ~1s so VisualMsgModifier lets
+// the begin/end playback callbacks through.
 void sciDMMarkCurrentAsViewed(UIViewController *dmVC) {
     if (!dmVC) return;
 

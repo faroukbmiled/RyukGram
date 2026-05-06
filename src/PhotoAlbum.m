@@ -1,4 +1,5 @@
 #import "PhotoAlbum.h"
+#import "Utils.h"
 
 @interface SCIPhotoAlbumWatcher : NSObject <PHPhotoLibraryChangeObserver>
 @property (nonatomic, strong) PHFetchResult<PHAsset *> *baseline;
@@ -74,8 +75,43 @@ static SCIPhotoAlbumWatcher *sciActiveWatcher = nil;
     }];
 }
 
++ (void)armWatcherIfEnabled {
+    if (![SCIUtils getBoolPref:@"save_to_ryukgram_album"]) return;
+    [self watchForNextSavedAsset];
+}
+
++ (void)addAssetWithLocalIdentifier:(NSString *)localId
+                         completion:(void (^)(BOOL, NSError *))completion {
+    if (!localId.length) {
+        if (completion) completion(NO, nil);
+        return;
+    }
+    [self fetchOrCreateAlbumWithCompletion:^(PHAssetCollection *album, NSError *err) {
+        if (!album) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) completion(NO, err);
+            });
+            return;
+        }
+        PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsWithLocalIdentifiers:@[localId] options:nil];
+        if (result.count == 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) completion(NO, nil);
+            });
+            return;
+        }
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            PHAssetCollectionChangeRequest *req = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:album];
+            [req addAssets:result];
+        } completionHandler:^(BOOL success, NSError *changeErr) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) completion(success, changeErr);
+            });
+        }];
+    }];
+}
+
 + (void)watchForNextSavedAsset {
-    // Replace any existing watcher — only the most recent share sheet matters
     if (sciActiveWatcher) {
         [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:sciActiveWatcher];
         [sciActiveWatcher.timeoutTimer invalidate];
@@ -93,7 +129,6 @@ static SCIPhotoAlbumWatcher *sciActiveWatcher = nil;
     watcher.baseline = [PHAsset fetchAssetsWithOptions:opts];
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:watcher];
 
-    // Auto-unregister after 60s in case the user dismisses without saving
     watcher.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                            repeats:NO
                                                              block:^(NSTimer *t) {
@@ -117,8 +152,7 @@ static SCIPhotoAlbumWatcher *sciActiveWatcher = nil;
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
         [SCIPhotoAlbum fetchOrCreateAlbumWithCompletion:^(PHAssetCollection *album, NSError *err) {}];
     } completionHandler:^(BOOL success, NSError *error) {
-        // Add the inserted assets to the album in a separate transaction so the
-        // album exists by the time we reference it.
+        // Two-transaction add so the album exists by the time we reference it.
         [SCIPhotoAlbum fetchOrCreateAlbumWithCompletion:^(PHAssetCollection *album, NSError *err) {
             if (!album) return;
             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{

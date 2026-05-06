@@ -51,7 +51,18 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *cacheDirectoryPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
     NSString *stem = [SCIMediaActions currentFilenameStem] ?: NSUUID.UUID.UUIDString;
-    NSURL *newPath = [[NSURL fileURLWithPath:cacheDirectoryPath] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", stem, self.fileExtension]];
+    NSString *ext = self.fileExtension.length ? self.fileExtension : @"bin";
+
+    // Disambiguate when the same stem is reused (e.g. retap on the same media)
+    // so the move doesn't fail with NSCocoaError 516.
+    NSURL *newPath = [[NSURL fileURLWithPath:cacheDirectoryPath]
+                       URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", stem, ext]];
+    NSInteger n = 1;
+    while ([fileManager fileExistsAtPath:newPath.path] && n < 1000) {
+        newPath = [[NSURL fileURLWithPath:cacheDirectoryPath]
+                    URLByAppendingPathComponent:[NSString stringWithFormat:@"%@-%ld.%@", stem, (long)n, ext]];
+        n++;
+    }
 
     NSError *fileMoveError;
     [fileManager moveItemAtURL:oldPath toURL:newPath error:&fileMoveError];

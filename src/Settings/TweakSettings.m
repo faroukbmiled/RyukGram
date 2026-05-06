@@ -4,7 +4,9 @@
 #import "SCISettingsBackup.h"
 #import "SCIFakeLocationSettingsVC.h"
 #import "../Features/ProfileAnalyzer/SCIProfileAnalyzerViewController.h"
+#import "../Gallery/SCIGalleryViewController.h"
 #import "SCIExcludedChatsViewController.h"
+#import "SCIHomeShortcutConfigViewController.h"
 #import "../Features/StoriesAndMessages/SCIExcludedThreads.h"
 #import "../Features/StoriesAndMessages/SCIExcludedStoryUsers.h"
 #import "SCIExcludedStoryUsersViewController.h"
@@ -17,6 +19,8 @@
 #import "../Features/Theme/SCITheme.h"
 #import "../Tweak.h"
 #import "../ActionButton/SCIActionIcon.h"
+#import "../ActionButton/SCIActionCatalog.h"
+#import "SCIActionMenuConfigViewController.h"
 #import "../UI/SCIIconPicker.h"
 #import "SCISettingsViewController.h"
 #import "../../modules/JGProgressHUD/JGProgressHUD.h"
@@ -97,7 +101,7 @@
             @"rows": @[
                 [SCISetting navigationCellWithTitle:SCILocalized(@"General")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"gear"]
+                                               icon:[SCISymbol symbolWithIGName:@"settings" fallback:@"gear"]
                                         navSections:@[@{
                                             @"header": @"",
                                             @"rows": @[
@@ -107,7 +111,6 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Do not save recent searches") subtitle:SCILocalized(@"Search bars will no longer save your recent searches") defaultsKey:@"no_recent_searches"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Open link from clipboard") subtitle:SCILocalized(@"Long-press the search tab to open a copied Instagram link") defaultsKey:@"paste_link_from_search"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Copy description") subtitle:SCILocalized(@"Copy description text fields by long-pressing on them") defaultsKey:@"copy_description"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Use detailed color picker") subtitle:SCILocalized(@"Long press on the eyedropper tool in stories to customize the text color more precisely") defaultsKey:@"detailed_color_picker"],
                                             ]
                                         },
                                         @{
@@ -137,7 +140,7 @@
                                                 ({
                                                     SCISetting *s = [SCISetting buttonCellWithTitle:SCILocalized(@"Embed domain")
                                                                        subtitle:@""
-                                                                           icon:[SCISymbol symbolWithName:@"globe"]
+                                                                           icon:nil
                                                                          action:^(void) {
                                                         UIWindow *win = nil;
                                                         for (UIWindow *w in [UIApplication sharedApplication].windows)
@@ -161,13 +164,6 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Copy comment text") subtitle:SCILocalized(@"Adds a copy option to the comment long-press menu") defaultsKey:@"copy_comment"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Download GIF comments") subtitle:SCILocalized(@"Adds download and copy options to GIF comments") defaultsKey:@"download_gif_comment"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Custom GIF in comments") subtitle:SCILocalized(@"Long-press the GIF button to paste any Giphy URL") defaultsKey:@"custom_gif_comment"],
-                                            ]
-                                        },
-                                        @{
-                                            @"header": SCILocalized(@"Notes"),
-                                            @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide notes tray") subtitle:SCILocalized(@"Hides the notes tray in the DM inbox") defaultsKey:@"hide_notes_tray"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide friends map") subtitle:SCILocalized(@"Hides the friends map icon in the notes tray") defaultsKey:@"hide_friends_map" requiresRestart:YES],
                                             ]
                                         },
                                         @{
@@ -211,20 +207,23 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Feed")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"rectangle.stack"]
+                                               icon:[SCISymbol symbolWithIGName:@"feed" fallback:@"rectangle.stack"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Action button"),
                                             @"footer": SCILocalized(@"Adds a RyukGram action button under each feed post with download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below."),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Inserts a button row below like/comment/share on each post") defaultsKey:@"feed_action_button"],
-                                                [SCISetting menuCellWithTitle:SCILocalized(@"Default tap action") subtitle:SCILocalized(@"What happens on a single tap. Long-press always opens the full menu") menu:[self menus][@"feed_action_default"]],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Show date") subtitle:SCILocalized(@"Adds the date as a small header at the top of the action menu") defaultsKey:@"menu_date_feed"],
+                                                [SCISetting navigationCellWithTitle:SCILocalized(@"Configure menu")
+                                                                            subtitle:SCILocalized(@"Reorder, enable/disable, set default tap, show date")
+                                                                                icon:nil
+                                                                      viewController:[[SCIActionMenuConfigViewController alloc] initForSource:SCIActionSourceFeed]],
                                             ]
                                         },
                                         @{
                                             @"header": SCILocalized(@"Media"),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Media zoom") subtitle:SCILocalized(@"Long press on media to expand in full-screen viewer") defaultsKey:@"feed_media_zoom"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Start media muted") subtitle:SCILocalized(@"Expanded videos open with sound off") defaultsKey:@"media_zoom_start_muted"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Disable video autoplay") subtitle:SCILocalized(@"Prevents videos from playing automatically") defaultsKey:@"disable_feed_autoplay" requiresRestart:YES],
                                             ]
                                         },
@@ -259,14 +258,16 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Stories")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"circle.dashed"]
+                                               icon:[SCISymbol symbolWithIGName:@"story" fallback:@"circle.dashed"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Action button"),
                                             @"footer": SCILocalized(@"Adds a RyukGram action button next to the eye button on stories with download/share/copy/expand/repost/view-mentions entries. Tap opens the menu by default; change the tap behavior below."),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Inserts a button next to the seen/eye button on story overlays") defaultsKey:@"stories_action_button" requiresRestart:YES],
-                                                [SCISetting menuCellWithTitle:SCILocalized(@"Default tap action") subtitle:SCILocalized(@"What happens on a single tap. Long-press always opens the full menu") menu:[self menus][@"stories_action_default"]],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Show date") subtitle:SCILocalized(@"Adds the date as a small header at the top of the action menu") defaultsKey:@"menu_date_stories"],
+                                                [SCISetting navigationCellWithTitle:SCILocalized(@"Configure menu")
+                                                                            subtitle:SCILocalized(@"Reorder, enable/disable, set default tap, show date")
+                                                                                icon:nil
+                                                                      viewController:[[SCIActionMenuConfigViewController alloc] initForSource:SCIActionSourceStories]],
                                             ]
                                         },
                                         @{
@@ -333,6 +334,7 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show poll vote counts") subtitle:SCILocalized(@"Show vote tallies on poll options and slider count/average before you vote") defaultsKey:@"stories_show_poll_votes_count"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Custom music sticker color") subtitle:SCILocalized(@"Long-press the color wheel on a music or lyric sticker to pick any solid or gradient color") defaultsKey:@"custom_music_sticker_color"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Allow video in photo sticker") subtitle:SCILocalized(@"Lets the photo sticker picker show videos too, not just photos") defaultsKey:@"photo_sticker_allow_video"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Use detailed color picker") subtitle:SCILocalized(@"Long press on the eyedropper tool in stories to customize the text color more precisely") defaultsKey:@"detailed_color_picker"],
                                             ]
                                         },
                                         @{
@@ -345,14 +347,16 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Reels")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"film.stack"]
+                                               icon:[SCISymbol symbolWithIGName:@"reels" fallback:@"film.stack"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Action button"),
                                             @"footer": SCILocalized(@"Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below."),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Places a button above the like/comment/share column on each reel") defaultsKey:@"reels_action_button"],
-                                                [SCISetting menuCellWithTitle:SCILocalized(@"Default tap action") subtitle:SCILocalized(@"What happens on a single tap. Long-press always opens the full menu") menu:[self menus][@"reels_action_default"]],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Show date") subtitle:SCILocalized(@"Adds the date as a small header at the top of the action menu") defaultsKey:@"menu_date_reels"],
+                                                [SCISetting navigationCellWithTitle:SCILocalized(@"Configure menu")
+                                                                            subtitle:SCILocalized(@"Reorder, enable/disable, set default tap, show date")
+                                                                                icon:nil
+                                                                      viewController:[[SCIActionMenuConfigViewController alloc] initForSource:SCIActionSourceReels]],
                                             ]
                                         },
                                         @{
@@ -401,7 +405,7 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Messages")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"bubble.left.and.bubble.right"]
+                                               icon:[SCISymbol symbolWithIGName:@"messages" fallback:@"bubble.left.and.bubble.right"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Threads"),
                                             @"rows": @[
@@ -438,6 +442,7 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide video call button") subtitle:SCILocalized(@"Removes the video call button from DM thread header") defaultsKey:@"hide_video_call_button" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide reels blend button") subtitle:SCILocalized(@"Hides the blend button in DMs") defaultsKey:@"hide_reels_blend"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Hide send to group chat") subtitle:SCILocalized(@"Removes the create/send to group chat row when sharing to multiple recipients") defaultsKey:@"hide_send_to_group"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Bypass DM character limit") subtitle:SCILocalized(@"Allows typing and sending DMs longer than Instagram's limit") defaultsKey:@"bypass_dm_char_limit"],
                                             ]
                                         },
                                         @{
@@ -508,6 +513,8 @@
                                         @{
                                             @"header": SCILocalized(@"Notes"),
                                             @"rows": @[
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide notes tray") subtitle:SCILocalized(@"Hides the notes tray in the DM inbox") defaultsKey:@"hide_notes_tray"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hide friends map") subtitle:SCILocalized(@"Hides the friends map icon in the notes tray") defaultsKey:@"hide_friends_map" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Note actions") subtitle:SCILocalized(@"Adds copy text, download GIF/audio to the note long-press menu") defaultsKey:@"note_actions"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Copy text on hold") subtitle:SCILocalized(@"Copies note text directly on long press without opening the menu") defaultsKey:@"note_copy_on_hold"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Enable note theming") subtitle:SCILocalized(@"Enables the notes theme picker") defaultsKey:@"enable_notes_customization"],
@@ -518,7 +525,10 @@
                                             @"header": SCILocalized(@"Disappearing media"),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Inserts a button on disappearing media overlays") defaultsKey:@"dm_visual_action_button" requiresRestart:YES],
-                                                [SCISetting menuCellWithTitle:SCILocalized(@"Default tap action") subtitle:SCILocalized(@"What happens on a single tap. Long-press always opens the full menu") menu:[self menus][@"dm_visual_action_default"]],
+                                                [SCISetting navigationCellWithTitle:SCILocalized(@"Configure menu")
+                                                                            subtitle:SCILocalized(@"Reorder, enable/disable, set default tap")
+                                                                                icon:nil
+                                                                      viewController:[[SCIActionMenuConfigViewController alloc] initForSource:SCIActionSourceDM]],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show mark-as-viewed button") subtitle:SCILocalized(@"Inserts an eye button to mark the current disappearing media as viewed") defaultsKey:@"dm_visual_seen_button" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Show audio toggle") subtitle:SCILocalized(@"Inserts a speaker button to mute/unmute disappearing media") defaultsKey:@"dm_visual_audio_toggle" requiresRestart:YES],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Unlimited replay of visual messages") subtitle:SCILocalized(@"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled") defaultsKey:@"unlimited_replay"],
@@ -537,15 +547,25 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Profile")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"person.crop.circle"]
+                                               icon:[SCISymbol symbolWithIGName:@"profile" fallback:@"person.crop.circle"]
                                         navSections:@[@{
-                                            @"header": @"",
+                                            @"header": SCILocalized(@"Action button"),
+                                            @"footer": SCILocalized(@"Adds a RyukGram action button to the profile header with copy, view picture, share, save, and profile-info entries. Tap opens the menu by default; change the tap behavior in Configure menu."),
+                                            @"rows": @[
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Show action button") subtitle:SCILocalized(@"Inserts a button in the profile navigation header") defaultsKey:@"action_button_profile_enabled" requiresRestart:YES],
+                                                [SCISetting navigationCellWithTitle:SCILocalized(@"Configure menu")
+                                                                            subtitle:SCILocalized(@"Reorder, enable/disable, set default tap")
+                                                                                icon:nil
+                                                                      viewController:[[SCIActionMenuConfigViewController alloc] initForSource:SCIActionSourceProfile]],
+                                            ]
+                                        },
+                                        @{
+                                            @"header": SCILocalized(@"Long-press gestures"),
                                             @"footer": SCILocalized(@"Long-press gestures on profile elements — kept separate from the per-feature action buttons."),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Zoom profile photo") subtitle:SCILocalized(@"Long press a profile picture to open it in full-screen with zoom, share, and save") defaultsKey:@"zoom_profile_photo"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Save profile picture") subtitle:SCILocalized(@"Long press to download directly (ignored when zoom is on)") defaultsKey:@"save_profile"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"View highlight cover") subtitle:SCILocalized(@"Adds a view option to the highlight long-press menu to open the cover in full-screen") defaultsKey:@"download_highlight_cover"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Profile copy button") subtitle:SCILocalized(@"Adds a button next to the burger menu on profiles to copy username, name or bio") defaultsKey:@"profile_copy_button"],
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Follow indicator") subtitle:SCILocalized(@"Shows whether the profile user follows you") menu:[self menus][@"follow_indicator"]],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Copy note on long press") subtitle:SCILocalized(@"Long press the note bubble on a profile to copy the text") defaultsKey:@"profile_note_copy"],
                                             ]
@@ -575,13 +595,22 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Navigation")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"hand.draw.fill"]
+                                               icon:[SCISymbol symbolWithIGName:@"layout" fallback:@"hand.draw.fill"]
                                         navSections:@[@{
                                             @"header": @"",
                                             @"rows": @[
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Icon order") subtitle:SCILocalized(@"The order of the icons on the bottom navigation bar") menu:[self menus][@"nav_icon_ordering"]],
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Swipe between tabs") subtitle:SCILocalized(@"Lets you swipe to switch between navigation bar tabs") menu:[self menus][@"swipe_nav_tabs"]],
                                                 [SCISetting menuCellWithTitle:SCILocalized(@"Launch tab") subtitle:SCILocalized(@"Tab the app opens to. Ignored when Messages-only is on") menu:[self menus][@"launch_tab"]],
+                                            ]
+                                        },
+                                        @{
+                                            @"header": SCILocalized(@"Home shortcut button"),
+                                            @"rows": @[
+                                                [SCISetting navigationCellWithTitle:SCILocalized(@"Home shortcut button")
+                                                                           subtitle:SCILocalized(@"Configure the extra button on the home top bar")
+                                                                               icon:nil
+                                                                     viewController:[SCIHomeShortcutConfigViewController new]],
                                             ]
                                         },
                                         @{
@@ -603,15 +632,25 @@
                                             ]
                                         }]
                 ],
-                [SCISetting navigationCellWithTitle:SCILocalized(@"Saving")
+                [SCISetting navigationCellWithTitle:SCILocalized(@"Media saving")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"tray.and.arrow.down"]
+                                               icon:[SCISymbol symbolWithIGName:@"download_filled" fallback:@"tray.and.arrow.down"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Downloads"),
                                             @"footer": SCILocalized(@"When \"Save to RyukGram album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a dedicated \"RyukGram\" album in your Photos library."),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm before download") subtitle:SCILocalized(@"Show a confirmation dialog before starting a download") defaultsKey:@"dw_confirm"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Save to RyukGram album") subtitle:SCILocalized(@"Route saves into a dedicated album in Photos instead of the camera roll root") defaultsKey:@"save_to_ryukgram_album"]
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Save to RyukGram album") subtitle:SCILocalized(@"Route saves into a dedicated album in Photos instead of the camera roll root") defaultsKey:@"save_to_ryukgram_album"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Enhanced media resolution") subtitle:SCILocalized(@"Spoof device profile so IG serves higher-quality images") defaultsKey:@"enhanced_media_resolution" requiresRestart:YES],
+                                            ]
+                                        },
+                                        @{
+                                            @"header": SCILocalized(@"Gallery"),
+                                            @"footer": SCILocalized(@"On-device library of media downloaded through RyukGram. Save mode picks where 'Download to Photos' actually writes."),
+                                            @"rows": @[
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Enable gallery") subtitle:SCILocalized(@"Show gallery entries in download menus and unlock the gallery button") defaultsKey:@"sci_gallery_enabled"],
+                                                [SCISetting menuCellWithTitle:SCILocalized(@"Gallery save mode") subtitle:SCILocalized(@"Where 'Download to Photos' actually writes when gallery is on") menu:[self menus][@"gallery_save_mode"]],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Hold DM tab to open gallery") subtitle:SCILocalized(@"Long-press the inbox button in the bottom tab bar to open RyukGram gallery") defaultsKey:@"dm_tab_long_press_gallery"],
                                             ]
                                         },
                                         [self enhancedDownloadsSection],
@@ -628,7 +667,7 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Confirm actions")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"checkmark"]
+                                               icon:[SCISymbol symbolWithIGName:@"circle_check" fallback:@"checkmark"]
                                         navSections:@[@{
                                             @"header": @"",
                                             @"rows": @[
@@ -664,15 +703,19 @@
             @"rows": @[
                 [SCISetting navigationCellWithTitle:[NSString stringWithFormat:@"%@ - BETA", SCILocalized(@"Profile Analyzer")]
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"person.fill.viewfinder"]
+                                               icon:[SCISymbol symbolWithIGName:@"green_screen" fallback:@"person.fill.viewfinder"]
                                      viewController:[[SCIProfileAnalyzerViewController alloc] init]],
+                [SCISetting buttonCellWithTitle:SCILocalized(@"Gallery")
+                                       subtitle:@""
+                                           icon:[SCISymbol symbolWithIGName:@"ig_icon_photo_gallery_outline_24" fallback:@"photo.on.rectangle.angled"]
+                                         action:^{ [SCIGalleryViewController presentGallery]; }],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Fake location")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"location.fill.viewfinder"]
+                                               icon:[SCISymbol symbolWithIGName:@"location_arrow" fallback:@"location.fill.viewfinder"]
                                      viewController:[[SCIFakeLocationSettingsVC alloc] init]],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Theme")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"moon"]
+                                               icon:[SCISymbol symbolWithIGName:@"moon" fallback:@"moon"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Theme"),
                                             @"footer": SCILocalized(@"The theme RyukGram applies to Instagram."),
@@ -700,12 +743,12 @@
                                             @"rows": @[
                                                 [SCISetting buttonCellWithTitle:SCILocalized(@"Apply & restart")
                                                                        subtitle:SCILocalized(@"Restart Instagram to apply your theme changes")
-                                                                           icon:[SCISymbol symbolWithName:@"arrow.clockwise.circle.fill"]
+                                                                           icon:[SCISymbol symbolWithIGName:@"bcn_circle-check_outline_24" fallback:@"checkmark.circle.fill"]
                                                                          action:^(void) { [SCIUtils showRestartConfirmation]; }
                                                 ],
                                                 [SCISetting buttonCellWithTitle:SCILocalized(@"Reset theme")
                                                                        subtitle:SCILocalized(@"Turn every theme option off and restart")
-                                                                           icon:[SCISymbol symbolWithName:@"arrow.uturn.backward.circle.fill"]
+                                                                           icon:[SCISymbol symbolWithIGName:@"bcn_arrow-ccw_outline_24" fallback:@"arrow.uturn.backward.circle.fill"]
                                                                          action:^(void) {
                                                     [SCIUtils showConfirmation:^{
                                                         [SCITheme resetToDefaults];
@@ -723,7 +766,7 @@
             @"rows": @[
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Backup & Restore")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"arrow.up.arrow.down.square"]
+                                               icon:[SCISymbol symbolWithIGName:@"cloud" fallback:@"arrow.up.arrow.down.square"]
                                         navSections:@[@{
                                             @"header": @"",
                                             @"footer": SCILocalized(@"Export or import RyukGram settings, excluded lists and Profile Analyzer data. Pick any combination on each page."),
@@ -740,7 +783,7 @@
                                                 ],
                                                 [SCISetting buttonCellWithTitle:SCILocalized(@"Reset")
                                                                        subtitle:SCILocalized(@"Clear selected data")
-                                                                           icon:[SCISymbol symbolWithName:@"arrow.counterclockwise.circle"]
+                                                                           icon:[SCISymbol symbolWithIGName:@"bcn_arrow-ccw_outline_24" fallback:@"arrow.counterclockwise.circle"]
                                                                          action:^(void) { [SCISettingsBackup presentReset]; }
                                                 ]
                                             ]
@@ -748,7 +791,7 @@
                 ],
                 [SCISetting navigationCellWithTitle:SCILocalized(@"Advanced")
                                            subtitle:@""
-                                               icon:[SCISymbol symbolWithName:@"gearshape.2"]
+                                               icon:[SCISymbol symbolWithIGName:@"toolbox" fallback:@"gearshape.2"]
                                         navSections:@[@{
                                             @"header": SCILocalized(@"Tweak settings"),
                                             @"rows": @[
@@ -773,7 +816,7 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Disable safe mode") subtitle:SCILocalized(@"Prevents Instagram from resetting settings after crashes (at your own risk)") defaultsKey:@"disable_safe_mode"],
                                                 [SCISetting buttonCellWithTitle:SCILocalized(@"Reset onboarding state")
                                                                            subtitle:@""
-                                                                               icon:nil
+                                                                               icon:[SCISymbol symbolWithIGName:@"bcn_arrow-ccw_outline_24" fallback:@"arrow.counterclockwise.circle"]
                                                                              action:^(void) { [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SCInstaFirstRun"]; [SCIUtils showRestartConfirmation];}
                                                 ],
                                             ]
@@ -853,7 +896,7 @@
             @"rows": @[
                 [SCISetting navigationCellWithTitle:SCILocalized(@"About")
                                            subtitle:SCILocalized(@"Version, credits, and links")
-                                               icon:[SCISymbol symbolWithName:@"info.circle"]
+                                               icon:[SCISymbol symbolWithIGName:@"info" fallback:@"info.circle"]
                                         navSections:[self aboutNavSections]]
             ]
         },
@@ -910,7 +953,7 @@
 + (SCISetting *)applyRestartCell {
     SCISetting *cell = [SCISetting buttonCellWithTitle:SCILocalized(@"Apply & restart")
                                               subtitle:SCILocalized(@"Restart Instagram to apply changes")
-                                                  icon:[SCISymbol symbolWithName:@"arrow.clockwise.circle.fill"]
+                                                  icon:[SCISymbol symbolWithIGName:@"bcn_circle-check_outline_24" fallback:@"checkmark.circle.fill"]
                                                 action:^{ [SCIUtils showRestartConfirmation]; }];
     cell.titleColor = [UIColor systemBlueColor];
     return cell;
@@ -919,7 +962,7 @@
 + (SCISetting *)resetAllExperimentalCell {
     SCISetting *cell = [SCISetting buttonCellWithTitle:SCILocalized(@"Reset all experimental flags")
                                               subtitle:SCILocalized(@"Turn every experimental toggle off")
-                                                  icon:[SCISymbol symbolWithName:@"arrow.counterclockwise.circle"]
+                                                  icon:[SCISymbol symbolWithIGName:@"bcn_arrow-ccw_outline_24" fallback:@"arrow.counterclockwise.circle"]
                                                 action:^{
         UIAlertController *a = [UIAlertController
             alertControllerWithTitle:SCILocalized(@"Reset experimental flags?")
@@ -1011,7 +1054,7 @@
             @"header": SCILocalized(@"Version"),
             @"rows": @[
                 [self aboutVersionRowTitle:@"RyukGram" value:SCIVersionString icon:[SCISymbol symbolWithName:@"wrench.and.screwdriver.fill" color:[UIColor systemGrayColor] size:14.0]],
-                [self aboutVersionRowTitle:@"Instagram" value:[SCIUtils IGVersionString] icon:[SCISymbol symbolWithName:@"camera.fill" color:[UIColor systemGrayColor] size:14.0]],
+                [self aboutVersionRowTitle:@"Instagram" value:[SCIUtils IGVersionString] icon:[SCISymbol symbolWithIGName:@"instagram" fallback:@"camera.fill" color:[UIColor systemGrayColor] size:14.0]],
                 [self aboutVersionRowTitle:SCILocalized(@"Bundle") value:[[NSBundle mainBundle] bundleIdentifier] icon:[SCISymbol symbolWithName:@"number" color:[UIColor systemGrayColor] size:14.0]],
             ]
         },
@@ -1142,7 +1185,7 @@
     SCISetting *cell = [SCISetting switchCellWithTitle:SCILocalized(@"Preserve messages database")
                                               subtitle:SCILocalized(@"Skip the messages database when clearing — keeps DMs, drafts, and saved messages.")
                                            defaultsKey:@"cache_preserve_messages_db"];
-    cell.icon = [SCISymbol symbolWithName:@"archivebox"];
+    cell.icon = [SCISymbol symbolWithIGName:@"document" fallback:@"archivebox"];
     return cell;
 }
 
@@ -1217,7 +1260,7 @@
 + (SCISetting *)actionIconNavCell {
     return [SCISetting navigationCellWithTitle:SCILocalized(@"Action button icon")
                                       subtitle:SCILocalized(@"Used across feed, stories, reels and DMs")
-                                          icon:[SCISymbol symbolWithName:@"square.grid.2x2"]
+                                          icon:nil
                                 viewController:[SCIIconPickerViewController new]];
 }
 
@@ -1526,6 +1569,24 @@ static void sciPresentTeenIconPicker(void) {
 
 + (NSDictionary *)menus {
     return @{
+        @"gallery_save_mode": [UIMenu menuWithChildren:@[
+            [UICommand commandWithTitle:SCILocalized(@"Photos only")
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"gallery_save_mode", @"value": @"off" }
+            ],
+            [UICommand commandWithTitle:SCILocalized(@"Photos + Gallery")
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"gallery_save_mode", @"value": @"mirror" }
+            ],
+            [UICommand commandWithTitle:SCILocalized(@"Gallery only")
+                                    image:nil
+                                    action:@selector(menuChanged:)
+                            propertyList:@{ @"defaultsKey": @"gallery_save_mode", @"value": @"gallery_only" }
+            ]
+        ]],
+
         @"theme_mode": [UIMenu menuWithChildren:@[
             [UICommand commandWithTitle:SCILocalized(@"Off")
                                     image:nil

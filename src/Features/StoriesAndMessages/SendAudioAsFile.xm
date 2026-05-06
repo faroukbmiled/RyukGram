@@ -8,6 +8,8 @@
 #import "../../SCIFFmpeg.h"
 #import "../../SCITrimViewController.h"
 #import "../../Tweak.h"
+#import "../../Gallery/SCIGalleryViewController.h"
+#import "../../Gallery/SCIGalleryFile.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <AVFoundation/AVFoundation.h>
@@ -258,6 +260,9 @@ static void sciShowTrimVC(NSURL *url, BOOL isVideo, UIViewController *threadVC) 
 
 #pragma mark - Show picker options
 
+// Forward decl: defined inside the IGDirectThreadViewController %hook below.
+static void sciPrepareAndShowTrim(NSURL *url, UIViewController *threadVC);
+
 static void sciShowUploadAudioOptions(UIViewController *threadVC) {
     sciAudioThreadVC = threadVC;
 
@@ -294,6 +299,19 @@ static void sciShowUploadAudioOptions(UIViewController *threadVC) {
         imgPicker.videoExportPreset = AVAssetExportPresetPassthrough;
         imgPicker.allowsEditing = YES; // enables built-in video trimming
         [vc presentViewController:imgPicker animated:YES completion:nil];
+    }]];
+
+    [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Audio from RyukGram Gallery") style:UIAlertActionStyleDefault handler:^(UIAlertAction *a) {
+        UIViewController *vc = weakVC;
+        if (!vc) return;
+        [SCIGalleryViewController presentPickerWithMediaTypes:@[@(SCIGalleryMediaTypeAudio)]
+                                                        title:SCILocalized(@"Pick audio")
+                                                       fromVC:vc
+                                                   completion:^(NSURL *pickedURL, SCIGalleryFile *pickedFile) {
+            if (!pickedURL) return;
+            UIViewController *threadVC = sciAudioThreadVC ?: vc;
+            if (threadVC) sciPrepareAndShowTrim(pickedURL, threadVC);
+        }];
     }]];
 
     [alert addAction:[UIAlertAction actionWithTitle:SCILocalized(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];

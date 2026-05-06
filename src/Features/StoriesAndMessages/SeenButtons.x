@@ -2,6 +2,7 @@
 #import "../../Tweak.h"
 #import "../../Utils.h"
 #import "../../SCIChrome.h"
+#import "../../UI/SCIIcon.h"
 #import "SCIExcludedThreads.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
@@ -111,7 +112,7 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
             [items addObject:toggleAction];
 
             UIAction *markSeen = [UIAction actionWithTitle:SCILocalized(@"Mark messages as seen")
-                                                     image:[UIImage systemImageNamed:@"checkmark.circle"]
+                                                     image:[SCIIcon imageNamed:@"eye"]
                                                 identifier:nil
                                                    handler:^(__kindof UIAction *_) {
                 UIViewController *nearestVC = [SCIUtils nearestViewControllerForView:anchor];
@@ -123,7 +124,7 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
         } else {
             // Button mode: just mark seen
             UIAction *seenAction = [UIAction actionWithTitle:SCILocalized(@"Mark messages as seen")
-                                                       image:[UIImage systemImageNamed:@"checkmark.circle"]
+                                                       image:[SCIIcon imageNamed:@"eye"]
                                                   identifier:nil
                                                      handler:^(__kindof UIAction *_) {
                 UIViewController *nearestVC = [SCIUtils nearestViewControllerForView:anchor];
@@ -138,7 +139,7 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
     NSString *addLabel = blockSelected ? SCILocalized(@"Add to block list") : SCILocalized(@"Exclude chat");
     NSString *removeLabel = blockSelected ? SCILocalized(@"Remove from block list") : SCILocalized(@"Un-exclude chat");
     NSString *toggleTitle = inList ? removeLabel : addLabel;
-    UIImage *toggleImg = [UIImage systemImageNamed:inList ? @"eye.fill" : @"eye.slash"];
+    UIImage *toggleImg = [SCIIcon imageNamed:(inList ? @"eye.fill" : @"eye.slash")];
     __weak UIView *weakAnchor = anchor;
     UIAction *toggle = [UIAction actionWithTitle:toggleTitle image:toggleImg identifier:nil
                                          handler:^(__kindof UIAction *_) {
@@ -175,8 +176,8 @@ static UIMenu *sciBuildThreadActionsMenu(UIView *anchor, NSString *threadId, UIW
         NSString *replayTitle = dmVisualMsgsViewedButtonEnabled
             ? SCILocalized(@"Visual messages: expiring")
             : SCILocalized(@"Visual messages: unlimited replay");
-        UIImage *replayImg = [UIImage systemImageNamed:dmVisualMsgsViewedButtonEnabled
-            ? @"photo.badge.checkmark" : @"photo.badge.checkmark.fill"];
+        UIImage *replayImg = [SCIIcon imageNamed:(dmVisualMsgsViewedButtonEnabled
+            ? @"photo.badge.checkmark" : @"photo.badge.checkmark.fill")];
         UIAction *replayAction = [UIAction actionWithTitle:replayTitle image:replayImg identifier:nil
                                                    handler:^(__kindof UIAction *_) {
             dmVisualMsgsViewedButtonEnabled = !dmVisualMsgsViewedButtonEnabled;
@@ -311,7 +312,8 @@ static NSDictionary *sciEntryFromThreadVC(UIViewController *vc) {
 
     if ([SCIUtils getBoolPref:@"remove_lastseen"] && !navExcluded) {
         SCIChromeButton *inner = nil;
-        UIBarButtonItem *seenButton = SCIChromeBarButtonItem(@"eye", 18, self, @selector(seenButtonHandler:), &inner);
+        UIBarButtonItem *seenButton = SCIChromeBarButtonItem(@"", 22, self, @selector(seenButtonHandler:), &inner);
+        [inner setIconResource:@"eye" pointSize:22]; // IG-styled eye glyph
         seenButton.accessibilityIdentifier = @"sci-seen-btn";
         UIColor *tint = UIColor.labelColor;
         if (sciIsSeenToggleMode()) tint = dmSeenToggleEnabled ? SCIUtils.SCIColor_Primary : UIColor.labelColor;
@@ -333,7 +335,8 @@ static NSDictionary *sciEntryFromThreadVC(UIViewController *vc) {
         SEL action = showRemoveBtn ? @selector(sciUnexcludeButtonHandler:) : @selector(sciAddToListHandler:);
         NSString *sym = showRemoveBtn ? @"eye.slash.fill" : @"eye.slash";
         SCIChromeButton *inner = nil;
-        UIBarButtonItem *listBtn = SCIChromeBarButtonItem(sym, 18, self, action, &inner);
+        UIBarButtonItem *listBtn = SCIChromeBarButtonItem(@"", 18, self, action, &inner);
+        [inner setIconResource:sym pointSize:18];
         listBtn.accessibilityIdentifier = @"sci-unex-btn";
         inner.iconTint = showRemoveBtn ? SCIUtils.SCIColor_Primary : UIColor.labelColor;
         inner.menu = sciBuildThreadActionsMenu(self, navThreadId, self.window);
@@ -345,7 +348,8 @@ static NSDictionary *sciEntryFromThreadVC(UIViewController *vc) {
     if ([SCIUtils getBoolPref:@"unlimited_replay"] && !navExcluded && !eyeButtonOn) {
         NSString *sym = dmVisualMsgsViewedButtonEnabled ? @"photo.badge.checkmark" : @"photo.badge.checkmark.fill";
         SCIChromeButton *inner = nil;
-        UIBarButtonItem *replayBtn = SCIChromeBarButtonItem(sym, 18, self, @selector(sciReplayToggleHandler:), &inner);
+        UIBarButtonItem *replayBtn = SCIChromeBarButtonItem(@"", 18, self, @selector(sciReplayToggleHandler:), &inner);
+        [inner setIconResource:sym pointSize:18];
         replayBtn.accessibilityIdentifier = @"sci-visual-btn";
         inner.iconTint = dmVisualMsgsViewedButtonEnabled ? UIColor.labelColor : SCIUtils.SCIColor_Primary;
         [new_items addObject:replayBtn];
@@ -393,8 +397,8 @@ static NSDictionary *sciEntryFromThreadVC(UIViewController *vc) {
     dmVisualMsgsViewedButtonEnabled = !dmVisualMsgsViewedButtonEnabled;
     NSString *sym = dmVisualMsgsViewedButtonEnabled ? @"photo.badge.checkmark" : @"photo.badge.checkmark.fill";
     UIColor *tint = dmVisualMsgsViewedButtonEnabled ? UIColor.labelColor : SCIUtils.SCIColor_Primary;
-    if (inner) { inner.symbolName = sym; inner.iconTint = tint; }
-    else if (barItem) { barItem.image = [UIImage systemImageNamed:sym]; barItem.tintColor = tint; }
+    if (inner) { [inner setIconResource:sym pointSize:18]; inner.iconTint = tint; }
+    else if (barItem) { barItem.image = [SCIIcon imageNamed:sym]; barItem.tintColor = tint; }
     [SCIUtils showToastForDuration:2.0 title:dmVisualMsgsViewedButtonEnabled
         ? SCILocalized(@"Visual messages will expire") : SCILocalized(@"Unlimited replay enabled")];
 }

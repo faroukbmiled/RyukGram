@@ -32,9 +32,9 @@ static NSArray<NSString *> *sciCacheDirs(void) {
     return dirs;
 }
 
-// Top-level entry names under any cache root that belong to RyukGram user
-// data (analyzer snapshots, header cache, future persistent state) and must
-// survive a cache wipe.
+// Top-level "RyukGram" folder under any cache root is RyukGram user data.
+// Gallery (Documents/Gallery) is outside `sciCacheDirs()` so already safe.
+// Derived caches (RyukGramImages, RyukGramChangelog) are intentionally wiped.
 static BOOL sciIsProtectedEntryName(const char *name) {
     return strcmp(name, "RyukGram") == 0;
 }

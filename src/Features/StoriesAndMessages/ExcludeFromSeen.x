@@ -5,6 +5,7 @@
 
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
+#import "../../UI/SCIIcon.h"
 #import "SCIExcludedThreads.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
@@ -77,7 +78,7 @@ static id new_ctxMenuCfg(id self, SEL _cmd, id indexPath) {
         NSString *addLabel = blockSelected ? SCILocalized(@"Add to block list") : SCILocalized(@"Exclude chat");
         NSString *removeLabel = blockSelected ? SCILocalized(@"Remove from block list") : SCILocalized(@"Un-exclude chat");
         NSString *title = inList ? removeLabel : addLabel;
-        UIImage *img = [UIImage systemImageNamed:inList ? @"eye.fill" : @"eye.slash"];
+        UIImage *img = [SCIIcon imageNamed:(inList ? @"eye.fill" : @"eye.slash")];
         UIAction *toggle = [UIAction actionWithTitle:title image:img identifier:nil
                                              handler:^(__kindof UIAction *_) {
             if (inList) {

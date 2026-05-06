@@ -1,36 +1,29 @@
-// Keyboard appearance override (theme_keyboard: off / dark / oled).
-//
-// Search-keyboard reset fix: UIKBBackdropView reverts to translucent on
-// context change (focus moves into a UISearchBar, etc.). Hooking
-// setBackgroundColor: + didMoveToWindow snaps any future repaint back to black.
+// Keyboard appearance override (theme_keyboard: off / dark / oled). Hooks
+// install at launch when mode != off; per-call gate via keyboardShouldApply*
+// follows system dark/light unless theme_force is on.
 
 #import "../../Utils.h"
 #import "SCITheme.h"
-
-static inline NSString *sciKeyboardMode(void) {
-    NSString *raw = [[NSUserDefaults standardUserDefaults] stringForKey:SCIThemePrefKeyboard];
-    return raw.length ? raw : @"off";
-}
 
 %group KeyboardThemeDarkGroup
 
 %hook UITextField
 - (BOOL)becomeFirstResponder {
-    self.keyboardAppearance = UIKeyboardAppearanceDark;
+    if ([SCITheme keyboardShouldApplyDark]) self.keyboardAppearance = UIKeyboardAppearanceDark;
     return %orig;
 }
 %end
 
 %hook UITextView
 - (BOOL)becomeFirstResponder {
-    self.keyboardAppearance = UIKeyboardAppearanceDark;
+    if ([SCITheme keyboardShouldApplyDark]) self.keyboardAppearance = UIKeyboardAppearanceDark;
     return %orig;
 }
 %end
 
 %hook UISearchBar
 - (BOOL)becomeFirstResponder {
-    self.keyboardAppearance = UIKeyboardAppearanceDark;
+    if ([SCITheme keyboardShouldApplyDark]) self.keyboardAppearance = UIKeyboardAppearanceDark;
     return %orig;
 }
 %end
@@ -42,10 +35,12 @@ static inline NSString *sciKeyboardMode(void) {
 %hook UIKBBackdropView
 - (void)layoutSubviews {
     %orig;
+    if (![SCITheme keyboardShouldApplyOLED]) return;
     self.backgroundColor = [UIColor blackColor];
     for (UIView *sub in self.subviews) sub.backgroundColor = [UIColor blackColor];
 }
 - (void)setBackgroundColor:(UIColor *)color {
+    if (![SCITheme keyboardShouldApplyOLED]) { %orig; return; }
     if (![color isEqual:[UIColor blackColor]]) {
         %orig([UIColor blackColor]);
         return;
@@ -54,6 +49,7 @@ static inline NSString *sciKeyboardMode(void) {
 }
 - (void)didMoveToWindow {
     %orig;
+    if (![SCITheme keyboardShouldApplyOLED]) return;
     self.backgroundColor = [UIColor blackColor];
     for (UIView *sub in self.subviews) sub.backgroundColor = [UIColor blackColor];
 }
@@ -62,6 +58,7 @@ static inline NSString *sciKeyboardMode(void) {
 %hook UIKBKeyplaneChargedView
 - (void)layoutSubviews {
     %orig;
+    if (![SCITheme keyboardShouldApplyOLED]) return;
     self.backgroundColor = [UIColor blackColor];
 }
 %end
@@ -70,12 +67,11 @@ static inline NSString *sciKeyboardMode(void) {
 
 %ctor {
     [SCITheme migrateLegacyPrefs];
-    NSString *mode = sciKeyboardMode();
+    NSString *raw = [[NSUserDefaults standardUserDefaults] stringForKey:SCIThemePrefKeyboard];
+    NSString *mode = raw.length ? raw : @"off";
     if ([mode isEqualToString:@"off"]) return;
-    if (![SCITheme forceTheme] && ![SCITheme isSystemDark]) return;
 
     %init(KeyboardThemeDarkGroup);
-
     if ([mode isEqualToString:@"oled"]) {
         %init(KeyboardThemeOLEDGroup);
     }

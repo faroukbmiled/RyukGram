@@ -29,6 +29,29 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
     if (![v isKindOfClass:[NSString class]]) return @"";
     return v;
 }
++ (NSDictionary *)getDictPref:(NSString *)key {
+    if (![key length]) return @{};
+    id v = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (v == nil) v = sciRegisteredDefaultsRef[key];
+    if (![v isKindOfClass:[NSDictionary class]]) return @{};
+    return v;
+}
++ (NSArray *)getArrayPref:(NSString *)key {
+    if (![key length]) return @[];
+    id v = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (v == nil) v = sciRegisteredDefaultsRef[key];
+    if (![v isKindOfClass:[NSArray class]]) return @[];
+    return v;
+}
++ (void)setPref:(id)value forKey:(NSString *)key {
+    if (![key length]) return;
+    NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+    if (value == nil) {
+        [defs removeObjectForKey:key];
+    } else {
+        [defs setObject:value forKey:key];
+    }
+}
 
 + (NSDictionary<NSString *, id> *)sciRegisteredDefaults { return sciRegisteredDefaultsRef ?: @{}; }
 + (void)setSciRegisteredDefaults:(NSDictionary<NSString *, id> *)defaults {
@@ -68,11 +91,7 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
         acVC.popoverPresentationController.sourceRect = CGRectMake(topVC.view.bounds.size.width / 2.0, topVC.view.bounds.size.height / 2.0, 1.0, 1.0);
     }
 
-    // If the user picks "Save to Photos" from the share sheet, route the new
-    // asset into the RyukGram album via a one-shot photo library observer.
-    if ([self getBoolPref:@"save_to_ryukgram_album"]) {
-        [SCIPhotoAlbum watchForNextSavedAsset];
-    }
+    [SCIPhotoAlbum armWatcherIfEnabled];
 
     [topVC presentViewController:acVC animated:true completion:nil];
 }
@@ -86,14 +105,11 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
     [rootController presentViewController:navigationController animated:YES completion:nil];
 }
 
-// Open settings and push straight into a named top-level entry (e.g. "Messages").
+// Open settings at a named top-level entry. Entry becomes the nav root with
+// Close — no settings-root underneath. Falls back to full root when missing.
 + (void)showSettingsVC:(UIWindow *)window atTopLevelEntry:(NSString *)entryTitle {
     UIViewController *rootController = [window rootViewController];
     while (rootController.presentedViewController) rootController = rootController.presentedViewController;
-    SCISettingsViewController *root = [SCISettingsViewController new];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-    if ([SCIUtils getBoolPref:@"settings_pause_playback"])
-        nav.modalPresentationStyle = UIModalPresentationFullScreen;
 
     NSArray *targetNavSections = nil;
     for (NSDictionary *section in [SCITweakSettings sections]) {
@@ -106,13 +122,23 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
         if (targetNavSections) break;
     }
 
+    UIViewController *navRoot;
     if (targetNavSections) {
         SCISettingsViewController *child = [[SCISettingsViewController alloc]
             initWithTitle:entryTitle sections:targetNavSections reduceMargin:NO];
         child.title = entryTitle;
-        [nav pushViewController:child animated:NO];
+        child.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemClose
+                                 target:child action:@selector(sciDismissSettings)];
+        navRoot = child;
+    } else {
+        navRoot = [SCISettingsViewController new];
     }
 
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:navRoot];
+    if ([SCIUtils getBoolPref:@"settings_pause_playback"]) {
+        nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
     [rootController presentViewController:nav animated:YES completion:nil];
 }
 
@@ -120,6 +146,81 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
 + (UIColor *)SCIColor_Primary {
     return [UIColor colorWithRed:0/255.0 green:152/255.0 blue:254/255.0 alpha:1];
 };
+
+static UIColor *SCIDynIGColor(CGFloat lr, CGFloat lg, CGFloat lb, CGFloat dr, CGFloat dg, CGFloat db) {
+    return [UIColor colorWithDynamicProvider:^UIColor *(UITraitCollection *tc) {
+        BOOL dark = tc.userInterfaceStyle == UIUserInterfaceStyleDark;
+        return [UIColor colorWithRed:(dark ? dr : lr)/255.0 green:(dark ? dg : lg)/255.0 blue:(dark ? db : lb)/255.0 alpha:1.0];
+    }];
+}
+
++ (UIColor *)SCIColor_InstagramBackground { return SCIDynIGColor(255,255,255, 11,16,20); }
++ (UIColor *)SCIColor_InstagramSecondaryBackground { return SCIDynIGColor(240,241,245, 42,48,55); }
++ (UIColor *)SCIColor_InstagramTertiaryBackground { return SCIDynIGColor(232,234,238, 58,64,72); }
++ (UIColor *)SCIColor_InstagramGroupedBackground { return [self SCIColor_InstagramBackground]; }
++ (UIColor *)SCIColor_InstagramPrimaryText { return SCIDynIGColor(15,20,25, 244,247,251); }
++ (UIColor *)SCIColor_InstagramSecondaryText { return SCIDynIGColor(99,108,118, 177,185,194); }
++ (UIColor *)SCIColor_InstagramTertiaryText { return SCIDynIGColor(130,138,147, 130,138,147); }
++ (UIColor *)SCIColor_InstagramSeparator { return SCIDynIGColor(220,223,228, 52,59,67); }
++ (UIColor *)SCIColor_InstagramFavorite { return [UIColor colorWithRed:255/255.0 green:48/255.0 blue:64/255.0 alpha:1.0]; }
++ (UIColor *)SCIColor_InstagramDestructive { return [UIColor colorWithRed:237/255.0 green:73/255.0 blue:86/255.0 alpha:1.0]; }
++ (UIColor *)SCIColor_InstagramPressedBackground { return SCIDynIGColor(232,233,238, 51,60,69); }
+
+// Instagram deep-link openers — try the in-app URL handler first, fall back
+// to UIApplication openURL: + the web URL.
++ (BOOL)openInstagramProfileForUsername:(NSString *)username {
+    if (!username.length) return NO;
+    NSString *enc = [username stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    if (!enc.length) return NO;
+    NSURL *appURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://user?username=%@", enc]];
+    UIApplication *app = [UIApplication sharedApplication];
+    if (appURL && [app canOpenURL:appURL]) {
+        id<UIApplicationDelegate> d = app.delegate;
+        if ([d respondsToSelector:@selector(application:openURL:options:)]) {
+            [d application:app openURL:appURL options:@{}];
+            return YES;
+        }
+        [app openURL:appURL options:@{} completionHandler:nil];
+        return YES;
+    }
+    NSURL *web = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.instagram.com/%@/", enc]];
+    return [self openInstagramMediaURL:web];
+}
+
++ (BOOL)openInstagramMediaURL:(NSURL *)url {
+    // Always route through IG's own URL handler. We never call
+    // [UIApplication openURL:] for https/http URLs because that bounces them
+    // to Safari instead of into IG's deep-link stack.
+    if (!url) return NO;
+    UIApplication *app = [UIApplication sharedApplication];
+    id<UIApplicationDelegate> d = app.delegate;
+    NSString *scheme = url.scheme.lowercaseString ?: @"";
+
+    if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) {
+        NSUserActivity *act = [[NSUserActivity alloc] initWithActivityType:NSUserActivityTypeBrowsingWeb];
+        act.webpageURL = url;
+        if ([d respondsToSelector:@selector(application:continueUserActivity:restorationHandler:)]) {
+            BOOL h = [d application:app continueUserActivity:act restorationHandler:^(__unused NSArray<id<UIUserActivityRestoring>> *r) {}];
+            if (h) return YES;
+        }
+        // Fall back to the IG app delegate's openURL: (still in-app, never Safari).
+        if ([d respondsToSelector:@selector(application:openURL:options:)]) {
+            [d application:app openURL:url options:@{}];
+            return YES;
+        }
+        return NO;
+    }
+
+    if ([scheme isEqualToString:@"instagram"]) {
+        if ([d respondsToSelector:@selector(application:openURL:options:)]) {
+            [d application:app openURL:url options:@{}];
+            return YES;
+        }
+        return NO;
+    }
+
+    return NO;
+}
 
 // Errors
 + (NSError *)errorWithDescription:(NSString *)errorDesc {
@@ -152,19 +253,29 @@ static NSDictionary *sciRegisteredDefaultsRef = nil;
 
 // Media
 
-// fieldCache fallback — reads the Pando-backed dict directly for when
-// IG's exposed property accessors break between versions.
-static id sciFieldCacheValue(id obj, NSString *key) {
-    if (!obj || !key.length) return nil;
++ (NSDictionary *)fieldCacheForObject:(id)obj {
+    if (!obj) return nil;
+    if ([obj isKindOfClass:[NSDictionary class]]) return obj;
     Ivar iv = NULL;
     for (Class c = [obj class]; c && !iv; c = class_getSuperclass(c))
         iv = class_getInstanceVariable(c, "_fieldCache");
     if (!iv) return nil;
     @try {
-        NSDictionary *dict = object_getIvar(obj, iv);
-        if (![dict isKindOfClass:[NSDictionary class]]) return nil;
-        return dict[key];
+        id v = object_getIvar(obj, iv);
+        return [v isKindOfClass:[NSDictionary class]] ? v : nil;
     } @catch (__unused id e) { return nil; }
+}
+
++ (id)fieldCacheValue:(id)obj forKey:(NSString *)key {
+    if (!key.length) return nil;
+    NSDictionary *fc = [self fieldCacheForObject:obj];
+    id v = fc[key];
+    return [v isKindOfClass:[NSNull class]] ? nil : v;
+}
+
+// Local alias used by older callers in this file.
+static id sciFieldCacheValue(id obj, NSString *key) {
+    return [SCIUtils fieldCacheValue:obj forKey:key];
 }
 
 + (NSURL *)getPhotoUrl:(IGPhoto *)photo {

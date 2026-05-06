@@ -24,8 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat symbolPointSize;
 @property (nonatomic, copy) UIColor *iconTint;
 @property (nonatomic, copy) UIColor *bubbleColor;
-// Set `.image` for custom/baked images that the symbol API can't produce.
+/// `symbolName` is SF-only. For IG-styled glyphs use `setIconResource:` or
+/// assign `iconView.image` directly with a baked image.
 @property (nonatomic, strong, readonly) UIImageView *iconView;
+
+/// IG-styled glyph via `+[SCIIcon imageNamed:]`. Clears `symbolName`.
+- (void)setIconResource:(NSString *)resourceName pointSize:(CGFloat)pointSize;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

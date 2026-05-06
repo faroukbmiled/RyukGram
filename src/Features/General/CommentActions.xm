@@ -1,15 +1,33 @@
 // Comment long-press menu extras: copy text + GIF download/link submenu.
 #import "../../Utils.h"
 #import "../../Downloader/Download.h"
+#import "../../UI/SCIIcon.h"
+#import "../../UI/SCIDownloadMenu.h"
+#import "../../Gallery/SCIGalleryFile.h"
+#import "../../Gallery/SCIGallerySaveMetadata.h"
+#import "../../ActionButton/SCIMediaActions.h"
+#import "../StoriesAndMessages/SCIDirectUserResolver.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <substrate.h>
 
-static SCIDownloadDelegate *sciGifDl = nil;
-
 static DownloadAction sciGifDownloadAction(void) {
     NSString *method = [SCIUtils getStringPref:@"dw_save_action"];
     return [method isEqualToString:@"photos"] ? saveToPhotos : share;
+}
+
+static void sciFillGifMetadataFromComment(SCIGallerySaveMetadata *md, id comment) {
+    if (!md || !comment) return;
+    @try {
+        id user = nil;
+        for (NSString *key in @[@"user", @"author", @"commenter"]) {
+            @try { user = [comment valueForKey:key]; } @catch (__unused id e) {}
+            if (user) break;
+        }
+        md.sourceUsername = sciDirectUserResolverUsernameFromUser(user);
+        md.sourceUserPK = sciDirectUserResolverPKFromUser(user);
+        md.sourceProfileURLString = sciDirectUserResolverProfilePicURLStringFromUser(user);
+    } @catch (__unused id e) {}
 }
 
 static id (*orig_commentCtxMenu)(id, SEL, id, id, CGPoint);
@@ -60,7 +78,7 @@ static id new_commentCtxMenu(id self, SEL _cmd, id cv, id indexPath, CGPoint poi
 
         if (hasText && [SCIUtils getBoolPref:@"copy_comment"]) {
             [extra addObject:[UIAction actionWithTitle:SCILocalized(@"Copy")
-                                                 image:[UIImage systemImageNamed:@"doc.on.doc"]
+                                                 image:[SCIIcon imageNamed:@"doc.on.doc"]
                                             identifier:nil
                                                handler:^(__kindof UIAction *_) {
                 [UIPasteboard generalPasteboard].string = text;
@@ -69,17 +87,38 @@ static id new_commentCtxMenu(id self, SEL _cmd, id cv, id indexPath, CGPoint poi
 
         if (hasGif && [SCIUtils getBoolPref:@"download_gif_comment"]) {
             UIAction *download = [UIAction actionWithTitle:SCILocalized(@"Download GIF")
-                                                     image:[UIImage systemImageNamed:@"arrow.down.circle"]
+                                                     image:[SCIIcon imageNamed:@"arrow.down.circle"]
                                                 identifier:nil
                                                    handler:^(__kindof UIAction *_) {
                 NSURL *url = [NSURL URLWithString:gifURL];
                 if (!url) return;
-                sciGifDl = [[SCIDownloadDelegate alloc] initWithAction:sciGifDownloadAction() showProgress:YES];
-                [sciGifDl downloadFileWithURL:url fileExtension:@"gif" hudLabel:nil];
+                SCIGallerySaveMetadata *md = [SCIGallerySaveMetadata new];
+                md.source = (int16_t)SCIGallerySourceComments;
+                if (gifId.length) md.sourceMediaPK = gifId;
+                md.sourceMediaURLString = gifURL;
+                sciFillGifMetadataFromComment(md, comment);
+                [SCIMediaActions setCurrentFilenameStem:
+                    [SCIMediaActions filenameStemForUsername:md.sourceUsername contextLabel:@"comment-gif"]];
+
+                if ([SCIUtils getBoolPref:@"sci_gallery_enabled"]) {
+                    [SCIDownloadMenu presentForURL:url
+                                              mode:SCIDownloadMenuModeRemoteURL
+                                     fileExtension:@"gif"
+                                          hudLabel:SCILocalized(@"Download GIF")
+                                          metadata:md
+                                           isAudio:NO
+                                            fromVC:nil];
+                } else {
+                    [SCIDownloadMenu downloadURL:url
+                                   fileExtension:@"gif"
+                                        hudLabel:nil
+                                        metadata:md
+                                     forceTarget:(sciGifDownloadAction() == saveToPhotos ? 0 : 2)];
+                }
             }];
             NSString *pageURL = gifId.length ? [NSString stringWithFormat:@"https://giphy.com/gifs/%@", gifId] : nil;
             UIAction *copy = [UIAction actionWithTitle:SCILocalized(@"Copy GIF link")
-                                                 image:[UIImage systemImageNamed:@"link"]
+                                                 image:[SCIIcon imageNamed:@"link"]
                                             identifier:nil
                                                handler:^(__kindof UIAction *_) {
                 if (!pageURL.length) return;
@@ -87,7 +126,7 @@ static id new_commentCtxMenu(id self, SEL _cmd, id cv, id indexPath, CGPoint poi
                 [SCIUtils showToastForDuration:1.5 title:SCILocalized(@"GIF link copied") subtitle:nil];
             }];
             [extra addObject:[UIMenu menuWithTitle:@"GIF"
-                                             image:[UIImage systemImageNamed:@"photo"]
+                                             image:[SCIIcon imageNamed:@"photo"]
                                         identifier:nil
                                            options:0
                                           children:@[download, copy]]];

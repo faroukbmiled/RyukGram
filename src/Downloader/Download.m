@@ -1,6 +1,9 @@
 #import "Download.h"
 #import "../PhotoAlbum.h"
+#import "../Gallery/SCIGalleryFile.h"
+#import "../Gallery/SCIGallerySaveMetadata.h"
 #import <Photos/Photos.h>
+#import <AVFoundation/AVFoundation.h>
 
 static const CGFloat kPillWidth = 220.0;
 static const CGFloat kPillHeight = 60.0;
@@ -486,14 +489,20 @@ static inline UIImage *SCIIcon(NSString *name) {
 
 - (void)downloadDidFinishWithFileURL:(NSURL *)fileURL {
 	dispatch_async(dispatch_get_main_queue(), ^{
-
-		if (self.action != saveToPhotos) {
+		// saveToPhotos / saveToGallery report their own pill state.
+		if (self.action != saveToPhotos && self.action != saveToGallery) {
 			[self.pill finishTicket:self.ticketId successMessage:SCILocalized(@"Done")];
 		}
+
+		NSString *galleryMode = [SCIUtils getStringPref:@"gallery_save_mode"];
+		BOOL isAudio = SCIGalleryExtensionIsAudio(fileURL.pathExtension);
 
 		switch (self.action) {
 			case share:
 				[SCIUtils showShareVC:fileURL];
+				if ([galleryMode isEqualToString:@"mirror"] && self.pendingGallerySaveMetadata) {
+					[self logFileToGalleryQuiet:fileURL];
+				}
 				break;
 
 			case quickLook:
@@ -501,10 +510,64 @@ static inline UIImage *SCIIcon(NSString *name) {
 				break;
 
 			case saveToPhotos:
-				[self saveFileToPhotos:fileURL];
+				// Photos library rejects audio — fall back to gallery / share.
+				if (isAudio) {
+					if ([galleryMode isEqualToString:@"off"] || galleryMode.length == 0) {
+						[self.pill finishTicket:self.ticketId successMessage:SCILocalized(@"Done")];
+						[SCIUtils showShareVC:fileURL];
+					} else {
+						[self saveFileToGallery:fileURL];
+					}
+					break;
+				}
+				if ([galleryMode isEqualToString:@"gallery_only"]) {
+					[self saveFileToGallery:fileURL];
+				} else {
+					[self saveFileToPhotos:fileURL];
+					if ([galleryMode isEqualToString:@"mirror"] && self.pendingGallerySaveMetadata) {
+						[self logFileToGalleryQuiet:fileURL];
+					}
+				}
+				break;
+
+			case saveToGallery:
+				[self saveFileToGallery:fileURL];
 				break;
 		}
 	});
+}
+
+- (void)saveFileToGallery:(NSURL *)fileURL {
+	NSError *err = nil;
+	SCIGalleryFile *file = [self saveFileURL:fileURL toGalleryWithError:&err];
+	if (file && !err) {
+		[self.pill finishTicket:self.ticketId successMessage:SCILocalized(@"Saved to Gallery")];
+	} else {
+		NSLog(@"[RyukGram] Gallery save failed: %@", err);
+		[self.pill finishTicket:self.ticketId errorMessage:SCILocalized(@"Failed to save")];
+	}
+}
+
+// Mirror mode: Photos save reports pill, gallery log is fire-and-forget.
+- (void)logFileToGalleryQuiet:(NSURL *)fileURL {
+	NSError *err = nil;
+	[self saveFileURL:fileURL toGalleryWithError:&err];
+	if (err) NSLog(@"[RyukGram] Gallery mirror log failed: %@", err);
+}
+
+// Copies (not moves) so share/Photos flow can still use the source file.
+- (SCIGalleryFile *)saveFileURL:(NSURL *)fileURL toGalleryWithError:(NSError **)error {
+	SCIGalleryMediaType mediaType = SCIGalleryMediaTypeForExtension(fileURL.pathExtension);
+	SCIGallerySaveMetadata *metadata = [self.pendingGallerySaveMetadata isKindOfClass:[SCIGallerySaveMetadata class]]
+		? self.pendingGallerySaveMetadata
+		: nil;
+	SCIGallerySource source = metadata ? (SCIGallerySource)metadata.source : SCIGallerySourceOther;
+	return [SCIGalleryFile saveFileToGallery:fileURL
+	                                  source:source
+	                               mediaType:mediaType
+	                              folderPath:nil
+	                                metadata:metadata
+	                                   error:error];
 }
 - (void)saveFileToPhotos:(NSURL *)fileURL {
 	[PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {

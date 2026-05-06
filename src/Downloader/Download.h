@@ -43,10 +43,14 @@
 typedef NS_ENUM(NSUInteger, DownloadAction) {
     share,
     quickLook,
-    saveToPhotos
+    saveToPhotos,
+    saveToGallery
 };
 @property (nonatomic, readonly) DownloadAction action;
 @property (nonatomic, readonly) BOOL showProgress;
+/// Optional gallery metadata. When set + the global save mode includes the
+/// gallery, the download is also (or instead) logged into the RyukGram gallery.
+@property (nonatomic, strong, nullable) id pendingGallerySaveMetadata;
 
 @property (nonatomic, strong) SCIDownloadManager *downloadManager;
 @property (nonatomic, strong) SCIDownloadPillView *pill;

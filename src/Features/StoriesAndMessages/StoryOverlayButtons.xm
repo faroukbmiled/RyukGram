@@ -4,6 +4,7 @@
 #import "OverlayHelpers.h"
 #import "SCIExcludedStoryUsers.h"
 #import "../../SCIChrome.h"
+#import "../../UI/SCIIcon.h"
 #import "../../ActionButton/SCIActionButton.h"
 #import "../../ActionButton/SCIActionIcon.h"
 #import "../../ActionButton/SCIMediaActions.h"
@@ -342,12 +343,13 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 	}
 
 	if (existing) {
-		existing.symbolName = symbol;
+		[existing setIconResource:symbol pointSize:18.0]; // IG-styled eye glyph
 		existing.iconTint = tint;
 		return;
 	}
 
-	SCIChromeButton *button = SCIStoryButton(symbol, 18.0, 36.0, SCI_STORY_EYE_TAG);
+	SCIChromeButton *button = SCIStoryButton(@"", 18.0, 36.0, SCI_STORY_EYE_TAG);
+	[button setIconResource:symbol pointSize:18.0];
 	button.iconTint = tint;
 
 	[button addTarget:self action:@selector(sciStorySeenButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -408,6 +410,7 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 
 	if (existing) [existing removeFromSuperview];
 
+	// Stays SF — `at` deliberately absent from SCIIcon's map (matches the action-button menu).
 	SCIChromeButton *button = SCIStoryButton(@"at", 18.0, 36.0, SCI_STORY_MENTIONS_TAG);
 	[button addTarget:self action:@selector(sciStoryMentionsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 	[self addSubview:button];
@@ -532,7 +535,7 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 - (void)sciStorySeenButtonTapped:(SCIChromeButton *)sender {
 	if ([[SCIUtils getStringPref:@"story_seen_mode"] isEqualToString:@"toggle"]) {
 		sciStorySeenToggleEnabled = !sciStorySeenToggleEnabled;
-		sender.symbolName = sciStorySeenToggleEnabled ? @"eye.fill" : @"eye";
+		[sender setIconResource:(sciStorySeenToggleEnabled ? @"eye.fill" : @"eye") pointSize:18.0];
 		sender.iconTint = sciStorySeenToggleEnabled ? SCIUtils.SCIColor_Primary : UIColor.whiteColor;
 
 		[SCIUtils showToastForDuration:2.0 title:sciStorySeenToggleEnabled ? SCILocalized(@"Story read receipts enabled") : SCILocalized(@"Story read receipts disabled")];
@@ -560,7 +563,7 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 
 		NSMutableArray<UIMenuElement *> *items = [NSMutableArray array];
 
-		[items addObject:[UIAction actionWithTitle:SCILocalized(@"Mark seen") image:[UIImage systemImageNamed:@"eye"] identifier:nil handler:^(__unused UIAction *action) {
+		[items addObject:[UIAction actionWithTitle:SCILocalized(@"Mark seen") image:[SCIIcon imageNamed:@"eye"] identifier:nil handler:^(__unused UIAction *action) {
 			((void(*)(id, SEL, id))objc_msgSend)(strongSelf, @selector(sciStoryMarkSeenTapped:), nil);
 		}]];
 
@@ -568,7 +571,7 @@ static void SCIConfigureStoryActionButton(SCIChromeButton *button) {
 			NSString *title = inList ? (blockSelected ? SCILocalized(@"Remove from block list") : SCILocalized(@"Un-exclude story seen")) : (blockSelected ? SCILocalized(@"Add to block list") : SCILocalized(@"Exclude story seen"));
 			NSString *image = inList ? @"minus.circle" : @"eye.slash";
 
-			UIAction *exclude = [UIAction actionWithTitle:title image:[UIImage systemImageNamed:image] identifier:nil handler:^(__unused UIAction *action) {
+			UIAction *exclude = [UIAction actionWithTitle:title image:[SCIIcon imageNamed:image] identifier:nil handler:^(__unused UIAction *action) {
 				if (inList) {
 					[SCIExcludedStoryUsers removePK:pk];
 					[SCIUtils showToastForDuration:2.0 title:blockSelected ? SCILocalized(@"Unblocked") : SCILocalized(@"Un-excluded")];

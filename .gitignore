@@ -35,7 +35,7 @@ src/**/wip.xm
 
 .claude
 CLAUDE.md
-upstream-scinsta
+upstream-scinsta*
 *.ipa
 *.dylib
 deploy.sh
@@ -57,3 +57,7 @@ RyukGram-src-*.zip
 *_diff.txt
 
 PUSH.md
+
+# FB asset browser (extracted from FBSharedFramework — local only)
+fb_assets_dump/
+fb_assets.html

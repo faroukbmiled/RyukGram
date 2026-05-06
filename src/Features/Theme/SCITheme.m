@@ -65,6 +65,24 @@ static NSString *const SCIThemeMigrationFlag = @"theme_migrated_v1";
     return [self mode] == SCIThemeModeOLED && [self effectiveDark];
 }
 
++ (NSString *)keyboardModeKey {
+    NSString *raw = [[NSUserDefaults standardUserDefaults] stringForKey:SCIThemePrefKeyboard];
+    return raw.length ? raw : @"off";
+}
+
++ (BOOL)keyboardShouldApplyDark {
+    NSString *km = [self keyboardModeKey];
+    if ([km isEqualToString:@"off"]) return NO;
+    if ([self forceTheme]) return YES;
+    return [self isSystemDark];
+}
+
++ (BOOL)keyboardShouldApplyOLED {
+    if (![[self keyboardModeKey] isEqualToString:@"oled"]) return NO;
+    if ([self forceTheme]) return YES;
+    return [self isSystemDark];
+}
+
 + (UIColor *)backgroundColor {
     return [UIColor blackColor];
 }

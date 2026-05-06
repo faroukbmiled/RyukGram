@@ -116,30 +116,18 @@ const void *kSCIDismissKey   = &kSCIDismissKey;
 
     NSString *tap = [SCIUtils getStringPref:prefKey];
     if (!tap.length) tap = @"menu";
+    if ([tap isEqualToString:@"menu"]) return;
+
     id media = provider(sender);
     if (media == (id)kCFNull) return;
 
     SCIActionContext tapCtx = (SCIActionContext)ctxNum.integerValue;
-    NSString *tapCtxLabel = [SCIMediaActions contextLabelForContext:tapCtx];
 
-    if ([tap isEqualToString:@"expand"]) {
-        [SCIMediaActions expandMedia:media fromView:sender caption:nil];
-    } else if ([tap isEqualToString:@"download_share"]) {
-        [SCIMediaActions setCurrentFilenameStem:[SCIMediaActions filenameStemForMedia:media contextLabel:tapCtxLabel]];
-        [SCIMediaActions downloadAndShareMedia:media];
-    } else if ([tap isEqualToString:@"download_photos"]) {
-        [SCIMediaActions setCurrentFilenameStem:[SCIMediaActions filenameStemForMedia:media contextLabel:tapCtxLabel]];
-        [SCIMediaActions downloadAndSaveMedia:media];
-    } else if ([tap isEqualToString:@"copy_link"]) {
-        [SCIMediaActions copyURLForMedia:media];
-    } else if ([tap isEqualToString:@"repost"]) {
-        NSURL *vidURL = [SCIUtils getVideoUrlForMedia:(id)media];
-        NSURL *imgURL = [SCIUtils getPhotoUrlForMedia:(id)media];
-        [SCIRepostSheet repostWithVideoURL:vidURL photoURL:imgURL];
-    } else if ([tap isEqualToString:@"view_mentions"]) {
-        UIViewController *host = [SCIUtils nearestViewControllerForView:sender];
-        if (host) sciShowStoryMentions(host, sender);
-    }
+    // Legacy values from older builds — translate before dispatch.
+    if ([tap isEqualToString:@"copy_link"])     tap = @"copy_url";
+    if ([tap isEqualToString:@"download_photos"]) tap = @"download_save";
+
+    [SCIMediaActions executeActionForContext:tapCtx actionID:tap media:media fromView:sender];
 }
 
 // MARK: - UIContextMenuInteractionDelegate

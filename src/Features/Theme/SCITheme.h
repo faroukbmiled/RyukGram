@@ -35,6 +35,11 @@ extern NSString *const SCIThemePrefKeyboard; // string: off/dark/oled
 + (UIUserInterfaceStyle)overrideStyle;
 + (BOOL)shouldRecolor;
 
+// Keyboard theme resolved against current state: returns NO when
+// `theme_keyboard` is off, YES when force is on, else mirrors system dark.
++ (BOOL)keyboardShouldApplyDark;
++ (BOOL)keyboardShouldApplyOLED;
+
 + (UIColor *)backgroundColor;
 + (UIColor *)surfaceColor;
 

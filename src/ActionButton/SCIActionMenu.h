@@ -2,6 +2,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCIActionMenuConfig;
+@class SCIActionConfigSection;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// One menu entry. Either a leaf (has handler) or a submenu (has children).
@@ -14,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) BOOL destructive;
 @property (nonatomic, assign, readonly) BOOL isSeparator;
 @property (nonatomic, assign, readonly) BOOL disabled;
+/// Optional stable identifier (matches SCIActionCatalog action IDs). Used to
+/// look up an action's handler from a freshly built menu without depending on
+/// localized titles.
+@property (nonatomic, copy, nullable) NSString *actionID;
 
 + (instancetype)actionWithTitle:(NSString *)title
                            icon:(nullable NSString *)icon
@@ -34,6 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// A visual group break. Rendered as an inline submenu divider in UIMenu.
 + (instancetype)separator;
+
+/// Read-only data row — rendered greyed out, non-tappable. Use for showing
+/// values inside an action menu that are visual context, not commands.
++ (instancetype)infoRowWithTitle:(NSString *)title icon:(nullable NSString *)icon;
 @end
 
 
@@ -46,6 +57,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Build a UIMenu with a header title shown at the top of the menu.
 + (UIMenu *)buildMenuWithActions:(NSArray<SCIAction *> *)actions title:(nullable NSString *)title;
+
+/// Translate a config + action-id resolver into the flat SCIAction array
+/// expected by buildMenuWithActions:. Non-collapsible sections render as
+/// inline groups separated by SCIAction separators; collapsible sections
+/// render as a single submenu SCIAction. Disabled actions and resolver-nil
+/// returns are skipped silently. `dateHeader` (when non-nil) becomes the
+/// first inline header.
++ (NSArray<SCIAction *> *)actionsForConfig:(SCIActionMenuConfig *)config
+                                 dateHeader:(nullable NSString *)dateHeader
+                                   resolver:(SCIAction * _Nullable (^)(NSString *actionID))resolver;
 
 @end
 

@@ -1,6 +1,7 @@
 #import "SCIChrome.h"
 #import "Utils.h"
 #import "SCIPrefObserver.h"
+#import "UI/SCIIcon.h"
 
 static void sciPinEdges(UIView *view, UIView *host) {
 	[NSLayoutConstraint activateConstraints:@[
@@ -208,13 +209,19 @@ static UIView *sciFindCanvasDeep(UIView *root, NSInteger depth) {
 }
 
 - (void)reloadIcon {
-	if (!_symbolName.length) {
-		_iconView.image = nil;
-		return;
-	}
+	// Empty symbolName → leave iconView.image alone (caller may have set a
+	// direct image via setIconResource:).
+	if (!_symbolName.length) return;
+	_iconView.image = [SCIIcon sfImageNamed:_symbolName
+								  pointSize:_symbolPointSize
+									 weight:UIImageSymbolWeightSemibold];
+}
 
-	UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:_symbolPointSize weight:UIImageSymbolWeightSemibold];
-	_iconView.image = [UIImage systemImageNamed:_symbolName withConfiguration:config];
+- (void)setIconResource:(NSString *)resourceName pointSize:(CGFloat)pointSize {
+	_symbolName = nil;
+	_iconView.image = resourceName.length
+		? [SCIIcon imageNamed:resourceName pointSize:pointSize weight:UIImageSymbolWeightSemibold]
+		: nil;
 }
 
 - (void)layoutSubviews {

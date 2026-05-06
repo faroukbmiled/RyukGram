@@ -1,5 +1,6 @@
 #import "../../InstagramHeaders.h"
 #import "../../Utils.h"
+#import "../../UI/SCIIcon.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 
@@ -99,7 +100,7 @@ static UIView * _Nullable sciFindSubmitButton(UIView *root) {
 
     UIButton *unlockBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     unlockBtn.tag = SCI_PW_BTN_TAG;
-    [unlockBtn setImage:[UIImage systemImageNamed:@"lock.open.fill" withConfiguration:config] forState:UIControlStateNormal];
+    [unlockBtn setImage:[SCIIcon imageNamed:@"lock.open.fill" configuration:config] forState:UIControlStateNormal];
     unlockBtn.tintColor = [UIColor colorWithRed:1.0 green:0.85 blue:0.0 alpha:1.0];
     unlockBtn.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     unlockBtn.layer.cornerRadius = 20;
@@ -109,7 +110,7 @@ static UIView * _Nullable sciFindSubmitButton(UIView *root) {
 
     UIButton *eyeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     eyeBtn.tag = SCI_PW_BTN_TAG + 1;
-    [eyeBtn setImage:[UIImage systemImageNamed:@"eye.fill" withConfiguration:config] forState:UIControlStateNormal];
+    [eyeBtn setImage:[SCIIcon imageNamed:@"eye.fill" configuration:config] forState:UIControlStateNormal];
     eyeBtn.tintColor = [UIColor whiteColor];
     eyeBtn.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     eyeBtn.layer.cornerRadius = 20;
