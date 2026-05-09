@@ -577,6 +577,17 @@
                                             ]
                                         },
                                         @{
+                                            @"header": SCILocalized(@"Profile stats"),
+                                            @"footer": SCILocalized(@"Controls how profile statistics are displayed in the profile header."),
+                                            @"rows": @[[SCISetting switchCellWithTitle:SCILocalized(@"Show full follower count")
+							subtitle:SCILocalized(@"Displays the complete follower count in the profile header instead of the shortened format")
+							defaultsKey:@"full_followers_count"],
+							[SCISetting switchCellWithTitle:SCILocalized(@"Show full post count")
+							subtitle:SCILocalized(@"Displays the complete post count in the profile header instead of the shortened format")
+							defaultsKey:@"full_posts_count"],
+						]
+                                        },
+                                        @{
                                             @"header": SCILocalized(@"Long-press gestures"),
                                             @"footer": SCILocalized(@"Long-press gestures on profile elements — kept separate from the per-feature action buttons."),
                                             @"rows": @[

@@ -65,6 +65,8 @@ static NSDictionary *sciDefaultsDictionary(void) {
         @"hide_reels_friends_bubbles": @(NO),
         @"hide_reels_floating_social_context": @(NO),
         @"hide_made_with_edits": @(NO),
+        @"full_followers_count": @(NO),
+        @"full_posts_count": @(NO),
         @"fake_follower_count": @(NO),
         @"fake_following_count": @(NO),
         @"fake_post_count": @(NO),
