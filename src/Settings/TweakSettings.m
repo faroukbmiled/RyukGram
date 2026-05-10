@@ -905,9 +905,9 @@
                                         @{
                                             @"header": @"FLEX",
                                             @"rows": @[
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Enable FLEX gesture") subtitle:SCILocalized(@"Hold 5 fingers on the screen to open FLEX") defaultsKey:@"flex_instagram"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Open FLEX on app launch") subtitle:SCILocalized(@"Opens FLEX when the app launches") defaultsKey:@"flex_app_launch"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Open FLEX on app focus") subtitle:SCILocalized(@"Opens FLEX when the app is focused") defaultsKey:@"flex_app_start"]
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Enable FLEX gesture") subtitle:SCILocalized(@"Hold 5 fingers on the screen to open FLEX") defaultsKey:@"flex_instagram" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Open FLEX on app launch") subtitle:SCILocalized(@"Opens FLEX when the app launches") defaultsKey:@"flex_app_launch" requiresRestart:YES],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Open FLEX on app focus") subtitle:SCILocalized(@"Opens FLEX when the app is focused") defaultsKey:@"flex_app_start" requiresRestart:YES]
                                             ]
                                         },
                                         @{
