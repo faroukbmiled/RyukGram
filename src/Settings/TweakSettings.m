@@ -1112,6 +1112,7 @@
             @"rows": @[
                 [SCISetting linkCellWithTitle:@"Ryuk" subtitle:SCILocalized(@"RyukGram developer") imageUrl:@"https://github.com/faroukbmiled.png" url:@"https://github.com/faroukbmiled"],
                 [SCISetting linkCellWithTitle:@"darthplagueiswise (Radan)" subtitle:SCILocalized(@"Experimental features") imageUrl:@"https://github.com/darthplagueiswise.png" url:@"https://github.com/darthplagueiswise"],
+                [SCISetting linkCellWithTitle:@"Hitori" subtitle:SCILocalized(@"Code contributions") imageUrl:@"https://github.com/mikasa-san.png" url:@"https://github.com/mikasa-san"],
             ]
         },
         @{
@@ -1155,7 +1156,6 @@
         @{
             @"header": SCILocalized(@"Code and research"),
             @"rows": @[
-                [SCISetting linkCellWithTitle:@"Mikasa-san" subtitle:SCILocalized(@"Code contributions") icon:nil url:@"https://github.com/Mikasa-san"],
                 [SCISetting linkCellWithTitle:@"Edoardo (@n3d1117)" subtitle:SCILocalized(@"Following feed mode (from InstaSane)") icon:nil url:@"https://github.com/n3d1117"],
                 [SCISetting linkCellWithTitle:@"John (@erupts0)" subtitle:SCILocalized(@"Testing and feature suggestions") icon:nil url:@"https://github.com/erupts0"],
             ]
