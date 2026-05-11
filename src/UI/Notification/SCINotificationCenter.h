@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)dismissAll;
 
 // Per-action pref defaults (notif_action_<id> = "default") — merged into
-// sciRegisterDefaultsOnce so picker rows resolve to "Default" on first launch.
+// SCIRegisterDefaultsOnce so picker rows resolve to "Default" on first launch.
 + (NSDictionary<NSString *, NSString *> *)defaultPerActionPrefs;
 
 // Settings preview hooks.

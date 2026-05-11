@@ -2,7 +2,7 @@
 #import "../../Utils.h"
 #import "../../InstagramHeaders.h"
 
-// ───── Pref keys (mirrored in sciDefaultsDictionary in Tweak.x) ─────
+// ───── Pref keys (mirrored in SCIDefaultsDictionary in SCIDefaults.m) ─────
 static NSString *const kPrefStyle           = @"notif_style";
 static NSString *const kPrefPosition        = @"notif_position";
 static NSString *const kPrefDefaultSurface  = @"notif_default_surface";

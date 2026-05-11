@@ -597,6 +597,10 @@
 "Confirm Instants emoji reaction" = "Instants 이모티콘 반응 확인";
 "Shows an alert before sending an emoji reaction on an Instant" = "Instant에 이모티콘 반응을 보내기 전에 알림 표시";
 "Confirm story like" = "스토리 좋아요 확인";
+"Confirm note like" = "노트 좋아요 확인";
+"Confirm note emoji reaction" = "노트 이모티콘 반응 확인";
+"Shows an alert when you click the like button on notes to confirm the like" = "노트에서 좋아요 버튼을 클릭할 때 좋아요를 확인할 경고를 표시합니다";
+"Shows an alert before sending an emoji reaction on a note" = "노트에 이모티콘 반응을 보내기 전에 경고를 표시합니다";
 "Confirm unfollow" = "언팔로우 확인";
 "Confirm voice messages" = "음성 메시지 확인";
 "Shows an alert before sending an emoji reaction on a story" = "스토리에 이모티콘 반응을 보내기 전에 경고를 표시합니다";
@@ -1244,7 +1248,7 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
-"%@ — GitHub & Telegram" = "%@ — GitHub & Telegram";
+"%@ — GitHub, Telegram, Donate" = "%@ — GitHub, Telegram, 후원";
 "About" = "정보";
 "Arabic translation" = "아랍어 번역";
 "Chinese (Traditional and Simplified) translation" = "중국어 (번체 및 간체) 번역";
@@ -1281,6 +1285,7 @@
 "Support RyukGram development" = "RyukGram 개발 후원";
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram은 SCInsta를 대폭 재작업한 포크입니다 — 원작자 후원에 감사드립니다.";
 "Browse changes from previous releases" = "이전 릴리스의 변경 사항 보기";
+"Code inspiration" = "코드 영감";
 "Telegram channel" = "Telegram 채널";
 "Testing and feature suggestions" = "테스트 및 기능 제안";
 "Tweak settings" = "트윅 설정";

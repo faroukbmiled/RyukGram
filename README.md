@@ -2,6 +2,8 @@
 A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com/SoCuul/SCInsta) with additional features and fixes.\
 `Version v1.2.3` | `Tested on Instagram 426.0.0`
 
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy me a coffee" height="50">](https://buymeacoffee.com/axryuk)
+
 ---
 
 > [!NOTE]
@@ -218,6 +220,7 @@ A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com
 ### Confirm actions
 - Confirm like: Posts/Stories
 - Confirm story emoji reaction **\***
+- Confirm note like + emoji reaction **\***
 - Confirm like: Reels
 - Confirm follow
 - Confirm unfollow **\***
@@ -345,5 +348,5 @@ $ ./build.sh <sideload/sidestore/rootless/rootful>
 
 RyukGram is free and open source. If you'd like to support development:
 
-- [☕ Donate to Ryuk (RyukGram)](https://ko-fi.com/ryuk744335)
+- [☕ Donate to Ryuk (RyukGram)](https://buymeacoffee.com/axryuk)
 - [☕ Donate to SoCuul (original SCInsta)](https://ko-fi.com/SoCuul) — RyukGram wouldn't exist without SoCuul's original SCInsta, so showing them some love is always welcome

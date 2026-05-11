@@ -597,6 +597,10 @@
 "Confirm Instants emoji reaction" = "Instants emoji tepkisini onayla";
 "Shows an alert before sending an emoji reaction on an Instant" = "Bir Instant'a emoji tepkisi göndermeden önce uyarı gösterir";
 "Confirm story like" = "Hikaye beğenisini onayla";
+"Confirm note like" = "Not beğenisini onayla";
+"Confirm note emoji reaction" = "Not emoji tepkisini onayla";
+"Shows an alert when you click the like button on notes to confirm the like" = "Notlarda beğeniyi onaylamak için beğen butonuna tıkladığınızda uyarı gösterir";
+"Shows an alert before sending an emoji reaction on a note" = "Bir nota emoji tepkisi göndermeden önce uyarı gösterir";
 "Confirm unfollow" = "Takibi bırakmayı onayla";
 "Confirm voice messages" = "Sesli mesajları onayla";
 "Shows an alert before sending an emoji reaction on a story" = "Bir hikayeye emoji tepkisi göndermeden önce uyarı gösterir";
@@ -1244,7 +1248,7 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
-"%@ — GitHub & Telegram" = "%@ — GitHub ve Telegram";
+"%@ — GitHub, Telegram, Donate" = "%@ — GitHub, Telegram, Bağış";
 "About" = "Hakkında";
 "Arabic translation" = "Arapça çeviri";
 "Chinese (Traditional and Simplified) translation" = "Çince (Geleneksel ve Basitleştirilmiş) çevirisi";
@@ -1281,6 +1285,7 @@
 "Support RyukGram development" = "RyukGram geliştirmesini destekle";
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram, SCInsta'nın büyük ölçüde yeniden çalışılmış bir çatallanmasıdır — orijinal geliştiriciye yapılan destek takdir edilir.";
 "Browse changes from previous releases" = "Önceki sürümlerdeki değişikliklere göz at";
+"Code inspiration" = "Kod ilhamı";
 "Telegram channel" = "Telegram kanalı";
 "Testing and feature suggestions" = "Test ve özellik önerileri";
 "Tweak settings" = "Tweak ayarları";

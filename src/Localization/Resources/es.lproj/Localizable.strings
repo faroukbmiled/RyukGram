@@ -597,6 +597,10 @@
 "Confirm Instants emoji reaction" = "Confirmar reacción con emojis en Instants";
 "Shows an alert before sending an emoji reaction on an Instant" = "Muestra una alerta antes de enviar una reacción con emojis en un Instant";
 "Confirm story like" = "Confirmar me gusta en historias";
+"Confirm note like" = "Confirmar me gusta en notas";
+"Confirm note emoji reaction" = "Confirmar reacción con emojis en notas";
+"Shows an alert when you click the like button on notes to confirm the like" = "Muestra una alerta para confirmar cuando tocas el botón de me gusta en una nota";
+"Shows an alert before sending an emoji reaction on a note" = "Muestra una alerta antes de enviar una reacción con emojis en una nota";
 "Confirm unfollow" = "Confirmar dejar de seguir";
 "Confirm voice messages" = "Confirmar mensaje de voz";
 "Shows an alert before sending an emoji reaction on a story" = "Muestra una alerta antes de enviar una reacción con emojis en una historia";
@@ -1244,7 +1248,7 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
-"%@ — GitHub & Telegram" = "%@ — GitHub y Telegram";
+"%@ — GitHub, Telegram, Donate" = "%@ — GitHub, Telegram, Donar";
 "About" = "Acerca de";
 "Arabic translation" = "Traducción al árabe";
 "Chinese (Traditional and Simplified) translation" = "Traducción al chino (tradicional y simplificado)";
@@ -1281,6 +1285,7 @@
 "Support RyukGram development" = "Apoyar el desarrollo de RyukGram";
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram es un fork de SCInsta muy reelaborado — se agradece apoyar al desarrollador original.";
 "Browse changes from previous releases" = "Explorar cambios de versiones anteriores";
+"Code inspiration" = "Inspiración de código";
 "Telegram channel" = "Canal de Telegram";
 "Testing and feature suggestions" = "Pruebas y sugerencias de funciones";
 "Tweak settings" = "Ajustes del tweak";

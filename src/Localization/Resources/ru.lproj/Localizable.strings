@@ -597,6 +597,10 @@
 "Confirm Instants emoji reaction" = "Подтверждать эмодзи-реакцию на Instants";
 "Shows an alert before sending an emoji reaction on an Instant" = "Показывает подтверждение перед отправкой эмодзи-реакции на Instant";
 "Confirm story like" = "Подтверждать лайк истории";
+"Confirm note like" = "Подтверждать лайк заметки";
+"Confirm note emoji reaction" = "Подтверждать эмодзи-реакцию на заметку";
+"Shows an alert when you click the like button on notes to confirm the like" = "Показывает подтверждение при нажатии кнопки лайка на заметках";
+"Shows an alert before sending an emoji reaction on a note" = "Показывает подтверждение перед отправкой эмодзи-реакции на заметку";
 "Confirm unfollow" = "Подтверждать отписку";
 "Confirm voice messages" = "Подтверждать голосовые сообщения";
 "Shows an alert before sending an emoji reaction on a story" = "Показывает подтверждение перед отправкой эмодзи-реакции на историю";
@@ -1244,7 +1248,7 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
-"%@ — GitHub & Telegram" = "%@ — GitHub и Telegram";
+"%@ — GitHub, Telegram, Donate" = "%@ — GitHub, Telegram, поддержать";
 "About" = "О программе";
 "Arabic translation" = "Арабский перевод";
 "Chinese (Traditional and Simplified) translation" = "Китайский перевод (традиционный и упрощённый)";
@@ -1281,6 +1285,7 @@
 "Support RyukGram development" = "Поддержать разработку RyukGram";
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram — это сильно переработанный форк SCInsta. Поддержка оригинального разработчика приветствуется.";
 "Browse changes from previous releases" = "Посмотреть изменения в прошлых версиях";
+"Code inspiration" = "Вдохновение для кода";
 "Telegram channel" = "Telegram-канал";
 "Testing and feature suggestions" = "Тестирование и предложения функций";
 "Tweak settings" = "Настройки твика";

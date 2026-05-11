@@ -1335,6 +1335,13 @@ static id sciCarouselParentMedia(id media, UIView *sourceView) {
 + (NSArray<SCIAction *> *)actionsForContext:(SCIActionContext)ctx
                                       media:(id)media
                                    fromView:(UIView *)sourceView {
+    return [self actionsForContext:ctx media:media fromView:sourceView includeDisabled:NO];
+}
+
++ (NSArray<SCIAction *> *)actionsForContext:(SCIActionContext)ctx
+                                      media:(id)media
+                                   fromView:(UIView *)sourceView
+                            includeDisabled:(BOOL)includeDisabled {
     SCIActionSource source = sciSourceFromContext(ctx);
     SCIActionMenuConfig *config = [SCIActionMenuConfig configForSource:source];
 
@@ -1655,7 +1662,7 @@ static id sciCarouselParentMedia(id media, UIView *sourceView) {
         return nil;
     };
 
-    return [SCIActionMenu actionsForConfig:config dateHeader:dateHeader resolver:resolve];
+    return [SCIActionMenu actionsForConfig:config dateHeader:dateHeader resolver:resolve includeDisabled:includeDisabled];
 }
 
 static BOOL sciFireActionWithIDInList(NSArray<SCIAction *> *items, NSString *aid) {
@@ -1677,7 +1684,9 @@ static BOOL sciFireActionWithIDInList(NSArray<SCIAction *> *items, NSString *aid
                           media:(id)media
                        fromView:(UIView *)sourceView {
     if (!aid.length || [aid isEqualToString:@"menu"]) return NO;
-    NSArray<SCIAction *> *flat = [self actionsForContext:ctx media:media fromView:sourceView];
+    // Pass YES so a default-tap binding still fires when the user hid that
+    // action from the menu — tap and menu visibility are separate decisions.
+    NSArray<SCIAction *> *flat = [self actionsForContext:ctx media:media fromView:sourceView includeDisabled:YES];
     return sciFireActionWithIDInList(flat, aid);
 }
 

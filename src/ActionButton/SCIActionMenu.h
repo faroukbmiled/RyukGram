@@ -1,5 +1,3 @@
-// SCIActionMenu — reusable action menu model + UIMenu builder.
-
 #import <UIKit/UIKit.h>
 
 @class SCIActionMenuConfig;
@@ -7,7 +5,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// One menu entry. Either a leaf (has handler) or a submenu (has children).
 @interface SCIAction : NSObject
 @property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly, nullable) NSString *subtitle;
@@ -17,16 +14,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) BOOL destructive;
 @property (nonatomic, assign, readonly) BOOL isSeparator;
 @property (nonatomic, assign, readonly) BOOL disabled;
-/// Optional stable identifier (matches SCIActionCatalog action IDs). Used to
-/// look up an action's handler from a freshly built menu without depending on
-/// localized titles.
+// Stable id (matches SCIActionCatalog) so handlers survive title localization.
 @property (nonatomic, copy, nullable) NSString *actionID;
 
 + (instancetype)actionWithTitle:(NSString *)title
                            icon:(nullable NSString *)icon
                         handler:(void(^)(void))handler;
 
-/// When placed first in the actions array, renders as a small grey caption above the menu.
+// Must be first in the array. Renders as a small grey caption.
 + (instancetype)headerWithTitle:(NSString *)title;
 
 + (instancetype)actionWithTitle:(NSString *)title
@@ -39,34 +34,33 @@ NS_ASSUME_NONNULL_BEGIN
                            icon:(nullable NSString *)icon
                        children:(NSArray<SCIAction *> *)children;
 
-/// A visual group break. Rendered as an inline submenu divider in UIMenu.
+// Group divider. Adjacent non-separator actions fold into one inline submenu.
 + (instancetype)separator;
 
-/// Read-only data row — rendered greyed out, non-tappable. Use for showing
-/// values inside an action menu that are visual context, not commands.
+// Greyed-out, non-tappable. For showing context values inside a menu.
 + (instancetype)infoRowWithTitle:(NSString *)title icon:(nullable NSString *)icon;
 @end
 
 
 @interface SCIActionMenu : NSObject
 
-/// Build a UIMenu from an array of SCIAction. Consecutive actions between
-/// `separator` markers are grouped into inline submenus so they render as
-/// divided sections (standard iOS menu aesthetic).
 + (UIMenu *)buildMenuWithActions:(NSArray<SCIAction *> *)actions;
-
-/// Build a UIMenu with a header title shown at the top of the menu.
 + (UIMenu *)buildMenuWithActions:(NSArray<SCIAction *> *)actions title:(nullable NSString *)title;
 
-/// Translate a config + action-id resolver into the flat SCIAction array
-/// expected by buildMenuWithActions:. Non-collapsible sections render as
-/// inline groups separated by SCIAction separators; collapsible sections
-/// render as a single submenu SCIAction. Disabled actions and resolver-nil
-/// returns are skipped silently. `dateHeader` (when non-nil) becomes the
-/// first inline header.
+// Walks config sections, asks `resolver` for each action ID, returns the flat
+// list ready for buildMenuWithActions:. Disabled actions and nil resolver
+// returns are dropped silently. `dateHeader` (if set) becomes the leading
+// grey caption.
 + (NSArray<SCIAction *> *)actionsForConfig:(SCIActionMenuConfig *)config
                                  dateHeader:(nullable NSString *)dateHeader
                                    resolver:(SCIAction * _Nullable (^)(NSString *actionID))resolver;
+
+// Same, but `includeDisabled:YES` keeps menu-disabled actions in the list so
+// the default-tap path can still fire one the user hid from the menu.
++ (NSArray<SCIAction *> *)actionsForConfig:(SCIActionMenuConfig *)config
+                                 dateHeader:(nullable NSString *)dateHeader
+                                   resolver:(SCIAction * _Nullable (^)(NSString *actionID))resolver
+                            includeDisabled:(BOOL)includeDisabled;
 
 @end
 

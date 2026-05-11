@@ -82,7 +82,7 @@
             @"rows": @[
                 ({
                     SCISetting *s = [SCISetting buttonCellWithTitle:@"RyukGram"
-                                                           subtitle:[NSString stringWithFormat:SCILocalized(@"%@ — GitHub & Telegram"), SCIVersionString]
+                                                           subtitle:[NSString stringWithFormat:SCILocalized(@"%@ — GitHub, Telegram, Donate"), SCIVersionString]
                                                                icon:nil
                                                              action:^{
                         UIWindow *win = nil;
@@ -723,7 +723,9 @@
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm like: Reels") subtitle:SCILocalized(@"Shows an alert when you click the like button on reels to confirm the like") defaultsKey:@"like_confirm_reels"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm story like") subtitle:SCILocalized(@"Shows an alert when you click the like button on stories to confirm the like") defaultsKey:@"story_like_confirm"],
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Confirm story emoji reaction") subtitle:SCILocalized(@"Shows an alert before sending an emoji reaction on a story") defaultsKey:@"emoji_reaction_confirm"],
-                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm Instants emoji reaction") subtitle:SCILocalized(@"Shows an alert before sending an emoji reaction on an Instant") defaultsKey:@"instants_emoji_reaction_confirm"]
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm Instants emoji reaction") subtitle:SCILocalized(@"Shows an alert before sending an emoji reaction on an Instant") defaultsKey:@"instants_emoji_reaction_confirm"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm note like") subtitle:SCILocalized(@"Shows an alert when you click the like button on notes to confirm the like") defaultsKey:@"note_like_confirm"],
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Confirm note emoji reaction") subtitle:SCILocalized(@"Shows an alert before sending an emoji reaction on a note") defaultsKey:@"note_react_confirm"]
                                             ]
                                         },
                                         @{
@@ -1110,7 +1112,7 @@
         @{
             @"header": SCILocalized(@"Developers"),
             @"rows": @[
-                [SCISetting linkCellWithTitle:@"Ryuk" subtitle:SCILocalized(@"RyukGram developer") imageUrl:@"https://github.com/faroukbmiled.png" url:@"https://github.com/faroukbmiled"],
+                [SCISetting linkCellWithTitle:@"Ryuk" subtitle:SCILocalized(@"RyukGram developer") imageUrl:@"https://github.com/faroukbmiled.png" url:SCIAuthorURL],
                 [SCISetting linkCellWithTitle:@"darthplagueiswise (Radan)" subtitle:SCILocalized(@"Experimental features") imageUrl:@"https://github.com/darthplagueiswise.png" url:@"https://github.com/darthplagueiswise"],
                 [SCISetting linkCellWithTitle:@"Hitori" subtitle:SCILocalized(@"Code contributions") imageUrl:@"https://github.com/mikasa-san.png" url:@"https://github.com/mikasa-san"],
             ]
@@ -1131,13 +1133,13 @@
                 [SCISetting linkCellWithTitle:SCILocalized(@"Source code") subtitle:@"" icon:nil url:SCIRepoURL],
                 [SCISetting linkCellWithTitle:SCILocalized(@"Report an issue") subtitle:@"" icon:nil url:SCIRepoIssuesURL],
                 [SCISetting linkCellWithTitle:SCILocalized(@"Releases") subtitle:@"" icon:nil url:SCIRepoReleasesURL],
-                [SCISetting linkCellWithTitle:SCILocalized(@"Telegram channel") subtitle:@"" icon:nil url:@"https://t.me/ryukgram"],
+                [SCISetting linkCellWithTitle:SCILocalized(@"Telegram channel") subtitle:@"" icon:nil url:SCITelegramURL],
             ]
         },
         @{
             @"header": @"",
             @"rows": @[
-                [SCISetting linkCellWithTitle:SCILocalized(@"Donate to Ryuk") subtitle:SCILocalized(@"Support RyukGram development") icon:[SCISymbol symbolWithName:@"heart.fill" color:[UIColor systemPinkColor] size:20.0] url:@"https://ko-fi.com/ryuk744335"],
+                [SCISetting linkCellWithTitle:SCILocalized(@"Donate to Ryuk") subtitle:SCILocalized(@"Support RyukGram development") icon:[SCISymbol symbolWithName:@"heart.fill" color:[UIColor systemPinkColor] size:20.0] url:SCIDonateURL],
             ]
         },
     ];
@@ -1148,7 +1150,7 @@
         @{
             @"header": SCILocalized(@"Inspirations"),
             @"rows": @[
-                [SCISetting linkCellWithTitle:@"SoCuul" subtitle:SCILocalized(@"Original SCInsta developer") icon:nil url:@"https://github.com/SoCuul/SCInsta"],
+                [SCISetting linkCellWithTitle:@"SoCuul" subtitle:SCILocalized(@"Original SCInsta developer") icon:nil url:SCISoCuulRepoURL],
                 [SCISetting linkCellWithTitle:@"BandarHL" subtitle:SCILocalized(@"Original BHInstagram developer") icon:nil url:@"https://github.com/BandarHL"],
                 [SCISetting linkCellWithTitle:@"Instaoled (@VAXMG)" subtitle:SCILocalized(@"OLED theme inspiration") icon:nil url:@"https://t.me/ciesIPAs"],
             ]
@@ -1158,6 +1160,7 @@
             @"rows": @[
                 [SCISetting linkCellWithTitle:@"Edoardo (@n3d1117)" subtitle:SCILocalized(@"Following feed mode (from InstaSane)") icon:nil url:@"https://github.com/n3d1117"],
                 [SCISetting linkCellWithTitle:@"John (@erupts0)" subtitle:SCILocalized(@"Testing and feature suggestions") icon:nil url:@"https://github.com/erupts0"],
+                [SCISetting linkCellWithTitle:@"efibalogh" subtitle:SCILocalized(@"Code inspiration") icon:nil url:@"https://github.com/efibalogh"],
             ]
         },
         @{
@@ -1176,7 +1179,7 @@
             @"header": @"",
             @"footer": SCILocalized(@"RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated."),
             @"rows": @[
-                [SCISetting linkCellWithTitle:SCILocalized(@"Donate to SoCuul") subtitle:SCILocalized(@"Support the original SCInsta developer") icon:[SCISymbol symbolWithName:@"heart.fill" color:[UIColor systemPinkColor] size:20.0] url:@"https://ko-fi.com/SoCuul"],
+                [SCISetting linkCellWithTitle:SCILocalized(@"Donate to SoCuul") subtitle:SCILocalized(@"Support the original SCInsta developer") icon:[SCISymbol symbolWithName:@"heart.fill" color:[UIColor systemPinkColor] size:20.0] url:SCISoCuulDonateURL],
             ]
         },
     ];

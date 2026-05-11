@@ -49,17 +49,20 @@
 
     UIButton *github = [self makeButtonWithTitle:SCILocalized(@"View on GitHub")
                                         sfSymbol:@"chevron.left.forwardslash.chevron.right"
-                                            tint:[UIColor labelColor]
-                                      background:[UIColor tertiarySystemFillColor]];
+                                       iconColor:[UIColor labelColor]];
     [github addTarget:self action:@selector(openGitHub) forControlEvents:UIControlEventTouchUpInside];
 
     UIButton *telegram = [self makeButtonWithTitle:SCILocalized(@"Join Telegram channel")
                                           sfSymbol:@"paperplane.fill"
-                                              tint:[UIColor whiteColor]
-                                        background:[UIColor colorWithRed:0.15 green:0.56 blue:0.93 alpha:1.0]];
+                                         iconColor:[UIColor colorWithRed:0.15 green:0.56 blue:0.93 alpha:1.0]];
     [telegram addTarget:self action:@selector(openTelegram) forControlEvents:UIControlEventTouchUpInside];
 
-    UIStackView *buttons = [[UIStackView alloc] initWithArrangedSubviews:@[github, telegram]];
+    UIButton *donate = [self makeButtonWithTitle:SCILocalized(@"Donate to Ryuk")
+                                        sfSymbol:@"heart.fill"
+                                       iconColor:[UIColor systemPinkColor]];
+    [donate addTarget:self action:@selector(openDonate) forControlEvents:UIControlEventTouchUpInside];
+
+    UIStackView *buttons = [[UIStackView alloc] initWithArrangedSubviews:@[github, telegram, donate]];
     buttons.axis = UILayoutConstraintAxisVertical;
     buttons.spacing = 10;
     buttons.distribution = UIStackViewDistributionFillEqually;
@@ -68,8 +71,9 @@
     stack.axis = UILayoutConstraintAxisVertical;
     stack.alignment = UIStackViewAlignmentCenter;
     stack.spacing = 14;
+    [stack setCustomSpacing:18 afterView:logo];
     [stack setCustomSpacing:2 afterView:title];
-    [stack setCustomSpacing:22 afterView:version];
+    [stack setCustomSpacing:34 afterView:version];
     stack.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:stack];
 
@@ -84,15 +88,25 @@
 
 - (UIButton *)makeButtonWithTitle:(NSString *)title
                          sfSymbol:(NSString *)symbol
-                             tint:(UIColor *)tint
-                       background:(UIColor *)bg {
+                        iconColor:(UIColor *)iconColor {
     UIButtonConfiguration *cfg = [UIButtonConfiguration filledButtonConfiguration];
-    cfg.title = title;
-    cfg.image = [UIImage systemImageNamed:symbol];
-    cfg.imagePadding = 10;
+
+    NSDictionary *attrs = @{
+        NSFontAttributeName: [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold],
+        NSForegroundColorAttributeName: [UIColor labelColor],
+    };
+    cfg.attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrs];
+
+    UIImageSymbolConfiguration *symCfg = [UIImageSymbolConfiguration configurationWithPointSize:16 weight:UIImageSymbolWeightSemibold];
+    cfg.image = [[UIImage systemImageNamed:symbol withConfiguration:symCfg]
+                 imageWithTintColor:iconColor renderingMode:UIImageRenderingModeAlwaysOriginal];
+    cfg.imagePadding = 12;
     cfg.imagePlacement = NSDirectionalRectEdgeLeading;
-    cfg.baseForegroundColor = tint;
-    cfg.baseBackgroundColor = bg;
+    cfg.baseBackgroundColor = [UIColor colorWithDynamicProvider:^UIColor *(UITraitCollection *tc) {
+        return tc.userInterfaceStyle == UIUserInterfaceStyleDark
+            ? [UIColor colorWithWhite:1.0 alpha:0.08]
+            : [UIColor colorWithWhite:0.0 alpha:0.05];
+    }];
     cfg.cornerStyle = UIButtonConfigurationCornerStyleLarge;
     cfg.contentInsets = NSDirectionalEdgeInsetsMake(14, 16, 14, 16);
 
@@ -108,10 +122,17 @@
     }];
 }
 
+- (void)openDonate {
+    NSURL *url = [NSURL URLWithString:SCIDonateURL];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (url) [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    }];
+}
+
 - (void)openTelegram {
     UIApplication *app = [UIApplication sharedApplication];
-    NSURL *scheme = [NSURL URLWithString:@"tg://resolve?domain=ryukgram"];
-    NSURL *web = [NSURL URLWithString:@"https://t.me/ryukgram"];
+    NSURL *scheme = [NSURL URLWithString:SCITelegramScheme];
+    NSURL *web = [NSURL URLWithString:SCITelegramURL];
     // IG's Info.plist doesn't whitelist `tg` for canOpenURL — skip the check
     // and fall through to the web link if the scheme isn't handled.
     [self dismissViewControllerAnimated:YES completion:^{

@@ -57,6 +57,7 @@ RyukGram-src-*.zip
 *_diff.txt
 
 PUSH.md
+DEV.md
 
 # FB asset browser (extracted from FBSharedFramework — local only)
 fb_assets_dump/

@@ -682,6 +682,10 @@
 "Confirm Instants emoji reaction" = "Confirm Instants emoji reaction";
 "Shows an alert before sending an emoji reaction on an Instant" = "Shows an alert before sending an emoji reaction on an Instant";
 "Confirm story like" = "Confirm story like";
+"Confirm note like" = "Confirm note like";
+"Confirm note emoji reaction" = "Confirm note emoji reaction";
+"Shows an alert when you click the like button on notes to confirm the like" = "Shows an alert when you click the like button on notes to confirm the like";
+"Shows an alert before sending an emoji reaction on a note" = "Shows an alert before sending an emoji reaction on a note";
 "Confirm unfollow" = "Confirm unfollow";
 "Confirm voice messages" = "Confirm voice messages";
 "Shows an alert before sending an emoji reaction on a story" = "Shows an alert before sending an emoji reaction on a story";
@@ -1322,7 +1326,7 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
-"%@ — GitHub & Telegram" = "%@ — GitHub & Telegram";
+"%@ — GitHub, Telegram, Donate" = "%@ — GitHub, Telegram, Donate";
 "About" = "About";
 "Arabic translation" = "Arabic translation";
 "Chinese (Traditional and Simplified) translation" = "Chinese (Traditional and Simplified) translation";
@@ -1359,6 +1363,7 @@
 "Support RyukGram development" = "Support RyukGram development";
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated.";
 "Browse changes from previous releases" = "Browse changes from previous releases";
+"Code inspiration" = "Code inspiration";
 "Telegram channel" = "Telegram channel";
 "Testing and feature suggestions" = "Testing and feature suggestions";
 "Tweak settings" = "Tweak settings";

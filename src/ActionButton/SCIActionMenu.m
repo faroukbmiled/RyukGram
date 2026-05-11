@@ -77,7 +77,7 @@
 @implementation SCIActionMenu
 
 + (UIImage *)imageForIcon:(NSString *)name {
-    // Action button menus stay SF-only.
+    // Menus use SF Symbols only — custom asset icons don't size right in UIMenu.
     return [SCIIcon sfImageNamed:name pointSize:16];
 }
 
@@ -123,6 +123,13 @@
 + (NSArray<SCIAction *> *)actionsForConfig:(SCIActionMenuConfig *)config
                                   dateHeader:(NSString *)dateHeader
                                     resolver:(SCIAction * _Nullable (^)(NSString *))resolver {
+    return [self actionsForConfig:config dateHeader:dateHeader resolver:resolver includeDisabled:NO];
+}
+
++ (NSArray<SCIAction *> *)actionsForConfig:(SCIActionMenuConfig *)config
+                                  dateHeader:(NSString *)dateHeader
+                                    resolver:(SCIAction * _Nullable (^)(NSString *))resolver
+                             includeDisabled:(BOOL)includeDisabled {
     NSMutableArray<SCIAction *> *out = [NSMutableArray array];
     if (!config || !resolver) return out;
 
@@ -132,11 +139,10 @@
 
     BOOL anyEmitted = (out.count > 0);
     for (SCIActionConfigSection *section in config.sections) {
-        // Resolve all enabled actions of this section first so we can decide
-        // whether the section produces anything before flushing a separator.
+        // Resolve first, emit separator after — empty sections shouldn't leave a stray divider.
         NSMutableArray<SCIAction *> *resolved = [NSMutableArray arrayWithCapacity:section.actionIDs.count];
         for (NSString *aid in section.actionIDs) {
-            if ([config isActionDisabled:aid]) continue;
+            if (!includeDisabled && [config isActionDisabled:aid]) continue;
             SCIAction *action = resolver(aid);
             if (action) {
                 if (!action.actionID.length) action.actionID = aid;
@@ -162,7 +168,8 @@
 }
 
 + (UIMenu *)buildMenuWithActions:(NSArray<SCIAction *> *)actions title:(NSString *)title {
-    // Header marker → first inline group's title (small grey caption).
+    // First action is a header marker (disabled, no handler, not a separator) —
+    // hoist its title onto the first inline group so it shows as a grey caption.
     NSString *headerTitle = nil;
     NSArray<SCIAction *> *items = actions;
     if (actions.count > 0) {
@@ -175,7 +182,6 @@
         }
     }
 
-    // Group actions between separators into inline submenus.
     NSMutableArray<UIMenuElement *> *top = [NSMutableArray array];
     NSMutableArray<UIMenuElement *> *currentGroup = [NSMutableArray array];
     __block BOOL isFirstFlush = YES;

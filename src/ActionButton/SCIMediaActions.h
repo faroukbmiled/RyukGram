@@ -128,16 +128,18 @@ typedef NS_ENUM(NSInteger, SCIActionContext) {
 /// Save an array of local file URLs to Photos (sequential, respects album pref).
 + (void)bulkSaveFiles:(NSArray<NSURL *> *)files;
 
-/// Build the full action menu for the given context + media + default tap.
-/// If `defaultTap` is provided and non-menu, the builder may reorder or skip
-/// its matching leaf so it's visible in the full menu.
 + (NSArray<SCIAction *> *)actionsForContext:(SCIActionContext)ctx
                                       media:(nullable id)media
                                    fromView:(UIView *)sourceView;
 
-/// Build the menu for `ctx`/`media`/`sourceView` and fire the handler whose
-/// SCIAction.actionID matches `aid`. Returns YES if a handler ran. Used by
-/// the action button's default-tap path so we don't duplicate dispatch logic.
+// `includeDisabled:YES` keeps menu-disabled actions in the result. Default-tap
+// fire uses this so a bound action keeps working even when hidden from the menu.
++ (NSArray<SCIAction *> *)actionsForContext:(SCIActionContext)ctx
+                                      media:(nullable id)media
+                                   fromView:(UIView *)sourceView
+                            includeDisabled:(BOOL)includeDisabled;
+
+// Fire the handler whose actionID matches `aid`. Returns YES if anything ran.
 + (BOOL)executeActionForContext:(SCIActionContext)ctx
                        actionID:(NSString *)aid
                           media:(nullable id)media

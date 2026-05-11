@@ -597,6 +597,10 @@
 "Confirm Instants emoji reaction" = "‏تأكيد تفاعل الإيموجي في الإنستنت‏";
 "Shows an alert before sending an emoji reaction on an Instant" = "‏يعرض تنبيهًا قبل إرسال تفاعل إيموجي على إنستنت‏";
 "Confirm story like" = "‏تأكيد الإعجاب بالقصة‏";
+"Confirm note like" = "‏تأكيد الإعجاب بالملاحظة‏";
+"Confirm note emoji reaction" = "‏تأكيد تفاعل الإيموجي على الملاحظة‏";
+"Shows an alert when you click the like button on notes to confirm the like" = "‏يُظهر تنبيهًا عند النقر على زر الإعجاب في الملاحظات للتأكيد‏";
+"Shows an alert before sending an emoji reaction on a note" = "‏يُظهر تنبيهًا قبل إرسال تفاعل إيموجي على ملاحظة‏";
 "Confirm unfollow" = "‏تأكيد إلغاء المتابعة‏";
 "Confirm voice messages" = "‏تأكيد الرسائل الصوتية‏";
 "Shows an alert before sending an emoji reaction on a story" = "‏يُظهر تنبيهًا قبل إرسال تفاعل إيموجي على قصة‏";
@@ -1244,7 +1248,7 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
-"%@ — GitHub & Telegram" = "‏%@ — جيت هاب وتيليجرام‏";
+"%@ — GitHub, Telegram, Donate" = "‏%@ — جيت هاب، تيليجرام، تبرع‏";
 "About" = "‏حول‏";
 "Arabic translation" = "‏الترجمة العربية‏";
 "Chinese (Traditional and Simplified) translation" = "ترجمة الصينية (التقليدية والمبسطة)";
@@ -1281,6 +1285,7 @@
 "Support RyukGram development" = "‏ادعم تطوير RyukGram‏";
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "‏RyukGram هو نسخة مُعاد تطويرها بشكل كبير من SCInsta — دعم المطور الأصلي موضع تقدير.‏";
 "Browse changes from previous releases" = "‏تصفح التغييرات من الإصدارات السابقة‏";
+"Code inspiration" = "‏إلهام برمجي‏";
 "Telegram channel" = "‏قناة تيليجرام‏";
 "Testing and feature suggestions" = "‏الاختبار واقتراحات الميزات‏";
 "Tweak settings" = "‏إعدادات التعديل‏";

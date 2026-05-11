@@ -597,6 +597,10 @@
 "Confirm Instants emoji reaction" = "确认 Instants 表情反应";
 "Shows an alert before sending an emoji reaction on an Instant" = "在向 Instant 发送表情反应前显示提示";
 "Confirm story like" = "确认限时动态按赞";
+"Confirm note like" = "确认笔记按赞";
+"Confirm note emoji reaction" = "确认笔记表情反应";
+"Shows an alert when you click the like button on notes to confirm the like" = "点击笔记按赞按钮时显示确认警告";
+"Shows an alert before sending an emoji reaction on a note" = "发送笔记表情反应前显示警告";
 "Confirm unfollow" = "确认取消追踪";
 "Confirm voice messages" = "确认语音讯息";
 "Shows an alert before sending an emoji reaction on a story" = "发送限时动态表情反应前显示警告";
@@ -1244,7 +1248,7 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
-"%@ — GitHub & Telegram" = "%@ — GitHub 与 Telegram";
+"%@ — GitHub, Telegram, Donate" = "%@ — GitHub、Telegram、捐赠";
 "About" = "关于";
 "Arabic translation" = "阿拉伯文翻译";
 "Chinese (Traditional and Simplified) translation" = "中文（繁体与简体）翻译";
@@ -1281,6 +1285,7 @@
 "Support RyukGram development" = "支持 RyukGram 开发";
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram 是 SCInsta 的深度重做分支 — 支持原开发者将不胜感激。";
 "Browse changes from previous releases" = "查看以往版本的更改";
+"Code inspiration" = "代码灵感";
 "Telegram channel" = "Telegram 频道";
 "Testing and feature suggestions" = "测试与功能建议";
 "Tweak settings" = "Tweak 设定";
