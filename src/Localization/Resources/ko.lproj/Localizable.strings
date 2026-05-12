@@ -651,6 +651,9 @@
 "Daily" = "매일";
 "Disable safe mode" = "안전 모드 비활성화";
 "Enable tweak settings quick-access" = "트윅 설정 빠른 접근 활성화";
+"Fix duplicate notifications" = "중복 알림 수정";
+"Prevents two banners for the same message when IG is in the foreground" = "IG가 포그라운드에 있을 때 동일한 메시지에 대한 두 개의 배너를 방지합니다";
+"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "알림 확장 프로그램이 알림을 전달하는 동안 IG가 앱 내에서 추가하는 두 번째 알림을 억제합니다.";
 "Free %@ of Instagram cache." = "Instagram 캐시에서 %@을(를) 확보합니다.";
 "Freed %@" = "%@ 확보됨";
 "Hold on the home tab to open RyukGram settings" = "홈 탭을 길게 눌러 RyukGram 설정을 엽니다";
@@ -1286,6 +1289,7 @@
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram은 SCInsta를 대폭 재작업한 포크입니다 — 원작자 후원에 감사드립니다.";
 "Browse changes from previous releases" = "이전 릴리스의 변경 사항 보기";
 "Code inspiration" = "코드 영감";
+"zxPluginsInject sideload compatibility shim" = "zxPluginsInject 사이드로드 호환성 심";
 "Telegram channel" = "Telegram 채널";
 "Testing and feature suggestions" = "테스트 및 기능 제안";
 "Tweak settings" = "트윅 설정";

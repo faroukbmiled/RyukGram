@@ -651,6 +651,9 @@
 "Daily" = "Ежедневно";
 "Disable safe mode" = "Отключить безопасный режим";
 "Enable tweak settings quick-access" = "Включить быстрый доступ к настройкам твика";
+"Fix duplicate notifications" = "Исправить дублирующиеся уведомления";
+"Prevents two banners for the same message when IG is in the foreground" = "Предотвращает появление двух баннеров для одного сообщения, когда IG на переднем плане";
+"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "Подавляет второе уведомление, которое IG ставит в очередь в приложении, пока его также доставляет расширение уведомлений.";
 "Free %@ of Instagram cache." = "Освободить %@ кэша Instagram.";
 "Freed %@" = "Освобождено %@";
 "Hold on the home tab to open RyukGram settings" = "Удерживайте вкладку Home, чтобы открыть настройки RyukGram";
@@ -1286,6 +1289,7 @@
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram — это сильно переработанный форк SCInsta. Поддержка оригинального разработчика приветствуется.";
 "Browse changes from previous releases" = "Посмотреть изменения в прошлых версиях";
 "Code inspiration" = "Вдохновение для кода";
+"zxPluginsInject sideload compatibility shim" = "Прослойка совместимости sideload zxPluginsInject";
 "Telegram channel" = "Telegram-канал";
 "Testing and feature suggestions" = "Тестирование и предложения функций";
 "Tweak settings" = "Настройки твика";

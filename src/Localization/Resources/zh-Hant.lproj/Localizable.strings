@@ -651,6 +651,9 @@
 "Daily" = "每日";
 "Disable safe mode" = "停用安全模式";
 "Enable tweak settings quick-access" = "啟用調整設定快速存取";
+"Fix duplicate notifications" = "修復重複通知";
+"Prevents two banners for the same message when IG is in the foreground" = "當 IG 在前景時,防止同一則訊息顯示兩個橫幅";
+"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "當通知擴充功能同時投遞通知時,抑制 IG 在應用程式內排隊的第二則通知。";
 "Free %@ of Instagram cache." = "釋放 %@ 的 Instagram 快取。";
 "Freed %@" = "已釋放 %@";
 "Hold on the home tab to open RyukGram settings" = "長按主頁標籤以開啟 RyukGram 設定";
@@ -1286,6 +1289,7 @@
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram 是 SCInsta 的深度重製分支 — 支持原開發者將不勝感激。";
 "Browse changes from previous releases" = "查看以往版本的變更";
 "Code inspiration" = "程式碼靈感";
+"zxPluginsInject sideload compatibility shim" = "zxPluginsInject 側載相容性墊片";
 "Telegram channel" = "Telegram 頻道";
 "Testing and feature suggestions" = "測試與功能建議";
 "Tweak settings" = "Tweak 設定";

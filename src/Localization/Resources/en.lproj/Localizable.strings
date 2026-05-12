@@ -736,6 +736,7 @@
 "Daily" = "Daily";
 "Disable safe mode" = "Disable safe mode";
 "Enable tweak settings quick-access" = "Enable tweak settings quick-access";
+"Fix duplicate notifications" = "Fix duplicate notifications";
 "Free %@ of Instagram cache." = "Free %@ of Instagram cache.";
 "Freed %@" = "Freed %@";
 "Hold on the home tab to open RyukGram settings" = "Hold on the home tab to open RyukGram settings";
@@ -747,12 +748,14 @@
 "Preserve messages database" = "Preserve messages database";
 "Pauses any playing video/audio when settings opens" = "Pauses any playing video/audio when settings opens";
 "Prevents Instagram from resetting settings after crashes (at your own risk)" = "Prevents Instagram from resetting settings after crashes (at your own risk)";
+"Prevents two banners for the same message when IG is in the foreground" = "Prevents two banners for the same message when IG is in the foreground";
 "Remove Instagram's cached images, videos, and temporary files." = "Remove Instagram's cached images, videos, and temporary files.";
 "Reset onboarding state" = "Reset onboarding state";
 "Run a silent cache clear on launch when the interval has elapsed." = "Run a silent cache clear on launch when the interval has elapsed.";
 "Show cache size" = "Show cache size";
 "Skip the messages database when clearing — keeps DMs, drafts, and saved messages." = "Skip the messages database when clearing — keeps DMs, drafts, and saved messages.";
 "Show tweak settings on app launch" = "Show tweak settings on app launch";
+"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it.";
 "Weekly" = "Weekly";
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1364,6 +1367,7 @@
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated.";
 "Browse changes from previous releases" = "Browse changes from previous releases";
 "Code inspiration" = "Code inspiration";
+"zxPluginsInject sideload compatibility shim" = "zxPluginsInject sideload compatibility shim";
 "Telegram channel" = "Telegram channel";
 "Testing and feature suggestions" = "Testing and feature suggestions";
 "Tweak settings" = "Tweak settings";

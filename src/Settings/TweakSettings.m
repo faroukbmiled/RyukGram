@@ -844,6 +844,13 @@
                                            subtitle:@""
                                                icon:[SCISymbol symbolWithIGName:@"toolbox" fallback:@"gearshape.2"]
                                         navSections:@[@{
+                                            @"header": SCILocalized(@"Notifications"),
+                                            @"footer": SCILocalized(@"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it."),
+                                            @"rows": @[
+                                                [SCISetting switchCellWithTitle:SCILocalized(@"Fix duplicate notifications") subtitle:SCILocalized(@"Prevents two banners for the same message when IG is in the foreground") defaultsKey:@"sci_fix_duplicate_notifications"],
+                                            ]
+                                        },
+                                        @{
                                             @"header": SCILocalized(@"Tweak settings"),
                                             @"rows": @[
                                                 [SCISetting switchCellWithTitle:SCILocalized(@"Enable tweak settings quick-access") subtitle:SCILocalized(@"Hold on the home tab to open RyukGram settings") defaultsKey:@"settings_shortcut" requiresRestart:YES],
@@ -1161,6 +1168,7 @@
                 [SCISetting linkCellWithTitle:@"Edoardo (@n3d1117)" subtitle:SCILocalized(@"Following feed mode (from InstaSane)") icon:nil url:@"https://github.com/n3d1117"],
                 [SCISetting linkCellWithTitle:@"John (@erupts0)" subtitle:SCILocalized(@"Testing and feature suggestions") icon:nil url:@"https://github.com/erupts0"],
                 [SCISetting linkCellWithTitle:@"efibalogh" subtitle:SCILocalized(@"Code inspiration") icon:nil url:@"https://github.com/efibalogh"],
+                [SCISetting linkCellWithTitle:@"asdfzxcvbn" subtitle:SCILocalized(@"zxPluginsInject sideload compatibility shim") icon:nil url:@"https://github.com/asdfzxcvbn/zxPluginsInject"],
             ]
         },
         @{

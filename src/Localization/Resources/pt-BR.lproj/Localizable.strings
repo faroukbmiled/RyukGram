@@ -651,6 +651,9 @@
 "Daily" = "Diariamente";
 "Disable safe mode" = "Desativar modo de segurança";
 "Enable tweak settings quick-access" = "Ativar acesso rápido às configurações do tweak";
+"Fix duplicate notifications" = "Corrigir notificações duplicadas";
+"Prevents two banners for the same message when IG is in the foreground" = "Evita dois banners para a mesma mensagem quando o IG está em primeiro plano";
+"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "Suprime a segunda notificação que o IG enfileira no app enquanto a extensão de notificação também a entrega.";
 "Free %@ of Instagram cache." = "Libera %@ de cache do Instagram.";
 "Freed %@" = "Liberado %@";
 "Hold on the home tab to open RyukGram settings" = "Segure na aba Início para abrir as configurações do RyukGram";
@@ -1286,6 +1289,7 @@
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "O RyukGram é um fork do SCInsta amplamente retrabalhado — apoiar o desenvolvedor original é muito bem-vindo.";
 "Browse changes from previous releases" = "Veja as alterações de versões anteriores";
 "Code inspiration" = "Inspiração de código";
+"zxPluginsInject sideload compatibility shim" = "Camada de compatibilidade de sideload zxPluginsInject";
 "Telegram channel" = "Canal no Telegram";
 "Testing and feature suggestions" = "Testes e sugestões de recursos";
 "Tweak settings" = "Configurações do tweak";

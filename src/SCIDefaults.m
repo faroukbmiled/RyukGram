@@ -225,6 +225,8 @@ NSDictionary *SCIDefaultsDictionary(void) {
 		@"bypass_reveal_sticker": @(NO),
 		@"photo_sticker_allow_video": @(NO),
 
+		@"sci_fix_duplicate_notifications": @(YES),
+
 		@"settings_pause_playback": @(YES),
 		@"embed_links": @(NO),
 		@"embed_link_domain": @"kkinstagram.com",

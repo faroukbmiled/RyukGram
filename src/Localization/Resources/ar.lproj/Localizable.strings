@@ -651,6 +651,9 @@
 "Daily" = "‏يومياً‏";
 "Disable safe mode" = "‏تعطيل الوضع الآمن‏";
 "Enable tweak settings quick-access" = "‏تفعيل الوصول السريع لإعدادات الأداة‏";
+"Fix duplicate notifications" = "‏إصلاح الإشعارات المكررة‏";
+"Prevents two banners for the same message when IG is in the foreground" = "‏يمنع ظهور إشعارين لنفس الرسالة عندما يكون Instagram في المقدمة‏";
+"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "‏يمنع الإشعار الثاني الذي يضيفه Instagram داخل التطبيق بينما يقوم امتداد الإشعارات بتسليمه أيضًا.‏";
 "Free %@ of Instagram cache." = "‏تحرير %@ من ذاكرة إنستغرام.‏";
 "Freed %@" = "‏تم تحرير %@‏";
 "Hold on the home tab to open RyukGram settings" = "‏اضغط مطولاً على تبويب الصفحة الرئيسية لفتح إعدادات ريوك غرام‏";
@@ -1286,6 +1289,7 @@
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "‏RyukGram هو نسخة مُعاد تطويرها بشكل كبير من SCInsta — دعم المطور الأصلي موضع تقدير.‏";
 "Browse changes from previous releases" = "‏تصفح التغييرات من الإصدارات السابقة‏";
 "Code inspiration" = "‏إلهام برمجي‏";
+"zxPluginsInject sideload compatibility shim" = "‏واجهة توافق التحميل الجانبي zxPluginsInject‏";
 "Telegram channel" = "‏قناة تيليجرام‏";
 "Testing and feature suggestions" = "‏الاختبار واقتراحات الميزات‏";
 "Tweak settings" = "‏إعدادات التعديل‏";

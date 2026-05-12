@@ -651,6 +651,9 @@
 "Daily" = "Günlük";
 "Disable safe mode" = "Güvenli modu kapat";
 "Enable tweak settings quick-access" = "Tweak ayarlarına hızlı erişimi etkinleştir";
+"Fix duplicate notifications" = "Yinelenen bildirimleri düzelt";
+"Prevents two banners for the same message when IG is in the foreground" = "IG ön plandayken aynı mesaj için iki bildirimin gösterilmesini önler";
+"Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "Bildirim uzantısı da bildirimi iletirken IG'nin uygulama içinde sıraya aldığı ikinci bildirimi bastırır.";
 "Free %@ of Instagram cache." = "Instagram önbelleğinden %@ boşalt.";
 "Freed %@" = "%@ boşaltıldı";
 "Hold on the home tab to open RyukGram settings" = "RyukGram ayarlarını açmak için ana sayfa sekmesine basılı tutun";
@@ -1286,6 +1289,7 @@
 "RyukGram is a heavily reworked fork of SCInsta — supporting the original developer is appreciated." = "RyukGram, SCInsta'nın büyük ölçüde yeniden çalışılmış bir çatallanmasıdır — orijinal geliştiriciye yapılan destek takdir edilir.";
 "Browse changes from previous releases" = "Önceki sürümlerdeki değişikliklere göz at";
 "Code inspiration" = "Kod ilhamı";
+"zxPluginsInject sideload compatibility shim" = "zxPluginsInject sideload uyumluluk katmanı";
 "Telegram channel" = "Telegram kanalı";
 "Testing and feature suggestions" = "Test ve özellik önerileri";
 "Tweak settings" = "Tweak ayarları";
