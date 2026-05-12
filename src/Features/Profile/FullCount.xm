@@ -44,15 +44,19 @@ static void sciSetText(IGStatButton *button, NSNumber *count) {
 - (void)layoutSubviews {
 	%orig;
 
+	BOOL followers = [SCIUtils getBoolPref:@"full_followers_count"];
+	BOOL posts = [SCIUtils getBoolPref:@"full_posts_count"];
+	if (!followers && !posts) return;
+
 	IGProfileViewController *vc = (IGProfileViewController *)[SCIUtils nearestViewControllerForView:self];
 	id user = [vc user];
 	NSDictionary *cache = [SCIUtils fieldCacheForObject:user];
 
-	if ([SCIUtils getBoolPref:@"full_followers_count"]) {
+	if (followers) {
 		sciSetText(MSHookIvar<IGStatButton *>(self, "$__lazy_storage_$_followersButton"), sciProfileCount(user, cache, NO));
 	}
 
-	if ([SCIUtils getBoolPref:@"full_posts_count"]) {
+	if (posts) {
 		sciSetText(MSHookIvar<IGStatButton *>(self, "postCountButton"), sciProfileCount(user, cache, YES));
 	}
 }

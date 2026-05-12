@@ -2,7 +2,7 @@
 A feature-rich iOS tweak for Instagram, forked from [SCInsta](https://github.com/SoCuul/SCInsta) with additional features and fixes.\
 `Version v1.2.3` | `Tested on Instagram 426.0.0`
 
-[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy me a coffee" height="50">](https://buymeacoffee.com/axryuk)
+<a href="https://buymeacoffee.com/axryuk" target="_blank" rel="noopener noreferrer"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy me a coffee" height="50"></a>
 
 ---
 

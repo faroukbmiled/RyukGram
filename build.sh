@@ -680,12 +680,69 @@ build_trollstore() {
 	echo "TIPA at: $(pwd)/$out_tipa"
 }
 
+# Build TrollFools zip — dylib + RyukGram.bundle + FFmpegKit frameworks at zip
+# root. TrollFools LC-injects each top-level dylib and copies top-level
+# .framework dirs into the target app's Frameworks/. No cyan/ipapatch/IPA.
+build_trollfools() {
+	local has_flex
+	has_flex="$(check_flex)"
+
+	local makeargs=()
+	local flexpath=()
+
+	if [ "$has_flex" = "1" ]; then
+		makeargs+=(SIDELOAD=1)
+		flexpath+=(".theos/obj/FLEXing.dylib" ".theos/obj/libflex.dylib")
+	fi
+
+	clean_build
+	ensure_packages_dir
+
+	log "Building ${APP_NAME} tweak for TrollFools"
+
+	make_final "${makeargs[@]}"
+
+	local stage
+	stage="$(mktemp -d)"
+
+	cp "$TWEAK_DYLIB" "$stage/${APP_NAME}.dylib"
+
+	for p in "${flexpath[@]}"; do
+		[ -f "$p" ] && cp "$p" "$stage/"
+	done
+
+	# Bundle holds localization + static assets only. Frameworks live at zip
+	# root so TrollFools treats them as injection targets — nested frameworks
+	# inside .bundle get copied as data and fail AMFI on dlopen. The loader's
+	# privateFrameworksPath fallback finds them at app/Frameworks/.
+	local stage_bundle="$stage/${BUNDLE_NAME}"
+	mkdir -p "$stage_bundle"
+	copy_localization_into_bundle "$stage_bundle"
+	copy_bundle_assets "$stage_bundle"
+
+	if [ -d "modules/ffmpegkit/ffmpegkit.framework" ]; then
+		log "Staging FFmpegKit at zip root"
+		patch_ffmpegkit_frameworks "$stage"
+	else
+		warn "FFmpegKit not found — zip built without FFmpegKit."
+	fi
+
+	local out_zip="${PACKAGES_DIR}/${APP_NAME}-trollfools.zip"
+	rm -f "$out_zip"
+	( cd "$stage" && zip -qr -9 "$OLDPWD/$out_zip" . )
+	rm -rf "$stage"
+
+	log "Done!"
+	echo
+	echo "TrollFools zip at: $(pwd)/$out_zip"
+}
+
 usage() {
 	echo '+-----------------------+'
 	echo '| RyukGram Build Script |'
 	echo '+-----------------------+'
 	echo
-	echo "Usage: $0 <dylib/sideload/sidestore/trollstore/rootless/rootful> [option]"
+	echo "Usage: $0 <dylib/sideload/sidestore/trollstore/trollfools/rootless/rootful> [option]"
 	echo
 	echo 'Commands:'
 	echo '  dylib                 Build the dylib only for Feather/manual injection'
@@ -697,6 +754,7 @@ usage() {
 	echo '  sidestore             Like sideload, plus legacy sideload compatibility patch'
 	echo '                        keychain/app group/CloudKit fixes for SideStore installs'
 	echo '  trollstore            Build a .tipa for TrollStore, requires cyan + decrypted IPA'
+	echo '  trollfools            Build a TrollFools zip (dylib + bundle + frameworks, no IPA)'
 	echo '  rootless              Build a rootless .deb package with FFmpegKit'
 	echo '  rootful               Build a rootful .deb package with FFmpegKit'
 	echo
@@ -721,6 +779,9 @@ main() {
 			;;
 		trollstore)
 			build_trollstore
+			;;
+		trollfools)
+			build_trollfools
 			;;
 		rootless)
 			build_deb "rootless"
