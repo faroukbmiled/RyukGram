@@ -3,6 +3,45 @@
 
 %group NoSuggestedUsersGroup
 
+static BOOL SCIIsSuggestedActivityObject(id obj) {
+	if (!obj) return NO;
+
+	NSString *className = NSStringFromClass([obj class]);
+	if (!className.length) return NO;
+
+	if ([className containsString:@"SuggestedUser"] ||
+		[className containsString:@"SuggestedUsers"] ||
+		[className containsString:@"DiscoverPeople"] ||
+		[className containsString:@"FeaturedUser"] ||
+		[className containsString:@"FollowPeople"] ||
+		[className containsString:@"CYMF"] ||
+		[className containsString:@"Cymf"]) {
+		return YES;
+	}
+
+	if ([obj isKindOfClass:%c(IGDiscoverPeopleItemConfiguration)] ||
+		[obj isKindOfClass:%c(IGSeeAllItemConfiguration)]) {
+		return YES;
+	}
+
+	if ([obj isKindOfClass:%c(IGLabelItemViewModel)]) {
+		@try {
+			id tag = [obj valueForKey:@"tag"];
+			if ([tag respondsToSelector:@selector(intValue)] && [tag intValue] == 2) return YES;
+
+			NSString *title = [obj valueForKey:@"labelTitle"];
+			if ([title isKindOfClass:NSString.class] &&
+				([title isEqualToString:@"Suggested for you"] ||
+				 [title isEqualToString:@"Suggested users"] ||
+				 [title isEqualToString:@"Discover people"])) {
+				return YES;
+			}
+		} @catch (__unused id e) {}
+	}
+
+	return NO;
+}
+
 // "Welcome to instagram" suggested users in feed
 %hook IGSuggestedUnitViewModel
 
@@ -25,17 +64,16 @@
 
 - (id)objectsForListAdapter:(id)arg1 {
 	NSArray *originalObjs = %orig();
-	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:[originalObjs count]];
+	if (![originalObjs isKindOfClass:NSArray.class]) return originalObjs;
+
+	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:originalObjs.count];
 
 	for (id obj in originalObjs) {
-		if ([obj isKindOfClass:%c(IGProfileChainingModel)]) {
-			continue;
-		}
-
+		if ([obj isKindOfClass:%c(IGProfileChainingModel)]) continue;
 		[filteredObjs addObject:obj];
 	}
 
-	return [filteredObjs copy];
+	return filteredObjs.copy;
 }
 
 %end
@@ -44,24 +82,21 @@
 %hook IGActivityFeedViewController
 
 - (id)objectsForListAdapter:(id)arg1 {
-	NSArray *originalObjs = %orig();
-	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:[originalObjs count]];
+	NSArray *originalObjs = %orig(arg1);
+	if (![originalObjs isKindOfClass:NSArray.class]) return originalObjs;
+
+	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:originalObjs.count];
 
 	for (id obj in originalObjs) {
-		BOOL shouldHide = NO;
-
-		if ([obj isKindOfClass:%c(IGLabelItemViewModel)]) {
-			@try {
-				shouldHide = [[obj valueForKey:@"tag"] intValue] == 2;
-			} @catch (__unused id e) {}
-		} else if ([obj isKindOfClass:%c(IGDiscoverPeopleItemConfiguration)] || [obj isKindOfClass:%c(IGSeeAllItemConfiguration)]) {
-			shouldHide = YES;
-		}
-
-		if (!shouldHide) [filteredObjs addObject:obj];
+		if (SCIIsSuggestedActivityObject(obj)) continue;
+		[filteredObjs addObject:obj];
 	}
 
-	return [filteredObjs copy];
+	return filteredObjs.copy;
+}
+
+- (void)_suggestedUsersSeeAllIntent {
+	return;
 }
 
 %end
@@ -71,7 +106,9 @@
 
 - (id)objectsForListAdapter:(id)arg1 {
 	NSArray *originalObjs = %orig(arg1);
-	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:[originalObjs count]];
+	if (![originalObjs isKindOfClass:NSArray.class]) return originalObjs;
+
+	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:originalObjs.count];
 
 	for (id obj in originalObjs) {
 		BOOL shouldHide = NO;
@@ -89,7 +126,7 @@
 		if (!shouldHide) [filteredObjs addObject:obj];
 	}
 
-	return [filteredObjs copy];
+	return filteredObjs.copy;
 }
 
 %end
@@ -97,7 +134,7 @@
 %hook IGSegmentedTabControl
 
 - (void)setSegments:(id)segments {
-	if (![segments isKindOfClass:[NSArray class]]) {
+	if (![segments isKindOfClass:NSArray.class]) {
 		%orig(segments);
 		return;
 	}
@@ -105,14 +142,11 @@
 	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:[segments count]];
 
 	for (id obj in (NSArray *)segments) {
-		if ([obj isKindOfClass:%c(IGFindUsersViewController)]) {
-			continue;
-		}
-
+		if ([obj isKindOfClass:%c(IGFindUsersViewController)]) continue;
 		[filteredObjs addObject:obj];
 	}
 
-	%orig([filteredObjs copy]);
+	%orig(filteredObjs.copy);
 }
 
 %end
@@ -131,7 +165,9 @@
 
 - (id)objectsForListAdapter:(id)arg1 {
 	NSArray *originalObjs = %orig(arg1);
-	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:[originalObjs count]];
+	if (![originalObjs isKindOfClass:NSArray.class]) return originalObjs;
+
+	NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:originalObjs.count];
 
 	for (id obj in originalObjs) {
 		BOOL shouldHide = NO;
@@ -147,7 +183,7 @@
 		if (!shouldHide) [filteredObjs addObject:obj];
 	}
 
-	return [filteredObjs copy];
+	return filteredObjs.copy;
 }
 
 %end
@@ -180,7 +216,7 @@
 		[filteredRows addObject:[set filteredOrderedSetUsingPredicate:predicate]];
 	}
 
-	rows = [filteredRows copy];
+	rows = filteredRows.copy;
 
 	return %orig(arg1, rows, allActions, overflowActions, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
 }
