@@ -279,7 +279,7 @@
 "Relative" = "상대적";
 "Date and time" = "날짜 및 시간";
 "You're all caught up" = "모두 확인했습니다";
-"Replaces the home feed with a grid of posts. Switching to Instagram's own feed keeps the feature on and hands the feed straight back. Pinch to change columns, tap a post to open it. The For You / Following switch stays in sync with Main feed." = "홈 피드를 게시물 그리드로 바꿉니다. 인스타그램 피드로 전환해도 기능은 켜진 채로 피드를 바로 돌려줍니다. 손가락을 오므려 열 수를 바꾸고, 게시물을 탭하면 열립니다. 추천 / 팔로잉 전환은 메인 피드와 동기화됩니다.";
+"Replaces the home feed with a grid of posts. Switching to Instagram's own feed keeps the feature on and hands the feed straight back. Pinch to change columns, tap a post to open it. The For You / Following switch stays in sync with Main feed." = "홈 피드를 게시물 그리드로 바꿉니다. 인스타그램 피드로 전환해도 기능은 켜진 상태로 기존 정식 피드 화면으로 즉시 전환됩니다. 손가락을 오므려 열 수를 바꾸고, 게시물을 탭하면 열립니다. 추천 / 팔로잉 전환은 메인 피드와 동기화됩니다.";
 "Switch button" = "전환 버튼";
 "Hold the heart button" = "하트 버튼 길게 누르기";
 "Floating button" = "플로팅 버튼";
@@ -307,7 +307,7 @@
 "Main feed" = "메인 피드";
 "Controls when and how the feed refreshes. Background refresh occurs when returning to the app after ~10 minutes. Home button refresh occurs when tapping the Home tab while already on it." = "피드 새로고침 시점과 방법을 제어합니다. 백그라운드 새로고침은 약 10분 후 앱으로 돌아올 때 발생합니다. 홈 버튼 새로고침은 이미 홈 탭에 있을 때 홈 탭을 탭하면 발생합니다.";
 "Confirm feed refresh" = "피드 새로고침 확인";
-"Shows an alert before a pull-to-refresh reloads the feed" = "당겨서 새로고침이 피드를 다시 불러오기 전에 경고를 표시합니다";
+"Shows an alert before a pull-to-refresh reloads the feed" = "당겨서 새로고침으로 피드를 다시 불러오기 전에 알림을 표시합니다";
 "Refresh stories only" = "스토리만 새로고침";
 "Pull-to-refresh reloads the stories tray without refreshing the feed" = "당겨서 새로고침하면 피드는 그대로 두고 스토리 트레이만 다시 불러옵니다";
 "Refresh feed?" = "피드를 새로고침하시겠습니까?";
@@ -515,7 +515,7 @@
 "Downloads" = "다운로드";
 "Downloads with %@ %@" = "%@ %@(으)로 다운로드합니다";
 "Enable long-press gesture" = "길게 누르기 제스처 활성화";
-"Finger count for long-press" = "길게 누르기 손가락 개수";
+"Finger count for long-press" = "길게 누르기에 사용할 손가락 수";
 "How many downloads run at once — extras wait in line and start as slots free up. Failed downloads retry automatically on network errors. Open the manager to watch, cancel, or retry downloads." = "동시에 실행할 다운로드 수 — 나머지는 대기열에서 기다리다 슬롯이 비면 시작됩니다. 실패한 다운로드는 네트워크 오류 시 자동으로 재시도됩니다. 관리자를 열어 다운로드를 확인, 취소 또는 재시도하세요.";
 "Keep running in background" = "백그라운드에서 계속 실행";
 "Legacy long-press gesture" = "기존 길게 누르기 제스처 (레거시)";
@@ -1318,7 +1318,7 @@
 "PK %@" = "PK %@";
 "Put settings back to defaults and clear data" = "설정을 기본값으로 되돌리고 데이터 지우기";
 "Swipe a row to clear it." = "행을 밀어서 지우세요.";
-"Rows marked Shared aren't tied to an account and always follow their own tick." = "“공용”으로 표시된 행은 계정에 묶이지 않으며 항상 자체 선택을 따릅니다.";
+"Rows marked Shared aren't tied to an account and always follow their own tick." = "“공용”으로 표시된 행은 계정에 묶이지 않으며 항상 개별적으로 선택 여부가 유지됩니다.";
 "%lu file(s)" = "파일 %lu개";
 "Clear all data" = "모든 데이터 지우기";
 "Every stored gallery item, log and recording is deleted from this device. Your settings are kept — use Reset to restore those to defaults. This can't be undone." = "저장된 모든 갤러리 항목, 기록, 녹음이 이 기기에서 삭제됩니다. 설정은 유지됩니다 — 재설정을 사용해 기본값으로 되돌리세요. 되돌릴 수 없습니다.";
@@ -1650,9 +1650,9 @@
 "Upload Audio" = "오디오 업로드";
 "VC not found" = "VC를 찾을 수 없습니다";
 "Video from Library" = "라이브러리에서 비디오 선택";
-"Visual messages will expire" = "시각적 메시지가 만료됩니다";
-"Visual messages: expiring" = "시각적 메시지: 만료 예정";
-"Visual messages: unlimited replay" = "시각적 메시지: 무제한 다시 보기";
+"Visual messages will expire" = "비주얼 메시지가 만료됩니다";
+"Visual messages: expiring" = "비주얼 메시지: 만료 예정";
+"Visual messages: unlimited replay" = "비주얼 메시지: 무제한 다시 보기";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
@@ -1928,7 +1928,7 @@
 "We refuse to run when the follower count exceeds %ld to avoid Instagram rate limits." = "Instagram API 제한을 피하기 위해 팔로워 수가 %ld명을 초과하면 실행하지 않습니다.";
 "You both follow each other" = "서로 팔로우하는 사이";
 "You don't follow back" = "내가 맞팔하지 않은 사람";
-"You follow them, they don't follow back" = "팔로우 중이지만 맞팔하지 않음";
+"You follow them, they don't follow back" = "내가 팔로우 중이지만 상대방은 맞팔하지 않음";
 "You started following" = "새로 팔로우 시작";
 "Your current scan was archived" = "현재 스캔이 보관되었습니다";
 "You unfollowed" = "언팔로우함";
@@ -2023,7 +2023,7 @@
 "Everyone is already loaded." = "이미 모두 불러왔습니다.";
 "Filter & sort" = "필터 및 정렬";
 "Follows me" = "나를 팔로우함";
-"Follows me first" = "나를 팔로우한 순";
+"Follows me first" = "나를 팔로우하는 계정 먼저";
 "Follows you" = "회원님을 팔로우함";
 "Hides everyone who doesn't match all picked filters." = "선택한 모든 필터에 맞지 않는 사람을 모두 숨깁니다.";
 "Jump to bottom" = "맨 아래로 이동";
@@ -2553,7 +2553,7 @@
 "Master switch. When off, no RyukGram pills or IG-native toasts are emitted." = "마스터 스위치. 끄면 어떤 알림도 표시되지 않습니다.";
 "Universal in-app notifications. All RyukGram feedback (downloads, copies, errors, success messages) routes through here." = "앱 내 통합 알림. 모든 RyukGram 피드백이 여기를 거칩니다.";
 "Minimal: flat blur. Colorful: tinted by tone. Glow: colored halo. Island: dynamic-island capsule." = "Minimal: 단순 블러. Colorful: 톤별 색조. Glow: 컬러 후광. Island: 다이내믹 아일랜드 캡슐.";
-"Top slides down, bottom slides up." = "위는 아래로, 아래는 위로 슬라이드합니다.";
+"Top slides down, bottom slides up." = "상단은 아래로, 하단은 위로 슬라이드하여 나타납니다.";
 "How many pills can show at once before queueing." = "대기열로 보내기 전에 동시에 표시할 알약 수.";
 "Multiplies how long toasts stay on screen." = "토스트가 화면에 머무르는 시간을 곱합니다.";
 "Vibration on success/error pills." = "성공/오류 알약에서 진동.";
@@ -2658,7 +2658,7 @@
 "Combine with date" = "날짜와 결합";
 "Absolute then relative" = "절대 다음 상대";
 "Relative – absolute" = "상대 – 절대";
-"Relative when young, absolute when older." = "최근이면 상대, 오래되면 절대.";
+"Relative when young, absolute when older." = "최근 날짜는 상대 시간, 오래된 날짜는 절대 시간으로 표시";
 "Example: “2h – Jan 5, 2026”" = "예: “2h – 2026년 1월 5일”";
 "Catch view-once media unsent while you're away. ⚠️ May drain battery" = "자리를 비운 사이 취소된 한 번 보기 미디어를 포착합니다. ⚠️ 배터리 소모가 클 수 있음";
 "Disappearing (view-once) media" = "사라지는 미디어 (한 번 보기)";
@@ -2780,7 +2780,7 @@
 "Every hour" = "1시간마다";
 "Every 6 hours" = "6시간마다";
 "My request accepted" = "내 요청 수락됨";
-"A private account accepted you" = "비공개 계정이 회원님을 수락했습니다";
+"A private account accepted you" = "비공개 계정이 회원님의 팔로우 요청을 수락했습니다";
 "My request declined" = "내 요청 거절됨";
 "No longer pending" = "더 이상 대기 중 아님";
 "New request received" = "새 요청 수신됨";
@@ -2878,7 +2878,7 @@
 "Auto-delete old recordings" = "오래된 녹화 자동 삭제";
 "Auto-record calls" = "통화 자동 녹화";
 "Auto-record ignore list" = "자동 녹화 무시 목록";
-"Auto-record ignored" = "자동 녹화 무시됨";
+"Auto-record ignored" = "자동 녹화 제외됨";
 "Auto-record on" = "자동 녹화 켜짐";
 "Block mute signal" = "음소거 신호 차단";
 "Both sides" = "양쪽";
@@ -2907,7 +2907,7 @@
 "Include my camera" = "내 카메라 포함";
 "Keep forever" = "영구 보관";
 "Large" = "크게";
-"Mute without the other side seeing you muted — your mic is still silenced" = "상대방이 음소거를 알 수 없게 음소거합니다 — 마이크는 여전히 꺼져 있습니다";
+"Mute without the other side seeing you muted — your mic is still silenced" = "내가 음소거한 사실을 상대방이 모르게 합니다 — 내가 음소거한 사실을 상대방이 모르게 합니다";
 "Muted silently" = "몰래 음소거됨";
 "My camera size" = "내 카메라 크기";
 "No call audio was captured." = "통화 오디오가 캡처되지 않았습니다.";
