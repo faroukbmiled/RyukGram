@@ -141,7 +141,7 @@
 "Hide trending searches" = "인기 검색어 숨기기";
 "Hide UI on capture" = "캡처 시 UI 숨기기";
 "Removes suggested accounts to follow outside the feed" = "피드 밖의 추천 팔로우 계정을 제거";
-"Hides like/comment/share counts on posts and reels" = "게시물 및 릴스의 좋아요/댓글/공유 횟수를 숨깁니다";
+"Hides like/comment/share counts on posts and reels" = "게시물 및 릴스의 좋아요/댓글/공유 횟수를 숨기기";
 "Removes the friends map icon from the notes tray" = "노트 트레이에서 친구 지도 아이콘을 제거";
 "Removes the suggested posts grid on the explore tab" = "탐색 탭의 추천 게시물 그리드를 제거";
 "Strips the Meta AI buttons and entry points from the app" = "앱에서 Meta AI 버튼과 진입점을 제거";
@@ -194,7 +194,7 @@
 "The selected icon will be saved and shown here the next time you open this page." = "선택한 아이콘은 저장되며 다음에 이 페이지를 열 때 여기에 표시됩니다.";
 "Toggle live comments" = "라이브 댓글 전환";
 "Use detailed color picker" = "상세 색상 선택기 사용";
-"Used across feed, stories, reels, and DMs." = "피드, 스토리, 릴스, DM 전체에서 사용됩니다";
+"Used across feed, stories, reels, and DMs." = "피드, 스토리, 릴스, DM 전체에서 사용됩니다.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                               DATE FORMAT                                //
@@ -2070,8 +2070,8 @@
 "FFmpegKit Debug" = "FFmpegKit 디버그";
 "File is empty or not a valid .strings file." = "파일이 비어 있거나 유효한 .strings 파일이 아닙니다.";
 "KD: OFF" = "KD: 끔";
-"Keep-deleted: OFF" = "  • 삭제된 메시지 보관: 끔";
-"Keep-deleted: ON" = "  • 삭제된 메시지 보관: 켬";
+"Keep-deleted: OFF" = "삭제된 메시지 보관: 끔";
+"Keep-deleted: ON" = "삭제된 메시지 보관: 켬";
 "Later" = "나중에";
 "Loading" = "불러오는 중";
 "Name of the Photos album RyukGram saves into. Leave empty to restore the default." = "RyukGram이 저장하는 사진 앨범 이름입니다. 기본값으로 되돌리려면 비워 두세요.";
@@ -2576,7 +2576,7 @@
 "Very long" = "매우 길게";
 "Downloads & saving" = "다운로드 및 저장";
 "Copy to clipboard" = "클립보드에 복사";
-"Read receipts & seen" = "읽음 확인 및 보임";
+"Read receipts & seen" = "읽음 확인 및 표시";
 "Block, exclude & pin" = "차단, 제외 및 고정";
 "Stories & messages" = "스토리 및 메시지";
 "Voice & audio" = "음성 및 오디오";
@@ -2593,8 +2593,8 @@
 "Copied quality picker URL" = "품질 선택기 URL 복사됨";
 "Copied unlocked password" = "잠금 해제된 비밀번호 복사됨";
 "Copied description text" = "설명 텍스트 복사됨";
-"DM seen / read receipts" = "DM 보임 / 읽음 확인";
-"Story seen / read receipts" = "스토리 보임 / 읽음 확인";
+"DM seen / read receipts" = "DM 읽음 표시 / 확인";
+"Story seen / read receipts" = "스토리 읽음 표시 / 확인";
 "Someone read your message" = "상대방이 내 메시지를 읽음";
 "User blocked / unblocked" = "사용자 차단 / 차단 해제";
 "Chat added / removed from exclude" = "채팅 제외 추가 / 제거";
@@ -2631,7 +2631,7 @@
 "Comment copied" = "댓글 복사됨";
 "FFmpeg log copied" = "FFmpeg 로그 복사됨";
 "GIF inserted" = "GIF 삽입됨";
-"Story marked as seen" = "스토리가 보임으로 표시됨";
+"Story marked as seen" = "스토리가 읽음으로 표시됨";
 "Saved" = "저장됨";
 "Tap to retry" = "재시도하려면 탭";
 "Looks great" = "멋져 보입니다";
@@ -2949,8 +2949,8 @@
 "You" = "나";
 "You (full screen)" = "나 (전체 화면)";
 "Your camera is captured and overlaid onto the recording. Choose which side fills the screen, the overlay size, and drag it to any corner." = "내 카메라가 캡처되어 녹화에 오버레이됩니다. 어느 쪽이 화면을 채울지, 오버레이 크기를 선택하고 원하는 모서리로 드래그하세요.";
-"Prompt before the call recordings open" = "통화 녹화를 열기 전에 확인 표시";
-"Prompt before the activity log opens" = "활동 기록을 열기 전에 확인";
+"Prompt before the call recordings open" = "통화 녹화를 열기 전에 요청";
+"Prompt before the activity log opens" = "활동 기록을 열기 전에 요청";
 "Mark all as read" = "모두 읽음으로 표시";
 "Delete %lu chats?" = "채팅 %lu개를 삭제할까요?";
 "This permanently removes their recordings." = "이들의 녹화를 영구적으로 제거합니다.";
