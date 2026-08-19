@@ -93,7 +93,7 @@
 "Audio page" = "오디오 페이지";
 "Auto-reveals sensitive media" = "민감한 콘텐츠를 자동으로 표시합니다";
 "Block surveys" = "설문조사 차단";
-"Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "시청자 수 하트비트를 차단하여 방송자가 당신을 보지 못하게 합니다 — 당신도 시청자 수를 볼 수 없습니다";
+"Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "시청자 수 하트비트를 차단하여 진행자가 회원님을 볼 수 없게 합니다 — 회원님 역시 시청자 수를 볼 수 없습니다";
 "Browser" = "브라우저";
 "Change the app icon from the bundled icons" = "기본 제공 아이콘으로 앱 아이콘 변경";
 "Choose Icon" = "아이콘 선택";
@@ -178,7 +178,7 @@
 "Selected" = "선택됨";
 "Sharing" = "공유";
 "Shopping" = "쇼핑";
-"Skip sensitive content covers" = "민감한 콘텐츠 가림 건너뛰기";
+"Skip sensitive content covers" = "민감한 콘텐츠 경고 화면 건너뛰기";
 "Solid color" = "단색";
 "Sponsored posts in main, contextual, video, and chaining feeds" = "메인, 맥락, 동영상, 연결 피드의 스폰서 게시물";
 "Sponsored posts on the explore grid" = "탐색 그리드의 스폰서 게시물";
@@ -224,9 +224,9 @@
 "Download and share" = "다운로드 및 공유";
 "Download to Photos" = "사진 앱에 다운로드";
 "Save with music" = "음악과 함께 저장";
-"Gallery with music" = "음악과 함께 갤러리에";
+"Gallery with music" = "음악과 함께 갤러리에 저장";
 "Save image (no music)" = "이미지 저장 (음악 없음)";
-"Gallery image (no music)" = "이미지 갤러리에 (음악 없음)";
+"Gallery image (no music)" = "갤러리 이미지 (음악 없음)";
 "Photo with music" = "음악이 있는 사진";
 "Enabled" = "활성화됨";
 "Expand" = "확장";
@@ -388,7 +388,7 @@
 "Seek" = "탐색";
 "Custom seek step" = "사용자 지정 탐색 간격";
 "Enter the number of seconds to skip" = "건너뛸 시간(초)을 입력하세요";
-"Set what a tap on a reel does" = "릴을 탭했을 때의 동작을 설정";
+"Set what a tap on a reel does" = "릴스를 탭했을 때의 동작을 설정";
 "Confirm reel refresh" = "릴스 새로고침 확인";
 "Custom speed" = "사용자 지정 속도";
 "Disable auto-unmuting reels" = "릴스 자동 음소거 해제 비활성화";
@@ -397,7 +397,7 @@
 "Doom scrolling limit" = "둠스크롤링 제한";
 "e.g. 1.75" = "예: 1.75";
 "Enter a value between 0.5 and 2.0" = "0.5에서 2.0 사이의 값을 입력하세요";
-"Keeps the progress bar visible on every reel" = "모든 릴에서 진행 표시줄을 계속 표시";
+"Keeps the progress bar visible on every reel" = "모든 릴스에서 진행 표시줄을 계속 표시";
 "Hide \"Made with Edits\" badge" = "\"Made with Edits\" 배지 숨기기";
 "Hide friends avatars" = "친구 아바타 숨기기";
 "Hide reels header" = "릴스 헤더 숨기기";
@@ -406,11 +406,11 @@
 "Hides the Edits app promo pill on reels" = "릴스에서 Edits 앱 홍보 알약 배너를 숨깁니다";
 "Hides the floating overlay showing who reposted or commented on reels" = "릴스에서 누가 리포스트하거나 댓글을 달았는지 표시하는 플로팅 오버레이를 숨깁니다";
 "Hides the repost button on the reels sidebar" = "릴스 사이드바에서 리포스트 버튼을 숨깁니다";
-"Drops the top bar while you watch reels" = "릴을 보는 동안 상단 바를 숨김";
+"Drops the top bar while you watch reels" = "릴스를 보는 동안 상단 바를 숨김";
 "Hiding" = "숨김";
 "IG default" = "IG 기본값";
 "Limits" = "제한";
-"Caps how many reels you can scroll in a row and blocks the refresh" = "연속으로 넘길 수 있는 릴 수를 제한하고 새로고침을 차단";
+"Caps how many reels you can scroll in a row and blocks the refresh" = "연속으로 넘길 수 있는 릴스 수를 제한하고 새로고침을 차단";
 "Only loads %@ %@" = "%@ %@만 로드합니다";
 "Places a button above the like/comment/share column on each reel" = "각 릴스의 좋아요/댓글/공유 열 위에 버튼을 배치합니다";
 "Playback speed" = "재생 속도";
@@ -429,21 +429,21 @@
 "Minimum reposts" = "최소 리포스트 수";
 "Reels below this count are hidden. 0 turns this limit off." = "이 수 미만의 릴스는 숨겨집니다. 0이면 이 제한이 꺼집니다.";
 "Turns the filter off and clears every minimum." = "필터를 끄고 모든 최소값을 지웁니다.";
-"Locks a reel in place so it never scrolls to the next one" = "릴을 고정하여 다음 릴로 넘어가지 않게 함";
-"Keeps reels from unmuting when you hit a volume or ringer key" = "볼륨이나 벨소리 키를 눌러도 릴 소리가 켜지지 않게 함";
+"Locks a reel in place so it never scrolls to the next one" = "릴스를 고정하여 다음 릴스로 넘어가지 않게 함";
+"Keeps reels from unmuting when you hit a volume or ringer key" = "볼륨이나 벨소리 키를 눌러도 릴스 소리가 켜지지 않게 함";
 "RyukGram" = "RyukGram";
-"Confirms before the reels feed refreshes" = "릴 피드를 새로고침하기 전에 확인";
+"Confirms before the reels feed refreshes" = "릴스 피드를 새로고침하기 전에 확인";
 "Shows buttons to reveal and auto-fill the password on locked reels" = "잠긴 릴스에서 비밀번호를 표시하고 자동 입력하는 버튼을 표시합니다";
 "Same as general format" = "일반 형식과 동일";
-"Shows the repost date on the \"reposted this reel\" header." = "\"이 릴을 리포스트함\" 헤더에 리포스트 날짜를 표시합니다.";
+"Shows the repost date on the \"reposted this reel\" header." = "\"이 릴스를 리포스트함\" 헤더에 리포스트 날짜를 표시합니다.";
 "Reposts" = "리포스트";
 "Swipe a reel left to open the author's profile" = "릴스를 왼쪽으로 스와이프하면 작성자의 프로필이 열립니다";
 "Swipe left to profile" = "왼쪽으로 스와이프하여 프로필 열기";
 "Tap Controls" = "탭 제어";
-"Tap to mute on photo reels" = "사진 릴에서 탭으로 음소거";
+"Tap to mute on photo reels" = "사진 릴스에서 탭으로 음소거";
 "Tapping the Reels tab while on reels does nothing" = "릴스 탭에 있을 때 릴스 탭을 탭해도 아무 작업도 수행하지 않습니다";
 "Unlock password-locked reels" = "비밀번호로 잠긴 릴스 잠금 해제";
-"When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "일시정지 모드가 켜져 있을 때 사진 릴을 탭하면 기본 일시정지 대신 오디오가 전환됩니다";
+"When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "일시정지 모드가 켜져 있을 때 사진 릴스를 탭하면 기본 일시정지 대신 오디오가 전환됩니다";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 PROFILE                                  //
@@ -704,9 +704,9 @@
 "Recent in your DMs" = "최근 대화 상대";
 "Results" = "결과";
 "This removes all recorded activity on this device." = "이 기기에 기록된 모든 활동을 삭제합니다.";
-"Active %ldd ago" = "%ldd 전 활동";
-"Active %ldh ago" = "%ldh 전 활동";
-"Active %ldm ago" = "%ldm 전 활동";
+"Active %ldd ago" = "%ld일 전 활동";
+"Active %ldh ago" = "%ld시간 전 활동";
+"Active %ldm ago" = "%ld분 전 활동";
 "Activity notifications" = "활동 알림";
 "Also track reads in group chats. Groups can be noisy" = "그룹 채팅의 읽음도 추적합니다. 그룹은 알림이 많을 수 있습니다";
 "Came online" = "온라인 상태가 됨";
@@ -733,7 +733,7 @@
 "Went offline" = "오프라인이 됨";
 "When someone becomes active" = "누군가 활동을 시작할 때";
 "When someone goes inactive" = "누군가 비활성 상태가 될 때";
-"When someone opens a message you sent" = "누군가 보낸 메시지를 열 때";
+"When someone opens a message you sent" = "상대방이 내가 보낸 메시지를 읽었을 때";
 "When someone starts typing to you" = "누군가 나에게 입력을 시작할 때";
 "is now active" = "지금 활동 중";
 "is typing…" = "입력 중…";
@@ -809,7 +809,7 @@
 "Hides typing indicator from others" = "다른 사람에게 회원님의 입력 중 상태를 숨깁니다";
 "Indicate unsent messages" = "전송 취소된 메시지 표시";
 "Keep deleted messages" = "삭제된 메시지 보관";
-"Turns view once messages into normal media you can loop and pause" = "한 번만 보기 메시지를 반복하고 멈출 수 있는 일반 미디어로 변환";
+"Turns view once messages into normal media you can loop and pause" = "한 번 보기 메시지를 반복 재생 및 일시정지가 가능한 일반 미디어로 변환";
 "Note actions" = "노트 작업";
 "Preserves messages that others unsend" = "다른 사람이 전송 취소한 메시지를 보존합니다";
 "Keep my deleted messages" = "내 삭제된 메시지 보존";
@@ -1102,7 +1102,7 @@
 "Confirms before the follow button follows someone" = "팔로우 버튼이 누군가를 팔로우하기 전에 확인";
 "Shows an alert when you click the like button on notes to confirm the like" = "노트에서 좋아요 버튼을 클릭할 때 좋아요를 확인할 경고를 표시합니다";
 "Shows an alert when you click the like button on posts to confirm the like" = "게시물에서 좋아요 버튼을 클릭할 때 좋아요를 확인할 경고를 표시합니다";
-"Confirms before a like lands on a reel" = "릴에 좋아요를 누르기 전에 확인";
+"Confirms before a like lands on a reel" = "릴스에 좋아요를 누르기 전에 확인";
 "Shows an alert when you click the like button on stories to confirm the like" = "스토리에서 좋아요 버튼을 클릭할 때 좋아요를 확인할 경고를 표시합니다";
 "Confirms before a comment posts" = "댓글을 게시하기 전에 확인";
 "Shows an alert when you click the repost button to confirm before reposting" = "리포스트 버튼을 클릭할 때 리포스트하기 전에 확인할 경고를 표시합니다";
@@ -1882,7 +1882,7 @@
 "Remove @%@ as a follower?" = "@%@님을 팔로워에서 삭제할까요?";
 "Remove follower" = "팔로워 삭제";
 "Removing… %lu / %lu" = "삭제 중… %lu / %lu";
-"Recording" = "녹음";
+"Recording" = "기록 중";
 "Request failed" = "요청 실패";
 "Reset analyzer data" = "분석 데이터 초기화";
 "Reset complete" = "초기화 완료";
@@ -2396,7 +2396,7 @@
 "Flat list. No grouping." = "단일 목록. 그룹 없음.";
 "Folder name" = "폴더 이름";
 "Folders" = "폴더";
-"From RyukGram Gallery" = "RyukGram 갤러리의 오디오";
+"From RyukGram Gallery" = "RyukGram 갤러리에서";
 "Gallery" = "갤러리";
 "Gallery only" = "갤러리만";
 "Gallery save mode" = "갤러리 저장 모드";
@@ -2595,7 +2595,7 @@
 "Copied description text" = "설명 텍스트 복사됨";
 "DM seen / read receipts" = "DM 보임 / 읽음 확인";
 "Story seen / read receipts" = "스토리 보임 / 읽음 확인";
-"Someone read your message" = "누군가 내 메시지를 읽음";
+"Someone read your message" = "상대방이 내 메시지를 읽음";
 "User blocked / unblocked" = "사용자 차단 / 차단 해제";
 "Chat added / removed from exclude" = "채팅 제외 추가 / 제거";
 "Story user added / removed from exclude" = "스토리 사용자 제외 추가 / 제거";
@@ -2877,7 +2877,7 @@
 "Also show recordings in the RyukGram gallery under Calls" = "RyukGram 갤러리의 통화 섹션에도 녹화를 표시합니다";
 "Auto-delete old recordings" = "오래된 녹화 자동 삭제";
 "Auto-record calls" = "통화 자동 녹화";
-"Auto-record ignore list" = "자동 녹화 무시 목록";
+"Auto-record ignore list" = "자동 녹화 제외 목록";
 "Auto-record ignored" = "자동 녹화 제외됨";
 "Auto-record on" = "자동 녹화 켜짐";
 "Block mute signal" = "음소거 신호 차단";
@@ -2907,7 +2907,7 @@
 "Include my camera" = "내 카메라 포함";
 "Keep forever" = "영구 보관";
 "Large" = "크게";
-"Mute without the other side seeing you muted — your mic is still silenced" = "내가 음소거한 사실을 상대방이 모르게 합니다 — 내가 음소거한 사실을 상대방이 모르게 합니다";
+"Mute without the other side seeing you muted — your mic is still silenced" = "상대방에게 음소거 상태를 알리지 않고 음소거합니다 — 마이크는 그대로 차단됩니다";
 "Muted silently" = "몰래 음소거됨";
 "My camera size" = "내 카메라 크기";
 "No call audio was captured." = "통화 오디오가 캡처되지 않았습니다.";
@@ -2964,7 +2964,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 "Reacted" = "반응함";
-"Reacted first" = "반응 먼저";
+"Reacted first" = "반응한 사람 우선";
 "Mutual" = "맞팔";
 "Viewers" = "조회한 사람";
 "1 viewer" = "조회한 사람 1명";
