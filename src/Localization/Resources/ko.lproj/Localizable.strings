@@ -846,7 +846,7 @@
 "All time" = "전체 기간";
 "Browse, filter and search recorded messages" = "기록된 메시지를 탐색, 필터링, 검색";
 "Captures unsent messages with their text or media" = "전송 취소된 메시지를 텍스트와 미디어와 함께 저장합니다";
-"Clear deleted-message log?" = "삭제된 메시지 기록를 지울까요?";
+"Clear deleted-message log?" = "삭제된 메시지 기록을 지울까요?";
 "Clear from this user" = "이 사용자 기록 지우기";
 "Clear log" = "로그 지우기";
 "Clear log for this account" = "이 계정의 로그 지우기";
@@ -866,7 +866,7 @@
 "Edited" = "수정됨";
 "Empty" = "비어 있음";
 "Enable deleted messages log" = "삭제된 메시지 기록 사용";
-"Enable Settings → Messages → Deleted messages log to start recording." = "설정 → 메시지 → 삭제된 메시지 기록를 활성화하여 기록을 시작하세요.";
+"Enable Settings → Messages → Deleted messages log to start recording." = "설정 → 메시지 → 삭제된 메시지 기록을 활성화하여 기록을 시작하세요.";
 "GIF" = "GIF";
 "Hashtag" = "해시태그";
 "IGTV" = "IGTV";
@@ -2128,7 +2128,7 @@
 "Links" = "링크";
 "No releases" = "릴리스 없음";
 "SCInsta developer" = "SCInsta 개발자";
-"Release notes" = "릴리스 메모";
+"Release notes" = "릴리스 노트";
 "Releases" = "릴리스";
 "Report an issue" = "문제 신고";
 "Russian translation" = "러시아어 번역";
