@@ -237,7 +237,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - See what RyukGram keeps on your device, by section and account, and clear it
 
 ### Localization
-- English, Spanish, French, Russian, Korean, Japanese, Arabic, Vietnamese, Chinese, Portuguese, and Turkish
+- English, Spanish, French, Russian, Korean, Japanese, Arabic, Vietnamese, Chinese, Portuguese, Turkish, and Indonesian
 - In app language picker, with English as the fallback
 
 ### Optimization
@@ -265,7 +265,7 @@ RyukGram got its start from [SCInsta](https://github.com/SoCuul/SCInsta) by [@So
 - [**@n3d1117**](https://github.com/n3d1117) for the Following feed
 - [**BillyCurtis**](https://github.com/BillyCurtis/OpenInstagramSafariExtension) for the Safari extension base
 - [**@asdfzxcvbn**](https://github.com/asdfzxcvbn) for ipapatch and zxPluginsInject
-- Furamako, [@ZomkaDEV](https://github.com/ZomkaDEV), [@ch1tmdgus](https://github.com/ch1tmdgus), [@bruuhim](https://github.com/bruuhim), [@jaydenjcpy](https://github.com/jaydenjcpy), [@brunorainha](https://github.com/brunorainha), [@yesnt10](https://github.com/yesnt10), [@tranbinh02](https://github.com/tranbinh02), [@yannouuuu](https://github.com/yannouuuu), and [@willybilly981](https://github.com/willybilly981) for translations
+- Furamako, [@ZomkaDEV](https://github.com/ZomkaDEV), [@ch1tmdgus](https://github.com/ch1tmdgus), [@bruuhim](https://github.com/bruuhim), [@jaydenjcpy](https://github.com/jaydenjcpy), [@brunorainha](https://github.com/brunorainha), [@yesnt10](https://github.com/yesnt10), [@tranbinh02](https://github.com/tranbinh02), [@yannouuuu](https://github.com/yannouuuu), [@willybilly981](https://github.com/willybilly981), and [@secdie](https://github.com/secdie) for translations
 
 ## Support
 
