@@ -1,110 +1,156 @@
-[release] RyukGram v1.3.3
+[release] RyukGram v1.3.4
 
-Updated for Instagram 439.0.0.
-
-### ✨ Highlights
-- **Call recording** — record voice and video calls, with auto-record, smart video grids and a per-person browser to play them back
-- **Activity notifications** — one log for who read your messages plus who came online, went offline or started typing, per person, with an accurate green dot
-- **Grid feed** — turn your home feed into a tappable grid of thumbnails with stats and author overlays, per account
-- **Stories archive** — saves every story you post before it expires, with its media and full viewer list, per account
-- **Story viewers list** — a searchable, filterable, sortable and pinnable "who viewed my story", with each viewer's reaction shown
-- **Instagram Plus** — turn on some Instagram's paid subscriber features inside the app
-- **Custom button icons** — pick any Instagram icon or iOS symbol for the action and home-shortcut buttons
+Updated for Instagram 446.0.0.
 
 ### 🆕 New features
-
-#### Messages
-- Activity notifications and Activity log — records who read your messages plus who came online, went offline or started typing, as a per-person timeline. Set each event to log silently, notify you, or both, and hold anyone to customise or mute them. A new accurate active-status option turns the green dot off the moment someone leaves. Filter by type and date, swipe or multi-select to delete, and lock the log behind your passcode
-- A dot in the DMs inbox to turn your active status on or off without opening settings
-- Keep deleted messages can now also keep the ones you unsend yourself, shown faded in chat and added to the deleted log
-- Mark chats seen locally — with read-receipt blocking on, opened chats look read on your device while the sender still gets no receipt; the eye button turns orange until you really mark seen
-- Hold the account name at the top of Direct to show or hide your hidden chats, with an optional passcode/Face ID lock
-- Messages-only mode is now its own menu, can turn on automatically during a daily window, and adds a notifications shortcut plus an optional home-shortcut button in the inbox header
-- Adding someone to a list (read-receipt blocking, hidden or locked chats, chat backgrounds, story viewer pins) now opens a picker of recent DMs with username search, instead of typing it in blind
-- The DM Draw feature can now send an image as your doodle — from the gallery, Photos, your Instagram or iOS stickers, or a pasted image — with an editor to crop, resize and remove the background
-- Custom chat backgrounds can now be videos or GIFs, framed with pan-zoom and trim, with the same opacity, blur and dim controls, and re-editable later
-- Hide suggested accounts and channels in Direct messages search
-
-#### Stories
-- Stories archive saves every story you post before it expires, with its media and full viewer list, per account. Browse by date in a grid, see who viewed, liked or reacted, with filter, sort, pinned viewers, an unread badge, optional alerts and its own backup and storage entry
-- The "who viewed my story" list is now searchable — filter (mutuals, following, follows you, verified, reacted, pinned), sort, and pin anyone to the top. Shows avatars, verified badges and each viewer's reaction, loads every viewer, and can switch back to Instagram's own list. Pick which one opens first
-- Marked-seen indicator — stories you already marked as seen hide the eye button or fill it green for 48 hours, per account
-- New "Save image (no music)" story download option for photo stories that have Instagram music on them
-- Story tray long-press "Profile picture" now also works in Instagram's new subscriber story preview menu
-
-#### Reels
-- New reels playback menu — hold the ⋯ or audio button for speed, seek (skip back/forward by a custom amount) and auto-scroll controls
-- Auto-scroll reels is back — Instagram default or RyukGram mode that keeps advancing after you swipe back
-- Filter reels by engagement — set a minimum for likes, comments, views or reposts and reels below it never show, plus an option to hide reels whose author hides their counts. Only the Reels tab is filtered by default, so reels you open from a post, profile or share stay untouched
-- Show when a reel was reposted — an optional date on the "reposted this reel" header
-
-#### Feed & Explore
-- New Grid feed — turn your home feed into a grid of post thumbnails showing likes, comments, views, shares and the author. Pinch to change columns, pull to refresh, tap a post to open it, or hold for a menu to like, follow, view profile, expand, share or copy the link. Choose which stats show, square or taller tiles, and how you switch back to Instagram's feed. Loads instantly, works per account and remembers where you left off
-- Search and explore grids now show stat pills on posts and reels — views, likes, comments, shares, reposts and date — with a page to pick which appear, reorder them and toggle them
-- New date format options — swap Instagram's relative timestamps on posts, notes, comments, stories and DMs for a fixed date, a preset like dd/MM/yyyy, or your own template, with a relative-time threshold
-- New "Block surveys" toggle — hides Instagram's in-app surveys and feedback prompts, including the "Interested in this post?" cards
-- Confirm feed refresh — an optional alert before a pull-to-refresh reloads the home feed
-- Refresh stories only — pull-to-refresh reloads just the stories tray and leaves the feed where it is
-
-#### Instants
-- Instants download now works on videos too — expand, save, share and download-all all handle video instants
-- Send a video from your gallery as an Instant — frame it square, trim any 7 seconds on a scrollable timeline, then hold to record
-- Confirm before capturing an Instant — an optional alert on a photo tap or held video, plus a confirm before tapping to switch Instants
-- Auto close the Instants viewer once you've seen them all
-
-#### Downloads & Gallery
-- Download manager got a rebuild — thumbnails for finished media, live size, speed and time left, a filter row, and swipe a row to cancel, retry or remove
-- Downloads now stay listed after you close the app and can be downloaded again from the history — kept from 12 hours up to forever, and cleared or exported from Backup and Storage
-- Download quality picker has an advanced view — download a video with no audio, or pick any of its audio tracks
-- Gallery — import your own photos, videos and files from the ••• menu, saved under an Imported filter
-- Gallery browsing got more controls — combine a sort with images, videos or favorites first, filter by date, pick 2 to 5 columns, and long-press a user section to select all their media
-- The gallery now uses Instagram icons throughout, grid tiles show a date chip, and long-pressing an item shows its date, source and size
-
-#### Profile
-- Profile card details now also show comment, share and repost counts, with a page to pick which stats appear, reorder them and toggle them
-- Followers and Following lists get a filter and sort button on Instagram's search bar — mutuals, following, follows you or verified, sorted by name or relationship
-- Profile Analyzer's badge now shows gains and losses — a green +N when a list grew, a red −N when it shrank
-- Profile Analyzer is out of beta
-
-#### Interface & notifications
-- Action button and home-shortcut icons are now fully customisable — a searchable browser for any Instagram icon or iOS symbol, per button or shared, including Instagram's colourful pet stickers
-- Tab bar icon order is now a live tab bar preview — drag to reorder, drag one up to hide, tap a hidden icon to add it back
-- Story and disappearing-media overlay buttons can be repositioned by dragging them on a preview
-- The notification pill can be placed anywhere on a phone preview, not just top or bottom
-- Notifications mirrored to the iOS notification centre can now also show as system banners while you're using the app
-- The home shortcut button shows a red dot for new deleted messages, read receipts or call recordings, with a count next to each in its menu
-- Favorite GIFs long-press menu can now copy a GIF's link
-
-#### Privacy & backup
-- Device ID masking now also hides the vendor ID and machine ID, can block Apple device attestation, and can reset fresh while keeping masking on. A Device ID button on the login screen gives the same controls while signed out
-- Follow requests tracker shows a badge for updates you haven't opened yet
-- Backup's "Feature data" now opens a list where you tick exactly which stores to export, import or reset, instead of all-or-nothing
-- Backups can be locked with a password when exporting (AES-256), asked for only when you restore them
-
-#### General
-- Change Instagram's own interface language from the tweak — a picker with a full language list, including Arabic even if your device isn't set to it; restart to apply
-- New Instagram Plus menu in General — turns on Instagram's paid subscriber features inside the app, including story and message peek, fonts, the app icon picker and custom story lists, with a master on/off and reset
-- Tweak settings shows an occasional donate prompt after long-term use, easily dismissed or hidden for good
+- A post or story downloaded to the gallery stays one item you swipe through, with a switch in Gallery Settings
+- Always mute starts feed, reels, stories and DMs silent until you tap a speaker or press volume
+- Auto-clear cache can run on every launch
+- Backup & Restore is now Backup & Profiles, with a profile shortcut on the settings home page
+- Backup, restore and storage list MobileConfig changes as their own item
+- Backup, restore and storage list the duplicate download list as their own item
+- Bring back the old Instagram logo in the feed header
+- Call recordings are tagged auto or manual in the list
+- Catch view-once media that arrives while Instagram is fully closed and keep it in the log when unsent, off by default, with size and age cleanup
+- Confirm before a reaction sends in a chat — pick whether it catches only the accidental double-tap reaction or every reaction you send
+- Copied text can open in a sheet first so you can edit it or copy only the part you selected
+- Custom fonts for Instagram, RyukGram, or both, set under Theme
+- Custom fonts in the story text tool: your imported and device fonts show up next to the built-in ones when you add text to a story
+- Deleted messages log entries can open the chat and jump to where the message was
+- Deleted messages log: logging view-once media you open is its own switch, off by default
+- Disappearing media has its own settings page, and the mark-as-viewed button only shows when view receipts are blocked
+- Doom scrolling limit can now cap the grids on audio, effect, template and remix pages too
+- Duplicate download check asks before you save the same media twice, and can remove the old gallery copy first
+- Expanded view shows the whole reel instead of cropping the sides
+- Fake profile options now live on their own page under Profile, with the username, name, counts and badge together
+- Fake username and display name for your own account, shown only on your device
+- Follow indicator in follower and following lists, with its own style kept separate from the profile one
+- Group any gallery files into an album, or split one back apart, from multi-select
+- Hide reels in chats so they never show or open in DM threads
+- Hide metrics and the two hide repost button switches now live in those pages, per button instead of all at once. Your old settings carry over
+- Hold a song in any music picker to download the audio
+- Hold any tab in the bottom bar to open a RyukGram screen, picked per tab under Interface > Tab bar > Tab shortcuts. Replaces the separate home, search and DM hold toggles
+- Hold controls for reels: force hold-to-pause, force the options menu, or the options menu with picture in picture
+- Hold the story eye button to mark every story in a reel as seen, or only the ones up to where you are
+- Import your own .ttf or .otf fonts, or download from thousands online
+- Indonesian translation added
+- Importing a backup can send its settings to a new profile instead of the ones you're using
+- Kept unsent messages can be marked with a tag, a faded bubble, a tinted bubble or any mix, with your own tag text, position, size and colors
+- Link a profile to Instagram accounts and it switches with the account, with an unlinked profile covering the rest
+- Long press a tracked follow request to open the profile, view the picture, filter to that user, copy the username or delete the entry
+- Machine ID masking, pinned like the rest of the identifiers, with copy and manual entry
+- Manage fonts in bulk from either font picker, with multi select and a delete confirmation
+- Mask everything & relaunch rolls every identifier, blocks Apple attestation and clears saved logins in one tap, from Settings or the login screen button
+- Messages-only mode now switches in place, no restart, whether you flip it yourself or the schedule does
+- MobileConfig changes can be exported and imported from the browser menu
+- New MobileConfig browser to read and change Instagram's own internal settings, with search inside a config, copiable config details and a home shortcut entry
+- New Post buttons and Reel buttons pages: reorder Instagram's own like, comment, share, repost and save buttons, hide any of them, or drop a count without hiding its button
+- New switch to hide the Threads button in the profile header
+- New Updates page under About with the update status, what's new in your build, every past release, and switches for the automatic checks
+- Optional ryuk_ prefix on saved file names, under Media saving
+- Photos can download at their full upload size, often much larger than the copy Instagram hands the app
+- Pick the size a photo downloads at, with the dimensions, format and file size on every option
+- Playback controls for stories with speed, seek and pause, held from the ⋯ or speaker button or opened from the story menu
+- Profiles carry a name, color and icon, and can be duplicated, exported or shared as a file
+- Refresh names & photos from the story stats screen and any story viewers list
+- Reset a profile to defaults or turn everything off inside it, with a count of what is on and what differs
+- Restored MobileConfig changes wait until you turn the browser on
+- RyukGram tells you when a newer release is out, shows what changed in it, and links straight to the Telegram channel
+- Saved files now share one naming scheme everywhere, stamped with the date the post went up instead of the moment you downloaded it
+- Select recordings in a call log to save them to the gallery, share them, share video calls as audio only, or delete them together
+- Setting profiles: keep several complete setups under names and switch between them in a tap
+- Spacing between story and disappearing media overlay buttons is adjustable with a slider in the layout editor
+- Status bar tap on the feed can scroll up without refreshing, or be turned off
+- Stop the right swipe on the feed from opening the camera
+- Story and disappearing media buttons placed next to each other close the gap when one of them is hidden, with a switch to turn it off
+- Story stats compares the last 7 or 30 days against the stretch before it
+- Story stats for the archive: overview numbers, a views-per-story chart, and a searchable audience list with filters, sorting and pinned viewers on top
+- Tap someone in the story stats audience list to see every story of yours they watched and what they reacted with
+- Tapping a reel in the feed can play it in place instead of opening the Reels player, or play first and open on a second tap
+- Tapping the RyukGram name or version on the settings links sheet opens the Updates page
+- The reels playback menu gains a pause control
+- The schedule can ask first and only switch when you confirm
+- Updated for Instagram 446.0.0
 
 ### 🛠 Fixes
-- Tapping someone in any RyukGram list now opens their profile inside RyukGram, so Back returns to the list instead of Instagram's home
-- Your gallery carries over to this update, with a one-time prompt to restore items saved by an older version, and gallery backups now import and export every item
-- The home shortcut button now shows on iPad
-- Custom chat background now fills behind the message input on Instagram 437 instead of leaving a black strip
-- Follow requests tracker no longer counts tapping "Following" on an already-followed account as a new request
-- Follow requests tracker no longer wrongly shows received requests as withdrawn, and loads pending requests reliably
-- Detailed color picker no longer crashes in the story drawing editor on Instagram 434
-- OLED theme no longer turns the RyukGram settings screens fully black
-- OLED theme no longer blacks out grey buttons like Follow/Following on profiles
-- Downloading reels or videos with newer Instagram audio (xHE-AAC) no longer fails
-- Feed scrolling is smoother, especially with the OLED theme enabled
-- Favorite GIFs now send and appear reliably in Direct messages
-- Deleted messages log now saves photos and videos at full quality instead of a low-res thumbnail
-- Deleted messages log no longer crashes when you pull to refresh right after leaving a chat
-- Reroute native Save now shows Instagram's Save and long-press Save on DM media even where Instagram hid them, including in vanish mode
-- Settings that need a restart now take effect after one restart instead of sometimes needing two
-- Auto-clear cache now runs reliably on the chosen interval and finishes even if you close Instagram mid-clear
-- Saving or sharing media now always uses a clean name (like username_stories_date) instead of the internal temporary filename
-- Reels action button stays visible on HDR reels, following Instagram's own tint like the like button does
-- No more crash when switching to the Reels tab on some accounts
-- Bulk saving Instants now labels each save with the account that posted it, even with several people's Instants on screen
+- A broken translation now falls back to English instead of crashing the screen it is on
+- A chat no longer shows as read on your other account after a quick switch
+- About keeps showing the available version until you update, so dismissing the popup does not lose it
+- App icon changes that fail now say why instead of showing a bare error
+- Archived story viewers whose profile picture had stopped loading show up again
+- Auto-clear cache no longer skips a whole period when a clear fails or gets cut short, it retries until one goes through
+- Auto-clear no longer stalls after a clock change or a restored backup
+- Bubble colors stay on the side you picked instead of leaking onto your own messages
+- Call buttons hide again on Instagram 444
+- Calls no longer keep recording into the next call when auto-record is off
+- Changing the app icon now works when Instagram is installed through SideStore or AltStore
+- Chat backgrounds keep showing after a theme change on Instagram 444
+- Chats marked seen locally now drop the unread bold on accounts where nothing happened before
+- Clearing the cache by hand no longer pushes the next auto-clear back
+- Color pickers open as a smaller sheet that leaves the page behind it visible
+- Confirmation popups no longer let the screen rotate where Instagram itself stays locked
+- Data saved by older versions no longer crashes the screen that reads it
+- Deleted messages log shows when an old message was originally sent, so it can't be mistaken for a new one
+- Downloading a video opened from search saved the cover photo instead, now it downloads the video and offers every quality
+- Downloading a whole post or story keeps its items in the order they were posted
+- Export and import no longer crash Instagram while scanning what's on the device
+- Fake verified badge stays put instead of vanishing on refresh
+- File names no longer pick up a second extension or timestamp when the same media is saved again
+- Follow confirmation works again on Instagram 443
+- Gradient bubble colors no longer vanish when you scroll a chat and come back
+- Hiding tabs no longer leaves the tab bar over a reel opened from a chat, or covering the message box on the way back
+- Hiding the reels header works again on Instagram 443
+- Importing only asks for a restart when what you imported actually needs one
+- Instagram no longer launches into a tab you hid
+- Instagram Plus story fonts unlock again, and the upgrade prompt stays away
+- Icon browser drops the colour pet icons Instagram 446 removed, and a button whose icon is gone shows a marker instead of nothing
+- Instants no longer crashes on a video it cannot read, and says so instead
+- Instagram Plus story peek now works on DM inbox avatars, not only the stories tray
+- Installing over the old pre-rename package now removes it instead of running both
+- Kept unsent messages no longer disappear when a chat reloads its older history, survive a restart, and now cover older messages you never opened
+- Korean translation reworked to read more naturally
+- Link tracking removal now strips Instagram's new igsi parameter and works on links using a custom domain
+- Long notification text now wraps and grows the pill instead of being cut off, with a limit and an ellipsis
+- Long pressing an avatar outside a profile page opens and saves it in HD too
+- Marking a story seen works again on Instagram 446
+- Masked device identifiers now stick: they are written even when Instagram never stored one, re-applied on every launch, and Instagram can no longer swap them back mid-session
+- Message peek shows the chat, drops the upgrade row from the menu, and opens the chat when you tap it
+- Moving between a chat and a reel no longer stacks a second tab bar under the first
+- Old feed logo works again on Instagram 444
+- Note actions row shows again when you hold a note on Instagram 446
+- Online status updates work again on Instagram 445
+- Opening an archived story no longer wipes its view, like and reaction counts, and counts already flattened are rebuilt from the saved viewers
+- Reels no longer crash when scrolling away with the playback toggle on
+- Release notes render properly now: sub-headings, nested bullets and inline code no longer come through as raw text
+- Reverting to your real device ID no longer restores a masked value over it
+- Rewinding a reel past its start now jumps to the beginning instead of doing nothing
+- Saved profile pictures now keep the quality you see in the preview
+- Settings carried over from an old install no longer come back with the wrong value
+- Shared links now have the same tracking parameters removed as links opened in the browser
+- Sharing from the gallery keeps the name you see in the list instead of a raw id
+- Sharing from the expanded view names the file after the account and post date instead of a raw id
+- Stories archive stops re-fetching viewers for stories that were deleted on Instagram
+- Story date format now applies on accounts where Instagram uses a different timestamp style
+- Story text colour picker applies your colour again on Instagram 446
+- Story mentions button refreshes again when a story opens on Instagram 445
+- Story viewer list header buttons are back on Instagram 445, and the reload button works for the first time
+- Tab bar buttons now open the tab they show when some tabs are hidden
+- Tapping a photo in a reel carousel now mutes it as intended
+- The copy icon is back in the action button menus, Instagram had dropped the artwork it used
+- The favourite option on comment GIFs shows its icon properly again
+- The explore grid no longer flashes into view when the explore page opens with it hidden
+- The icon browser picks up the icons added in Instagram 441
+- The in-call record button now hides with Instagram's own call controls, so tapping to bring them back cannot start a recording
+- The profile action button no longer overlaps the username in the profile top bar
+- The Snapshots screen no longer crashes in Japanese, Turkish and Chinese
+- The story viewers "Default list" option now shows translated in every language
+- The unsent notification names the chat instead of saying a message was unsent, when the message itself can't be recovered
+- Trimming an HDR video exports instead of failing
+- Turning on the messages-only schedule asks to restart right away instead of waiting for the window to start
+- Unsent messages recovered from an older part of a chat now show who sent them and get logged with their content
+- What's new no longer shows an older release's notes when you are on a build that has not been released yet
+- Your icon order and hidden tabs survive the messages-only switch instead of all coming back
+
+### ⚠️ Known issues
+- Reopening the story text tool highlights your last custom font but starts typing in the default one until you tap it again
+- Unfollow confirmation does not appear on profiles on Instagram 446

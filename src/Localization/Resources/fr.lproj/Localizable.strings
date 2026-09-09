@@ -88,9 +88,14 @@
 "Adds download, copy and expand options to GIF and image comments" = "Ajoute des options télécharger, copier et agrandir aux commentaires GIF et image";
 "Allow video in photo sticker" = "Autoriser la vidéo dans le sticker photo";
 "Alternate icons are not supported" = "Les icônes alternatives ne sont pas prises en charge";
+"Couldn't change app icon" = "Le changement d'icône a échoué";
+"Always mute" = "Toujours en sourdine";
+"Starts muted everywhere until you tap a speaker" = "Tout démarre en sourdine jusqu'à ce que vous touchiez un bouton de son";
 "Anonymous live viewing" = "Visionnage de lives anonyme";
 "App Icon" = "Icône de l’app";
-"Audio page" = "Page audio";
+"Download from music picker" = "Télécharger depuis le sélecteur de musique";
+"Music" = "Musique";
+"Adds a download option to the song long-press menu in music pickers" = "Ajoute une option de téléchargement au menu d’appui long sur un titre dans les sélecteurs de musique";
 "Auto-reveals sensitive media" = "Affiche automatiquement les médias sensibles";
 "Block surveys" = "Bloquer les sondages";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "Bloque le signal du compteur de spectateurs pour que le diffuseur ne vous voie pas — vous ne verrez pas non plus le compteur";
@@ -103,6 +108,10 @@
 "Copy comment text" = "Copier le texte du commentaire";
 "Copy description" = "Copier la description";
 "Long press a caption to copy its text" = "Appuie longuement sur une légende pour copier son texte";
+"Edit before copying" = "Modifier avant de copier";
+"Pick or trim what gets copied" = "Choisis ou coupe ce qui est copié";
+"Copy selection" = "Copier la sélection";
+"%lu characters" = "%lu caractères";
 "Custom sticker colors" = "Couleurs de stickers personnalisées";
 "Custom colors aren't supported for this sticker" = "Les couleurs personnalisées ne sont pas prises en charge pour ce sticker";
 "Date format" = "Format de date";
@@ -122,7 +131,6 @@
 "End" = "Fin";
 "Experimental features" = "Fonctionnalités expérimentales";
 "Explore & search" = "Explorer et rechercher";
-"Failed to change icon" = "Échec du changement d’icône";
 "Fixed" = "Fixe";
 "Fixed prevents shrinking. Hide makes it disappear when scrolling down" = "Fixe empêche le rétrécissement. Masquer le fait disparaître au défilement vers le bas";
 "Focus/distractions" = "Concentration/distractions";
@@ -134,14 +142,12 @@
 "Hide explore posts grid" = "Masquer la grille des publications Explorer";
 "Hide friends map" = "Masquer la carte des amis";
 "Hide Meta AI" = "Masquer Meta AI";
-"Hide metrics" = "Masquer les métriques";
 "Hide notes tray" = "Masquer le bandeau des notes";
 "Hide on scroll" = "Masquer au défilement";
 "Hide TestFlight popup" = "Masquer la fenêtre TestFlight";
 "Hide trending searches" = "Masquer les recherches tendance";
 "Hide UI on capture" = "Masquer l’interface lors des captures";
 "Removes suggested accounts to follow outside the feed" = "Supprime les comptes suggérés à suivre en dehors du fil";
-"Hides like/comment/share counts on posts and reels" = "Masque les compteurs de J’aime, commentaires et partages sur les publications et reels";
 "Removes the friends map icon from the notes tray" = "Supprime l'icône de la carte des amis du bandeau de notes";
 "Removes the suggested posts grid on the explore tab" = "Supprime la grille de publications suggérées dans l'onglet Explorer";
 "Strips the Meta AI buttons and entry points from the app" = "Retire les boutons et points d'accès Meta AI de l'app";
@@ -158,7 +164,6 @@
 "Hold the eyedropper in stories to pick an exact text color" = "Maintiens la pipette dans les stories pour choisir une couleur précise";
 "Long-press the color wheel in sticker editors to pick any solid or gradient color" = "Maintenez la roue chromatique dans les éditeurs de stickers pour choisir une couleur unie ou dégradée";
 "Long-press the heart button in a live to hide or show the comments" = "Maintenez le bouton cœur dans un live pour masquer ou afficher les commentaires";
-"Long-press the search tab to open a copied Instagram link" = "Maintenez l’onglet de recherche pour ouvrir un lien Instagram copié";
 "Master switch. When off, all per-surface toggles below are ignored." = "Interrupteur principal. Désactivé, tous les boutons par surface ci-dessous sont ignorés.";
 "No suggested chats" = "Aucune discussion suggérée";
 "No suggested users" = "Aucun utilisateur suggéré";
@@ -192,6 +197,7 @@
 "Suppresses the \"It's time to update Instagram Beta\" nag" = "Supprime le rappel « It’s time to update Instagram Beta »";
 "Tap to apply" = "Toucher pour appliquer";
 "The selected icon will be saved and shown here the next time you open this page." = "L’icône sélectionnée sera enregistrée et affichée ici la prochaine fois que vous ouvrirez cette page.";
+"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "Votre app de sideload a remplacé la liste d’icônes d’Instagram. Remettez son icône sur Par défaut, puis actualisez Instagram pour récupérer les icônes.";
 "Toggle live comments" = "Afficher/masquer les commentaires de live";
 "Use detailed color picker" = "Utiliser le sélecteur de couleur détaillé";
 "Used across feed, stories, reels, and DMs." = "Utilisé dans le fil, les stories, les reels et les DM";
@@ -316,9 +322,10 @@
 "Disable home button refresh" = "Désactiver le rafraîchissement par Accueil";
 "Disable home button scroll" = "Désactiver le défilement par Accueil";
 "Disable video autoplay" = "Désactiver la lecture automatique des vidéos";
+"Disable swipe to camera" = "Désactiver le balayage vers l'appareil photo";
+"Swiping right on the feed no longer opens the camera" = "Balayer vers la droite dans le fil n'ouvre plus l'appareil photo";
 "Hide" = "Masquer";
 "Hide entire feed" = "Masquer tout le fil";
-"Hide repost button" = "Masquer le bouton de repost";
 "Hide stories tray" = "Masquer le bandeau des stories";
 "Hide suggested stories" = "Masquer les stories suggérées";
 "Hide story highlights" = "Masquer les stories à la une";
@@ -326,7 +333,6 @@
 "Hides suggested accounts" = "Masque les comptes suggérés";
 "Hides suggested reels" = "Masque les reels suggérés";
 "Hides suggested threads posts" = "Masque les publications Threads suggérées";
-"Hides the repost button on feed posts" = "Masque le bouton de repost sur les publications du fil";
 "Hides the story tray at the top" = "Masque le bandeau des stories en haut";
 "Inserts a button row below like/comment/share on each post" = "Insère une rangée de boutons sous J’aime/commenter/partager sur chaque publication";
 "Long press on media to expand in full-screen viewer" = "Appui long sur le média pour l’agrandir en plein écran";
@@ -343,11 +349,16 @@
 "No suggested threads" = "Aucun Threads suggéré";
 "Prevents feed from reloading when returning from background" = "Empêche le fil de se recharger au retour depuis l’arrière-plan";
 "Prevents videos from playing automatically" = "Empêche les vidéos de se lancer automatiquement";
+"Play in place" = "Lire sur place";
+"Play, then open" = "Lire, puis ouvrir";
 "Refresh" = "Rafraîchir";
 "Removes all content from your home feed" = "Supprime tout le contenu de votre fil d’accueil";
 "Removes suggested accounts from the stories tray" = "Supprime les comptes suggérés du bandeau des stories";
 "Removes suggested posts" = "Supprime les publications suggérées";
 "Scroll to top without refreshing when tapping Home" = "Remonter en haut sans rafraîchir en touchant Accueil";
+"Scroll only" = "Défilement seulement";
+"Status bar tap" = "Appui sur la barre d'état";
+"Tapping the top of the screen scrolls up and refreshes" = "Appuyer en haut de l'écran fait défiler vers le haut et actualise";
 "Show action button" = "Afficher le bouton d’action";
 "Show date" = "Afficher la date";
 "Stories tray" = "Bandeau des stories";
@@ -373,6 +384,15 @@
 "Paste a giphy.com URL or media ID" = "Collez une URL giphy.com ou un identifiant de média";
 "Send" = "Envoyer";
 
+"Post buttons" = "Boutons de publication";
+"Reorder, hide buttons and counts" = "Réorganiser, masquer les boutons et les compteurs";
+"Customized" = "Personnalisé";
+"Buttons" = "Boutons";
+"Numbers" = "Nombres";
+"Right side" = "Côté droit";
+"Drag to reorder, left to right. Instagram pins the last one to the right." = "Faites glisser pour réorganiser, de gauche à droite. Instagram fixe le dernier à droite.";
+"The right-side button never shows a count." = "Le bouton de droite n'affiche jamais de compteur.";
+"Restores Instagram's order and shows every button and count." = "Rétablit l'ordre d'Instagram et affiche tous les boutons et compteurs.";
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
 // Settings → Reels tab                                                     //
@@ -380,8 +400,16 @@
 
 "Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Ajoute un bouton d’action RyukGram au-dessus de la barre latérale des reels avec voir-couverture/télécharger/partager/copier/agrandir/repost. Par défaut, un toucher ouvre le menu ; changez ce comportement ci-dessous.";
 "Always show progress scrubber" = "Toujours afficher la barre de progression";
+"Expanded view" = "Vue étendue";
+"Shows the whole reel instead of cropping the sides" = "Affiche le reel en entier au lieu de rogner les côtés";
 "Auto-scroll reels" = "Défilement automatique des reels";
-"Speed, seek and auto-scroll controls" = "Contrôles de vitesse, navigation et défilement automatique";
+"Hold Controls" = "Contrôles par appui long";
+"Ignored while MobileConfig overrides it" = "Ignoré tant que MobileConfig le remplace";
+"Menu" = "Menu";
+"Menu + PiP" = "Menu + PiP";
+"Pause" = "Pause";
+"Set what holding a reel does" = "Définit l'action d'un appui long sur un reel";
+"Speed, seek, pause and auto-scroll controls" = "Contrôles de vitesse, navigation, pause et défilement automatique";
 "Enabled controls appear when you hold the ⋯ or audio button on a reel." = "Les contrôles activés apparaissent en maintenant le bouton ⋯ ou audio d'un reel.";
 "Seek controls" = "Contrôles de navigation";
 "Auto-scroll control" = "Contrôle du défilement automatique";
@@ -395,7 +423,8 @@
 "Disable scrolling reels" = "Désactiver le défilement des reels";
 "Disable tab button refresh" = "Désactiver le rafraîchissement par l’onglet";
 "Doom scrolling limit" = "Limite de défilement infini";
-"e.g. 1.75" = "ex. 1,75";
+"Limit audio and effect pages" = "Limiter les pages audio et effets";
+"Grids on audio, effect, template and remix pages stop at the same count" = "Les grilles des pages audio, effets, modèles et remix s'arrêtent au même nombre";
 "Enter a value between 0.5 and 2.0" = "Saisir une valeur entre 0,5 et 2,0";
 "Keeps the progress bar visible on every reel" = "Garde la barre de progression visible sur chaque reel";
 "Hide \"Made with Edits\" badge" = "Masquer le badge « Made with Edits »";
@@ -405,7 +434,6 @@
 "Hides the avatar bubbles next to the Friends tab in reels" = "Masque les bulles d’avatar à côté de l’onglet Amis dans les reels";
 "Hides the Edits app promo pill on reels" = "Masque la pastille promotionnelle de l’app Edits sur les reels";
 "Hides the floating overlay showing who reposted or commented on reels" = "Masque la superposition flottante indiquant qui a reposté ou commenté les reels";
-"Hides the repost button on the reels sidebar" = "Masque le bouton de repost dans la barre latérale des reels";
 "Drops the top bar while you watch reels" = "Masque la barre supérieure pendant que tu regardes des reels";
 "Hiding" = "Masquage";
 "IG default" = "Par défaut IG";
@@ -445,6 +473,10 @@
 "Unlock password-locked reels" = "Déverrouiller les reels protégés par mot de passe";
 "When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "Quand le mode pause est activé, toucher les reels photo active/coupe le son au lieu du geste de pause natif";
 
+"Reel buttons" = "Boutons de reels";
+"Drag to reorder, top to bottom." = "Faites glisser pour réorganiser, de haut en bas.";
+"More options" = "Plus d'options";
+"Audio cover" = "Pochette audio";
 //////////////////////////////////////////////////////////////////////////////
 //                                 PROFILE                                  //
 // Settings → Profile tab                                                   //
@@ -456,10 +488,14 @@
 "Card details" = "Détails de la carte";
 "Comment count" = "Nombre de commentaires";
 "Copy note on long press" = "Copier la note par appui long";
+"Display name" = "Nom affiché";
 "Extra stats shown on each post and reel card in profile grids — pick which, reorder them, then apply." = "Statistiques supplémentaires sur chaque carte de publication et de reel dans les grilles de profil — choisissez lesquelles, réorganisez-les, puis appliquez.";
 "Fake follower count" = "Faux nombre d’abonnés";
 "Fake following count" = "Faux nombre d’abonnements";
+"Fake display name" = "Nom affiché factice";
 "Fake post count" = "Faux nombre de publications";
+"Fake profile" = "Profil factice";
+"Fake username" = "Nom d'utilisateur factice";
 "Fake profile stats" = "Fausses stats de profil";
 "Fake verified badge" = "Faux badge vérifié";
 "Fetch missing counts" = "Récupérer les compteurs manquants";
@@ -475,6 +511,7 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "Gestes d’appui long sur les éléments du profil — séparés des boutons d’action propres à chaque fonctionnalité.";
 "Master switch for all card stats. Fetch missing counts uses Instagram's API and may hit rate limits." = "Interrupteur principal pour toutes les statistiques de la carte. Récupérer les compteurs manquants utilise l’API d’Instagram et peut atteindre les limites de requêtes.";
 "Only affects your own profile header. Other users see the real numbers." = "N’affecte que l’en-tête de votre propre profil. Les autres utilisateurs voient les vrais chiffres.";
+"Only shown on your device. Other people see your real profile." = "Visible uniquement sur votre appareil. Les autres voient votre vrai profil.";
 "Post count" = "Nombre de publications";
 "Profile card details" = "Détails de la carte de profil";
 "Profile stats" = "Stats du profil";
@@ -490,6 +527,9 @@
 "Show full follower count" = "Afficher le nombre complet d’abonnés";
 "Show full post count" = "Afficher le nombre complet de publications";
 "Show the custom number set below" = "Affiche le nombre personnalisé défini ci-dessous";
+"Username, name, counts, and verified badge" = "Nom d'utilisateur, nom, chiffres et badge certifié";
+"Show the custom handle set below" = "Affiche le nom d'utilisateur personnalisé défini ci-dessous";
+"Show the custom name set below" = "Affiche le nom personnalisé défini ci-dessous";
 "Show the exact number instead of a shortened one" = "Affiche le nombre exact au lieu de la version abrégée";
 "Shows whether the profile user follows you" = "Indique si l’utilisateur du profil vous suit";
 "Tap to set" = "Toucher pour définir";
@@ -500,12 +540,15 @@
 "Views, likes, comments, shares, reposts, date" = "Vues, J’aime, commentaires, partages, reposts, date";
 "Zoom profile photo" = "Zoomer la photo de profil";
 
+"Hide Threads button" = "Masquer le bouton Threads";
+"Hides it from the profile header" = "Le masque de l'en-tête du profil";
 //////////////////////////////////////////////////////////////////////////////
 //                            SAVING & DOWNLOADS                            //
 // Settings → Saving tab                                                    //
 //////////////////////////////////////////////////////////////////////////////
 
 "Active, queued, and finished downloads" = "Téléchargements actifs, en file et terminés";
+"Add prefix to file names" = "Ajouter un préfixe aux noms de fichiers";
 "Auto-retry attempts" = "Tentatives auto.";
 "Auto-retry failed downloads" = "Réessayer auto. les téléchargements échoués";
 "Confirm before download" = "Confirmer avant téléchargement";
@@ -530,6 +573,7 @@
 "Save action" = "Action d’enregistrement";
 "Save to dedicated album" = "Enregistrer dans un album dédié";
 "Show a confirmation dialog before starting a download" = "Afficher une confirmation avant de lancer un téléchargement";
+"Start every saved file name with ryuk_ so downloads are easy to spot" = "Commencer chaque nom de fichier par ryuk_ pour repérer les téléchargements";
 "Try %@ more %@ before giving up" = "Essayer encore %@ %@ avant d'abandonner";
 "What happens after the gesture downloads" = "Ce qui se passe après le téléchargement par geste";
 "When \"Save to dedicated album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a named album in your Photos library. Tap \"Album name\" to change it." = "Quand « Enregistrer dans un album dédié » est activé, les téléchargements et les choix « Enregistrer dans Photos » de la feuille de partage sont dirigés vers un album nommé dans votre photothèque. Appuyez sur « Nom de l'album » pour le changer.";
@@ -548,44 +592,58 @@
 "%ds" = "%d s";
 "%ld downloading" = "%ld en cours";
 "%ld still running — they'll be stopped. The files already saved are kept." = "%ld sont encore en cours et seront arrêtés. Les fichiers déjà enregistrés sont conservés.";
+"%lu entries will be forgotten. Downloaded files are untouched." = "%lu entrées seront oubliées. Les fichiers déjà enregistrés ne bougent pas.";
 "%lu failed" = "%lu échec(s)";
 "%lu of %lu done" = "%lu sur %lu terminés";
+"%lu of %lu items are already saved." = "%lu éléments sur %lu sont déjà enregistrés.";
 "%lu saved, %lu failed" = "%lu enregistrés, %lu échecs";
 "12 hours" = "12 heures";
 "1s" = "1 s";
 "24 hours" = "24 heures";
 "48 hours" = "48 heures";
 "Active" = "Actif";
+"Already downloaded" = "Déjà téléchargé";
+"Ask before downloading media you already saved" = "Demander avant de télécharger un média déjà enregistré";
 "Auto-retry" = "Nouvelle tentative auto.";
+"Check for duplicates" = "Vérifier les doublons";
 "Clear completed" = "Effacer les terminés";
 "Clear download history" = "Effacer l'historique des téléchargements";
 "Clear download history?" = "Effacer l'historique des téléchargements ?";
+"Clear duplicate list" = "Effacer la liste des doublons";
 "Completed" = "Terminé";
 "Don't keep" = "Ne pas conserver";
+"Download again" = "Télécharger à nouveau";
 "Download history" = "Historique des téléchargements";
 "Download settings" = "Réglages de téléchargement";
 "Downloading %lu items" = "Téléchargement de %lu éléments";
 "Downloading…" = "Téléchargement…";
+"Duplicate download list" = "Liste des téléchargements en double";
+"Duplicates" = "Doublons";
 "Empty the manager's list of past downloads" = "Vide la liste des téléchargements passés du gestionnaire";
 "Encoding %d%%" = "Encodage %d%%";
 "Encoding…" = "Encodage…";
 "Extra downloads wait in line and start as slots free up." = "Les téléchargements supplémentaires attendent dans la file et démarrent dès qu'une place se libère.";
+"Forget every download recorded so far" = "Oublier tous les téléchargements enregistrés";
 "How long finished, failed and cancelled downloads stay in the manager after you close the app. The files themselves are never touched — only the list." = "Durée pendant laquelle les téléchargements terminés, échoués et annulés restent dans le gestionnaire après la fermeture de l'app. Les fichiers ne sont jamais touchés, seulement la liste.";
 "How long past downloads stay listed in the manager" = "Durée d'affichage des téléchargements passés dans le gestionnaire";
 "Keep history for" = "Conserver l'historique pendant";
+"Keeps a list of what you already grabbed and asks first when the same media comes up again. Only IDs are stored, never files, and carousels ask once for the whole post." = "Garde une liste de ce que tu as déjà pris et demande avant si le même média revient. Seuls des identifiants sont stockés, jamais de fichiers, et un carrousel ne demande qu'une fois.";
 "Media you download shows up here, with its progress and where it was saved." = "Les médias que vous téléchargez apparaissent ici, avec leur progression et leur destination.";
 "No downloads yet" = "Aucun téléchargement pour l'instant";
 "Preview" = "Aperçu";
 "Queued" = "En file";
 "Redownload" = "Retélécharger";
+"Remove and download again" = "Supprimer et retélécharger";
 "Retry" = "Réessayer";
 "Retrying…" = "Nouvelle tentative…";
+"Still in your gallery." = "Toujours dans ta galerie.";
 "Stop" = "Arrêter";
 "The files already saved are kept — this only empties the list." = "Les fichiers déjà enregistrés sont conservés, cela vide seulement la liste.";
 "Waiting for a free slot" = "En attente d'un créneau libre";
 "Waiting for connection…" = "En attente de connexion…";
 "Waiting to retry" = "En attente de nouvelle tentative";
 "Waiting…" = "En attente…";
+"You saved this on %@." = "Enregistré le %@.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 STORIES                                  //
@@ -596,6 +654,10 @@
 "Overlay layout" = "Disposition superposée";
 "Drag to position the buttons" = "Faites glisser pour positionner les boutons";
 "Drag the buttons onto the story. The dimmed strip is the reply bar." = "Faites glisser les boutons sur la story. La bande grisée est la barre de réponse.";
+"Close gaps automatically" = "Combler les espaces automatiquement";
+"Buttons next to each other close the gap when one is hidden" = "Les boutons voisins comblent l'espace quand l'un est masqué";
+"Button spacing" = "Espacement des boutons";
+"%ld pt" = "%ld pt";
 "Send message" = "Envoyer un message";
 
 "Pinned" = "Épinglés";
@@ -611,6 +673,8 @@
 "Pin order" = "Ordre d'épinglage";
 "Pin this viewer?" = "Épingler ce spectateur ?";
 "Filter, sort & pin viewers" = "Filtrer, trier et épingler les spectateurs";
+"Default list" = "Liste par défaut";
+"Which list opens first. The header button still switches between them" = "Quelle liste s'ouvre en premier. Le bouton d'en-tête bascule toujours entre les deux";
 "Add by username, remove, reorder" = "Ajouter par nom d'utilisateur, supprimer, réordonner";
 "Pinned viewers (%lu)" = "Spectateurs épinglés (%lu)";
 "Viewers list" = "Liste des spectateurs";
@@ -673,14 +737,26 @@
 "Show poll vote counts" = "Afficher le nombre de votes des sondages";
 "Show vote tallies on poll options and slider count/average before you vote" = "Affiche les totaux de vote sur les options de sondage et le nombre/la moyenne des curseurs avant votre vote";
 "Stop story auto-advance" = "Arrêter l’avance automatique des stories";
+"Playback controls" = "Contrôles de lecture";
+"Speed, seek and pause controls" = "Contrôles de vitesse, navigation et pause";
+"Enabled controls appear when you hold the ⋯ or speaker button on a story, or from Playback in the story menu." = "Les contrôles activés apparaissent en maintenant le bouton ⋯ ou le bouton audio d’une story, ou depuis Lecture dans le menu de la story.";
+"Pause control" = "Contrôle de pause";
 "Stories" = "Stories";
 "Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" = "Les stories ne passeront plus automatiquement à la suivante à la fin du minuteur. Touchez pour avancer manuellement";
 "Story audio toggle" = "Interrupteur audio des stories";
 "Story user list" = "Liste d’utilisateurs des stories";
 "Tapping the eye button to mark a story as seen advances to the next story automatically" = "Toucher le bouton œil pour marquer une story comme vue passe automatiquement à la suivante";
 "This will send a story view receipt." = "Un accusé de vue sera envoyé pour cette story.";
+"This will send %ld story view receipts." = "%ld accusés de vue seront envoyés.";
 "View story mentions" = "Voir les mentions de story";
 "Which stories get seen-receipt blocking" = "Stories concernées par le blocage des accusés de vue";
+"Text tool" = "Outil texte";
+"Adds your own fonts to the font row when you add text to a story. The text is drawn into the story, so everyone sees it in the font you picked." = "Ajoute vos propres polices à la rangée de polices quand vous écrivez du texte sur une story. Le texte est dessiné dans la story, donc tout le monde le voit dans la police choisie.";
+"Custom story fonts" = "Polices de story personnalisées";
+"Show your imported and device fonts next to the built-in ones" = "Affiche vos polices importées et celles de l'appareil à côté des polices natives";
+"Choose fonts" = "Choisir des polices";
+"Choose fonts (%lu)" = "Choisir des polices (%lu)";
+"Import, browse online, or pick from the fonts already on your device" = "Importez, parcourez en ligne ou choisissez parmi les polices déjà sur votre appareil";
 
 //////////////////////////////////////////////////////////////////////////////
 //                       MESSAGES — ACTIVITY NOTIFICATIONS                  //
@@ -769,6 +845,32 @@
 // Settings → Keep deleted messages tab                                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"A small label on the message" = "Une petite étiquette sur le message";
+"Above the bubble" = "Au-dessus de la bulle";
+"Below the bubble" = "Sous la bulle";
+"Beside the bubble" = "À côté de la bulle";
+"Bubble" = "Bulle";
+"Drawn at %@ %@" = "En %@ %@";
+"Fade" = "Estomper";
+"Hide quick actions" = "Masquer les actions rapides";
+"Hides the shortcut buttons next to the message" = "Masque les boutons de raccourci à côté du message";
+"How kept messages are marked" = "Comment les messages gardés sont marqués";
+"Left at %@%@ opacity" = "Reste à %@%@ d'opacité";
+"Makes the message see-through" = "Rend le message translucide";
+"Marks messages someone unsent but you kept" = "Marque les messages supprimés par quelqu'un et gardés par toi";
+"No mark" = "Aucune marque";
+"Paints the bubble one color" = "Peint la bulle d'une seule couleur";
+"Show tag" = "Afficher l'étiquette";
+"Tag" = "Étiquette";
+"Tag text" = "Texte de l'étiquette";
+"The tag, fade and tint all return to their defaults." = "L'étiquette, l'estompage et la teinte reviennent à leurs valeurs par défaut.";
+"Text size" = "Taille du texte";
+"The tint stays put even when a chat background or theme repaints the other bubbles." = "La couleur reste en place même si un fond de discussion ou un thème repeint les autres bulles.";
+"Tint" = "Teinte";
+"Use any mix of the three, or none of them to keep messages silently." = "Utilise n'importe quelle combinaison des trois, ou aucune pour garder les messages en silence.";
+"Where the tag sits" = "Où se place l'étiquette";
+"Your own wording stays as typed, in any language. Leave it empty for the default." = "Ton texte reste tel quel, dans n'importe quelle langue. Laisse vide pour la valeur par défaut.";
+
 "Activity" = "Activité";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "Ajoute une option « Télécharger » au menu d’appui long des messages vocaux pour les enregistrer en audio M4A";
 "Allows typing and sending DMs longer than Instagram's limit" = "Permet d’écrire et d’envoyer des DM plus longs que la limite d’Instagram";
@@ -795,6 +897,8 @@
 "Files" = "Fichiers";
 "Full last active date" = "Date complète de dernière activité";
 "Hide reels blend button" = "Masquer le bouton Blend des reels";
+"Hide reels in chats" = "Masquer les reels dans les chats";
+"Shared reels stop showing up in DM threads" = "Les reels partagés n'apparaissent plus dans les conversations";
 "Hide send to group chat" = "Masquer l’envoi à un groupe";
 "Pin recipients on long-press" = "Épingler les destinataires à l’appui long";
 "Long-press in the share sheet to pin a chat/user to the top" = "Appui long dans la feuille de partage pour épingler une discussion/un utilisateur en haut";
@@ -809,7 +913,9 @@
 "Hides typing indicator from others" = "Masque l’indicateur de saisie aux autres";
 "Indicate unsent messages" = "Indiquer les messages annulés";
 "Keep deleted messages" = "Conserver les messages supprimés";
-"Turns view once messages into normal media you can loop and pause" = "Transforme les messages à vue unique en médias normaux que tu peux relire et mettre en pause";
+"Kept unsent messages" = "Messages annulés conservés";
+"Mirrored chat history" = "Copie de l'historique des conversations";
+"Turns view once messages into normal media you can replay and loop" = "Transforme les messages à vue unique en médias normaux que tu peux revoir et lire en boucle";
 "Note actions" = "Actions des notes";
 "Preserves messages that others unsend" = "Conserve les messages annulés par les autres";
 "Keep my deleted messages" = "Conserver mes messages supprimés";
@@ -818,7 +924,7 @@
 "Quick list button in chats" = "Bouton de liste rapide dans les discussions";
 "Removes the audio call button from DM thread header" = "Retire le bouton d’appel audio de l’en-tête des fils de DM";
 "Removes the video call button from DM thread header" = "Retire le bouton d’appel vidéo de l’en-tête des fils de DM";
-"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled" = "Revoir les messages visuels sans expiration. À basculer dans le menu du bouton œil, ou via un bouton séparé quand le bouton œil est désactivé";
+"The sender is not told you opened it, and the media stays replayable" = "L'expéditeur n'est pas prévenu que tu l'as ouvert, et le média reste relisible";
 "Search, sort, swipe to remove or toggle keep-deleted" = "Rechercher, trier, balayer pour supprimer ou basculer la conservation des supprimés";
 "Send audio as file" = "Envoyer l’audio comme fichier";
 "Send files (experimental)" = "Envoyer des fichiers (expérimental)";
@@ -826,8 +932,10 @@
 "Show full date instead of \"Active 2h ago\"" = "Afficher la date complète au lieu de \"Active 2h ago\"";
 "Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "Affiche un bouton dans les fils de DM pour ajouter/retirer des discussions de la liste. Appui long pour plus d’options";
 "Shows a notification pill when a message is unsent" = "Affiche une pastille de notification lorsqu’un message est annulé";
-"Shows an \"Unsent\" label on preserved messages" = "Affiche un libellé \"Unsent\" sur les messages conservés";
-"Unlimited replay of visual messages" = "Relecture illimitée des messages visuels";
+"Block view receipts" = "Bloquer les accusés de visionnage";
+"Instagram reports a view when the media finishes playing. Block it and the media stays unopened until you send the receipt yourself." = "Instagram signale le visionnage dès la fin de la lecture. Bloque-le et le média reste non ouvert jusqu'à ce que tu envoies l'accusé toi-même.";
+"Available while view receipts are blocked." = "Disponible tant que les accusés de visionnage sont bloqués.";
+"View-once photos and videos, and their buttons" = "Photos et vidéos à vue unique, et leurs boutons";
 "Unsent message notification" = "Notification de message annulé";
 "Voice messages" = "Messages vocaux";
 "Warn before clearing on refresh" = "Avertir avant l’effacement au rafraîchissement";
@@ -861,6 +969,11 @@
 "Deleted messages" = "Messages supprimés";
 "Deleted messages log" = "Journal des messages supprimés";
 "Deleted: %@\n" = "Supprimé : %@\n";
+"Show in chat" = "Voir dans la conversation";
+"Jumped to around that time" = "Accès à cette période approximative";
+"Couldn't find that message in the chat" = "Message introuvable dans la conversation";
+"%@ · sent %@" = "%@ · envoyé %@";
+"Sent: %@\n" = "Envoyé : %@\n";
 "Edit %lu" = "Modification %lu";
 "Edit history" = "Historique des modifications";
 "Edited" = "Modifié";
@@ -895,6 +1008,8 @@
 "Reaction removed" = "Réaction retirée";
 "Log removed reactions" = "Enregistrer les réactions retirées";
 "Also records when someone removes a reaction, and which message it was on" = "Enregistre aussi lorsqu'une réaction est retirée, et sur quel message.";
+"Log opened view-once media" = "Enregistrer les médias à vue unique ouverts";
+"Saves it before it disappears. Off logs only unsends" = "Les garde avant leur disparition. Désactivé, journalise seulement les suppressions";
 "Removed a reaction" = "A retiré une réaction";
 "on @%@: %@" = "sur @%@ : %@";
 "on: %@" = "sur : %@";
@@ -1019,24 +1134,32 @@
 "Hide search tab" = "Masquer l’onglet recherche";
 "Remove the search/explore button from the tab bar" = "Retire le bouton recherche/exploration de la barre d’onglets";
 "Hide tab bar" = "Masquer la barre d’onglets";
-"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "Masque tous les onglets sauf la boîte de réception DM + le profil et force le lancement sur la boîte de réception. Le raccourci des réglages passe à l’appui long sur l’onglet boîte de réception.";
+"Tab shortcuts" = "Raccourcis d'onglets";
+"Hold a tab to open a RyukGram screen" = "Appuyez longuement sur un onglet pour ouvrir un écran RyukGram";
+"Not on the tab bar" = "Absent de la barre d'onglets";
+"When the feed tab is off the bar, its shortcut moves to the first tab that is on it." = "Quand l'onglet du fil n'est pas dans la barre, son raccourci passe au premier onglet qui s'y trouve.";
 "Icon order" = "Ordre des icônes";
 "Launch tab" = "Onglet au lancement";
 "Swipe sideways to move between the tab bar tabs" = "Balaie latéralement pour passer d'un onglet à l'autre";
 "Messages only" = "Messages seulement";
 "Messages-only mode" = "Mode messages seulement";
+"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "Masque tous les onglets sauf la boîte de réception et le profil, et ouvre l'app sur la boîte. Le raccourci des réglages passe à l'appui long sur l'onglet messages.";
 "Automatic schedule" = "Programmation automatique";
 "DM-only client, hide tabs, auto schedule" = "Client messages seulement, masquer les onglets, programmation auto";
 "Start time" = "Heure de début";
 "End time" = "Heure de fin";
 "Switch into Messages-only on its own during a time window" = "Passer en mode messages seulement automatiquement pendant une plage horaire";
-"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above. You'll be asked to restart when the window starts and when it ends." = "Active le mode messages seulement automatiquement pendant une plage quotidienne (ex. 22:00 – 06:00) à l’aide des options ci-dessus. Un redémarrage vous sera demandé au début et à la fin de la plage.";
+"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "Active le mode Messages uniquement tout seul pendant une plage quotidienne (par ex. 22:00 – 06:00) avec les options ci-dessus.";
 "Active now · ends %@" = "Actif maintenant · se termine à %@";
 "Next window starts %@" = "Prochaine plage à %@";
 "Messages-only starting" = "Mode messages seulement : début";
 "Messages-only ending" = "Mode messages seulement : fin";
 "Your Messages-only window has started. Restart Instagram to switch to DM-only." = "Votre plage en mode messages seulement a commencé. Redémarrez Instagram pour basculer en messages seulement.";
 "Your Messages-only window has ended. Restart Instagram to bring back the other tabs." = "Votre plage en mode messages seulement est terminée. Redémarrez Instagram pour retrouver les autres onglets.";
+"When the window changes" = "Au changement de plage";
+"Apply instantly" = "Appliquer aussitôt";
+"Your Messages-only window has started. Switch to DM-only now?" = "Ta plage Messages uniquement a commencé. Passer en mode messages seuls maintenant ?";
+"Your Messages-only window has ended. Bring back the other tabs now?" = "Ta plage Messages uniquement est terminée. Rétablir les autres onglets maintenant ?";
 "Navigation" = "Navigation";
 "Swipe between tabs" = "Balayer entre les onglets";
 "Tab the app opens to. Ignored when Messages-only is on" = "Onglet ouvert au lancement de l’app. Ignoré quand Messages seulement est activé";
@@ -1061,12 +1184,15 @@
 "Confirm follow" = "Confirmer l’abonnement";
 "Confirm follow requests" = "Confirmer les demandes d’abonnement";
 "Confirm Instants capture" = "Confirmer la capture d’Instantanés";
+"Shows an alert before sending a reaction in a chat" = "Affiche une alerte avant l'envoi d'une réaction dans une discussion";
+"Confirm DM reaction" = "Confirmer la réaction en messagerie";
 "Confirm Instants emoji reaction" = "Confirmer la réaction emoji aux Instantanés";
 "Confirm like: Posts" = "Confirmer le J’aime : publications";
 "Confirm like: Reels" = "Confirmer le J’aime : reels";
 "Confirm note emoji reaction" = "Confirmer la réaction emoji aux notes";
 "Confirm note like" = "Confirmer le J’aime sur une note";
 "Confirm posting comment" = "Confirmer l’envoi du commentaire";
+"Confirm reaction" = "Confirmer la réaction";
 "Confirm repost" = "Confirmer le repost";
 "Confirm send to group chat" = "Confirmer l’envoi à un groupe";
 "Confirm sticker interaction (highlights)" = "Confirmer l’interaction avec un sticker (stories à la une)";
@@ -1080,6 +1206,7 @@
 "Confirm video call" = "Confirmer l’appel vidéo";
 "Confirm voice call" = "Confirmer l’appel vocal";
 "Confirm voice messages" = "Confirmer les messages vocaux";
+"Double tap only" = "Double tap uniquement";
 "Follows" = "Abonnements";
 "Likes" = "J'aime";
 "Messaging" = "Messagerie";
@@ -1252,8 +1379,8 @@
 "Wrong passcode • %ld attempts" = "Code incorrect • %ld tentatives";
 
 //////////////////////////////////////////////////////////////////////////////
-//                             BACKUP & RESTORE                             //
-// Settings → Backup & Restore tab                                          //
+//                            BACKUP & PROFILES                             //
+// Settings → Backup & Profiles tab                                         //
 //////////////////////////////////////////////////////////////////////////////
 "Protection" = "Protection";
 "Password-protect" = "Protéger par mot de passe";
@@ -1285,7 +1412,6 @@
 "Applying backup…" = "Application de la sauvegarde…";
 "archive error" = "erreur d'archive";
 "Archived snapshots" = "Captures archivées";
-"Backup & Restore" = "Sauvegarde et restauration";
 "Backup exported" = "Sauvegarde exportée";
 "Backup failed" = "Échec de la sauvegarde";
 "Backup has no importable sections." = "La sauvegarde ne contient aucune section importable.";
@@ -1339,6 +1465,55 @@
 "Truncated entry length." = "Longueur d'entrée tronquée.";
 "Truncated entry path." = "Chemin d'entrée tronqué.";
 "Unsafe entry path." = "Chemin d'entrée non sécurisé.";
+"%@ is now in use" = "%@ est maintenant utilisé";
+"%lu changed" = "%lu modifications";
+"%lu on · %lu changed" = "%lu activés · %lu modifiés";
+"A new profile" = "Un nouveau profil";
+"Accounts you haven't linked use %@." = "Les comptes non liés utilisent %@.";
+"Adds a shortcut to the settings home page." = "Ajoute un raccourci à l'écran principal des réglages.";
+"All other accounts" = "Tous les autres comptes";
+"Applied to the settings you're using now." = "Appliqué aux réglages que vous utilisez maintenant.";
+"Backup & Profiles" = "Sauvegarde et profils";
+"Backup has no settings to save." = "La sauvegarde n'a aucun réglage à enregistrer.";
+"Color" = "Couleur";
+"Current settings are saved to %@ first." = "Les réglages actuels sont d'abord enregistrés dans %@.";
+"Current settings aren't in a profile and will be replaced." = "Les réglages actuels n'appartiennent à aucun profil et seront remplacés.";
+"Current settings" = "Réglages actuels";
+"Duplicate" = "Dupliquer";
+"Every setting goes back to how it shipped." = "Tous les réglages reviennent à leur valeur d'origine.";
+"Every switch goes off, so the app behaves like stock." = "Tous les interrupteurs s'éteignent et l'app redevient d'origine.";
+"Follows every change you make." = "Suit chaque changement que vous faites.";
+"In %@" = "Dans %@";
+"Name it, switch to it whenever" = "Nommez-le, basculez quand vous voulez";
+"Name this profile" = "Nommer ce profil";
+"Named setups you can switch between." = "Des configurations nommées entre lesquelles basculer.";
+"New profile" = "Nouveau profil";
+"No accounts seen yet." = "Aucun compte connu pour l'instant.";
+"No profile covers your other accounts." = "Aucun profil ne couvre tes autres comptes.";
+"Not linked" = "Non lié";
+"Nothing ticked, so this profile covers every account you haven't linked elsewhere." = "Rien de coché, donc ce profil couvre tous les comptes non liés à un autre.";
+"Overwrite %@?" = "Remplacer %@ ?";
+"Overwrite what you're using now" = "Remplacer ce que vous utilisez maintenant";
+"Overwrite" = "Remplacer";
+"Profiles" = "Profils";
+"Replaces it with your current settings." = "Le remplace par vos réglages actuels.";
+"Reset %@ to defaults?" = "Réinitialiser %@ aux valeurs par défaut ?";
+"Saved as %@" = "Enregistré sous %@";
+"Saved as a profile. Your current settings stay as they are." = "Enregistré comme profil. Vos réglages actuels ne changent pas.";
+"Saves your current settings and switches to it." = "Enregistre vos réglages actuels et bascule dessus.";
+"Settings go to" = "Les réglages vont vers";
+"Show on settings home" = "Afficher sur l'écran des réglages";
+"Switch to %@?" = "Basculer vers %@ ?";
+"Switch to a linked account and this profile comes with it." = "Basculez vers un compte lié et ce profil vient avec.";
+"Switch" = "Basculer";
+"Switching to a ticked account switches to this profile." = "Basculer vers un compte coché active ce profil.";
+"Tap to switch. Changes stay in the profile in use. Swipe or hold for more." = "Touchez pour basculer. Les changements restent dans le profil utilisé. Balayez ou maintenez pour plus.";
+"Turn everything off in %@?" = "Tout désactiver dans %@ ?";
+"Turn off" = "Désactiver";
+"Use for other accounts" = "Utiliser pour les autres comptes";
+"Your settings aren't saved to a profile." = "Vos réglages ne sont enregistrés dans aucun profil.";
+"Your settings stay untouched." = "Vos réglages ne sont pas touchés.";
+"Your settings stay — they just won't belong to a profile." = "Vos réglages restent, ils n'appartiendront simplement plus à un profil.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
@@ -1348,6 +1523,7 @@
 "Advanced" = "Avancé";
 "All tweak options are disabled" = "Toutes les options du tweak sont désactivées";
 "Auto-clear cache" = "Vidage automatique du cache";
+"Every launch" = "À chaque lancement";
 "Automatically opens settings when the app launches" = "Ouvre automatiquement les réglages au lancement de l’app";
 "Cache" = "Cache";
 "Cache cleared" = "Cache vidé";
@@ -1360,14 +1536,12 @@
 "Daily" = "Quotidien";
 "Disable all tweak options" = "Désactiver toutes les options du tweak";
 "Disable safe mode" = "Désactiver le mode sans échec";
-"Enable tweak settings quick-access" = "Activer l’accès rapide aux réglages du tweak";
 "Instagram runs stock while this is on. Turn it back off to restore your settings." = "Instagram fonctionne normalement tant que ceci est activé. Désactivez-le pour restaurer vos réglages.";
 "Tap to re-enable everything" = "Appuyez pour tout réactiver";
 "Turn every feature off — your settings are kept" = "Désactive toutes les fonctionnalités — vos réglages sont conservés";
 "Fix duplicate notifications" = "Corriger les notifications en double";
 "Free %@ of Instagram cache." = "Libérer %@ du cache Instagram.";
 "Freed %@" = "%@ libérés";
-"Hold on the home tab to open RyukGram settings" = "Maintenez l’onglet Accueil pour ouvrir les réglages RyukGram";
 "Monthly" = "Mensuel";
 "Nothing to clear" = "Rien à vider";
 "Off skips the size scan when Advanced opens." = "Désactivé, l’analyse de taille est ignorée à l’ouverture d’Avancé.";
@@ -1422,6 +1596,12 @@
 "Surfaces" = "Surfaces";
 "These toggles flip hidden Instagram experiments on. Some features may not work on every account or IG version. If IG keeps crashing on launch, the flags auto-reset after 3 failed starts." = "Ces réglages activent des expériences Instagram masquées. Certaines fonctionnalités peuvent ne pas fonctionner sur tous les comptes ou versions d’IG. Si IG continue de planter au lancement, les flags se réinitialisent après 3 échecs.";
 "Toggle hidden Instagram experiments. Some may not work on every account or IG version." = "Activez des expériences Instagram masquées. Certaines peuvent ne pas fonctionner sur tous les comptes ou versions d’IG.";
+"Export overrides" = "Exporter les modifications";
+"Import overrides" = "Importer des modifications";
+"Nothing to export" = "Rien à exporter";
+"%lu applied · %lu skipped" = "%lu appliquée(s) · %lu ignorée(s)";
+"This file holds %lu entry(s). Merge keeps what you already changed, replace clears your current overrides first." = "Ce fichier contient %lu entrée(s). Fusionner garde vos modifications actuelles, remplacer les efface d’abord.";
+"MobileConfig overrides" = "Modifications MobileConfig";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  DEBUG                                   //
@@ -1557,6 +1737,7 @@
 "%@ unsent a message" = "%@ a annulé un message";
 "%@ unsent a message from %@" = "%@ a annulé un message de %@";
 "A message was unsent" = "Un message a été annulé";
+"A message in %@ was unsent" = "Un message a été annulé dans %@";
 "Add" = "Ajouter";
 "Add to block list" = "Ajouter à la liste de blocage";
 "Added to block list" = "Ajouté à la liste de blocage";
@@ -1598,6 +1779,8 @@
 "Marking as viewed advances to the next stacked media instead of closing" = "Marquer comme vu passe au média empilé suivant au lieu de fermer";
 "Mark messages as seen" = "Marquer les messages comme vus";
 "Mark seen" = "Marquer vu";
+"Mark all (%ld)" = "Tout marquer (%ld)";
+"Mark up to here (%ld)" = "Marquer jusqu'ici (%ld)";
 "Marked as viewed" = "Marqué comme vu";
 "Marked messages as seen" = "Messages marqués comme vus";
 "Mentions" = "Mentions";
@@ -1644,15 +1827,15 @@
 "Un-exclude story seen" = "Ne plus exclure la vue de story";
 "Un-excluded" = "Réintégré";
 "Unblocked" = "Débloqué";
-"Unlimited replay enabled" = "Relecture illimitée activée";
+"Views blocked" = "Visionnages bloqués";
 "Unmute story audio" = "Rétablir le son de la story";
 "Unsent" = "Annulé";
 "Upload Audio" = "Téléverser l’audio";
 "VC not found" = "VC introuvable";
 "Video from Library" = "Vidéo depuis la photothèque";
-"Visual messages will expire" = "Les messages visuels expireront";
-"Visual messages: expiring" = "Messages visuels : expiration";
-"Visual messages: unlimited replay" = "Messages visuels : relecture illimitée";
+"Views will be reported" = "Les visionnages seront signalés";
+"Disappearing media: views reported" = "Média éphémère : visionnages signalés";
+"Disappearing media: views blocked" = "Média éphémère : visionnages bloqués";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
@@ -1773,6 +1956,33 @@
 "Select color" = "Sélectionner une couleur";
 "Set location" = "Définir le lieu";
 "The theme RyukGram applies to Instagram." = "Le thème que RyukGram applique à Instagram.";
+"Fonts" = "Polices";
+"Font" = "Police";
+"Custom fonts" = "Polices personnalisées";
+"Everywhere" = "Partout";
+"Per surface" = "Par surface";
+"Per surface gives Instagram and RyukGram their own font." = "Par surface donne à Instagram et à RyukGram leur propre police.";
+"Replace the app font" = "Remplacer la police de l'app";
+"My fonts" = "Mes polices";
+"Device fonts" = "Polices de l'appareil";
+"Import a .ttf or .otf file, or browse thousands of fonts online." = "Importez un fichier .ttf ou .otf, ou parcourez des milliers de polices en ligne.";
+"Swipe a font to delete it." = "Balayez une police pour la supprimer.";
+"Delete %lu fonts?" = "Supprimer %lu polices ?";
+"Added" = "Ajoutées";
+"Swipe to remove." = "Balayez pour retirer.";
+"The quick brown fox jumps over the lazy dog" = "Portez ce vieux whisky au juge blond qui fume";
+"%lu styles · %@" = "%lu styles · %@";
+"%@ · %lu weights" = "%@ · %lu graisses";
+"Browse online" = "Parcourir en ligne";
+"Font installed" = "Police installée";
+"Restart Instagram to apply everywhere" = "Redémarrez Instagram pour l'appliquer partout";
+"No usable font found. Pick a .ttf or .otf file." = "Aucune police utilisable. Choisissez un fichier .ttf ou .otf.";
+"This font has no downloadable styles." = "Cette police n'a aucun style téléchargeable.";
+"Could not load the font catalog." = "Impossible de charger le catalogue de polices.";
+"Sans" = "Sans";
+"Serif" = "Serif";
+"Display" = "Display";
+"Hand" = "Manuscrite";
 "Theme" = "Thème";
 "Turn Location Services on in Settings → Privacy to use your current location." = "Activez les services de localisation dans Réglages → Confidentialité pour utiliser votre position actuelle.";
 "Type an emoji to use as the note bubble icon." = "Saisissez un emoji à utiliser comme icône de la bulle de note.";
@@ -2015,6 +2225,8 @@
 //                            PROFILE (FEATURES)                            //
 // Strings from Profile.                                                    //
 //////////////////////////////////////////////////////////////////////////////
+"Follow indicator in lists" = "Indicateur d'abonnement dans les listes";
+"Shows whether each user in a follower or following list follows you" = "Indique si chaque utilisateur d'une liste d'abonnés ou d'abonnements vous suit";
 
 "%lu accounts" = "%lu comptes";
 "%lu loaded" = "%lu chargés";
@@ -2101,6 +2313,17 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"Updates" = "Mises à jour";
+"Update available" = "Mise à jour disponible";
+"Check for updates" = "Rechercher les mises à jour";
+"You're up to date" = "Vous êtes à jour";
+"Get it on Telegram" = "Télécharger sur Telegram";
+"Update check failed" = "Échec de la vérification";
+"%@ is available" = "%@ est disponible";
+"What's new in this build" = "Nouveautés de cette version";
+"Tells you on launch when a newer RyukGram is out" = "Vous prévient au lancement quand une version plus récente de RyukGram est disponible";
+"Shows the release notes once after RyukGram updates" = "Affiche les notes de version une fois après la mise à jour de RyukGram";
+"Reads the public RyukGram release list on GitHub. Nothing about you is sent." = "Lit la liste publique des versions de RyukGram sur GitHub. Rien vous concernant n'est envoyé.";
 "Enjoying RyukGram?" = "RyukGram vous plaît ?";
 "It's free, and nothing leaves your device. If you enjoy using it, a coffee keeps it going." = "C'est gratuit et rien ne quitte votre appareil. Si vous aimez l'utiliser, un café le fait vivre.";
 "Donate" = "Faire un don";
@@ -2166,6 +2389,11 @@
 "Audio track %ld" = "Piste audio %ld";
 "Download video at the highest available quality" = "Télécharger la vidéo dans la meilleure qualité disponible";
 "Downloads HD video via DASH streams and encodes to H.264. Requires FFmpegKit." = "Télécharge la vidéo HD via des flux DASH et l’encode en H.264. Nécessite FFmpegKit.";
+"Full resolution asks Instagram for the original upload, often far larger than the size the app is given." = "Résolution complète demande à Instagram le fichier d’origine, souvent bien plus grand que la taille fournie à l’application.";
+"Full resolution" = "Résolution complète";
+"Photo Size" = "Taille de la photo";
+"%@ · Original" = "%@ · Original";
+"Copy photo URL" = "Copier l’URL de la photo";
 "Encoding in software" = "Encodage logiciel";
 "Encoding speed" = "Vitesse d’encodage";
 "Enhanced downloads" = "Téléchargements améliorés";
@@ -2342,6 +2570,14 @@
 "Added %lu" = "%lu ajoutés";
 "All files deleted" = "Tous les fichiers ont été supprimés";
 "Browsing" = "Navigation";
+"Group posts and stories" = "Grouper les publications et stories";
+"One swipeable item per post or story" = "Un seul élément à faire défiler par publication ou story";
+"Group into album" = "Grouper en album";
+"Split album" = "Séparer l'album";
+"Delete album" = "Supprimer l'album";
+"Delete album?" = "Supprimer l'album ?";
+"Share all" = "Tout partager";
+"Select at least two files" = "Sélectionnez au moins deux fichiers";
 "Found %lu items saved by a previous version. Restore them into your gallery now?" = "%lu éléments enregistrés par une version précédente ont été trouvés. Les restaurer dans votre galerie maintenant ?";
 "Gallery data from a previous version was found. Restore it now?" = "Des données de galerie d'une version précédente ont été trouvées. Les restaurer maintenant ?";
 "Gallery restored" = "Galerie restaurée";
@@ -2411,7 +2647,6 @@
 "Any time" = "N’importe quand";
 "This year" = "Cette année";
 "%ld columns" = "%ld colonnes";
-"Hold DM tab to open gallery" = "Maintenir l’onglet DM pour ouvrir la galerie";
 "Images" = "Images";
 "Images deleted" = "Images supprimées";
 "Images first" = "Images d’abord";
@@ -2419,7 +2654,6 @@
 "items" = "éléments";
 "Largest first" = "Les plus grands d’abord";
 "List view" = "Vue en liste";
-"Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "Maintenez le bouton de la boîte de réception dans la barre du bas pour ouvrir la galerie RyukGram";
 "Manage" = "Gérer";
 "More" = "Plus";
 "Move selected" = "Déplacer la sélection";
@@ -2511,6 +2745,8 @@
 "Choose the icon shown on the home top bar. Auto uses the selected action icon when only one action is enabled." = "Choisir l'icône affichée dans la barre supérieure de l'accueil. « Auto » utilise l'icône de l'action sélectionnée quand une seule action est activée.";
 "Configure button" = "Configurer le bouton";
 "Global Action Icons" = "Icônes d'action globales";
+"Old Instagram logo" = "Ancien logo Instagram";
+"Brings back the previous feed header wordmark." = "Rétablit l'ancien logo dans l'en-tête du fil.";
 "Interface" = "Interface";
 "Override the icon for a specific button. Buttons left on Default follow the shared icon above." = "Remplacer l'icône d'un bouton spécifique. Les boutons laissés sur « Par défaut » suivent l'icône partagée ci-dessus.";
 "Per button" = "Par bouton";
@@ -2550,6 +2786,10 @@
 "Preview pill" = "Aperçu de la pastille";
 "Preview download pill" = "Aperçu de la pastille de téléchargement";
 "Preview loading pill" = "Aperçu de la pastille de chargement";
+"Preview long text" = "Aperçu du texte long";
+"Check wrapping and truncation" = "Vérifiez le retour à la ligne et la troncature";
+"A notification title long enough to wrap onto more than one line" = "Un titre de notification assez long pour tenir sur plusieurs lignes";
+"And a body that keeps going so you can see the pill grow, wrap, and finally cut itself off with an ellipsis instead of taking over the whole screen." = "Et un corps qui continue pour que vous voyiez la pastille grandir, revenir à la ligne, puis se couper par des points de suspension au lieu d'occuper tout l'écran.";
 "Master switch. When off, no RyukGram pills or IG-native toasts are emitted." = "Interrupteur principal. Désactivé, aucune pastille RyukGram ni toast natif IG n’est émis.";
 "Universal in-app notifications. All RyukGram feedback (downloads, copies, errors, success messages) routes through here." = "Notifications universelles dans l’app. Tout le retour RyukGram (téléchargements, copies, erreurs, messages de succès) passe par ici.";
 "Minimal: flat blur. Colorful: tinted by tone. Glow: colored halo. Island: dynamic-island capsule." = "Minimal : flou plat. Coloré : teinté selon le ton. Halo : auréole colorée. Island : capsule de type dynamic island.";
@@ -2632,6 +2872,7 @@
 "FFmpeg log copied" = "Journal FFmpeg copié";
 "GIF inserted" = "GIF inséré";
 "Story marked as seen" = "Story marquée comme vue";
+"Marked %ld stories as seen" = "%ld stories marquées comme vues";
 "Saved" = "Enregistré";
 "Tap to retry" = "Toucher pour réessayer";
 "Looks great" = "Tout va bien";
@@ -2715,6 +2956,22 @@
 //                               DEVICE ID                                  //
 // Settings -> Advanced -> Device ID, and the login-screen Device ID button //
 //////////////////////////////////////////////////////////////////////////////
+"Machine ID" = "ID machine";
+"Copy machine ID" = "Copier l'ID machine";
+"Enter machine ID manually…" = "Saisir l'ID machine manuellement…";
+"Restore a saved one, or clear it to re-register" = "Restaurez-en un enregistré, ou effacez-le pour vous réenregistrer";
+"Manual machine ID" = "ID machine manuel";
+"Only paste one Instagram issued. The server checks its format, so a made-up value is rejected." = "Ne collez qu'un ID émis par Instagram. Le serveur vérifie son format, une valeur inventée est donc refusée.";
+"Machine ID set" = "ID machine défini";
+"Clear and re-register" = "Effacer et réenregistrer";
+"Machine ID cleared" = "ID machine effacé";
+"No machine ID yet" = "Pas encore d'ID machine";
+"Issued by Instagram and format-checked by the server, so it can only be kept, never made up. RyukGram pins the one you were issued so Instagram can't swap it." = "Émis par Instagram et vérifié par le serveur, il peut seulement être conservé, jamais inventé. RyukGram fige celui qui vous a été attribué pour qu'Instagram ne puisse pas le remplacer.";
+"Mask everything & relaunch" = "Tout masquer et relancer";
+"Mask everything & relaunch?" = "Tout masquer et relancer ?";
+"Mask everything" = "Tout masquer";
+"Rolls every identifier, blocks Apple attestation, and clears your saved logins and cookies. You sign in again afterwards." = "Régénère tous les identifiants, bloque l'attestation Apple et efface vos connexions et cookies enregistrés. Vous vous reconnecterez ensuite.";
+"Fresh IDs, blocked attestation, cleared logins" = "Nouveaux ID, attestation bloquée, connexions effacées";
 "Roll a new fingerprint" = "Générer une nouvelle empreinte";
 "New device fingerprint" = "Nouvelle empreinte d'appareil";
 "Roll new ID" = "Générer un nouvel ID";
@@ -2759,6 +3016,7 @@
 //                         FOLLOW REQUESTS TRACKER                        //
 // Settings → Follow Requests Tracker                                     //
 //////////////////////////////////////////////////////////////////////////
+"View all from this user" = "Voir tout de cet utilisateur";
 "Follow Requests" = "Demandes d'abonnement";
 "Show follow requests" = "Afficher les demandes d'abonnement";
 "Check now" = "Vérifier maintenant";
@@ -2830,7 +3088,7 @@
 "Turn everything off" = "Tout désactiver";
 "Every Instagram Plus feature turns off and Instagram restarts." = "Toutes les fonctionnalités Instagram Plus sont désactivées et Instagram redémarre.";
 "Story peek" = "Aperçu de story";
-"Hold a story in the tray to preview it without opening it." = "Maintenez une story dans la barre pour l'aperçu sans l'ouvrir.";
+"Hold a story in the tray or an inbox avatar to preview it without opening it." = "Maintenez une story dans la barre ou un avatar de la boîte de réception pour l'aperçu sans l'ouvrir.";
 "Story fonts" = "Polices de story";
 "Adds the subscriber fonts when you add text to a story." = "Ajoute les polices réservées aux abonnés lorsque vous ajoutez du texte à une story.";
 "Search story viewers" = "Rechercher parmi les vues";
@@ -2900,6 +3158,8 @@
 "Drag your camera window to any corner or edge." = "Faites glisser la fenêtre de votre caméra vers n’importe quel coin ou bord.";
 "Enable call recording" = "Activer l’enregistrement d’appel";
 "Export all" = "Tout exporter";
+"Share as audio only" = "Partager l’audio seul";
+"Delete %lu recordings?" = "Supprimer %lu enregistrements ?";
 "Full screen" = "Plein écran";
 "Group call" = "Appel de groupe";
 "Ignore auto-record for this chat" = "Ignorer l’enregistrement automatique pour cette discussion";
@@ -2907,6 +3167,7 @@
 "Include my camera" = "Inclure ma caméra";
 "Keep forever" = "Conserver indéfiniment";
 "Large" = "Grand";
+"Manual" = "Manuel";
 "Mute without the other side seeing you muted — your mic is still silenced" = "Couper le son sans que l’autre côté vous voie en sourdine — votre micro reste silencieux";
 "Muted silently" = "Sourdine silencieuse";
 "My camera size" = "Taille de ma caméra";
@@ -2963,6 +3224,7 @@
 // Settings → Stories archive + the archive grid, media viewer, viewers  //
 //////////////////////////////////////////////////////////////////////////
 
+
 "Reacted" = "Réactions";
 "Reacted first" = "Réactions d'abord";
 "Mutual" = "Amis communs";
@@ -3011,3 +3273,83 @@
 "%lu pinned viewers just saw, liked or reacted" = "%lu vues épinglées viennent de voir, d'aimer ou de réagir";
 "A pinned viewer" = "Une vue épinglée";
 "On each launch" = "À chaque lancement";
+
+"MobileConfig" = "MobileConfig";
+"Enable MobileConfig browser" = "Activer le navigateur MobileConfig";
+"Open MobileConfig browser" = "Ouvrir le navigateur MobileConfig";
+"Lets the browser read values and apply your changes" = "Permet au navigateur de lire les valeurs et d'appliquer vos modifications";
+"Search, toggle and edit config values" = "Rechercher, activer et modifier les valeurs de configuration";
+"Turn on the browser first, then restart Instagram" = "Activez d'abord le navigateur, puis redémarrez Instagram";
+"Use at your own risk" = "À utiliser à vos risques et périls";
+"I understand" = "J'ai compris";
+"MobileConfig overrides were reset after repeated crashes on launch" = "Les remplacements MobileConfig ont été réinitialisés après plusieurs plantages au lancement";
+"Overridden" = "Remplacés";
+"overridden" = "remplacés";
+"Search name or config number" = "Rechercher par nom ou numéro de configuration";
+"Reset all overrides" = "Réinitialiser tous les remplacements";
+"Reset all overrides?" = "Réinitialiser tous les remplacements ?";
+"%lu override(s) will be removed." = "%lu remplacement(s) seront supprimés.";
+"param" = "paramètre";
+"params" = "paramètres";
+"Config" = "Configuration";
+"Number" = "Numéro";
+"Override" = "Remplacer";
+"Value" = "Valeur";
+"Type: %@   ·   live: %@" = "Type : %@   ·   actuel : %@";
+"Clear override" = "Effacer le remplacement";
+"Note" = "Note";
+"Parameter:" = "Paramètre :";
+"Reset %lu override(s)" = "Réinitialiser %lu remplacement(s)";
+"Read and change Instagram's own internal settings. Known names are built in; configs shown only as a number have obfuscated names we can't recover yet. If Instagram crashes on launch three times in a row, your changes are cleared for you." = "Lisez et modifiez les réglages internes d'Instagram. Les noms connus sont intégrés ; les configs affichées uniquement par un numéro ont des noms obfusqués que nous ne pouvons pas encore récupérer. Si Instagram plante trois fois de suite au lancement, vos modifications sont effacées automatiquement.";
+"This changes Instagram's own internal settings. Some can break features or cause crashes until you switch them back.\n\nChanges stay on this device. Most take effect right away, and some only after you restart Instagram. If it crashes on launch three times in a row, they're cleared for you.\n\nInstagram can tell when a setting doesn't match what its server sent. It's very unlikely to affect your account, but not impossible. Use at your own risk." = "Ceci modifie les réglages internes d'Instagram. Certains peuvent casser des fonctionnalités ou provoquer des plantages jusqu'à ce que vous les remettiez.\n\nLes modifications restent sur cet appareil. La plupart s'appliquent immédiatement et certaines seulement après un redémarrage d'Instagram. S'il plante trois fois de suite au lancement, elles sont effacées automatiquement.\n\nInstagram peut détecter qu'un réglage ne correspond pas à ce que son serveur a envoyé. Il est très peu probable que cela affecte votre compte, mais pas impossible. À utiliser à vos risques et périls.";
+"Tap a field to copy. Tap a value below to edit." = "Appuyez sur un champ pour le copier. Appuyez sur une valeur ci-dessous pour la modifier.";
+"%lu configs  ·  %lu named" = "%lu configs  ·  %lu nommées";
+
+"Clear cache now" = "Vider le cache maintenant";
+"Delete staged captures that haven't been unsent yet" = "Supprime les captures en attente qui n'ont pas encore été retirées";
+"Clear view-once cache" = "Vider le cache éphémère";
+"Delete all staged captures that haven't been unsent? Anything already saved to the log is kept." = "Supprimer toutes les captures en attente non retirées ? Ce qui est déjà enregistré dans le journal est conservé.";
+"Capture while closed" = "Capturer app fermée";
+"Save media that arrives while Instagram is closed" = "Enregistre les médias reçus quand Instagram est fermé";
+"⚠️ Only works on the full Instagram build with plugins, signed with a paid, ad-hoc certificate under the default Instagram bundle id. The no-plugins build has no notification extension. Requires the deleted messages log to stay on.\n\nCatches view-once media (and normal media if enabled) that arrives while Instagram is fully closed, using the notification extension. Affects only this log and its media, nothing else in the app. It rides push notifications, so muted chats, Do Not Disturb or disabled notifications miss messages; \"Keep running in background\" is the fallback." = "⚠️ Fonctionne uniquement sur la version complète d'Instagram avec plugins, signée par un certificat payant (ad-hoc) sous l'identifiant de bundle Instagram par défaut. La version sans plugins n'a pas d'extension de notification. Nécessite que le journal des messages supprimés reste activé.\n\nCapture les médias à usage unique (et normaux si activé) reçus quand Instagram est totalement fermé, via l'extension de notification. N'affecte que ce journal et ses médias, rien d'autre dans l'app. Dépend des notifications push : les discussions en sourdine, le mode Ne pas déranger ou les notifications désactivées font manquer des messages ; \"Garder actif en arrière-plan\" est la solution de secours.";
+"Uses the notification extension to save media that arrives with the app closed" = "Utilise l'extension de notification pour enregistrer les médias reçus app fermée";
+"Also capture normal media" = "Capturer aussi les médias normaux";
+"Not just view-once. Uses a lot more storage" = "Pas seulement à usage unique. Utilise beaucoup plus de stockage";
+"Auto-clean" = "Nettoyage auto";
+"Limit how much captured media is kept" = "Limite la quantité de médias capturés conservés";
+"Size limit" = "Limite de taille";
+"Keep at most this per account" = "Conserver au maximum ceci par compte";
+"MB" = "Mo";
+"Age limit" = "Limite d'âge";
+"Keep no longer than this" = "Ne pas conserver plus longtemps que ceci";
+"days" = "jours";
+"Drop every capture each time you open the app" = "Supprime chaque capture à chaque ouverture de l'app";
+"Trim each account by size and age" = "Élaguer chaque compte par taille et par âge";
+"Kept per account. A capture is dropped once it passes either limit." = "Conservées par compte. Une capture est supprimée dès qu'elle dépasse l'une des limites.";
+"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "Les deux désactivés, les captures sont conservées jusqu'à leur retrait. En activer un désactive l'autre. Ce qui est réellement retiré est d'abord enregistré dans le journal et n'est jamais nettoyé ici.";
+"Clear when I open Instagram" = "Vider à l'ouverture d'Instagram";
+"Keep within size / age limits" = "Conserver dans les limites de taille / d'âge";
+"View-once cache" = "Cache éphémère";
+"Message log" = "Journal des messages";
+
+"Story stats" = "Statistiques des stories";
+"Views per story" = "Vues par story";
+"%@ · peak %@ views" = "%@ · pic à %@ vues";
+"Avg / story" = "Moyenne par story";
+"Unique viewers" = "Spectateurs uniques";
+"Engagement" = "Engagement";
+"Loyal fans" = "Fans fidèles";
+"Peak hour" = "Heure de pointe";
+"Recently viewed" = "Vues récemment";
+"No archived stories in this range yet." = "Aucune story archivée sur cette période.";
+
+"Names & photos updated" = "Noms et photos mis à jour";
+"Names & photos are up to date" = "Les noms et photos sont déjà à jour";
+
+"Early birds" = "Lève-tôt";
+"Opens first" = "Regarde en premier";
+"top %ld%%" = "top %ld%%";
+"1 reaction" = "1 réaction";
+"%ld reactions" = "%ld réactions";
+"Watched %ld stories" = "A vu %ld stories";
+"Unpin" = "Détacher";

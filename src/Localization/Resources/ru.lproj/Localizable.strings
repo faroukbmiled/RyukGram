@@ -88,9 +88,14 @@
 "Adds download, copy and expand options to GIF and image comments" = "Добавляет пункты скачивания, копирования и развёртывания для GIF и изображений в комментариях";
 "Allow video in photo sticker" = "Разрешить видео в фото‑стикере";
 "Alternate icons are not supported" = "Альтернативные значки не поддерживаются";
+"Couldn't change app icon" = "Не удалось сменить иконку приложения";
+"Always mute" = "Всегда без звука";
+"Starts muted everywhere until you tap a speaker" = "Всё начинается без звука, пока вы не нажмёте кнопку звука";
 "Anonymous live viewing" = "Анонимный просмотр трансляций";
 "App Icon" = "Значок приложения";
-"Audio page" = "Страница аудио";
+"Download from music picker" = "Скачивание из выбора музыки";
+"Music" = "Музыка";
+"Adds a download option to the song long-press menu in music pickers" = "Добавляет скачивание в меню долгого нажатия на трек в выборе музыки";
 "Auto-reveals sensitive media" = "Автоматически показывает чувствительный контент";
 "Block surveys" = "Блокировать опросы";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "Блокирует heartbeat счётчика зрителей, чтобы трансляция не видела вас — вы также не увидите счётчик зрителей";
@@ -103,6 +108,10 @@
 "Copy comment text" = "Копировать текст комментария";
 "Copy description" = "Копировать описание";
 "Long press a caption to copy its text" = "Удерживайте подпись, чтобы скопировать её текст";
+"Edit before copying" = "Редактировать перед копированием";
+"Pick or trim what gets copied" = "Выберите или обрежьте копируемое";
+"Copy selection" = "Копировать выделенное";
+"%lu characters" = "Символов: %lu";
 "Custom sticker colors" = "Свои цвета стикеров";
 "Custom colors aren't supported for this sticker" = "Свои цвета не поддерживаются для этого стикера";
 "Date format" = "Формат даты";
@@ -122,7 +131,6 @@
 "End" = "Конец";
 "Experimental features" = "Экспериментальные функции";
 "Explore & search" = "Интересное и поиск";
-"Failed to change icon" = "Не удалось изменить значок";
 "Fixed" = "Зафиксировано";
 "Fixed prevents shrinking. Hide makes it disappear when scrolling down" = "«Зафиксировано» предотвращает уменьшение. «Скрывать» делает панель невидимой при прокрутке вниз";
 "Focus/distractions" = "Фокус/отвлечения";
@@ -134,14 +142,12 @@
 "Hide explore posts grid" = "Скрыть сетку постов в Explore";
 "Hide friends map" = "Скрыть карту друзей";
 "Hide Meta AI" = "Скрыть Meta AI";
-"Hide metrics" = "Скрыть метрики";
 "Hide notes tray" = "Скрыть панель заметок";
 "Hide on scroll" = "Скрывать при прокрутке";
 "Hide TestFlight popup" = "Скрыть окно TestFlight";
 "Hide trending searches" = "Скрыть популярные запросы";
 "Hide UI on capture" = "Скрыть интерфейс при захвате";
 "Removes suggested accounts to follow outside the feed" = "Убирает рекомендованные аккаунты вне ленты";
-"Hides like/comment/share counts on posts and reels" = "Прячет числа лайков, комментариев и репостов на публикациях и рилсах";
 "Removes the friends map icon from the notes tray" = "Убирает значок карты друзей из панели заметок";
 "Removes the suggested posts grid on the explore tab" = "Убирает сетку рекомендованных публикаций во вкладке «Интересное»";
 "Strips the Meta AI buttons and entry points from the app" = "Удаляет кнопки и точки входа Meta AI из приложения";
@@ -158,7 +164,6 @@
 "Hold the eyedropper in stories to pick an exact text color" = "Удерживайте пипетку в историях, чтобы выбрать точный цвет текста";
 "Long-press the color wheel in sticker editors to pick any solid or gradient color" = "Зажмите цветовое колесо в редакторе стикеров, чтобы выбрать любой сплошной цвет или градиент";
 "Long-press the heart button in a live to hide or show the comments" = "Удерживайте кнопку сердца в прямой трансляции, чтобы скрыть или показать комментарии";
-"Long-press the search tab to open a copied Instagram link" = "Удерживайте вкладку поиска, чтобы открыть скопированную ссылку Instagram";
 "Master switch. When off, all per-surface toggles below are ignored." = "Главный переключатель. Когда выключен, все переключатели ниже игнорируются.";
 "No suggested chats" = "Без рекомендуемых чатов";
 "No suggested users" = "Без рекомендуемых пользователей";
@@ -192,6 +197,7 @@
 "Suppresses the \"It's time to update Instagram Beta\" nag" = "Подавляет уведомление \"It's time to update Instagram Beta\"";
 "Tap to apply" = "Нажмите, чтобы применить";
 "The selected icon will be saved and shown here the next time you open this page." = "Выбранный значок будет сохранён и показан здесь при следующем открытии этой страницы.";
+"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "Приложение для сайдлоада заменило список значков Instagram. Верните его значок на стандартный и обновите Instagram, чтобы вернуть значки.";
 "Toggle live comments" = "Переключить комментарии прямой трансляции";
 "Use detailed color picker" = "Использовать подробный выбор цвета";
 "Used across feed, stories, reels, and DMs." = "Используется в ленте, историях, роликах и ЛС";
@@ -316,9 +322,10 @@
 "Disable home button refresh" = "Отключить обновление кнопкой Home";
 "Disable home button scroll" = "Отключить прокрутку кнопкой Home";
 "Disable video autoplay" = "Отключить автовоспроизведение видео";
+"Disable swipe to camera" = "Отключить свайп к камере";
+"Swiping right on the feed no longer opens the camera" = "Свайп вправо в ленте больше не открывает камеру";
 "Hide" = "Скрыть";
 "Hide entire feed" = "Скрыть всю ленту";
-"Hide repost button" = "Скрыть кнопку репоста";
 "Hide stories tray" = "Скрыть панель историй";
 "Hide suggested stories" = "Скрыть рекомендуемые истории";
 "Hide story highlights" = "Скрыть актуальное из историй";
@@ -326,7 +333,6 @@
 "Hides suggested accounts" = "Скрывает рекомендуемые аккаунты";
 "Hides suggested reels" = "Скрывает рекомендуемые рилсы";
 "Hides suggested threads posts" = "Скрывает рекомендуемые посты Threads";
-"Hides the repost button on feed posts" = "Прячет кнопку репоста на публикациях ленты";
 "Hides the story tray at the top" = "Прячет верхнюю ленту историй";
 "Inserts a button row below like/comment/share on each post" = "Ставит ряд кнопок под лайком, комментарием и репостом у каждой публикации";
 "Long press on media to expand in full-screen viewer" = "Долгое нажатие на медиа раскрывает его в полноэкранном просмотрщике";
@@ -343,11 +349,16 @@
 "No suggested threads" = "Без рекомендуемых Threads";
 "Prevents feed from reloading when returning from background" = "Мешает ленте перезагружаться при возвращении из фонового режима";
 "Prevents videos from playing automatically" = "Не даёт видео воспроизводиться автоматически";
+"Play in place" = "Воспроизвести здесь";
+"Play, then open" = "Воспроизвести, затем открыть";
 "Refresh" = "Обновление";
 "Removes all content from your home feed" = "Полностью очищает вашу домашнюю ленту от содержимого";
 "Removes suggested accounts from the stories tray" = "Убирает рекомендованные аккаунты из ленты историй";
 "Removes suggested posts" = "Убирает рекомендуемые посты";
 "Scroll to top without refreshing when tapping Home" = "Прокрутка к началу без обновления при касании Home";
+"Scroll only" = "Только прокрутка";
+"Status bar tap" = "Нажатие на строку состояния";
+"Tapping the top of the screen scrolls up and refreshes" = "Нажатие вверху экрана прокручивает вверх и обновляет";
 "Show action button" = "Показывать кнопку действий";
 "Show date" = "Показывать дату";
 "Stories tray" = "Панель историй";
@@ -373,6 +384,15 @@
 "Paste a giphy.com URL or media ID" = "Вставьте ссылку giphy.com или ID медиа";
 "Send" = "Отправить";
 
+"Post buttons" = "Кнопки публикации";
+"Reorder, hide buttons and counts" = "Порядок, скрытие кнопок и счётчиков";
+"Customized" = "Изменено";
+"Buttons" = "Кнопки";
+"Numbers" = "Числа";
+"Right side" = "Справа";
+"Drag to reorder, left to right. Instagram pins the last one to the right." = "Перетащите, чтобы изменить порядок слева направо. Instagram закрепляет последнюю кнопку справа.";
+"The right-side button never shows a count." = "Кнопка справа никогда не показывает счётчик.";
+"Restores Instagram's order and shows every button and count." = "Восстанавливает порядок Instagram и показывает все кнопки и счётчики.";
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
 // Settings → Reels tab                                                     //
@@ -380,8 +400,16 @@
 
 "Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Помещает кнопку действий RyukGram над боковой панелью рилса с командами обложка/загрузка/поделиться/копировать/развернуть/репост. Обычное касание раскрывает меню; настроить реакцию на касание можно ниже.";
 "Always show progress scrubber" = "Всегда показывать полосу прогресса";
+"Expanded view" = "Развёрнутый вид";
+"Shows the whole reel instead of cropping the sides" = "Показывает reel целиком вместо обрезки по краям";
 "Auto-scroll reels" = "Автопрокрутка рилсов";
-"Speed, seek and auto-scroll controls" = "Управление скоростью, перемоткой и автопрокруткой";
+"Hold Controls" = "Управление удержанием";
+"Ignored while MobileConfig overrides it" = "Игнорируется, пока MobileConfig его переопределяет";
+"Menu" = "Меню";
+"Menu + PiP" = "Меню + PiP";
+"Pause" = "Пауза";
+"Set what holding a reel does" = "Задаёт действие по удержанию reel";
+"Speed, seek, pause and auto-scroll controls" = "Управление скоростью, перемоткой, паузой и автопрокруткой";
 "Enabled controls appear when you hold the ⋯ or audio button on a reel." = "Включённые элементы появляются при удержании кнопки ⋯ или аудио на Reels.";
 "Seek controls" = "Перемотка";
 "Auto-scroll control" = "Управление автопрокруткой";
@@ -395,7 +423,8 @@
 "Disable scrolling reels" = "Отключить прокрутку рилсов";
 "Disable tab button refresh" = "Отключить обновление кнопкой вкладки";
 "Doom scrolling limit" = "Лимит doomscrolling";
-"e.g. 1.75" = "напр. 1.75";
+"Limit audio and effect pages" = "Ограничить страницы аудио и эффектов";
+"Grids on audio, effect, template and remix pages stop at the same count" = "Сетки на страницах аудио, эффектов, шаблонов и ремиксов останавливаются на том же количестве";
 "Enter a value between 0.5 and 2.0" = "Введите значение от 0.5 до 2.0";
 "Keeps the progress bar visible on every reel" = "Всегда показывает полосу прогресса на каждом reel";
 "Hide \"Made with Edits\" badge" = "Скрыть значок «Made with Edits»";
@@ -405,7 +434,6 @@
 "Hides the avatar bubbles next to the Friends tab in reels" = "Скрывает аватары рядом с вкладкой «Друзья» в рилсах";
 "Hides the Edits app promo pill on reels" = "Скрывает рекламную плашку приложения Edits в рилсах";
 "Hides the floating overlay showing who reposted or commented on reels" = "Скрывает плавающую панель с информацией о том, кто репостнул или прокомментировал рилс";
-"Hides the repost button on the reels sidebar" = "Прячет кнопку репоста на боковой панели рилсов";
 "Drops the top bar while you watch reels" = "Скрывает верхнюю панель при просмотре reels";
 "Hiding" = "Скрытие";
 "IG default" = "IG по умолчанию";
@@ -445,6 +473,10 @@
 "Unlock password-locked reels" = "Разблокировать рилсы с паролем";
 "When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "Когда режим паузы включён, нажатие на фото-Reels переключает звук вместо стандартной паузы";
 
+"Reel buttons" = "Кнопки Reels";
+"Drag to reorder, top to bottom." = "Перетащите, чтобы изменить порядок сверху вниз.";
+"More options" = "Ещё";
+"Audio cover" = "Обложка аудио";
 //////////////////////////////////////////////////////////////////////////////
 //                                 PROFILE                                  //
 // Settings → Profile tab                                                   //
@@ -456,10 +488,14 @@
 "Card details" = "Детали карточки";
 "Comment count" = "Число комментариев";
 "Copy note on long press" = "Копировать заметку по удержанию";
+"Display name" = "Отображаемое имя";
 "Extra stats shown on each post and reel card in profile grids — pick which, reorder them, then apply." = "Дополнительная статистика на каждой карточке публикации и Reels в сетке профиля — выберите нужные, измените порядок и примените.";
 "Fake follower count" = "Поддельное число подписчиков";
 "Fake following count" = "Поддельное число подписок";
+"Fake display name" = "Поддельное отображаемое имя";
 "Fake post count" = "Поддельное число публикаций";
+"Fake profile" = "Поддельный профиль";
+"Fake username" = "Поддельное имя пользователя";
 "Fake profile stats" = "Поддельная статистика профиля";
 "Fake verified badge" = "Поддельная галочка";
 "Fetch missing counts" = "Запросить недостающие счётчики";
@@ -475,6 +511,7 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "Жесты удержания на элементах профиля — вынесены отдельно от кнопок действий конкретных функций.";
 "Master switch for all card stats. Fetch missing counts uses Instagram's API and may hit rate limits." = "Главный переключатель для всей статистики карточки. Запрос недостающих счётчиков использует API Instagram и может достичь лимитов запросов.";
 "Only affects your own profile header. Other users see the real numbers." = "Влияет только на заголовок вашего собственного профиля. Другие пользователи видят реальные числа.";
+"Only shown on your device. Other people see your real profile." = "Видно только на вашем устройстве. Другие видят настоящий профиль.";
 "Post count" = "Число публикаций";
 "Profile card details" = "Детали карточки профиля";
 "Profile stats" = "Статистика профиля";
@@ -490,6 +527,9 @@
 "Show full follower count" = "Показывать полное число подписчиков";
 "Show full post count" = "Показывать полное число публикаций";
 "Show the custom number set below" = "Показывает заданное ниже число";
+"Username, name, counts, and verified badge" = "Имя пользователя, имя, числа и значок подтверждения";
+"Show the custom handle set below" = "Показывает заданное ниже имя пользователя";
+"Show the custom name set below" = "Показывает заданное ниже имя";
 "Show the exact number instead of a shortened one" = "Показывает точное число вместо сокращённого";
 "Shows whether the profile user follows you" = "Сообщает, подписан ли владелец профиля на вас";
 "Tap to set" = "Нажмите, чтобы задать";
@@ -500,12 +540,15 @@
 "Views, likes, comments, shares, reposts, date" = "Просмотры, отметки «Нравится», комментарии, пересылки, репосты, дата";
 "Zoom profile photo" = "Увеличение фото профиля";
 
+"Hide Threads button" = "Скрыть кнопку Threads";
+"Hides it from the profile header" = "Убирает её из шапки профиля";
 //////////////////////////////////////////////////////////////////////////////
 //                            SAVING & DOWNLOADS                            //
 // Settings → Saving tab                                                    //
 //////////////////////////////////////////////////////////////////////////////
 
 "Active, queued, and finished downloads" = "Активные, в очереди и завершённые загрузки";
+"Add prefix to file names" = "Добавлять префикс к именам файлов";
 "Auto-retry attempts" = "Попытки автоповтора";
 "Auto-retry failed downloads" = "Автоповтор неудачных загрузок";
 "Confirm before download" = "Подтверждать перед скачиванием";
@@ -530,6 +573,7 @@
 "Save action" = "Действие после сохранения";
 "Save to dedicated album" = "Сохранять в отдельный альбом";
 "Show a confirmation dialog before starting a download" = "Спрашивать подтверждение до начала загрузки";
+"Start every saved file name with ryuk_ so downloads are easy to spot" = "Начинать имя каждого сохранённого файла с ryuk_, чтобы сразу находить загрузки";
 "Try %@ more %@ before giving up" = "Попробовать ещё %@ %@ перед отказом";
 "What happens after the gesture downloads" = "Что следует после загрузки жестом";
 "When \"Save to dedicated album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a named album in your Photos library. Tap \"Album name\" to change it." = "Когда «Сохранять в отдельный альбом» включено, загрузки и выбор «Сохранить в Фото» из меню «Поделиться» направляются в именованный альбом вашей медиатеки «Фото». Нажмите «Название альбома», чтобы изменить его.";
@@ -548,44 +592,58 @@
 "%ds" = "%dс";
 "%ld downloading" = "Загружается: %ld";
 "%ld still running — they'll be stopped. The files already saved are kept." = "%ld ещё выполняются — они будут остановлены. Уже сохранённые файлы останутся.";
+"%lu entries will be forgotten. Downloaded files are untouched." = "Будет забыто записей: %lu. Скачанные файлы остаются на месте.";
 "%lu failed" = "%lu с ошибкой";
 "%lu of %lu done" = "%lu из %lu готово";
+"%lu of %lu items are already saved." = "%lu из %lu элементов уже сохранены.";
 "%lu saved, %lu failed" = "%lu сохранено, %lu с ошибкой";
 "12 hours" = "12 часов";
 "1s" = "1с";
 "24 hours" = "24 часа";
 "48 hours" = "48 часов";
 "Active" = "Активные";
+"Already downloaded" = "Уже скачано";
+"Ask before downloading media you already saved" = "Спрашивать перед скачиванием уже сохранённого";
 "Auto-retry" = "Автоповтор";
+"Check for duplicates" = "Проверять дубликаты";
 "Clear completed" = "Очистить завершённые";
 "Clear download history" = "Очистить историю загрузок";
 "Clear download history?" = "Очистить историю загрузок?";
+"Clear duplicate list" = "Очистить список дубликатов";
 "Completed" = "Завершено";
 "Don't keep" = "Не хранить";
+"Download again" = "Скачать снова";
 "Download history" = "История загрузок";
 "Download settings" = "Настройки загрузки";
 "Downloading %lu items" = "Загрузка %lu объектов";
 "Downloading…" = "Загрузка…";
+"Duplicate download list" = "Список дубликатов загрузок";
+"Duplicates" = "Дубликаты";
 "Empty the manager's list of past downloads" = "Очистить список прошлых загрузок в менеджере";
 "Encoding %d%%" = "Кодирование %d%%";
 "Encoding…" = "Кодирование…";
 "Extra downloads wait in line and start as slots free up." = "Лишние загрузки ждут в очереди и запускаются по мере освобождения слотов.";
+"Forget every download recorded so far" = "Забыть все записанные загрузки";
 "How long finished, failed and cancelled downloads stay in the manager after you close the app. The files themselves are never touched — only the list." = "Как долго завершённые, неудачные и отменённые загрузки остаются в менеджере после закрытия приложения. Сами файлы не трогаются — только список.";
 "How long past downloads stay listed in the manager" = "Как долго прошлые загрузки остаются в менеджере";
 "Keep history for" = "Хранить историю";
+"Keeps a list of what you already grabbed and asks first when the same media comes up again. Only IDs are stored, never files, and carousels ask once for the whole post." = "Ведёт список уже скачанного и спрашивает, когда то же самое попадается снова. Хранятся только идентификаторы, файлы никогда, а карусель спрашивает один раз на пост.";
 "Media you download shows up here, with its progress and where it was saved." = "Загружаемые медиа появятся здесь: прогресс и место сохранения.";
 "No downloads yet" = "Загрузок пока нет";
 "Preview" = "Предпросмотр";
 "Queued" = "В очереди";
 "Redownload" = "Загрузить заново";
+"Remove and download again" = "Удалить и скачать снова";
 "Retry" = "Повторить";
 "Retrying…" = "Повтор…";
+"Still in your gallery." = "Всё ещё в галерее.";
 "Stop" = "Остановить";
 "The files already saved are kept — this only empties the list." = "Уже сохранённые файлы останутся — очищается только список.";
 "Waiting for a free slot" = "Ожидание свободного слота";
 "Waiting for connection…" = "Ожидание соединения…";
 "Waiting to retry" = "Ожидание повтора";
 "Waiting…" = "Ожидание…";
+"You saved this on %@." = "Вы сохранили это %@.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 STORIES                                  //
@@ -596,6 +654,10 @@
 "Overlay layout" = "Расположение оверлея";
 "Drag to position the buttons" = "Перетащите, чтобы разместить кнопки";
 "Drag the buttons onto the story. The dimmed strip is the reply bar." = "Перетащите кнопки на историю. Затемнённая полоса — это панель ответа.";
+"Close gaps automatically" = "Автоматически закрывать пропуски";
+"Buttons next to each other close the gap when one is hidden" = "Соседние кнопки закрывают пропуск, когда одна скрыта";
+"Button spacing" = "Расстояние между кнопками";
+"%ld pt" = "%ld пт";
 "Send message" = "Отправить сообщение";
 
 "Pinned" = "Закреплённые";
@@ -611,6 +673,8 @@
 "Pin order" = "Порядок закрепления";
 "Pin this viewer?" = "Закрепить этого зрителя?";
 "Filter, sort & pin viewers" = "Фильтр, сортировка и закрепление зрителей";
+"Default list" = "Список по умолчанию";
+"Which list opens first. The header button still switches between them" = "Какой список открывается первым. Кнопка в заголовке по-прежнему переключает их";
 "Add by username, remove, reorder" = "Добавить по имени пользователя, удалить, изменить порядок";
 "Pinned viewers (%lu)" = "Закреплённые зрители (%lu)";
 "Viewers list" = "Список зрителей";
@@ -673,14 +737,26 @@
 "Show poll vote counts" = "Показывать количество голосов опроса";
 "Show vote tallies on poll options and slider count/average before you vote" = "Показывает число голосов по вариантам опроса и среднее/количество слайдера до голосования";
 "Stop story auto-advance" = "Остановить авто-переход историй";
+"Playback controls" = "Управление воспроизведением";
+"Speed, seek and pause controls" = "Скорость, перемотка и пауза";
+"Enabled controls appear when you hold the ⋯ or speaker button on a story, or from Playback in the story menu." = "Включённые элементы появляются при удержании кнопки ⋯ или звука в истории, либо из пункта «Воспроизведение» в меню истории.";
+"Pause control" = "Управление паузой";
 "Stories" = "Истории";
 "Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" = "По окончании таймера истории не перескакивают на следующую сами. Переход выполняется касанием вручную";
 "Story audio toggle" = "Переключатель звука истории";
 "Story user list" = "Список пользователей истории";
 "Tapping the eye button to mark a story as seen advances to the next story automatically" = "Касание кнопки-глаза для отметки истории просмотренной само переводит к следующей истории";
 "This will send a story view receipt." = "Будет отправлено уведомление о просмотре истории.";
+"This will send %ld story view receipts." = "Будет отправлено уведомлений о просмотре: %ld.";
 "View story mentions" = "Посмотреть упоминания в истории";
 "Which stories get seen-receipt blocking" = "Для каких историй блокируются уведомления о просмотре";
+"Text tool" = "Текстовый инструмент";
+"Adds your own fonts to the font row when you add text to a story. The text is drawn into the story, so everyone sees it in the font you picked." = "Добавляет ваши шрифты в ряд шрифтов при наборе текста в истории. Текст рисуется прямо в истории, поэтому все видят его выбранным шрифтом.";
+"Custom story fonts" = "Свои шрифты для историй";
+"Show your imported and device fonts next to the built-in ones" = "Показывать импортированные шрифты и шрифты устройства рядом со встроенными";
+"Choose fonts" = "Выбрать шрифты";
+"Choose fonts (%lu)" = "Выбрать шрифты (%lu)";
+"Import, browse online, or pick from the fonts already on your device" = "Импортируйте, найдите онлайн или выберите из шрифтов на устройстве";
 
 //////////////////////////////////////////////////////////////////////////////
 //                       MESSAGES — ACTIVITY NOTIFICATIONS                  //
@@ -769,6 +845,32 @@
 // Settings → Keep deleted messages tab                                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"A small label on the message" = "Небольшая метка на сообщении";
+"Above the bubble" = "Над пузырём";
+"Below the bubble" = "Под пузырём";
+"Beside the bubble" = "Рядом с пузырём";
+"Bubble" = "Пузырь";
+"Drawn at %@ %@" = "Размер %@ %@";
+"Fade" = "Приглушить";
+"Hide quick actions" = "Скрыть быстрые действия";
+"Hides the shortcut buttons next to the message" = "Скрывает кнопки-ярлыки рядом с сообщением";
+"How kept messages are marked" = "Как отмечаются сохранённые сообщения";
+"Left at %@%@ opacity" = "Остаётся с непрозрачностью %@%@";
+"Makes the message see-through" = "Делает сообщение полупрозрачным";
+"Marks messages someone unsent but you kept" = "Отмечает сообщения, которые удалили, а вы сохранили";
+"No mark" = "Без отметки";
+"Paints the bubble one color" = "Красит пузырь в один цвет";
+"Show tag" = "Показывать метку";
+"Tag" = "Метка";
+"Tag text" = "Текст метки";
+"The tag, fade and tint all return to their defaults." = "Метка, приглушение и заливка вернутся к значениям по умолчанию.";
+"Text size" = "Размер текста";
+"The tint stays put even when a chat background or theme repaints the other bubbles." = "Цвет остаётся на месте, даже если фон чата или тема перекрашивают остальные пузыри.";
+"Tint" = "Заливка";
+"Use any mix of the three, or none of them to keep messages silently." = "Сочетайте любые из трёх или отключите все, чтобы сохранять сообщения незаметно.";
+"Where the tag sits" = "Где стоит метка";
+"Your own wording stays as typed, in any language. Leave it empty for the default." = "Ваш текст остаётся как есть, на любом языке. Оставьте пустым для значения по умолчанию.";
+
 "Activity" = "Активность";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "Добавляет команду \"Скачать\" в контекстное меню голосовых сообщений для сохранения их в виде аудио M4A";
 "Allows typing and sending DMs longer than Instagram's limit" = "Позволяет вводить и отправлять сообщения длиннее лимита Instagram";
@@ -795,6 +897,8 @@
 "Files" = "Файлы";
 "Full last active date" = "Полная дата последней активности";
 "Hide reels blend button" = "Скрыть кнопку Blend в рилсах";
+"Hide reels in chats" = "Скрыть рилсы в чатах";
+"Shared reels stop showing up in DM threads" = "Пересланные рилсы больше не появляются в переписках";
 "Hide send to group chat" = "Скрыть «Отправить в групповой чат»";
 "Pin recipients on long-press" = "Закреплять получателей долгим нажатием";
 "Long-press in the share sheet to pin a chat/user to the top" = "Долгое нажатие в окне «Поделиться», чтобы закрепить чат/пользователя сверху";
@@ -809,7 +913,9 @@
 "Hides typing indicator from others" = "Скрывает индикатор набора текста от других";
 "Indicate unsent messages" = "Показывать отозванные сообщения";
 "Keep deleted messages" = "Сохранять удалённые сообщения";
-"Turns view once messages into normal media you can loop and pause" = "Превращает одноразовые сообщения в обычные медиа с повтором и паузой";
+"Kept unsent messages" = "Сохранённые отозванные сообщения";
+"Mirrored chat history" = "Копия истории чатов";
+"Turns view once messages into normal media you can replay and loop" = "Превращает одноразовые сообщения в обычные медиа с повтором и зацикливанием";
 "Note actions" = "Действия с заметками";
 "Preserves messages that others unsend" = "Сохраняет сообщения, которые другие отзывают";
 "Keep my deleted messages" = "Сохранять мои удалённые сообщения";
@@ -818,7 +924,7 @@
 "Quick list button in chats" = "Кнопка быстрого списка в чатах";
 "Removes the audio call button from DM thread header" = "Убирает кнопку аудиозвонка из шапки переписки в личных сообщениях";
 "Removes the video call button from DM thread header" = "Убирает кнопку видеозвонка из шапки переписки в личных сообщениях";
-"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled" = "Даёт пересматривать визуальные сообщения без их исчезновения. Включается в меню кнопки-глаза либо отдельной кнопкой, если кнопка-глаз выключена";
+"The sender is not told you opened it, and the media stays replayable" = "Отправитель не узнает, что вы открыли, а медиа остаётся доступным для повтора";
 "Search, sort, swipe to remove or toggle keep-deleted" = "Поиск, сортировка, свайп для удаления либо переключения keep-deleted";
 "Send audio as file" = "Отправлять аудио как файл";
 "Send files (experimental)" = "Отправка файлов (экспериментально)";
@@ -826,8 +932,10 @@
 "Show full date instead of \"Active 2h ago\"" = "Отображать полную дату вместо \"Active 2h ago\"";
 "Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "Выводит в переписках личных сообщений кнопку для добавления и удаления чатов из списка. Долгое нажатие открывает дополнительные варианты";
 "Shows a notification pill when a message is unsent" = "Выводит уведомление-плашку, когда сообщение отзывают";
-"Shows an \"Unsent\" label on preserved messages" = "Ставит пометку \"Отозвано\" на сохранённых сообщениях";
-"Unlimited replay of visual messages" = "Неограниченный повтор визуальных сообщений";
+"Block view receipts" = "Блокировать отметки о просмотре";
+"Instagram reports a view when the media finishes playing. Block it and the media stays unopened until you send the receipt yourself." = "Instagram отправляет отметку о просмотре сразу после окончания воспроизведения. Заблокируйте это, и медиа останется непрочитанным, пока вы не отправите отметку сами.";
+"Available while view receipts are blocked." = "Доступно, пока отметки о просмотре заблокированы.";
+"View-once photos and videos, and their buttons" = "Одноразовые фото и видео и их кнопки";
 "Unsent message notification" = "Уведомление об отозванном сообщении";
 "Voice messages" = "Голосовые сообщения";
 "Warn before clearing on refresh" = "Предупреждать перед очисткой при обновлении";
@@ -861,6 +969,11 @@
 "Deleted messages" = "Удалённые сообщения";
 "Deleted messages log" = "Журнал удалённых сообщений";
 "Deleted: %@\n" = "Удалено: %@\n";
+"Show in chat" = "Показать в чате";
+"Jumped to around that time" = "Переход примерно к этому времени";
+"Couldn't find that message in the chat" = "Не удалось найти это сообщение в чате";
+"%@ · sent %@" = "%@ · отправлено %@";
+"Sent: %@\n" = "Отправлено: %@\n";
 "Edit %lu" = "Изменение %lu";
 "Edit history" = "История изменений";
 "Edited" = "Изменено";
@@ -895,6 +1008,8 @@
 "Reaction removed" = "Реакция удалена";
 "Log removed reactions" = "Записывать удалённые реакции";
 "Also records when someone removes a reaction, and which message it was on" = "Также записывает, когда кто-то удаляет реакцию и к какому сообщению она относилась.";
+"Log opened view-once media" = "Записывать открытые одноразовые медиа";
+"Saves it before it disappears. Off logs only unsends" = "Сохраняет до исчезновения. Выкл — только удалённое";
 "Removed a reaction" = "Удалил(а) реакцию";
 "on @%@: %@" = "на @%@: %@";
 "on: %@" = "на: %@";
@@ -1019,24 +1134,32 @@
 "Hide search tab" = "Скрыть вкладку поиска";
 "Remove the search/explore button from the tab bar" = "Убрать кнопку поиска/обзора с панели вкладок";
 "Hide tab bar" = "Скрыть панель вкладок";
-"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "Оставляет только вкладки входящих личных сообщений и профиля, а запуск ведёт сразу во входящие. Переход к настройкам переносится на долгое нажатие вкладки входящих.";
+"Tab shortcuts" = "Ярлыки вкладок";
+"Hold a tab to open a RyukGram screen" = "Удерживайте вкладку, чтобы открыть экран RyukGram";
+"Not on the tab bar" = "Нет на панели вкладок";
+"When the feed tab is off the bar, its shortcut moves to the first tab that is on it." = "Если вкладки ленты нет на панели, её ярлык переходит к первой вкладке на панели.";
 "Icon order" = "Порядок иконок";
 "Launch tab" = "Стартовая вкладка";
 "Swipe sideways to move between the tab bar tabs" = "Проведите в сторону, чтобы переключаться между вкладками";
 "Messages only" = "Только сообщения";
 "Messages-only mode" = "Режим только сообщений";
+"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "Скрывает все вкладки, кроме входящих сообщений и профиля, и запускает приложение во входящих. Ярлык настроек переходит на долгое нажатие вкладки сообщений.";
 "Automatic schedule" = "Автоматическое расписание";
 "DM-only client, hide tabs, auto schedule" = "Только личные сообщения, скрыть вкладки, авторасписание";
 "Start time" = "Время начала";
 "End time" = "Время окончания";
 "Switch into Messages-only on its own during a time window" = "Автоматически включать режим только сообщений в заданный промежуток времени";
-"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above. You'll be asked to restart when the window starts and when it ends." = "Автоматически включает режим только сообщений в ежедневном промежутке (напр. 22:00 – 06:00) с помощью переключателей выше. Вам будет предложено перезапустить приложение в начале и в конце промежутка.";
+"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "Включает режим «Только сообщения» сам в заданный ежедневный интервал (например, 22:00 – 6:00) с помощью переключателей выше.";
 "Active now · ends %@" = "Активен · до %@";
 "Next window starts %@" = "Следующий промежуток в %@";
 "Messages-only starting" = "Включение режима только сообщений";
 "Messages-only ending" = "Выключение режима только сообщений";
 "Your Messages-only window has started. Restart Instagram to switch to DM-only." = "Промежуток режима только сообщений начался. Перезапустите Instagram, чтобы перейти к только сообщениям.";
 "Your Messages-only window has ended. Restart Instagram to bring back the other tabs." = "Промежуток режима только сообщений закончился. Перезапустите Instagram, чтобы вернуть остальные вкладки.";
+"When the window changes" = "При смене интервала";
+"Apply instantly" = "Применять сразу";
+"Your Messages-only window has started. Switch to DM-only now?" = "Интервал «Только сообщения» начался. Переключить сейчас?";
+"Your Messages-only window has ended. Bring back the other tabs now?" = "Интервал «Только сообщения» закончился. Вернуть остальные вкладки сейчас?";
 "Navigation" = "Навигация";
 "Swipe between tabs" = "Свайп между вкладками";
 "Tab the app opens to. Ignored when Messages-only is on" = "Вкладка, открываемая при запуске. Не действует при включённом режиме только сообщений";
@@ -1061,12 +1184,15 @@
 "Confirm follow" = "Подтверждать подписку";
 "Confirm follow requests" = "Подтверждать запросы на подписку";
 "Confirm Instants capture" = "Подтверждать съёмку Моментов";
+"Shows an alert before sending a reaction in a chat" = "Показывает предупреждение перед отправкой реакции в чате";
+"Confirm DM reaction" = "Подтверждать реакцию в сообщениях";
 "Confirm Instants emoji reaction" = "Подтверждать эмодзи-реакцию на Моменты";
 "Confirm like: Posts" = "Подтверждать лайк: посты";
 "Confirm like: Reels" = "Подтверждать лайк: рилсы";
 "Confirm note emoji reaction" = "Подтверждать эмодзи-реакцию на заметку";
 "Confirm note like" = "Подтверждать лайк заметки";
 "Confirm posting comment" = "Подтверждать отправку комментария";
+"Confirm reaction" = "Подтвердить реакцию";
 "Confirm repost" = "Подтверждать репост";
 "Confirm send to group chat" = "Подтверждать отправку в групповой чат";
 "Confirm sticker interaction (highlights)" = "Подтверждать взаимодействие со стикером (актуальное)";
@@ -1080,6 +1206,7 @@
 "Confirm video call" = "Подтверждать видеозвонок";
 "Confirm voice call" = "Подтверждать аудиозвонок";
 "Confirm voice messages" = "Подтверждать голосовые сообщения";
+"Double tap only" = "Только двойное касание";
 "Follows" = "Подписки";
 "Likes" = "Лайки";
 "Messaging" = "Сообщения";
@@ -1252,8 +1379,8 @@
 "Wrong passcode • %ld attempts" = "Неверный код-пароль • %ld попыток";
 
 //////////////////////////////////////////////////////////////////////////////
-//                             BACKUP & RESTORE                             //
-// Settings → Backup & Restore tab                                          //
+//                            BACKUP & PROFILES                             //
+// Settings → Backup & Profiles tab                                         //
 //////////////////////////////////////////////////////////////////////////////
 "Protection" = "Защита";
 "Password-protect" = "Защитить паролем";
@@ -1285,7 +1412,6 @@
 "Applying backup…" = "Применение резервной копии…";
 "archive error" = "ошибка архива";
 "Archived snapshots" = "Архивные снимки";
-"Backup & Restore" = "Резервная копия и восстановление";
 "Backup exported" = "Резервная копия экспортирована";
 "Backup failed" = "Ошибка резервного копирования";
 "Backup has no importable sections." = "В резервной копии нет разделов для импорта.";
@@ -1339,6 +1465,55 @@
 "Truncated entry length." = "Усечённая длина записи.";
 "Truncated entry path." = "Усечённый путь записи.";
 "Unsafe entry path." = "Небезопасный путь записи.";
+"%@ is now in use" = "%@ используется";
+"%lu changed" = "изменено: %lu";
+"%lu on · %lu changed" = "включено: %lu · изменено: %lu";
+"A new profile" = "Новый профиль";
+"Accounts you haven't linked use %@." = "Непривязанные аккаунты используют %@.";
+"Adds a shortcut to the settings home page." = "Добавляет ярлык на главный экран настроек.";
+"All other accounts" = "Все остальные аккаунты";
+"Applied to the settings you're using now." = "Применяется к настройкам, которыми вы пользуетесь сейчас.";
+"Backup & Profiles" = "Резервная копия и профили";
+"Backup has no settings to save." = "В копии нет настроек для сохранения.";
+"Color" = "Цвет";
+"Current settings are saved to %@ first." = "Текущие настройки сначала сохраняются в «%@».";
+"Current settings aren't in a profile and will be replaced." = "Текущие настройки не входят в профиль и будут заменены.";
+"Current settings" = "Текущие настройки";
+"Duplicate" = "Дублировать";
+"Every setting goes back to how it shipped." = "Все настройки вернутся к исходным значениям.";
+"Every switch goes off, so the app behaves like stock." = "Все переключатели выключатся, и приложение будет работать как обычное.";
+"Follows every change you make." = "Следует за каждым вашим изменением.";
+"In %@" = "В %@";
+"Name it, switch to it whenever" = "Назовите его и переключайтесь когда угодно";
+"Name this profile" = "Название профиля";
+"Named setups you can switch between." = "Именованные наборы настроек, между которыми можно переключаться.";
+"New profile" = "Новый профиль";
+"No accounts seen yet." = "Аккаунты пока не найдены.";
+"No profile covers your other accounts." = "Ни один профиль не покрывает остальные аккаунты.";
+"Not linked" = "Не привязан";
+"Nothing ticked, so this profile covers every account you haven't linked elsewhere." = "Ничего не отмечено, поэтому этот профиль охватывает все аккаунты, не привязанные к другому.";
+"Overwrite %@?" = "Заменить «%@»?";
+"Overwrite what you're using now" = "Заменить то, чем вы пользуетесь сейчас";
+"Overwrite" = "Заменить";
+"Profiles" = "Профили";
+"Replaces it with your current settings." = "Заменяет его вашими текущими настройками.";
+"Reset %@ to defaults?" = "Сбросить %@ к стандартным?";
+"Saved as %@" = "Сохранено как «%@»";
+"Saved as a profile. Your current settings stay as they are." = "Сохраняется как профиль. Ваши текущие настройки не меняются.";
+"Saves your current settings and switches to it." = "Сохраняет текущие настройки и переключается на него.";
+"Settings go to" = "Настройки идут в";
+"Show on settings home" = "Показывать на главной странице настроек";
+"Switch to %@?" = "Переключиться на «%@»?";
+"Switch to a linked account and this profile comes with it." = "Переключитесь на привязанный аккаунт — этот профиль включится вместе с ним.";
+"Switch" = "Переключить";
+"Switching to a ticked account switches to this profile." = "Переключение на отмеченный аккаунт включает этот профиль.";
+"Tap to switch. Changes stay in the profile in use. Swipe or hold for more." = "Нажмите, чтобы переключиться. Изменения остаются в текущем профиле. Смахните или удерживайте для остального.";
+"Turn everything off in %@?" = "Выключить всё в %@?";
+"Turn off" = "Выключить";
+"Use for other accounts" = "Использовать для остальных аккаунтов";
+"Your settings aren't saved to a profile." = "Ваши настройки не сохранены ни в один профиль.";
+"Your settings stay untouched." = "Ваши настройки останутся нетронутыми.";
+"Your settings stay — they just won't belong to a profile." = "Ваши настройки останутся, просто перестанут принадлежать профилю.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
@@ -1348,6 +1523,7 @@
 "Advanced" = "Дополнительно";
 "All tweak options are disabled" = "Все опции твика отключены";
 "Auto-clear cache" = "Автоочистка кэша";
+"Every launch" = "При каждом запуске";
 "Automatically opens settings when the app launches" = "Сам открывает настройки сразу после старта приложения";
 "Cache" = "Кэш";
 "Cache cleared" = "Кэш очищен";
@@ -1360,14 +1536,12 @@
 "Daily" = "Ежедневно";
 "Disable all tweak options" = "Отключить все опции твика";
 "Disable safe mode" = "Отключить безопасный режим";
-"Enable tweak settings quick-access" = "Включить быстрый доступ к настройкам твика";
 "Instagram runs stock while this is on. Turn it back off to restore your settings." = "Пока включено, Instagram работает как обычно. Выключите, чтобы восстановить настройки.";
 "Tap to re-enable everything" = "Нажмите, чтобы снова включить всё";
 "Turn every feature off — your settings are kept" = "Отключить все функции — настройки сохранятся";
 "Fix duplicate notifications" = "Исправить дублирующиеся уведомления";
 "Free %@ of Instagram cache." = "Освободить %@ кэша Instagram.";
 "Freed %@" = "Освобождено %@";
-"Hold on the home tab to open RyukGram settings" = "Задержите палец на вкладке Home, чтобы вызвать настройки RyukGram";
 "Monthly" = "Ежемесячно";
 "Nothing to clear" = "Нечего очищать";
 "Off skips the size scan when Advanced opens." = "В выключенном состоянии пропускает сканирование размера при открытии «Дополнительно».";
@@ -1422,6 +1596,12 @@
 "Surfaces" = "Интерфейсы";
 "These toggles flip hidden Instagram experiments on. Some features may not work on every account or IG version. If IG keeps crashing on launch, the flags auto-reset after 3 failed starts." = "Эти переключатели включают скрытые эксперименты Instagram. Некоторые функции могут не работать на всех аккаунтах или версиях IG. Если IG падает при запуске, флаги сбрасываются после 3 неудачных стартов.";
 "Toggle hidden Instagram experiments. Some may not work on every account or IG version." = "Переключайте скрытые эксперименты Instagram. Некоторые могут не работать на всех аккаунтах или версиях IG.";
+"Export overrides" = "Экспорт изменений";
+"Import overrides" = "Импорт изменений";
+"Nothing to export" = "Нечего экспортировать";
+"%lu applied · %lu skipped" = "Применено: %lu · пропущено: %lu";
+"This file holds %lu entry(s). Merge keeps what you already changed, replace clears your current overrides first." = "В файле %lu запись(ей). Объединение сохранит ваши изменения, замена сначала их удалит.";
+"MobileConfig overrides" = "Изменения MobileConfig";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  DEBUG                                   //
@@ -1557,6 +1737,7 @@
 "%@ unsent a message" = "%@ отозвал(а) сообщение";
 "%@ unsent a message from %@" = "%1$@ отозвал(а) сообщение от %2$@";
 "A message was unsent" = "Сообщение было отозвано";
+"A message in %@ was unsent" = "Сообщение в %@ было отозвано";
 "Add" = "Добавить";
 "Add to block list" = "Добавить в список блокировки";
 "Added to block list" = "Добавлено в список блокировки";
@@ -1598,6 +1779,8 @@
 "Marking as viewed advances to the next stacked media instead of closing" = "Отметка как просмотренного переключает на следующий медиафайл в стопке вместо закрытия";
 "Mark messages as seen" = "Отметить сообщения как просмотренные";
 "Mark seen" = "Отметить просмотр";
+"Mark all (%ld)" = "Отметить все (%ld)";
+"Mark up to here (%ld)" = "Отметить до этой (%ld)";
 "Marked as viewed" = "Отмечено как просмотренное";
 "Marked messages as seen" = "Сообщения отмечены как просмотренные";
 "Mentions" = "Упоминания";
@@ -1644,15 +1827,15 @@
 "Un-exclude story seen" = "Убрать просмотр истории из исключений";
 "Un-excluded" = "Исключение убрано";
 "Unblocked" = "Разблокировано";
-"Unlimited replay enabled" = "Неограниченный повтор включён";
+"Views blocked" = "Просмотры блокируются";
 "Unmute story audio" = "Включить звук истории";
 "Unsent" = "Отозвано";
 "Upload Audio" = "Загрузить аудио";
 "VC not found" = "VC не найден";
 "Video from Library" = "Видео из медиатеки";
-"Visual messages will expire" = "Визуальные сообщения истекут";
-"Visual messages: expiring" = "Визуальные сообщения: с истечением";
-"Visual messages: unlimited replay" = "Визуальные сообщения: неограниченный повтор";
+"Views will be reported" = "Просмотры будут отправляться";
+"Disappearing media: views reported" = "Исчезающие медиа: просмотры отправляются";
+"Disappearing media: views blocked" = "Исчезающие медиа: просмотры блокируются";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
@@ -1773,6 +1956,33 @@
 "Select color" = "Выбрать цвет";
 "Set location" = "Установить местоположение";
 "The theme RyukGram applies to Instagram." = "Тема, которую RyukGram применяет к Instagram.";
+"Fonts" = "Шрифты";
+"Font" = "Шрифт";
+"Custom fonts" = "Свои шрифты";
+"Everywhere" = "Везде";
+"Per surface" = "По интерфейсам";
+"Per surface gives Instagram and RyukGram their own font." = "«По интерфейсам» задаёт отдельный шрифт для Instagram и RyukGram.";
+"Replace the app font" = "Заменить шрифт приложения";
+"My fonts" = "Мои шрифты";
+"Device fonts" = "Шрифты устройства";
+"Import a .ttf or .otf file, or browse thousands of fonts online." = "Импортируйте файл .ttf или .otf либо выберите из тысяч шрифтов онлайн.";
+"Swipe a font to delete it." = "Смахните шрифт, чтобы удалить его.";
+"Delete %lu fonts?" = "Удалить шрифты (%lu)?";
+"Added" = "Добавленные";
+"Swipe to remove." = "Смахните, чтобы убрать.";
+"The quick brown fox jumps over the lazy dog" = "Съешь же ещё этих мягких французских булок да выпей чаю";
+"%lu styles · %@" = "%lu начертаний · %@";
+"%@ · %lu weights" = "%@ · %lu начертаний";
+"Browse online" = "Найти онлайн";
+"Font installed" = "Шрифт установлен";
+"Restart Instagram to apply everywhere" = "Перезапустите Instagram, чтобы применить везде";
+"No usable font found. Pick a .ttf or .otf file." = "Подходящий шрифт не найден. Выберите файл .ttf или .otf.";
+"This font has no downloadable styles." = "У этого шрифта нет доступных для загрузки начертаний.";
+"Could not load the font catalog." = "Не удалось загрузить каталог шрифтов.";
+"Sans" = "Гротеск";
+"Serif" = "Антиква";
+"Display" = "Акцидентный";
+"Hand" = "Рукописный";
 "Theme" = "Тема";
 "Turn Location Services on in Settings → Privacy to use your current location." = "Включите службы геолокации в Настройках → Конфиденциальность, чтобы использовать текущее местоположение.";
 "Type an emoji to use as the note bubble icon." = "Введите эмодзи для использования в качестве значка пузыря заметки.";
@@ -2015,6 +2225,8 @@
 //                            PROFILE (FEATURES)                            //
 // Strings from Profile.                                                    //
 //////////////////////////////////////////////////////////////////////////////
+"Follow indicator in lists" = "Индикатор подписки в списках";
+"Shows whether each user in a follower or following list follows you" = "Показывает, подписан ли на вас каждый пользователь в списке подписчиков или подписок";
 
 "%lu accounts" = "%lu аккаунтов";
 "%lu loaded" = "%lu загружено";
@@ -2101,6 +2313,17 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"Updates" = "Обновления";
+"Update available" = "Доступно обновление";
+"Check for updates" = "Проверять обновления";
+"You're up to date" = "У вас последняя версия";
+"Get it on Telegram" = "Скачать в Telegram";
+"Update check failed" = "Не удалось проверить обновления";
+"%@ is available" = "Доступна версия %@";
+"What's new in this build" = "Что нового в этой сборке";
+"Tells you on launch when a newer RyukGram is out" = "Сообщает при запуске, когда выходит новая версия RyukGram";
+"Shows the release notes once after RyukGram updates" = "Показывает заметки о выпуске один раз после обновления RyukGram";
+"Reads the public RyukGram release list on GitHub. Nothing about you is sent." = "Читает публичный список выпусков RyukGram на GitHub. Ничего о вас не отправляется.";
 "Enjoying RyukGram?" = "Нравится RyukGram?";
 "It's free, and nothing leaves your device. If you enjoy using it, a coffee keeps it going." = "Это бесплатно, и ничего не покидает ваше устройство. Если вам нравится, чашка кофе поможет проекту жить.";
 "Donate" = "Поддержать";
@@ -2166,6 +2389,11 @@
 "Audio track %ld" = "Аудиодорожка %ld";
 "Download video at the highest available quality" = "Загружать ролики в наивысшем доступном качестве";
 "Downloads HD video via DASH streams and encodes to H.264. Requires FFmpegKit." = "Загружает HD-видео из DASH-потоков и перекодирует в H.264. Нужен FFmpegKit.";
+"Full resolution asks Instagram for the original upload, often far larger than the size the app is given." = "«Полное разрешение» запрашивает у Instagram исходный загруженный файл, который обычно намного больше того, что получает приложение.";
+"Full resolution" = "Полное разрешение";
+"Photo Size" = "Размер фото";
+"%@ · Original" = "%@ · Оригинал";
+"Copy photo URL" = "Скопировать ссылку на фото";
 "Encoding in software" = "Кодирование программно";
 "Encoding speed" = "Скорость кодирования";
 "Enhanced downloads" = "Расширенные загрузки";
@@ -2342,6 +2570,14 @@
 "Added %lu" = "Добавлено %lu";
 "All files deleted" = "Все файлы удалены";
 "Browsing" = "Просмотр";
+"Group posts and stories" = "Группировать посты и истории";
+"One swipeable item per post or story" = "Один элемент с пролистыванием на пост или историю";
+"Group into album" = "Объединить в альбом";
+"Split album" = "Разделить альбом";
+"Delete album" = "Удалить альбом";
+"Delete album?" = "Удалить альбом?";
+"Share all" = "Поделиться всем";
+"Select at least two files" = "Выберите хотя бы два файла";
 "Found %lu items saved by a previous version. Restore them into your gallery now?" = "Найдено %lu элементов, сохранённых предыдущей версией. Восстановить их в галерею сейчас?";
 "Gallery data from a previous version was found. Restore it now?" = "Найдены данные галереи от предыдущей версии. Восстановить сейчас?";
 "Gallery restored" = "Галерея восстановлена";
@@ -2411,7 +2647,6 @@
 "Any time" = "Любое время";
 "This year" = "В этом году";
 "%ld columns" = "Столбцов: %ld";
-"Hold DM tab to open gallery" = "Удерживайте вкладку DM, чтобы открыть галерею";
 "Images" = "Изображения";
 "Images deleted" = "Изображения удалены";
 "Images first" = "Сначала изображения";
@@ -2419,7 +2654,6 @@
 "items" = "файлов";
 "Largest first" = "Сначала большие";
 "List view" = "Списком";
-"Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "Удерживайте кнопку входящих в нижней панели, чтобы открыть галерею RyukGram";
 "Manage" = "Управление";
 "More" = "Ещё";
 "Move selected" = "Переместить выбранное";
@@ -2511,6 +2745,8 @@
 "Choose the icon shown on the home top bar. Auto uses the selected action icon when only one action is enabled." = "Выберите значок на верхней панели. «Авто» использует значок действия, когда включено только одно действие.";
 "Configure button" = "Настроить кнопку";
 "Global Action Icons" = "Глобальные значки действий";
+"Old Instagram logo" = "Старый логотип Instagram";
+"Brings back the previous feed header wordmark." = "Возвращает прежний логотип в шапке ленты.";
 "Interface" = "Интерфейс";
 "Override the icon for a specific button. Buttons left on Default follow the shared icon above." = "Переопределить значок для конкретной кнопки. Кнопки на значении «По умолчанию» используют общий значок выше.";
 "Per button" = "По кнопкам";
@@ -2550,6 +2786,10 @@
 "Preview pill" = "Превью плашки";
 "Preview download pill" = "Превью плашки загрузки";
 "Preview loading pill" = "Превью плашки загрузки";
+"Preview long text" = "Превью длинного текста";
+"Check wrapping and truncation" = "Проверка переноса и обрезки";
+"A notification title long enough to wrap onto more than one line" = "Заголовок уведомления, достаточно длинный, чтобы перенестись на несколько строк";
+"And a body that keeps going so you can see the pill grow, wrap, and finally cut itself off with an ellipsis instead of taking over the whole screen." = "И текст, который тянется дальше, чтобы вы увидели, как плашка растёт, переносится и обрывается многоточием вместо того, чтобы занять весь экран.";
 "Master switch. When off, no RyukGram pills or IG-native toasts are emitted." = "Главный выключатель. Когда выключен, никакие уведомления не показываются.";
 "Universal in-app notifications. All RyukGram feedback (downloads, copies, errors, success messages) routes through here." = "Универсальные уведомления в приложении. Все сообщения RyukGram (загрузки, копирование, ошибки, успехи) проходят здесь.";
 "Minimal: flat blur. Colorful: tinted by tone. Glow: colored halo. Island: dynamic-island capsule." = "Minimal: плоское размытие. Colorful: тонированная. Glow: цветной ореол. Island: капсула Dynamic Island.";
@@ -2632,6 +2872,7 @@
 "FFmpeg log copied" = "Лог FFmpeg скопирован";
 "GIF inserted" = "GIF вставлен";
 "Story marked as seen" = "История отмечена прочитанной";
+"Marked %ld stories as seen" = "Историй отмечено прочитанными: %ld";
 "Saved" = "Сохранено";
 "Tap to retry" = "Нажмите, чтобы повторить";
 "Looks great" = "Выглядит отлично";
@@ -2715,6 +2956,22 @@
 //                               DEVICE ID                                  //
 // Settings -> Advanced -> Device ID, and the login-screen Device ID button //
 //////////////////////////////////////////////////////////////////////////////
+"Machine ID" = "Идентификатор машины";
+"Copy machine ID" = "Копировать идентификатор машины";
+"Enter machine ID manually…" = "Ввести идентификатор машины вручную…";
+"Restore a saved one, or clear it to re-register" = "Восстановите сохранённый или очистите для повторной регистрации";
+"Manual machine ID" = "Идентификатор машины вручную";
+"Only paste one Instagram issued. The server checks its format, so a made-up value is rejected." = "Вставляйте только выданный Instagram. Сервер проверяет формат, поэтому выдуманное значение будет отклонено.";
+"Machine ID set" = "Идентификатор машины задан";
+"Clear and re-register" = "Очистить и зарегистрировать заново";
+"Machine ID cleared" = "Идентификатор машины очищен";
+"No machine ID yet" = "Идентификатора машины пока нет";
+"Issued by Instagram and format-checked by the server, so it can only be kept, never made up. RyukGram pins the one you were issued so Instagram can't swap it." = "Выдаётся Instagram, а сервер проверяет формат, поэтому его можно только сохранить, но не выдумать. RyukGram закрепляет выданный вам идентификатор, чтобы Instagram не смог его подменить.";
+"Mask everything & relaunch" = "Замаскировать всё и перезапустить";
+"Mask everything & relaunch?" = "Замаскировать всё и перезапустить?";
+"Mask everything" = "Замаскировать всё";
+"Rolls every identifier, blocks Apple attestation, and clears your saved logins and cookies. You sign in again afterwards." = "Пересоздаёт все идентификаторы, блокирует аттестацию Apple и очищает сохранённые входы и cookie. После этого вы войдёте заново.";
+"Fresh IDs, blocked attestation, cleared logins" = "Новые идентификаторы, блокировка аттестации, очистка входов";
 "Roll a new fingerprint" = "Сгенерировать новый отпечаток";
 "New device fingerprint" = "Новый отпечаток устройства";
 "Roll new ID" = "Сгенерировать новый ID";
@@ -2759,6 +3016,7 @@
 //                         FOLLOW REQUESTS TRACKER                        //
 // Settings → Follow Requests Tracker                                     //
 //////////////////////////////////////////////////////////////////////////
+"View all from this user" = "Показать всё от этого пользователя";
 "Follow Requests" = "Запросы на подписку";
 "Show follow requests" = "Показать запросы на подписку";
 "Check now" = "Проверить сейчас";
@@ -2830,7 +3088,7 @@
 "Turn everything off" = "Выключить всё";
 "Every Instagram Plus feature turns off and Instagram restarts." = "Все функции Instagram Plus выключатся, и Instagram перезапустится.";
 "Story peek" = "Предпросмотр историй";
-"Hold a story in the tray to preview it without opening it." = "Удерживайте историю в ленте, чтобы посмотреть её, не открывая.";
+"Hold a story in the tray or an inbox avatar to preview it without opening it." = "Удерживайте историю в ленте или аватар в переписках, чтобы посмотреть её, не открывая.";
 "Story fonts" = "Шрифты историй";
 "Adds the subscriber fonts when you add text to a story." = "Добавляет шрифты для подписчиков при добавлении текста к истории.";
 "Search story viewers" = "Поиск по зрителям истории";
@@ -2900,6 +3158,8 @@
 "Drag your camera window to any corner or edge." = "Перетащите окно камеры в любой угол или к краю.";
 "Enable call recording" = "Включить запись звонков";
 "Export all" = "Экспортировать всё";
+"Share as audio only" = "Поделиться только аудио";
+"Delete %lu recordings?" = "Удалить записи (%lu)?";
 "Full screen" = "Во весь экран";
 "Group call" = "Групповой звонок";
 "Ignore auto-record for this chat" = "Исключить этот чат из автозаписи";
@@ -2907,6 +3167,7 @@
 "Include my camera" = "Включить мою камеру";
 "Keep forever" = "Хранить всегда";
 "Large" = "Большой";
+"Manual" = "Вручную";
 "Mute without the other side seeing you muted — your mic is still silenced" = "Отключите звук так, чтобы собеседник не видел этого — ваш микрофон всё равно выключен";
 "Muted silently" = "Тихо отключён";
 "My camera size" = "Размер моей камеры";
@@ -2963,6 +3224,7 @@
 // Settings → Stories archive + the archive grid, media viewer, viewers  //
 //////////////////////////////////////////////////////////////////////////
 
+
 "Reacted" = "Реакции";
 "Reacted first" = "Сначала с реакциями";
 "Mutual" = "Взаимные";
@@ -3011,3 +3273,83 @@
 "%lu pinned viewers just saw, liked or reacted" = "%lu закреплённых зрителей посмотрели, отметили или отреагировали";
 "A pinned viewer" = "Закреплённый зритель";
 "On each launch" = "При каждом запуске";
+
+"MobileConfig" = "MobileConfig";
+"Enable MobileConfig browser" = "Включить браузер MobileConfig";
+"Open MobileConfig browser" = "Открыть браузер MobileConfig";
+"Lets the browser read values and apply your changes" = "Позволяет браузеру читать значения и применять ваши изменения";
+"Search, toggle and edit config values" = "Поиск, переключение и изменение значений конфигурации";
+"Turn on the browser first, then restart Instagram" = "Сначала включите браузер, затем перезапустите Instagram";
+"Use at your own risk" = "Используйте на свой страх и риск";
+"I understand" = "Понятно";
+"MobileConfig overrides were reset after repeated crashes on launch" = "Переопределения MobileConfig сброшены после повторных сбоев при запуске";
+"Overridden" = "Переопределено";
+"overridden" = "переопределено";
+"Search name or config number" = "Поиск по имени или номеру конфигурации";
+"Reset all overrides" = "Сбросить все переопределения";
+"Reset all overrides?" = "Сбросить все переопределения?";
+"%lu override(s) will be removed." = "Будет удалено переопределений: %lu.";
+"param" = "параметр";
+"params" = "параметров";
+"Config" = "Конфигурация";
+"Number" = "Номер";
+"Override" = "Переопределение";
+"Value" = "Значение";
+"Type: %@   ·   live: %@" = "Тип: %@   ·   текущее: %@";
+"Clear override" = "Убрать переопределение";
+"Note" = "Заметка";
+"Parameter:" = "Параметр:";
+"Reset %lu override(s)" = "Сбросить переопределения: %lu";
+"Read and change Instagram's own internal settings. Known names are built in; configs shown only as a number have obfuscated names we can't recover yet. If Instagram crashes on launch three times in a row, your changes are cleared for you." = "Читайте и меняйте внутренние настройки Instagram. Известные названия встроены, а конфиги, показанные только числом, имеют обфусцированные имена, которые пока не удаётся восстановить. Если Instagram трижды подряд вылетит при запуске, ваши изменения будут очищены автоматически.";
+"This changes Instagram's own internal settings. Some can break features or cause crashes until you switch them back.\n\nChanges stay on this device. Most take effect right away, and some only after you restart Instagram. If it crashes on launch three times in a row, they're cleared for you.\n\nInstagram can tell when a setting doesn't match what its server sent. It's very unlikely to affect your account, but not impossible. Use at your own risk." = "Это меняет внутренние настройки Instagram. Некоторые могут ломать функции или вызывать сбои, пока вы их не вернёте.\n\nИзменения остаются на этом устройстве. Большинство применяются сразу, а некоторые — только после перезапуска Instagram. Если он трижды подряд вылетит при запуске, они будут очищены автоматически.\n\nInstagram может определить, когда настройка не совпадает с тем, что прислал его сервер. Крайне маловероятно, что это затронет ваш аккаунт, но не исключено. Используйте на свой страх и риск.";
+"Tap a field to copy. Tap a value below to edit." = "Коснитесь поля, чтобы скопировать. Коснитесь значения ниже, чтобы изменить.";
+"%lu configs  ·  %lu named" = "%lu конфигов  ·  %lu с именем";
+
+"Clear cache now" = "Очистить кэш";
+"Delete staged captures that haven't been unsent yet" = "Удаляет отложенные снимки, которые ещё не были отозваны";
+"Clear view-once cache" = "Очистить кэш одноразовых";
+"Delete all staged captures that haven't been unsent? Anything already saved to the log is kept." = "Удалить все отложенные снимки, которые ещё не отозваны? Уже сохранённое в журнале останется.";
+"Capture while closed" = "Захват при закрытом приложении";
+"Save media that arrives while Instagram is closed" = "Сохраняет медиа, пришедшие при закрытом Instagram";
+"⚠️ Only works on the full Instagram build with plugins, signed with a paid, ad-hoc certificate under the default Instagram bundle id. The no-plugins build has no notification extension. Requires the deleted messages log to stay on.\n\nCatches view-once media (and normal media if enabled) that arrives while Instagram is fully closed, using the notification extension. Affects only this log and its media, nothing else in the app. It rides push notifications, so muted chats, Do Not Disturb or disabled notifications miss messages; \"Keep running in background\" is the fallback." = "⚠️ Работает только на полной сборке Instagram с плагинами, подписанной платным сертификатом (ad-hoc) под стандартным идентификатором Instagram. В сборке без плагинов нет расширения уведомлений. Требует, чтобы журнал удалённых сообщений оставался включённым.\n\nЗахватывает одноразовые медиа (и обычные, если включено), приходящие при полностью закрытом Instagram, через расширение уведомлений. Влияет только на этот журнал и его медиа, ни на что другое в приложении. Зависит от push-уведомлений, поэтому в беззвучных чатах, режиме «Не беспокоить» или при отключённых уведомлениях сообщения теряются; «Держать активным в фоне» — запасной вариант.";
+"Uses the notification extension to save media that arrives with the app closed" = "Использует расширение уведомлений, чтобы сохранять медиа, пришедшие при закрытом приложении";
+"Also capture normal media" = "Захватывать и обычные медиа";
+"Not just view-once. Uses a lot more storage" = "Не только одноразовые. Занимает намного больше места";
+"Auto-clean" = "Автоочистка";
+"Limit how much captured media is kept" = "Ограничивает, сколько захваченных медиа хранится";
+"Size limit" = "Лимит размера";
+"Keep at most this per account" = "Хранить не более этого на аккаунт";
+"MB" = "МБ";
+"Age limit" = "Лимит срока";
+"Keep no longer than this" = "Хранить не дольше этого";
+"days" = "дн.";
+"Drop every capture each time you open the app" = "Удалять все снимки при каждом открытии приложения";
+"Trim each account by size and age" = "Ограничивать каждый аккаунт по размеру и сроку";
+"Kept per account. A capture is dropped once it passes either limit." = "Хранится для каждого аккаунта. Снимок удаляется, как только превышает любой из лимитов.";
+"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "Когда оба параметра выключены, снимки хранятся, пока их не отзовут. Включение одного выключает другой. То, что действительно отозвано, сначала сохраняется в журнал и здесь никогда не очищается.";
+"Clear when I open Instagram" = "Очищать при открытии Instagram";
+"Keep within size / age limits" = "Хранить в пределах лимитов размера / срока";
+"View-once cache" = "Кэш одноразовых";
+"Message log" = "Журнал сообщений";
+
+"Story stats" = "Статистика историй";
+"Views per story" = "Просмотры по историям";
+"%@ · peak %@ views" = "%@ · пик %@ просмотров";
+"Avg / story" = "В среднем за историю";
+"Unique viewers" = "Уникальные зрители";
+"Engagement" = "Вовлечённость";
+"Loyal fans" = "Постоянные зрители";
+"Peak hour" = "Час пика";
+"Recently viewed" = "Недавно смотрели";
+"No archived stories in this range yet." = "За этот период архивных историй пока нет.";
+
+"Names & photos updated" = "Имена и фото обновлены";
+"Names & photos are up to date" = "Имена и фото уже актуальны";
+
+"Early birds" = "Ранние зрители";
+"Opens first" = "Смотрит первым";
+"top %ld%%" = "топ %ld%%";
+"1 reaction" = "1 реакция";
+"%ld reactions" = "%ld реакций";
+"Watched %ld stories" = "Посмотрел(а) %ld историй";
+"Unpin" = "Открепить";

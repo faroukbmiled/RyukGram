@@ -88,9 +88,14 @@
 "Adds download, copy and expand options to GIF and image comments" = "GIF・画像コメントにダウンロード、コピー、拡大の項目を追加します";
 "Allow video in photo sticker" = "写真スタンプで動画を許可";
 "Alternate icons are not supported" = "代替アイコンには対応していません";
+"Couldn't change app icon" = "アプリアイコンを変更できませんでした";
+"Always mute" = "常にミュート";
+"Starts muted everywhere until you tap a speaker" = "スピーカーを押すまですべてミュートで始まります";
 "Anonymous live viewing" = "匿名でのライブ視聴";
 "App Icon" = "アプリアイコン";
-"Audio page" = "音源ページ";
+"Download from music picker" = "ミュージックピッカーからダウンロード";
+"Music" = "ミュージック";
+"Adds a download option to the song long-press menu in music pickers" = "ミュージックピッカーで曲を長押ししたメニューにダウンロードを追加します";
 "Auto-reveals sensitive media" = "センシティブなメディアを自動的に表示します";
 "Block surveys" = "アンケートをブロック";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "視聴者数のハートビート通信をブロックし、配信者にあなたの視聴が表示されないようにします。自分も視聴者数は見られなくなります";
@@ -103,6 +108,10 @@
 "Copy comment text" = "コメントテキストをコピー";
 "Copy description" = "説明文をコピー";
 "Long press a caption to copy its text" = "キャプションを長押ししてテキストをコピー";
+"Edit before copying" = "コピー前に編集";
+"Pick or trim what gets copied" = "コピーする範囲を選ぶか削る";
+"Copy selection" = "選択範囲をコピー";
+"%lu characters" = "%lu 文字";
 "Custom sticker colors" = "スタンプのカスタムカラー";
 "Custom colors aren't supported for this sticker" = "このスタンプはカスタムカラーに対応していません";
 "Date format" = "日付形式";
@@ -122,7 +131,6 @@
 "End" = "終了";
 "Experimental features" = "実験的機能";
 "Explore & search" = "発見と検索";
-"Failed to change icon" = "アイコンの変更に失敗しました";
 "Fixed" = "固定";
 "Fixed prevents shrinking. Hide makes it disappear when scrolling down" = "「固定」は縮小を防ぎます。「非表示」は下スクロール時に消えるようにします";
 "Focus/distractions" = "集中/気を散らす要素";
@@ -134,14 +142,12 @@
 "Hide explore posts grid" = "発見タブの投稿グリッドを非表示";
 "Hide friends map" = "友達マップを非表示";
 "Hide Meta AI" = "Meta AIを非表示";
-"Hide metrics" = "数値を非表示";
 "Hide notes tray" = "ノートトレイを非表示";
 "Hide on scroll" = "スクロール時に非表示";
 "Hide TestFlight popup" = "TestFlightのポップアップを非表示";
 "Hide trending searches" = "人気の検索を非表示";
 "Hide UI on capture" = "キャプチャ時にUIを隠す";
 "Removes suggested accounts to follow outside the feed" = "フィード外のおすすめアカウントを非表示にします";
-"Hides like/comment/share counts on posts and reels" = "投稿とリールのいいね/コメント/シェア数を非表示にします";
 "Removes the friends map icon from the notes tray" = "ノートトレイから友達マップのアイコンを非表示にします";
 "Removes the suggested posts grid on the explore tab" = "発見タブのおすすめ投稿グリッドを非表示にします";
 "Strips the Meta AI buttons and entry points from the app" = "アプリからMeta AIのボタンと入口を削除します";
@@ -158,7 +164,6 @@
 "Hold the eyedropper in stories to pick an exact text color" = "ストーリーでスポイトを長押しして正確なテキストの色を選択します";
 "Long-press the color wheel in sticker editors to pick any solid or gradient color" = "スタンプ編集画面のカラーホイールを長押しすると、任意の単色またはグラデーションカラーを選べます";
 "Long-press the heart button in a live to hide or show the comments" = "ライブでハートボタンを長押しすると、コメントの表示/非表示を切り替えられます";
-"Long-press the search tab to open a copied Instagram link" = "検索タブを長押しすると、コピー済みのInstagramリンクを開けます";
 "Master switch. When off, all per-surface toggles below are ignored." = "マスタースイッチです。オフのとき、下の画面ごとのトグルはすべて無視されます。";
 "No suggested chats" = "おすすめチャットを非表示";
 "No suggested users" = "おすすめユーザーを非表示";
@@ -192,6 +197,7 @@
 "Suppresses the \"It's time to update Instagram Beta\" nag" = "「Instagram Betaを更新する時期です」という催促を非表示にします";
 "Tap to apply" = "タップで適用";
 "The selected icon will be saved and shown here the next time you open this page." = "選択したアイコンは保存され、次にこのページを開いたときにここに表示されます。";
+"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "サイドロードアプリが Instagram のアイコン一覧を置き換えました。そのアプリのアイコンを「デフォルト」に戻し、Instagram を更新するとアイコンが戻ります。";
 "Toggle live comments" = "ライブコメントの表示切り替え";
 "Use detailed color picker" = "詳細なカラーピッカーを使用";
 "Used across feed, stories, reels, and DMs." = "フィード、ストーリーズ、リール、DM全体で使用されます。";
@@ -316,9 +322,10 @@
 "Disable home button refresh" = "ホームボタン更新を無効化";
 "Disable home button scroll" = "ホームボタンでのスクロールを無効化";
 "Disable video autoplay" = "動画の自動再生を無効化";
+"Disable swipe to camera" = "スワイプでカメラを開かない";
+"Swiping right on the feed no longer opens the camera" = "フィードで右にスワイプしてもカメラが開きません";
 "Hide" = "非表示";
 "Hide entire feed" = "フィード全体を非表示";
-"Hide repost button" = "リポストボタンを非表示";
 "Hide stories tray" = "ストーリーズトレイを非表示";
 "Hide suggested stories" = "おすすめストーリーズを非表示";
 "Hide story highlights" = "ストーリーズハイライトを非表示";
@@ -326,7 +333,6 @@
 "Hides suggested accounts" = "おすすめアカウントを非表示にします";
 "Hides suggested reels" = "おすすめリールを非表示にします";
 "Hides suggested threads posts" = "Threadsのおすすめ投稿を非表示にします";
-"Hides the repost button on feed posts" = "フィード投稿のリポストボタンを非表示にします";
 "Hides the story tray at the top" = "上部のストーリートレイを非表示にします";
 "Inserts a button row below like/comment/share on each post" = "各投稿のいいね/コメント/シェアの下にボタン列を追加します";
 "Long press on media to expand in full-screen viewer" = "メディアを長押しすると全画面ビューアで拡大表示します";
@@ -343,11 +349,16 @@
 "No suggested threads" = "Threadsのおすすめを非表示";
 "Prevents feed from reloading when returning from background" = "バックグラウンドから戻ったときにフィードが再読み込みされるのを防ぎます";
 "Prevents videos from playing automatically" = "動画が自動再生されるのを防ぎます";
+"Play in place" = "その場で再生";
+"Play, then open" = "再生してから開く";
 "Refresh" = "更新";
 "Removes all content from your home feed" = "ホームフィードからすべてのコンテンツを取り除きます";
 "Removes suggested accounts from the stories tray" = "ストーリーズトレイからおすすめアカウントを取り除きます";
 "Removes suggested posts" = "おすすめ投稿を取り除きます";
 "Scroll to top without refreshing when tapping Home" = "ホームをタップしたとき、更新せずに最上部へスクロールします";
+"Scroll only" = "スクロールのみ";
+"Status bar tap" = "ステータスバーのタップ";
+"Tapping the top of the screen scrolls up and refreshes" = "画面上部をタップすると上にスクロールして更新します";
 "Show action button" = "アクションボタンを表示";
 "Show date" = "日付を表示";
 "Stories tray" = "ストーリーズトレイ";
@@ -373,6 +384,15 @@
 "Paste a giphy.com URL or media ID" = "giphy.comのURLまたはメディアIDを貼り付けてください";
 "Send" = "送信";
 
+"Post buttons" = "投稿のボタン";
+"Reorder, hide buttons and counts" = "並べ替え、ボタンと数の非表示";
+"Customized" = "カスタム済み";
+"Buttons" = "ボタン";
+"Numbers" = "数字";
+"Right side" = "右側";
+"Drag to reorder, left to right. Instagram pins the last one to the right." = "ドラッグして左から右に並べ替えます。Instagram は最後の 1 つを右端に固定します。";
+"The right-side button never shows a count." = "右端のボタンには数字が表示されません。";
+"Restores Instagram's order and shows every button and count." = "Instagram の順序に戻し、すべてのボタンと数字を表示します。";
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
 // Settings → Reels tab                                                     //
@@ -380,8 +400,16 @@
 
 "Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "リールのサイドバー上部に、カバー表示/ダウンロード/共有/コピー/拡大/リポスト項目を備えたRyukGramアクションボタンを追加します。タップするとデフォルトでメニューが開きます。タップ時の動作は下で変更できます。";
 "Always show progress scrubber" = "再生バーを常に表示";
+"Expanded view" = "全体表示";
+"Shows the whole reel instead of cropping the sides" = "左右を切り取らずにReelsを全体表示します";
 "Auto-scroll reels" = "リールの自動スクロール";
-"Speed, seek and auto-scroll controls" = "速度・シーク・自動スクロールの操作";
+"Hold Controls" = "長押し操作";
+"Ignored while MobileConfig overrides it" = "MobileConfigが上書き中は無視されます";
+"Menu" = "メニュー";
+"Menu + PiP" = "メニュー + PiP";
+"Pause" = "一時停止";
+"Set what holding a reel does" = "Reelsを長押ししたときの動作を設定します";
+"Speed, seek, pause and auto-scroll controls" = "速度・シーク・一時停止・自動スクロールの操作";
 "Enabled controls appear when you hold the ⋯ or audio button on a reel." = "有効にした操作は、Reelsで⋯または音声ボタンを長押しすると表示されます。";
 "Seek controls" = "シーク操作";
 "Auto-scroll control" = "自動スクロール操作";
@@ -395,7 +423,8 @@
 "Disable scrolling reels" = "リールのスクロールを無効化";
 "Disable tab button refresh" = "タブボタンでの更新を無効化";
 "Doom scrolling limit" = "ドゥームスクロール制限";
-"e.g. 1.75" = "例: 1.75";
+"Limit audio and effect pages" = "オーディオとエフェクトのページを制限";
+"Grids on audio, effect, template and remix pages stop at the same count" = "オーディオ、エフェクト、テンプレート、リミックスのページのグリッドも同じ件数で止まります";
 "Enter a value between 0.5 and 2.0" = "0.5〜2.0の値を入力してください";
 "Keeps the progress bar visible on every reel" = "すべてのReelsで進行バーを表示したままにします";
 "Hide \"Made with Edits\" badge" = "「Editsで作成」バッジを非表示";
@@ -405,7 +434,6 @@
 "Hides the avatar bubbles next to the Friends tab in reels" = "リールの友達タブ横のアバターバブルを非表示にします";
 "Hides the Edits app promo pill on reels" = "リール上のEditsアプリ宣伝ピルを非表示にします";
 "Hides the floating overlay showing who reposted or commented on reels" = "リールでリポスト/コメントしたユーザーを示すフローティング表示を非表示にします";
-"Hides the repost button on the reels sidebar" = "リールのサイドバーのリポストボタンを非表示にします";
 "Drops the top bar while you watch reels" = "Reels視聴中は上部バーを非表示にします";
 "Hiding" = "非表示設定";
 "IG default" = "IGデフォルト";
@@ -445,6 +473,10 @@
 "Unlock password-locked reels" = "パスワード付きリールのロック解除";
 "When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "一時停止モードがオンのとき、写真リールのタップは標準の一時停止ではなく音声のオン/オフになります";
 
+"Reel buttons" = "リールのボタン";
+"Drag to reorder, top to bottom." = "ドラッグして上から下に並べ替えます。";
+"More options" = "その他のオプション";
+"Audio cover" = "音源のカバー";
 //////////////////////////////////////////////////////////////////////////////
 //                                 PROFILE                                  //
 // Settings → Profile tab                                                   //
@@ -456,10 +488,14 @@
 "Card details" = "カードの詳細";
 "Comment count" = "コメント数";
 "Copy note on long press" = "長押しでノートをコピー";
+"Display name" = "表示名";
 "Extra stats shown on each post and reel card in profile grids — pick which, reorder them, then apply." = "プロフィールグリッドの各投稿・Reelsカードに表示する追加統計 — 表示する項目の選択と並べ替えを行い、適用してください。";
 "Fake follower count" = "偽のフォロワー数";
 "Fake following count" = "偽のフォロー数";
+"Fake display name" = "偽の表示名";
 "Fake post count" = "偽の投稿数";
+"Fake profile" = "偽のプロフィール";
+"Fake username" = "偽のユーザーネーム";
 "Fake profile stats" = "プロフィール統計の偽装";
 "Fake verified badge" = "偽の認証バッジ";
 "Fetch missing counts" = "不足している数値を取得";
@@ -475,6 +511,7 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "プロフィール要素の長押しジェスチャーです。機能ごとのアクションボタンとは別に管理されます。";
 "Master switch for all card stats. Fetch missing counts uses Instagram's API and may hit rate limits." = "すべてのカード統計のマスタースイッチです。不足するカウントの取得はInstagramのAPIを使用し、レート制限に達する場合があります。";
 "Only affects your own profile header. Other users see the real numbers." = "自分のプロフィールヘッダーの表示にのみ影響します。他のユーザーには実際の数値が表示されます。";
+"Only shown on your device. Other people see your real profile." = "この端末にのみ表示されます。他の人には本当のプロフィールが見えます。";
 "Post count" = "投稿数";
 "Profile card details" = "プロフィールカードの詳細";
 "Profile stats" = "プロフィール統計";
@@ -490,6 +527,9 @@
 "Show full follower count" = "フォロワー数を省略せず表示";
 "Show full post count" = "投稿数を省略せず表示";
 "Show the custom number set below" = "下で設定したカスタムの数値を表示します";
+"Username, name, counts, and verified badge" = "ユーザーネーム、名前、数値、認証バッジ";
+"Show the custom handle set below" = "下で設定したカスタムのユーザーネームを表示します";
+"Show the custom name set below" = "下で設定したカスタムの名前を表示します";
 "Show the exact number instead of a shortened one" = "省略せず正確な数値を表示します";
 "Shows whether the profile user follows you" = "そのユーザーがあなたをフォローしているかを表示します";
 "Tap to set" = "タップして設定";
@@ -500,12 +540,15 @@
 "Views, likes, comments, shares, reposts, date" = "再生回数、いいね、コメント、シェア、リポスト、日付";
 "Zoom profile photo" = "プロフィール画像をズーム";
 
+"Hide Threads button" = "Threads ボタンを非表示";
+"Hides it from the profile header" = "プロフィールヘッダーから非表示にします";
 //////////////////////////////////////////////////////////////////////////////
 //                            SAVING & DOWNLOADS                            //
 // Settings → Saving tab                                                    //
 //////////////////////////////////////////////////////////////////////////////
 
 "Active, queued, and finished downloads" = "実行中・待機中・完了したダウンロード";
+"Add prefix to file names" = "ファイル名にプレフィックスを付ける";
 "Auto-retry attempts" = "自動再試行の回数";
 "Auto-retry failed downloads" = "失敗したダウンロードを自動で再試行";
 "Confirm before download" = "ダウンロード前に確認";
@@ -530,6 +573,7 @@
 "Save action" = "保存時の動作";
 "Save to dedicated album" = "専用アルバムに保存";
 "Show a confirmation dialog before starting a download" = "ダウンロード開始前に確認ダイアログを表示します";
+"Start every saved file name with ryuk_ so downloads are easy to spot" = "すべての保存ファイル名を ryuk_ で始めてダウンロードを見つけやすくします";
 "Try %@ more %@ before giving up" = "あきらめる前に、あと %@ %@ 再試行します";
 "What happens after the gesture downloads" = "ジェスチャーでのダウンロード後の動作";
 "When \"Save to dedicated album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a named album in your Photos library. Tap \"Album name\" to change it." = "「専用アルバムに保存」がオンのとき、ダウンロードや共有シートの「写真アプリに保存」は、写真ライブラリ内の指定した名前のアルバムに保存されます。「アルバム名」をタップすると変更できます。";
@@ -548,44 +592,58 @@
 "%ds" = "%ds";
 "%ld downloading" = "%ld件ダウンロード中";
 "%ld still running — they'll be stopped. The files already saved are kept." = "%ld件がまだ実行中です — 停止されます。保存済みのファイルはそのまま残ります。";
+"%lu entries will be forgotten. Downloaded files are untouched." = "%lu 件の記録を削除します。保存済みのファイルはそのままです。";
 "%lu failed" = "%lu 件失敗";
 "%lu of %lu done" = "%lu / %lu 件完了";
+"%lu of %lu items are already saved." = "%lu / %lu 件は保存済みです。";
 "%lu saved, %lu failed" = "%lu 件保存、%lu 件失敗";
 "12 hours" = "12時間";
 "1s" = "1秒";
 "24 hours" = "24時間";
 "48 hours" = "48時間";
 "Active" = "実行中";
+"Already downloaded" = "ダウンロード済み";
+"Ask before downloading media you already saved" = "保存済みのメディアをダウンロードする前に確認";
 "Auto-retry" = "自動再試行";
+"Check for duplicates" = "重複をチェック";
 "Clear completed" = "完了分を消去";
 "Clear download history" = "ダウンロード履歴を消去";
 "Clear download history?" = "ダウンロード履歴を消去しますか？";
+"Clear duplicate list" = "重複リストを消去";
 "Completed" = "完了";
 "Don't keep" = "保持しない";
+"Download again" = "もう一度ダウンロード";
 "Download history" = "ダウンロード履歴";
 "Download settings" = "ダウンロード設定";
 "Downloading %lu items" = "%lu 件をダウンロード中";
 "Downloading…" = "ダウンロード中…";
+"Duplicate download list" = "重複ダウンロードリスト";
+"Duplicates" = "重複";
 "Empty the manager's list of past downloads" = "マネージャーの過去のダウンロード一覧を空にします";
 "Encoding %d%%" = "エンコード中 %d%%";
 "Encoding…" = "エンコード中…";
 "Extra downloads wait in line and start as slots free up." = "超えた分のダウンロードは順番待ちになり、空きができ次第開始されます。";
+"Forget every download recorded so far" = "記録済みのダウンロードをすべて忘れる";
 "How long finished, failed and cancelled downloads stay in the manager after you close the app. The files themselves are never touched — only the list." = "アプリを閉じた後、完了・失敗・キャンセルしたダウンロードをマネージャーに残す期間です。ファイル自体には一切手を加えず、一覧のみが対象です。";
 "How long past downloads stay listed in the manager" = "過去のダウンロードをマネージャーに一覧表示する期間";
 "Keep history for" = "履歴を保持する期間";
+"Keeps a list of what you already grabbed and asks first when the same media comes up again. Only IDs are stored, never files, and carousels ask once for the whole post." = "ダウンロード済みのものを記録し、同じメディアが再び来たときに先に確認します。保存されるのはIDだけでファイルは保存されません。カルーセルは投稿ごとに1回だけ確認します。";
 "Media you download shows up here, with its progress and where it was saved." = "ダウンロードしたメディアが、進捗と保存先とともにここに表示されます。";
 "No downloads yet" = "ダウンロードはまだありません";
 "Preview" = "プレビュー";
 "Queued" = "待機中";
 "Redownload" = "再ダウンロード";
+"Remove and download again" = "削除してもう一度ダウンロード";
 "Retry" = "再試行";
 "Retrying…" = "再試行中…";
+"Still in your gallery." = "ギャラリーに残っています。";
 "Stop" = "停止";
 "The files already saved are kept — this only empties the list." = "保存済みのファイルはそのまま残ります。一覧を空にするだけです。";
 "Waiting for a free slot" = "空きスロットを待機中";
 "Waiting for connection…" = "接続を待機中…";
 "Waiting to retry" = "再試行を待機中";
 "Waiting…" = "待機中…";
+"You saved this on %@." = "%@ に保存済みです。";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 STORIES                                  //
@@ -596,6 +654,10 @@
 "Overlay layout" = "オーバーレイのレイアウト";
 "Drag to position the buttons" = "ドラッグしてボタンを配置";
 "Drag the buttons onto the story. The dimmed strip is the reply bar." = "ボタンをストーリー上にドラッグしてください。暗くなった帯は返信バーです。";
+"Close gaps automatically" = "すき間を自動で詰める";
+"Buttons next to each other close the gap when one is hidden" = "隣り合うボタンは片方が非表示になると詰まります";
+"Button spacing" = "ボタンの間隔";
+"%ld pt" = "%ld pt";
 "Send message" = "メッセージを送信";
 
 "Pinned" = "ピン留め済み";
@@ -611,6 +673,8 @@
 "Pin order" = "ピン留めの順序";
 "Pin this viewer?" = "この閲覧者をピン留めしますか?";
 "Filter, sort & pin viewers" = "閲覧者の絞り込み・並べ替え・ピン留め";
+"Default list" = "既定のリスト";
+"Which list opens first. The header button still switches between them" = "最初に開くリスト。ヘッダーのボタンで切り替えられます";
 "Add by username, remove, reorder" = "ユーザーネームで追加、削除、並べ替え";
 "Pinned viewers (%lu)" = "ピン留めした閲覧者 (%lu)";
 "Viewers list" = "閲覧者リスト";
@@ -673,14 +737,26 @@
 "Show poll vote counts" = "アンケートの票数を表示";
 "Show vote tallies on poll options and slider count/average before you vote" = "投票する前に、アンケート選択肢の得票数やスライダーの回答数/平均を表示します";
 "Stop story auto-advance" = "ストーリーの自動送りを停止";
+"Playback controls" = "再生操作";
+"Speed, seek and pause controls" = "速度・シーク・一時停止の操作";
+"Enabled controls appear when you hold the ⋯ or speaker button on a story, or from Playback in the story menu." = "有効にした操作は、ストーリーの⋯ボタンまたはスピーカーボタンを長押しするか、ストーリーメニューの「再生」から表示されます。";
+"Pause control" = "一時停止操作";
 "Stories" = "ストーリーズ";
 "Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" = "タイマーが終わってもストーリーが自動的に次へ進まなくなります。タップで手動で進めてください";
 "Story audio toggle" = "ストーリーの音声切り替え";
 "Story user list" = "ストーリーのユーザーリスト";
 "Tapping the eye button to mark a story as seen advances to the next story automatically" = "目のボタンをタップしてストーリーを既読にすると、自動的に次のストーリーへ進みます";
 "This will send a story view receipt." = "ストーリーの閲覧通知が送信されます。";
+"This will send %ld story view receipts." = "%ld件のストーリーの閲覧通知が送信されます。";
 "View story mentions" = "ストーリーのメンションを表示";
 "Which stories get seen-receipt blocking" = "既読通知をブロックするストーリーの対象";
+"Text tool" = "テキストツール";
+"Adds your own fonts to the font row when you add text to a story. The text is drawn into the story, so everyone sees it in the font you picked." = "ストーリーにテキストを追加するとき、フォントの列に自分のフォントを追加します。テキストはストーリーに描き込まれるので、選んだフォントのまま全員に表示されます。";
+"Custom story fonts" = "ストーリーのカスタムフォント";
+"Show your imported and device fonts next to the built-in ones" = "読み込んだフォントとデバイスのフォントを標準フォントの隣に表示します";
+"Choose fonts" = "フォントを選ぶ";
+"Choose fonts (%lu)" = "フォントを選ぶ (%lu)";
+"Import, browse online, or pick from the fonts already on your device" = "読み込む、オンラインで探す、またはデバイスにあるフォントから選べます";
 
 //////////////////////////////////////////////////////////////////////////////
 //                       MESSAGES — ACTIVITY NOTIFICATIONS                  //
@@ -769,6 +845,32 @@
 // Settings → Keep deleted messages tab                                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"A small label on the message" = "メッセージに小さなラベルを表示";
+"Above the bubble" = "吹き出しの上";
+"Below the bubble" = "吹き出しの下";
+"Beside the bubble" = "吹き出しの横";
+"Bubble" = "吹き出し";
+"Drawn at %@ %@" = "%@ %@ で表示";
+"Fade" = "薄くする";
+"Hide quick actions" = "クイック操作を隠す";
+"Hides the shortcut buttons next to the message" = "メッセージ横のショートカットボタンを隠します";
+"How kept messages are marked" = "残したメッセージの表示方法";
+"Left at %@%@ opacity" = "不透明度 %@%@ のまま";
+"Makes the message see-through" = "メッセージを半透明にします";
+"Marks messages someone unsent but you kept" = "相手が送信取り消ししても残したメッセージに印を付けます";
+"No mark" = "印なし";
+"Paints the bubble one color" = "吹き出しを単色で塗ります";
+"Show tag" = "ラベルを表示";
+"Tag" = "ラベル";
+"Tag text" = "ラベルの文字";
+"The tag, fade and tint all return to their defaults." = "ラベル、薄さ、着色がすべて既定に戻ります。";
+"Text size" = "文字サイズ";
+"The tint stays put even when a chat background or theme repaints the other bubbles." = "チャットの背景やテーマが他の吹き出しを塗り替えても、この色は変わりません。";
+"Tint" = "着色";
+"Use any mix of the three, or none of them to keep messages silently." = "3つを自由に組み合わせられます。すべてオフなら印なしで保存します。";
+"Where the tag sits" = "ラベルの位置";
+"Your own wording stays as typed, in any language. Leave it empty for the default." = "入力した文字はどの言語でもそのまま使われます。空にすると既定に戻ります。";
+
 "Activity" = "アクティビティ";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "ボイスメッセージの長押しメニューに「ダウンロード」項目を追加し、M4A音声として保存できるようにします";
 "Allows typing and sending DMs longer than Instagram's limit" = "Instagramの文字数制限を超えるDMの入力と送信を可能にします";
@@ -795,6 +897,8 @@
 "Files" = "ファイル";
 "Full last active date" = "最終アクティブの完全な日時";
 "Hide reels blend button" = "リールのブレンドボタンを非表示";
+"Hide reels in chats" = "チャット内のリールを非表示";
+"Shared reels stop showing up in DM threads" = "共有されたリールがDMスレッドに表示されなくなります";
 "Hide send to group chat" = "グループチャットへの送信を非表示";
 "Pin recipients on long-press" = "長押しで送信先をピン留め";
 "Long-press in the share sheet to pin a chat/user to the top" = "共有シートで長押しすると、チャット/ユーザーを一番上にピン留めできます";
@@ -809,7 +913,9 @@
 "Hides typing indicator from others" = "入力中の表示を相手に見せないようにします";
 "Indicate unsent messages" = "送信取り消しメッセージを表示";
 "Keep deleted messages" = "削除されたメッセージを保持";
-"Turns view once messages into normal media you can loop and pause" = "一度きりのメッセージを、ループや一時停止ができる通常のメディアに変えます";
+"Kept unsent messages" = "保持した送信取り消しメッセージ";
+"Mirrored chat history" = "チャット履歴のコピー";
+"Turns view once messages into normal media you can replay and loop" = "一度きりのメッセージを、再生とループができる通常のメディアに変えます";
 "Note actions" = "ノートのアクション";
 "Preserves messages that others unsend" = "相手が送信取り消しをしたメッセージを保持します";
 "Keep my deleted messages" = "削除したメッセージを保持";
@@ -818,7 +924,7 @@
 "Quick list button in chats" = "チャット内のクイックリストボタン";
 "Removes the audio call button from DM thread header" = "DMスレッドのヘッダーから音声通話ボタンを取り除きます";
 "Removes the video call button from DM thread header" = "DMスレッドのヘッダーからビデオ通話ボタンを取り除きます";
-"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled" = "ビジュアルメッセージを期限切れなしで再生できます。目のボタンのメニュー、または目のボタンが無効の場合は単独のボタンで切り替えます";
+"The sender is not told you opened it, and the media stays replayable" = "開いたことが送信者に伝わらず、メディアは何度でも再生できます";
 "Search, sort, swipe to remove or toggle keep-deleted" = "検索・並べ替え・スワイプで削除、または削除メッセージ保持の切り替えができます";
 "Send audio as file" = "音声をファイルとして送信";
 "Send files (experimental)" = "ファイルを送信(実験的)";
@@ -826,8 +932,10 @@
 "Show full date instead of \"Active 2h ago\"" = "「2時間前にオンライン」の代わりに完全な日時を表示します";
 "Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "DMスレッドに、チャットをリストへ追加/削除するボタンを表示します。長押しでその他のオプションが開きます";
 "Shows a notification pill when a message is unsent" = "メッセージが送信取り消しされたとき通知ピルを表示します";
-"Shows an \"Unsent\" label on preserved messages" = "保持したメッセージに「送信取り消し」ラベルを表示します";
-"Unlimited replay of visual messages" = "ビジュアルメッセージの無制限再生";
+"Block view receipts" = "視聴通知をブロック";
+"Instagram reports a view when the media finishes playing. Block it and the media stays unopened until you send the receipt yourself." = "Instagram は再生が終わった時点で視聴を通知します。ブロックすると、自分で通知を送るまで未開封のままになります。";
+"Available while view receipts are blocked." = "視聴通知のブロック中に利用できます。";
+"View-once photos and videos, and their buttons" = "一度きりの写真と動画、そのボタン";
 "Unsent message notification" = "送信取り消しの通知";
 "Voice messages" = "ボイスメッセージ";
 "Warn before clearing on refresh" = "更新での消去前に警告";
@@ -861,6 +969,11 @@
 "Deleted messages" = "削除されたメッセージ";
 "Deleted messages log" = "削除メッセージのログ";
 "Deleted: %@\n" = "削除日時: %@\n";
+"Show in chat" = "チャットで表示";
+"Jumped to around that time" = "その時間帯に移動しました";
+"Couldn't find that message in the chat" = "チャット内でそのメッセージが見つかりませんでした";
+"%@ · sent %@" = "%@ · 送信 %@";
+"Sent: %@\n" = "送信: %@\n";
 "Edit %lu" = "編集 %lu";
 "Edit history" = "編集履歴";
 "Edited" = "編集済み";
@@ -895,6 +1008,8 @@
 "Reaction removed" = "リアクションが削除されました";
 "Log removed reactions" = "削除されたリアクションを記録";
 "Also records when someone removes a reaction, and which message it was on" = "誰かがリアクションを取り消したことと、それがどのメッセージに対するものかも記録します";
+"Log opened view-once media" = "開いた一度だけ表示のメディアを記録";
+"Saves it before it disappears. Off logs only unsends" = "消える前に保存。オフでは送信取り消しのみ記録";
 "Removed a reaction" = "リアクションを取り消しました";
 "on @%@: %@" = "@%@ に対して: %@";
 "on: %@" = "対象: %@";
@@ -1019,24 +1134,32 @@
 "Hide search tab" = "検索タブを非表示";
 "Remove the search/explore button from the tab bar" = "タブバーから検索/発見ボタンを取り除きます";
 "Hide tab bar" = "タブバーを非表示";
-"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "DM受信箱とプロフィール以外のすべてのタブを非表示にし、起動時に受信箱を開くようにします。設定へのショートカットは受信箱タブの長押しに移動します。";
+"Tab shortcuts" = "タブのショートカット";
+"Hold a tab to open a RyukGram screen" = "タブを長押しして RyukGram の画面を開く";
+"Not on the tab bar" = "タブバーにありません";
+"When the feed tab is off the bar, its shortcut moves to the first tab that is on it." = "フィードタブがバーにない場合、そのショートカットはバー上の最初のタブに移ります。";
 "Icon order" = "アイコンの順序";
 "Launch tab" = "起動時のタブ";
 "Swipe sideways to move between the tab bar tabs" = "左右にスワイプしてタブバーのタブを切り替えます";
 "Messages only" = "メッセージのみ";
 "Messages-only mode" = "メッセージ専用モード";
+"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "DM受信箱とプロフィール以外のタブをすべて隠し、起動時に受信箱を開きます。設定のショートカットは受信箱タブの長押しに移ります。";
 "Automatic schedule" = "自動スケジュール";
 "DM-only client, hide tabs, auto schedule" = "DM専用クライアント、タブ非表示、自動スケジュール";
 "Start time" = "開始時刻";
 "End time" = "終了時刻";
 "Switch into Messages-only on its own during a time window" = "指定した時間帯に自動でメッセージ専用に切り替えます";
-"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above. You'll be asked to restart when the window starts and when it ends." = "上のトグルを使って、毎日の時間帯（例：午後10:00〜午前6:00）に自動でメッセージ専用をオンにします。時間帯の開始時と終了時に再起動を求められます。";
+"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "上のスイッチで、毎日決めた時間帯 (例: 22:00〜6:00) にメッセージ専用モードを自動でオンにします。";
 "Active now · ends %@" = "現在有効 · %@に終了";
 "Next window starts %@" = "次の時間帯は%@に開始";
 "Messages-only starting" = "メッセージ専用を開始";
 "Messages-only ending" = "メッセージ専用を終了";
 "Your Messages-only window has started. Restart Instagram to switch to DM-only." = "メッセージ専用の時間帯が始まりました。Instagramを再起動してDM専用に切り替えてください。";
 "Your Messages-only window has ended. Restart Instagram to bring back the other tabs." = "メッセージ専用の時間帯が終了しました。Instagramを再起動して他のタブを戻してください。";
+"When the window changes" = "時間帯が切り替わったとき";
+"Apply instantly" = "すぐに適用";
+"Your Messages-only window has started. Switch to DM-only now?" = "メッセージ専用の時間帯が始まりました。今すぐ切り替えますか？";
+"Your Messages-only window has ended. Bring back the other tabs now?" = "メッセージ専用の時間帯が終わりました。他のタブを今すぐ戻しますか？";
 "Navigation" = "ナビゲーション";
 "Swipe between tabs" = "スワイプでタブ切り替え";
 "Tab the app opens to. Ignored when Messages-only is on" = "アプリ起動時に開くタブです。メッセージ専用モードがオンのときは無視されます";
@@ -1061,12 +1184,15 @@
 "Confirm follow" = "フォローを確認";
 "Confirm follow requests" = "フォローリクエストを確認";
 "Confirm Instants capture" = "インスタントの撮影を確認";
+"Shows an alert before sending a reaction in a chat" = "チャットでリアクションを送信する前に確認を表示します";
+"Confirm DM reaction" = "DMのリアクションを確認";
 "Confirm Instants emoji reaction" = "インスタントの絵文字リアクションを確認";
 "Confirm like: Posts" = "いいねを確認: 投稿";
 "Confirm like: Reels" = "いいねを確認: リール";
 "Confirm note emoji reaction" = "ノートの絵文字リアクションを確認";
 "Confirm note like" = "ノートのいいねを確認";
 "Confirm posting comment" = "コメント投稿を確認";
+"Confirm reaction" = "リアクションを確認";
 "Confirm repost" = "リポストを確認";
 "Confirm send to group chat" = "グループチャットへの送信を確認";
 "Confirm sticker interaction (highlights)" = "スタンプ操作を確認(ハイライト)";
@@ -1080,6 +1206,7 @@
 "Confirm video call" = "ビデオ通話を確認";
 "Confirm voice call" = "音声通話を確認";
 "Confirm voice messages" = "ボイスメッセージを確認";
+"Double tap only" = "ダブルタップのみ";
 "Follows" = "フォロー";
 "Likes" = "いいね";
 "Messaging" = "メッセージ";
@@ -1252,8 +1379,8 @@
 "Wrong passcode • %ld attempts" = "パスコードが違います • %ld 回試行";
 
 //////////////////////////////////////////////////////////////////////////////
-//                             BACKUP & RESTORE                             //
-// Settings → Backup & Restore tab                                          //
+//                            BACKUP & PROFILES                             //
+// Settings → Backup & Profiles tab                                         //
 //////////////////////////////////////////////////////////////////////////////
 "Protection" = "保護";
 "Password-protect" = "パスワード保護";
@@ -1285,7 +1412,6 @@
 "Applying backup…" = "バックアップを適用中…";
 "archive error" = "アーカイブエラー";
 "Archived snapshots" = "アーカイブ済みスナップショット";
-"Backup & Restore" = "バックアップと復元";
 "Backup exported" = "バックアップをエクスポートしました";
 "Backup failed" = "バックアップに失敗しました";
 "Backup has no importable sections." = "このバックアップにはインポート可能なセクションがありません。";
@@ -1339,6 +1465,55 @@
 "Truncated entry length." = "エントリの長さが途中で切れています。";
 "Truncated entry path." = "エントリのパスが途中で切れています。";
 "Unsafe entry path." = "安全でないエントリパスです。";
+"%@ is now in use" = "%@ を使用中";
+"%lu changed" = "%lu 件変更";
+"%lu on · %lu changed" = "%lu 個オン · %lu 個変更";
+"A new profile" = "新しいプロファイル";
+"Accounts you haven't linked use %@." = "リンクしていないアカウントは %@ を使います。";
+"Adds a shortcut to the settings home page." = "設定のホーム画面にショートカットを追加します。";
+"All other accounts" = "他のすべてのアカウント";
+"Applied to the settings you're using now." = "今使っている設定にそのまま適用します。";
+"Backup & Profiles" = "バックアップとプロファイル";
+"Backup has no settings to save." = "このバックアップに保存できる設定はありません。";
+"Color" = "カラー";
+"Current settings are saved to %@ first." = "現在の設定はまず %@ に保存されます。";
+"Current settings aren't in a profile and will be replaced." = "現在の設定はどのプロファイルにも属しておらず、置き換えられます。";
+"Current settings" = "現在の設定";
+"Duplicate" = "複製";
+"Every setting goes back to how it shipped." = "すべての設定が初期状態に戻ります。";
+"Every switch goes off, so the app behaves like stock." = "すべてのスイッチがオフになり、標準の動作になります。";
+"Follows every change you make." = "加えた変更をそのまま反映します。";
+"In %@" = "%@ 内";
+"Name it, switch to it whenever" = "名前を付けて、いつでも切り替え";
+"Name this profile" = "プロファイル名を付ける";
+"Named setups you can switch between." = "名前を付けて切り替えられる設定一式です。";
+"New profile" = "新しいプロファイル";
+"No accounts seen yet." = "まだ確認されたアカウントはありません。";
+"No profile covers your other accounts." = "他のアカウントを担当するプロファイルがありません。";
+"Not linked" = "未リンク";
+"Nothing ticked, so this profile covers every account you haven't linked elsewhere." = "何もチェックされていないため、他にリンクしていないすべてのアカウントをこのプロファイルが担当します。";
+"Overwrite %@?" = "%@ を上書きしますか？";
+"Overwrite what you're using now" = "今使っているものを上書き";
+"Overwrite" = "上書き";
+"Profiles" = "プロファイル";
+"Replaces it with your current settings." = "現在の設定で置き換えます。";
+"Reset %@ to defaults?" = "%@ を既定に戻しますか?";
+"Saved as %@" = "%@ として保存しました";
+"Saved as a profile. Your current settings stay as they are." = "プロファイルとして保存します。現在の設定はそのままです。";
+"Saves your current settings and switches to it." = "現在の設定を保存して切り替えます。";
+"Settings go to" = "設定の保存先";
+"Show on settings home" = "設定のホーム画面に表示";
+"Switch to %@?" = "%@ に切り替えますか？";
+"Switch to a linked account and this profile comes with it." = "リンクしたアカウントに切り替えると、このプロファイルも一緒に切り替わります。";
+"Switch" = "切り替え";
+"Switching to a ticked account switches to this profile." = "チェックしたアカウントに切り替えると、このプロファイルになります。";
+"Tap to switch. Changes stay in the profile in use. Swipe or hold for more." = "タップで切り替え。変更は使用中のプロファイルに残ります。スワイプまたは長押しでその他の操作。";
+"Turn everything off in %@?" = "%@ のすべてをオフにしますか?";
+"Turn off" = "オフにする";
+"Use for other accounts" = "他のアカウントに使う";
+"Your settings aren't saved to a profile." = "設定はどのプロファイルにも保存されていません。";
+"Your settings stay untouched." = "設定はそのままです。";
+"Your settings stay — they just won't belong to a profile." = "設定はそのまま残りますが、どのプロファイルにも属さなくなります。";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
@@ -1348,6 +1523,7 @@
 "Advanced" = "詳細設定";
 "All tweak options are disabled" = "すべてのTweak機能が無効です";
 "Auto-clear cache" = "キャッシュの自動消去";
+"Every launch" = "起動のたび";
 "Automatically opens settings when the app launches" = "アプリ起動時に自動で設定を開きます";
 "Cache" = "キャッシュ";
 "Cache cleared" = "キャッシュを消去しました";
@@ -1360,14 +1536,12 @@
 "Daily" = "毎日";
 "Disable all tweak options" = "すべてのTweak機能を無効化";
 "Disable safe mode" = "セーフモードを無効化";
-"Enable tweak settings quick-access" = "Tweak設定のクイックアクセスを有効化";
 "Instagram runs stock while this is on. Turn it back off to restore your settings." = "オンの間、Instagramは標準の状態で動作します。設定を元に戻すには、これをオフにしてください。";
 "Tap to re-enable everything" = "タップですべて再び有効化";
 "Turn every feature off — your settings are kept" = "すべての機能をオフにします(設定は保持されます)";
 "Fix duplicate notifications" = "通知の重複を修正";
 "Free %@ of Instagram cache." = "Instagramのキャッシュ %@ を解放します。";
 "Freed %@" = "%@ を解放しました";
-"Hold on the home tab to open RyukGram settings" = "ホームタブを長押しするとRyukGram設定が開きます";
 "Monthly" = "毎月";
 "Nothing to clear" = "消去するものがありません";
 "Off skips the size scan when Advanced opens." = "オフにすると、詳細設定を開いたときのサイズスキャンを省略します。";
@@ -1422,6 +1596,12 @@
 "Surfaces" = "画面";
 "These toggles flip hidden Instagram experiments on. Some features may not work on every account or IG version. If IG keeps crashing on launch, the flags auto-reset after 3 failed starts." = "これらのトグルはInstagramの隠し実験機能を有効にします。一部の機能はアカウントやIGのバージョンによって動作しない場合があります。IGが起動時にクラッシュし続ける場合、3回失敗した時点でフラグは自動的にリセットされます。";
 "Toggle hidden Instagram experiments. Some may not work on every account or IG version." = "Instagramの隠し実験機能を切り替えます。アカウントやIGのバージョンによっては動作しないものもあります。";
+"Export overrides" = "変更を書き出す";
+"Import overrides" = "変更を読み込む";
+"Nothing to export" = "書き出すものがありません";
+"%lu applied · %lu skipped" = "%lu 件を適用 · %lu 件をスキップ";
+"This file holds %lu entry(s). Merge keeps what you already changed, replace clears your current overrides first." = "このファイルには %lu 件の項目があります。結合は今の変更を残し、置き換えは先に消去します。";
+"MobileConfig overrides" = "MobileConfig の変更";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  DEBUG                                   //
@@ -1557,6 +1737,7 @@
 "%@ unsent a message" = "%@ がメッセージを送信取り消ししました";
 "%@ unsent a message from %@" = "%@ が %@ のメッセージを送信取り消ししました";
 "A message was unsent" = "メッセージが送信取り消しされました";
+"A message in %@ was unsent" = "%@ でメッセージが送信取り消しされました";
 "Add" = "追加";
 "Add to block list" = "ブロックリストに追加";
 "Added to block list" = "ブロックリストに追加しました";
@@ -1598,6 +1779,8 @@
 "Marking as viewed advances to the next stacked media instead of closing" = "閲覧済みにすると、画面を閉じずに次の重なったメディアへ進みます";
 "Mark messages as seen" = "メッセージを既読にする";
 "Mark seen" = "既読にする";
+"Mark all (%ld)" = "すべて既読 (%ld)";
+"Mark up to here (%ld)" = "ここまで既読 (%ld)";
 "Marked as viewed" = "閲覧済みにしました";
 "Marked messages as seen" = "メッセージを既読にしました";
 "Mentions" = "メンション";
@@ -1644,15 +1827,15 @@
 "Un-exclude story seen" = "ストーリー既読の除外を解除";
 "Un-excluded" = "除外を解除しました";
 "Unblocked" = "ブロックを解除しました";
-"Unlimited replay enabled" = "無制限再生を有効にしました";
+"Views blocked" = "視聴をブロック中";
 "Unmute story audio" = "ストーリー音声のミュートを解除";
 "Unsent" = "送信取り消し";
 "Upload Audio" = "音声をアップロード";
 "VC not found" = "VCが見つかりませんでした";
 "Video from Library" = "ライブラリから動画";
-"Visual messages will expire" = "ビジュアルメッセージは期限切れになります";
-"Visual messages: expiring" = "ビジュアルメッセージ: 期限あり";
-"Visual messages: unlimited replay" = "ビジュアルメッセージ: 無制限再生";
+"Views will be reported" = "視聴が通知されます";
+"Disappearing media: views reported" = "消えるメディア: 視聴を通知";
+"Disappearing media: views blocked" = "消えるメディア: 視聴をブロック";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
@@ -1773,6 +1956,33 @@
 "Select color" = "色を選択";
 "Set location" = "位置を設定";
 "The theme RyukGram applies to Instagram." = "RyukGramがInstagramに適用するテーマです。";
+"Fonts" = "フォント";
+"Font" = "フォント";
+"Custom fonts" = "カスタムフォント";
+"Everywhere" = "すべて";
+"Per surface" = "画面ごと";
+"Per surface gives Instagram and RyukGram their own font." = "「画面ごと」では Instagram と RyukGram に別々のフォントを設定できます。";
+"Replace the app font" = "アプリのフォントを置き換える";
+"My fonts" = "マイフォント";
+"Device fonts" = "デバイスのフォント";
+"Import a .ttf or .otf file, or browse thousands of fonts online." = ".ttf または .otf ファイルを読み込むか、オンラインで数千のフォントを探せます。";
+"Swipe a font to delete it." = "フォントをスワイプすると削除できます。";
+"Delete %lu fonts?" = "%lu 個のフォントを削除しますか？";
+"Added" = "追加済み";
+"Swipe to remove." = "スワイプすると外せます。";
+"The quick brown fox jumps over the lazy dog" = "いろはにほへと ちりぬるを わかよたれそ つねならむ";
+"%lu styles · %@" = "%lu スタイル · %@";
+"%@ · %lu weights" = "%@ · %lu ウェイト";
+"Browse online" = "オンラインで探す";
+"Font installed" = "フォントをインストールしました";
+"Restart Instagram to apply everywhere" = "すべてに反映するには Instagram を再起動してください";
+"No usable font found. Pick a .ttf or .otf file." = "使用できるフォントがありません。.ttf または .otf ファイルを選んでください。";
+"This font has no downloadable styles." = "このフォントにダウンロードできるスタイルがありません。";
+"Could not load the font catalog." = "フォントカタログを読み込めませんでした。";
+"Sans" = "サンセリフ";
+"Serif" = "セリフ";
+"Display" = "ディスプレイ";
+"Hand" = "手書き";
 "Theme" = "テーマ";
 "Turn Location Services on in Settings → Privacy to use your current location." = "現在地を使用するには、設定 → プライバシーで位置情報サービスをオンにしてください。";
 "Type an emoji to use as the note bubble icon." = "ノートの吹き出しアイコンに使う絵文字を入力してください。";
@@ -1921,7 +2131,7 @@
 "Username Z → A" = "ユーザーネーム Z → A";
 "Username, name or picture changes" = "ユーザーネーム、名前、画像の変更";
 "Username: @%@ → @%@" = "ユーザーネーム: @%@ → @%@";
-"Using %@ across %lu snapshots." = "%lu 件のスナップショットで %@ を使用しています。";
+"Using %@ across %lu snapshots." = "%2$lu 件のスナップショットで %1$@ を使用しています。";
 "Verified only" = "認証済みのみ";
 "Visited" = "閲覧履歴";
 "Visited profiles" = "閲覧したプロフィール";
@@ -2015,6 +2225,8 @@
 //                            PROFILE (FEATURES)                            //
 // Strings from Profile.                                                    //
 //////////////////////////////////////////////////////////////////////////////
+"Follow indicator in lists" = "リストのフォロー表示";
+"Shows whether each user in a follower or following list follows you" = "フォロワーやフォロー中のリストで、各ユーザーが自分をフォローしているかを表示します";
 
 "%lu accounts" = "%lu 件のアカウント";
 "%lu loaded" = "%lu 件読み込み済み";
@@ -2101,6 +2313,17 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"Updates" = "アップデート";
+"Update available" = "アップデートがあります";
+"Check for updates" = "アップデートを確認";
+"You're up to date" = "最新の状態です";
+"Get it on Telegram" = "Telegramで入手";
+"Update check failed" = "アップデートの確認に失敗しました";
+"%@ is available" = "%@ が利用可能です";
+"What's new in this build" = "このビルドの新機能";
+"Tells you on launch when a newer RyukGram is out" = "新しいRyukGramが公開されると起動時に知らせます";
+"Shows the release notes once after RyukGram updates" = "RyukGramの更新後に一度だけリリースノートを表示します";
+"Reads the public RyukGram release list on GitHub. Nothing about you is sent." = "GitHub上の公開されたRyukGramのリリース一覧を読み込みます。あなたに関する情報は送信されません。";
 "Enjoying RyukGram?" = "RyukGramは気に入っていますか？";
 "It's free, and nothing leaves your device. If you enjoy using it, a coffee keeps it going." = "無料で、データが端末外に出ることもありません。気に入っていただけたら、コーヒー1杯の支援が開発の力になります。";
 "Donate" = "寄付する";
@@ -2166,6 +2389,11 @@
 "Audio track %ld" = "音声トラック %ld";
 "Download video at the highest available quality" = "利用可能な最高画質で動画をダウンロードします";
 "Downloads HD video via DASH streams and encodes to H.264. Requires FFmpegKit." = "DASHストリーム経由でHD動画をダウンロードし、H.264にエンコードします。FFmpegKitが必要です。";
+"Full resolution asks Instagram for the original upload, often far larger than the size the app is given." = "フル解像度はInstagramにアップロード元のファイルを要求します。アプリに渡されるサイズより大幅に大きいことがよくあります。";
+"Full resolution" = "フル解像度";
+"Photo Size" = "写真のサイズ";
+"%@ · Original" = "%@・オリジナル";
+"Copy photo URL" = "写真のURLをコピー";
 "Encoding in software" = "ソフトウェアでエンコード中";
 "Encoding speed" = "エンコード速度";
 "Enhanced downloads" = "高画質ダウンロード";
@@ -2342,6 +2570,14 @@
 "Added %lu" = "%lu 件追加しました";
 "All files deleted" = "すべてのファイルを削除しました";
 "Browsing" = "閲覧";
+"Group posts and stories" = "投稿とストーリーをまとめる";
+"One swipeable item per post or story" = "投稿やストーリーごとにスワイプできる1つの項目";
+"Group into album" = "アルバムにまとめる";
+"Split album" = "アルバムを分割";
+"Delete album" = "アルバムを削除";
+"Delete album?" = "アルバムを削除しますか?";
+"Share all" = "すべて共有";
+"Select at least two files" = "2つ以上のファイルを選択してください";
 "Found %lu items saved by a previous version. Restore them into your gallery now?" = "以前のバージョンで保存された %lu 件のアイテムが見つかりました。今すぐギャラリーに復元しますか？";
 "Gallery data from a previous version was found. Restore it now?" = "以前のバージョンのギャラリーデータが見つかりました。今すぐ復元しますか？";
 "Gallery restored" = "ギャラリーを復元しました";
@@ -2411,7 +2647,6 @@
 "Any time" = "すべての期間";
 "This year" = "今年";
 "%ld columns" = "%ld 列";
-"Hold DM tab to open gallery" = "DMタブ長押しでギャラリーを開く";
 "Images" = "画像";
 "Images deleted" = "画像を削除しました";
 "Images first" = "画像を先に";
@@ -2419,7 +2654,6 @@
 "items" = "件";
 "Largest first" = "サイズが大きい順";
 "List view" = "リスト表示";
-"Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "下部タブバーの受信箱ボタンを長押しするとRyukGramギャラリーが開きます";
 "Manage" = "管理";
 "More" = "その他";
 "Move selected" = "選択項目を移動";
@@ -2511,6 +2745,8 @@
 "Choose the icon shown on the home top bar. Auto uses the selected action icon when only one action is enabled." = "ホーム上部バーに表示するアイコンを選びます。「自動」は、有効なアクションが1つだけのとき、そのアクションのアイコンを使用します。";
 "Configure button" = "ボタンを設定";
 "Global Action Icons" = "全体のアクションアイコン";
+"Old Instagram logo" = "以前のInstagramロゴ";
+"Brings back the previous feed header wordmark." = "フィードヘッダーのロゴを以前のものに戻します。";
 "Interface" = "インターフェイス";
 "Override the icon for a specific button. Buttons left on Default follow the shared icon above." = "特定のボタンのアイコンを上書きします。「デフォルト」のままのボタンは、上の共通アイコンに従います。";
 "Per button" = "ボタンごと";
@@ -2550,6 +2786,10 @@
 "Preview pill" = "ピルをプレビュー";
 "Preview download pill" = "ダウンロードピルをプレビュー";
 "Preview loading pill" = "読み込みピルをプレビュー";
+"Preview long text" = "長いテキストをプレビュー";
+"Check wrapping and truncation" = "折り返しと省略を確認";
+"A notification title long enough to wrap onto more than one line" = "2行以上に折り返されるくらい長い通知タイトル";
+"And a body that keeps going so you can see the pill grow, wrap, and finally cut itself off with an ellipsis instead of taking over the whole screen." = "本文も長く続くので、ピルが伸びて折り返し、画面全体を覆う代わりに省略記号で切られる様子を確認できます。";
 "Master switch. When off, no RyukGram pills or IG-native toasts are emitted." = "マスタースイッチです。オフにすると、RyukGramのピルもIGネイティブのトーストも表示されません。";
 "Universal in-app notifications. All RyukGram feedback (downloads, copies, errors, success messages) routes through here." = "アプリ内の共通通知です。RyukGramのすべてのフィードバック(ダウンロード、コピー、エラー、成功メッセージ)はここを経由します。";
 "Minimal: flat blur. Colorful: tinted by tone. Glow: colored halo. Island: dynamic-island capsule." = "ミニマル: フラットなブラー。カラフル: 種類ごとの色付き。グロー: 色付きの光。アイランド: Dynamic Island風カプセル。";
@@ -2632,6 +2872,7 @@
 "FFmpeg log copied" = "FFmpegログをコピーしました";
 "GIF inserted" = "GIFを挿入しました";
 "Story marked as seen" = "ストーリーを既読にしました";
+"Marked %ld stories as seen" = "%ld件のストーリーを既読にしました";
 "Saved" = "保存しました";
 "Tap to retry" = "タップして再試行";
 "Looks great" = "いい感じです";
@@ -2715,6 +2956,22 @@
 //                               DEVICE ID                                  //
 // Settings -> Advanced -> Device ID, and the login-screen Device ID button //
 //////////////////////////////////////////////////////////////////////////////
+"Machine ID" = "マシンID";
+"Copy machine ID" = "マシンIDをコピー";
+"Enter machine ID manually…" = "マシンIDを手動で入力…";
+"Restore a saved one, or clear it to re-register" = "保存したものを復元するか、消去して再登録します";
+"Manual machine ID" = "マシンIDを手動設定";
+"Only paste one Instagram issued. The server checks its format, so a made-up value is rejected." = "Instagramが発行したものだけを貼り付けてください。サーバーが形式を検証するため、でたらめな値は拒否されます。";
+"Machine ID set" = "マシンIDを設定しました";
+"Clear and re-register" = "消去して再登録";
+"Machine ID cleared" = "マシンIDを消去しました";
+"No machine ID yet" = "マシンIDはまだありません";
+"Issued by Instagram and format-checked by the server, so it can only be kept, never made up. RyukGram pins the one you were issued so Instagram can't swap it." = "Instagramが発行し、サーバーが形式を検証するため、保持することしかできず、でっち上げることはできません。RyukGramは発行されたIDを固定し、Instagramが差し替えられないようにします。";
+"Mask everything & relaunch" = "すべてを偽装して再起動";
+"Mask everything & relaunch?" = "すべてを偽装して再起動しますか？";
+"Mask everything" = "すべてを偽装";
+"Rolls every identifier, blocks Apple attestation, and clears your saved logins and cookies. You sign in again afterwards." = "すべての識別子を作り直し、Appleのアテステーションをブロックし、保存されたログインとCookieを消去します。その後もう一度サインインします。";
+"Fresh IDs, blocked attestation, cleared logins" = "新しいID、アテステーション遮断、ログイン消去";
 "Roll a new fingerprint" = "新しいフィンガープリントを生成";
 "New device fingerprint" = "新しいデバイスフィンガープリント";
 "Roll new ID" = "新しいIDを生成";
@@ -2759,6 +3016,7 @@
 //                         FOLLOW REQUESTS TRACKER                        //
 // Settings → Follow Requests Tracker                                     //
 //////////////////////////////////////////////////////////////////////////
+"View all from this user" = "このユーザーのすべてを表示";
 "Follow Requests" = "フォローリクエスト";
 "Show follow requests" = "フォローリクエストを表示";
 "Check now" = "今すぐ確認";
@@ -2830,7 +3088,7 @@
 "Turn everything off" = "すべてオフにする";
 "Every Instagram Plus feature turns off and Instagram restarts." = "すべてのInstagram Plus機能がオフになり、Instagramが再起動します。";
 "Story peek" = "ストーリーのプレビュー";
-"Hold a story in the tray to preview it without opening it." = "トレイのストーリーを長押しすると、開かずにプレビューできます。";
+"Hold a story in the tray or an inbox avatar to preview it without opening it." = "トレイのストーリーまたは受信箱のアイコンを長押しすると、開かずにプレビューできます。";
 "Story fonts" = "ストーリーのフォント";
 "Adds the subscriber fonts when you add text to a story." = "ストーリーにテキストを追加する際にサブスク限定フォントを追加します。";
 "Search story viewers" = "ストーリーの閲覧者を検索";
@@ -2900,6 +3158,8 @@
 "Drag your camera window to any corner or edge." = "カメラウィンドウを任意の角や端にドラッグできます。";
 "Enable call recording" = "通話録画を有効にする";
 "Export all" = "すべて書き出す";
+"Share as audio only" = "音声のみを共有";
+"Delete %lu recordings?" = "%lu件の録音を削除しますか？";
 "Full screen" = "全画面";
 "Group call" = "グループ通話";
 "Ignore auto-record for this chat" = "このチャットを自動録画から除外";
@@ -2907,6 +3167,7 @@
 "Include my camera" = "自分のカメラを含める";
 "Keep forever" = "無期限で保持";
 "Large" = "大";
+"Manual" = "手動";
 "Mute without the other side seeing you muted — your mic is still silenced" = "相手に気づかれずにミュートします — マイクは無音のままです";
 "Muted silently" = "気づかれずにミュート中";
 "My camera size" = "自分のカメラのサイズ";
@@ -2963,6 +3224,7 @@
 // Settings → Stories archive + the archive grid, media viewer, viewers  //
 //////////////////////////////////////////////////////////////////////////
 
+
 "Reacted" = "リアクション";
 "Reacted first" = "リアクション順";
 "Mutual" = "相互フォロー";
@@ -3011,3 +3273,83 @@
 "%lu pinned viewers just saw, liked or reacted" = "%lu人の固定した閲覧者が閲覧・いいね・リアクションしました";
 "A pinned viewer" = "固定した閲覧者";
 "On each launch" = "起動ごと";
+
+"MobileConfig" = "MobileConfig";
+"Enable MobileConfig browser" = "MobileConfig ブラウザを有効にする";
+"Open MobileConfig browser" = "MobileConfig ブラウザを開く";
+"Lets the browser read values and apply your changes" = "ブラウザが値を読み取り、変更を適用できるようにします";
+"Search, toggle and edit config values" = "設定値を検索・切り替え・編集";
+"Turn on the browser first, then restart Instagram" = "先にブラウザを有効にしてから Instagram を再起動してください";
+"Use at your own risk" = "自己責任でご利用ください";
+"I understand" = "理解しました";
+"MobileConfig overrides were reset after repeated crashes on launch" = "起動時のクラッシュが繰り返されたため、MobileConfig の上書きをリセットしました";
+"Overridden" = "上書き済み";
+"overridden" = "上書き済み";
+"Search name or config number" = "名前または設定番号で検索";
+"Reset all overrides" = "すべての上書きをリセット";
+"Reset all overrides?" = "すべての上書きをリセットしますか？";
+"%lu override(s) will be removed." = "%lu 件の上書きが削除されます。";
+"param" = "パラメータ";
+"params" = "パラメータ";
+"Config" = "設定";
+"Number" = "番号";
+"Override" = "上書き";
+"Value" = "値";
+"Type: %@   ·   live: %@" = "型: %@   ·   現在値: %@";
+"Clear override" = "上書きを消去";
+"Note" = "メモ";
+"Parameter:" = "パラメータ:";
+"Reset %lu override(s)" = "%lu 件の上書きをリセット";
+"Read and change Instagram's own internal settings. Known names are built in; configs shown only as a number have obfuscated names we can't recover yet. If Instagram crashes on launch three times in a row, your changes are cleared for you." = "Instagram 独自の内部設定を読み取って変更できます。判明している名前は組み込み済みで、番号のみで表示される設定は名前が難読化されており現在は復元できません。起動時に Instagram が3回連続でクラッシュすると、変更は自動的に消去されます。";
+"This changes Instagram's own internal settings. Some can break features or cause crashes until you switch them back.\n\nChanges stay on this device. Most take effect right away, and some only after you restart Instagram. If it crashes on launch three times in a row, they're cleared for you.\n\nInstagram can tell when a setting doesn't match what its server sent. It's very unlikely to affect your account, but not impossible. Use at your own risk." = "これは Instagram 独自の内部設定を変更します。一部は元に戻すまで機能を壊したりクラッシュを引き起こしたりする場合があります。\n\n変更はこの端末に保存されます。ほとんどはすぐに反映され、一部は Instagram を再起動した後にのみ反映されます。起動時に3回連続でクラッシュすると自動的に消去されます。\n\n設定がサーバーから送られた内容と一致しない場合、Instagram はそれを検知できます。アカウントに影響する可能性は極めて低いですが、ゼロではありません。自己責任でご利用ください。";
+"Tap a field to copy. Tap a value below to edit." = "フィールドをタップするとコピーできます。下の値をタップすると編集できます。";
+"%lu configs  ·  %lu named" = "%lu 個の設定  ·  %lu 個に名前あり";
+
+"Clear cache now" = "キャッシュを今すぐ削除";
+"Delete staged captures that haven't been unsent yet" = "まだ取り消されていない保留中のキャプチャを削除します";
+"Clear view-once cache" = "一度きりキャッシュを削除";
+"Delete all staged captures that haven't been unsent? Anything already saved to the log is kept." = "まだ取り消されていない保留中のキャプチャをすべて削除しますか？ 記録に保存済みのものは残ります。";
+"Capture while closed" = "アプリを閉じたまま取得";
+"Save media that arrives while Instagram is closed" = "Instagramを閉じている間に届いたメディアを保存します";
+"⚠️ Only works on the full Instagram build with plugins, signed with a paid, ad-hoc certificate under the default Instagram bundle id. The no-plugins build has no notification extension. Requires the deleted messages log to stay on.\n\nCatches view-once media (and normal media if enabled) that arrives while Instagram is fully closed, using the notification extension. Affects only this log and its media, nothing else in the app. It rides push notifications, so muted chats, Do Not Disturb or disabled notifications miss messages; \"Keep running in background\" is the fallback." = "⚠️ 既定のInstagramバンドルIDで有料（アドホック）証明書によって署名された、プラグイン入りの完全版Instagramでのみ動作します。プラグインなし版には通知拡張がありません。削除済みメッセージの記録を有効のままにする必要があります。\n\n通知拡張機能を使い、Instagramを完全に閉じている間に届いた一度きり（設定すれば通常も）メディアを取得します。影響するのはこの記録とそのメディアのみで、アプリの他の部分には影響しません。プッシュ通知に依存するため、ミュート中のチャット、おやすみモード、通知オフではメッセージを取り逃します。「バックグラウンドで維持」が代替手段です。";
+"Uses the notification extension to save media that arrives with the app closed" = "アプリを閉じている間に届いたメディアを通知拡張機能で保存します";
+"Also capture normal media" = "通常のメディアも取得";
+"Not just view-once. Uses a lot more storage" = "一度きりだけではありません。保存容量を大幅に消費します";
+"Auto-clean" = "自動クリーン";
+"Limit how much captured media is kept" = "保持する取得済みメディアの量を制限します";
+"Size limit" = "サイズ上限";
+"Keep at most this per account" = "アカウントごとに最大でこの容量まで保持";
+"MB" = "MB";
+"Age limit" = "期間上限";
+"Keep no longer than this" = "これより長く保持しない";
+"days" = "日";
+"Drop every capture each time you open the app" = "アプリを開くたびにすべてのキャプチャを削除";
+"Trim each account by size and age" = "アカウントごとにサイズと期間で整理";
+"Kept per account. A capture is dropped once it passes either limit." = "アカウントごとに保持します。キャプチャはいずれかの上限を超えると削除されます。";
+"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "両方をオフにすると、キャプチャは取り消されるまで保持されます。一方をオンにすると、もう一方はオフになります。実際に取り消されたものは先に記録へ保存され、ここでは削除されません。";
+"Clear when I open Instagram" = "Instagramを開いたら削除";
+"Keep within size / age limits" = "サイズ／期間の上限内で保持";
+"View-once cache" = "一度きりキャッシュ";
+"Message log" = "メッセージ記録";
+
+"Story stats" = "ストーリー統計";
+"Views per story" = "ストーリーごとの閲覧数";
+"%@ · peak %@ views" = "%@ · 最高 %@ 回";
+"Avg / story" = "1件あたりの平均";
+"Unique viewers" = "ユニーク閲覧者";
+"Engagement" = "エンゲージメント";
+"Loyal fans" = "熱心な閲覧者";
+"Peak hour" = "ピーク時間";
+"Recently viewed" = "最近の閲覧順";
+"No archived stories in this range yet." = "この期間にアーカイブされたストーリーはありません。";
+
+"Names & photos updated" = "名前と写真を更新しました";
+"Names & photos are up to date" = "名前と写真は最新です";
+
+"Early birds" = "早起き";
+"Opens first" = "最初に見る";
+"top %ld%%" = "上位 %ld%%";
+"1 reaction" = "リアクション1件";
+"%ld reactions" = "リアクション%ld件";
+"Watched %ld stories" = "%ld件のストーリーを閲覧";
+"Unpin" = "ピン留めを解除";

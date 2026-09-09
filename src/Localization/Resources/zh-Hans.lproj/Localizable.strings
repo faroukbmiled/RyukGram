@@ -88,9 +88,14 @@
 "Adds download, copy and expand options to GIF and image comments" = "为 GIF 与图片评论新增下载、复制与展开选项";
 "Allow video in photo sticker" = "照片贴纸允许视频";
 "Alternate icons are not supported" = "不支持备用图标";
+"Couldn't change app icon" = "更改应用图标失败";
+"Always mute" = "始终静音";
+"Starts muted everywhere until you tap a speaker" = "所有内容都以静音开始，直到你点按扬声器";
 "Anonymous live viewing" = "匿名观看直播";
 "App Icon" = "应用图标";
-"Audio page" = "音频页";
+"Download from music picker" = "从音乐选择器下载";
+"Music" = "音乐";
+"Adds a download option to the song long-press menu in music pickers" = "在音乐选择器中长按歌曲的菜单里添加下载选项";
 "Auto-reveals sensitive media" = "自动显示敏感内容";
 "Block surveys" = "屏蔽调查问卷";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "封锁观众数心跳，让直播主看不到你 — 你也看不到观众数";
@@ -103,6 +108,10 @@
 "Copy comment text" = "复制留言文字";
 "Copy description" = "复制描述";
 "Long press a caption to copy its text" = "长按标题即可复制其文字";
+"Edit before copying" = "复制前编辑";
+"Pick or trim what gets copied" = "挑选或删减要复制的内容";
+"Copy selection" = "复制所选内容";
+"%lu characters" = "%lu 个字符";
 "Custom sticker colors" = "自定义贴纸颜色";
 "Custom colors aren't supported for this sticker" = "此贴纸不支持自定义颜色";
 "Date format" = "日期格式";
@@ -122,7 +131,6 @@
 "End" = "结束";
 "Experimental features" = "实验性功能";
 "Explore & search" = "探索和搜索";
-"Failed to change icon" = "更换图标失败";
 "Fixed" = "固定";
 "Fixed prevents shrinking. Hide makes it disappear when scrolling down" = "固定可防止缩小。隐藏可在向下滚动时让其消失";
 "Focus/distractions" = "专注／分心";
@@ -134,14 +142,12 @@
 "Hide explore posts grid" = "隐藏探索贴文网格";
 "Hide friends map" = "隐藏好友地图";
 "Hide Meta AI" = "隐藏 Meta AI";
-"Hide metrics" = "隐藏指标";
 "Hide notes tray" = "隐藏笔记托盘";
 "Hide on scroll" = "滚动时隐藏";
 "Hide TestFlight popup" = "隐藏 TestFlight 弹窗";
 "Hide trending searches" = "隐藏热门搜寻";
 "Hide UI on capture" = "录影/截图时隐藏 UI";
 "Removes suggested accounts to follow outside the feed" = "移除动态之外的推荐关注账户";
-"Hides like/comment/share counts on posts and reels" = "隐藏贴文和短片的喜欢／留言／分享数";
 "Removes the friends map icon from the notes tray" = "从便签栏移除好友地图图标";
 "Removes the suggested posts grid on the explore tab" = "移除探索页的推荐帖子网格";
 "Strips the Meta AI buttons and entry points from the app" = "移除应用中的 Meta AI 按钮和入口";
@@ -158,7 +164,6 @@
 "Hold the eyedropper in stories to pick an exact text color" = "在快拍中长按吸管以选取精确的文字颜色";
 "Long-press the color wheel in sticker editors to pick any solid or gradient color" = "长按贴纸编辑器中的色轮，即可选择任意纯色或渐变色";
 "Long-press the heart button in a live to hide or show the comments" = "在直播中长按爱心按钮以隐藏或显示留言";
-"Long-press the search tab to open a copied Instagram link" = "长按搜寻分页以开启复制的 Instagram 连结";
 "Master switch. When off, all per-surface toggles below are ignored." = "总开关。关闭时，下方所有按界面的开关都将被忽略。";
 "No suggested chats" = "无建议聊天";
 "No suggested users" = "无建议用户";
@@ -192,6 +197,7 @@
 "Suppresses the \"It's time to update Instagram Beta\" nag" = "抑制\"It's time to update Instagram Beta\"提示";
 "Tap to apply" = "点按以应用";
 "The selected icon will be saved and shown here the next time you open this page." = "所选图标将被保存，并在下次打开此页面时显示在此处。";
+"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "你的侧载应用替换了 Instagram 的图标列表。将它的应用图标改回默认，然后刷新 Instagram 即可恢复图标。";
 "Toggle live comments" = "切换直播留言";
 "Use detailed color picker" = "使用详细色彩选择器";
 "Used across feed, stories, reels, and DMs." = "用于动态、快拍、Reels 和私信";
@@ -316,9 +322,10 @@
 "Disable home button refresh" = "停用首页按钮刷新";
 "Disable home button scroll" = "停用首页按钮滚动";
 "Disable video autoplay" = "停用影片自动播放";
+"Disable swipe to camera" = "禁用滑动打开相机";
+"Swiping right on the feed no longer opens the camera" = "在动态消息中向右滑动不再打开相机";
 "Hide" = "隐藏";
 "Hide entire feed" = "隐藏整个动态消息";
-"Hide repost button" = "隐藏转贴按钮";
 "Hide stories tray" = "隐藏限时动态列";
 "Hide suggested stories" = "隐藏建议的限时动态";
 "Hide story highlights" = "隐藏快拍精选";
@@ -326,7 +333,6 @@
 "Hides suggested accounts" = "隐藏建议帐号";
 "Hides suggested reels" = "隐藏建议短片";
 "Hides suggested threads posts" = "隐藏建议的 Threads 贴文";
-"Hides the repost button on feed posts" = "隐藏动态消息贴文上的转贴按钮";
 "Hides the story tray at the top" = "隐藏顶部限时动态列";
 "Inserts a button row below like/comment/share on each post" = "在每则贴文的赞／留言／分享下方插入按钮列";
 "Long press on media to expand in full-screen viewer" = "长按媒体以在全萤幕检视器中展开";
@@ -343,11 +349,16 @@
 "No suggested threads" = "没有推荐的串列";
 "Prevents feed from reloading when returning from background" = "防止从背景返回时重新载入动态消息";
 "Prevents videos from playing automatically" = "防止影片自动播放";
+"Play in place" = "原位播放";
+"Play, then open" = "播放，再打开";
 "Refresh" = "重新整理";
 "Removes all content from your home feed" = "移除主页动态中的所有内容";
 "Removes suggested accounts from the stories tray" = "从限时动态列移除推荐帐号";
 "Removes suggested posts" = "移除推荐贴文";
 "Scroll to top without refreshing when tapping Home" = "点击首页时卷动至顶端但不重新整理";
+"Scroll only" = "仅滚动";
+"Status bar tap" = "点按状态栏";
+"Tapping the top of the screen scrolls up and refreshes" = "点按屏幕顶部会滚动到顶部并刷新";
 "Show action button" = "显示操作按钮";
 "Show date" = "显示日期";
 "Stories tray" = "限时动态列";
@@ -373,6 +384,15 @@
 "Paste a giphy.com URL or media ID" = "粘贴 giphy.com 网址或媒体 ID";
 "Send" = "发送";
 
+"Post buttons" = "帖子按钮";
+"Reorder, hide buttons and counts" = "重新排序，隐藏按钮和计数";
+"Customized" = "已自定义";
+"Buttons" = "按钮";
+"Numbers" = "数字";
+"Right side" = "右侧";
+"Drag to reorder, left to right. Instagram pins the last one to the right." = "拖动以从左到右重新排序。Instagram 会将最后一个固定在右侧。";
+"The right-side button never shows a count." = "右侧按钮不显示计数。";
+"Restores Instagram's order and shows every button and count." = "恢复 Instagram 的顺序并显示所有按钮和计数。";
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
 // Settings → Reels tab                                                     //
@@ -380,8 +400,16 @@
 
 "Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "在短片侧边栏上方新增 RyukGram 操作按钮，包含观看封面/下载/分享/复制/展开/转贴项目。预设点击开启选单；可在下方更改点击行为。";
 "Always show progress scrubber" = "始终显示进度条";
+"Expanded view" = "完整显示";
+"Shows the whole reel instead of cropping the sides" = "完整显示 reel，而不裁剪两侧";
 "Auto-scroll reels" = "自动卷动短片";
-"Speed, seek and auto-scroll controls" = "速度、快进和自动滚动控制";
+"Hold Controls" = "长按控制";
+"Ignored while MobileConfig overrides it" = "MobileConfig 覆盖期间将被忽略";
+"Menu" = "菜单";
+"Menu + PiP" = "菜单 + 画中画";
+"Pause" = "暂停";
+"Set what holding a reel does" = "设置长按 reel 时的操作";
+"Speed, seek, pause and auto-scroll controls" = "速度、快进、暂停和自动滚动控制";
 "Enabled controls appear when you hold the ⋯ or audio button on a reel." = "在 Reels 上长按 ⋯ 或音频按钮时会显示已启用的控制项。";
 "Seek controls" = "快进控制";
 "Auto-scroll control" = "自动滚动控制";
@@ -395,7 +423,8 @@
 "Disable scrolling reels" = "停用短片卷动";
 "Disable tab button refresh" = "停用分页按钮重新整理";
 "Doom scrolling limit" = "限制无止尽卷动";
-"e.g. 1.75" = "例如 1.75";
+"Limit audio and effect pages" = "限制音频和特效页面";
+"Grids on audio, effect, template and remix pages stop at the same count" = "音频、特效、模板和混剪页面的网格在相同数量处停止";
 "Enter a value between 0.5 and 2.0" = "请输入 0.5 到 2.0 之间的值";
 "Keeps the progress bar visible on every reel" = "在每个 reel 上始终显示进度条";
 "Hide \"Made with Edits\" badge" = "隐藏\"Made with Edits\"徽章";
@@ -405,7 +434,6 @@
 "Hides the avatar bubbles next to the Friends tab in reels" = "隐藏 Reels 中好友标签旁的头像气泡";
 "Hides the Edits app promo pill on reels" = "在 Reels 中隐藏 Edits 应用推广胶囊";
 "Hides the floating overlay showing who reposted or commented on reels" = "隐藏 Reels 上显示谁转发或评论的浮动覆盖层";
-"Hides the repost button on the reels sidebar" = "隐藏短片侧边栏的转贴按钮";
 "Drops the top bar while you watch reels" = "观看 reels 时隐藏顶部栏";
 "Hiding" = "隐藏";
 "IG default" = "IG 预设";
@@ -445,6 +473,10 @@
 "Unlock password-locked reels" = "解锁密码保护的短片";
 "When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "启用暂停模式时，点击图片短片会切换音讯，而非原生的暂停手势";
 
+"Reel buttons" = "Reels 按钮";
+"Drag to reorder, top to bottom." = "拖动以从上到下重新排序。";
+"More options" = "更多选项";
+"Audio cover" = "音频封面";
 //////////////////////////////////////////////////////////////////////////////
 //                                 PROFILE                                  //
 // Settings → Profile tab                                                   //
@@ -456,10 +488,14 @@
 "Card details" = "卡片详情";
 "Comment count" = "评论数";
 "Copy note on long press" = "长按复制备注";
+"Display name" = "显示名称";
 "Extra stats shown on each post and reel card in profile grids — pick which, reorder them, then apply." = "在资料网格中每个帖子和 Reels 卡片上显示的额外统计 — 选择需要的项目，重新排序后再应用。";
 "Fake follower count" = "伪造粉丝数";
 "Fake following count" = "伪造追踪数";
+"Fake display name" = "虚假显示名称";
 "Fake post count" = "伪造贴文数";
+"Fake profile" = "虚假资料";
+"Fake username" = "虚假用户名";
 "Fake profile stats" = "伪造个人档案数据";
 "Fake verified badge" = "伪造认证徽章";
 "Fetch missing counts" = "获取缺失的计数";
@@ -475,6 +511,7 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "个人档案元素的长按手势 — 与每项功能的操作按钮分开维护。";
 "Master switch for all card stats. Fetch missing counts uses Instagram's API and may hit rate limits." = "所有卡片统计的总开关。获取缺失的计数会使用 Instagram 的 API，可能触发速率限制。";
 "Only affects your own profile header. Other users see the real numbers." = "仅影响你自己的个人档案页首。其他用户看到的是真实数字。";
+"Only shown on your device. Other people see your real profile." = "仅在你的设备上显示，其他人看到的仍是真实资料。";
 "Post count" = "贴文数";
 "Profile card details" = "资料卡详情";
 "Profile stats" = "个人资料统计";
@@ -490,6 +527,9 @@
 "Show full follower count" = "显示完整粉丝数";
 "Show full post count" = "显示完整帖子数";
 "Show the custom number set below" = "显示下方设置的自定义数字";
+"Username, name, counts, and verified badge" = "用户名、名称、数字和认证徽章";
+"Show the custom handle set below" = "显示下方设置的自定义用户名";
+"Show the custom name set below" = "显示下方设置的自定义名称";
 "Show the exact number instead of a shortened one" = "显示精确数字而非缩写数字";
 "Shows whether the profile user follows you" = "显示该用户是否追踪你";
 "Tap to set" = "点击以设定";
@@ -500,12 +540,15 @@
 "Views, likes, comments, shares, reposts, date" = "观看数、点赞、评论、分享、转发、日期";
 "Zoom profile photo" = "缩放个人档案照片";
 
+"Hide Threads button" = "隐藏 Threads 按钮";
+"Hides it from the profile header" = "从个人主页顶部隐藏";
 //////////////////////////////////////////////////////////////////////////////
 //                            SAVING & DOWNLOADS                            //
 // Settings → Saving tab                                                    //
 //////////////////////////////////////////////////////////////////////////////
 
 "Active, queued, and finished downloads" = "进行中、排队中和已完成的下载";
+"Add prefix to file names" = "为文件名添加前缀";
 "Auto-retry attempts" = "自动重试次数";
 "Auto-retry failed downloads" = "自动重试失败的下载";
 "Confirm before download" = "下载前确认";
@@ -530,6 +573,7 @@
 "Save action" = "储存动作";
 "Save to dedicated album" = "保存到专用相册";
 "Show a confirmation dialog before starting a download" = "开始下载前显示确认对话框";
+"Start every saved file name with ryuk_ so downloads are easy to spot" = "让每个保存的文件名都以 ryuk_ 开头，一眼就能找到下载内容";
 "Try %@ more %@ before giving up" = "放弃前再尝试 %@ 次%@";
 "What happens after the gesture downloads" = "手势下载后的动作";
 "When \"Save to dedicated album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a named album in your Photos library. Tap \"Album name\" to change it." = "开启 \"保存到专用相册\" 后，下载和分享菜单中的 \"存储到照片\" 操作会被归入你照片图库中的一个命名相册。点按 \"相册名称\" 可更改它。";
@@ -548,44 +592,58 @@
 "%ds" = "%d秒";
 "%ld downloading" = "%ld 项下载中";
 "%ld still running — they'll be stopped. The files already saved are kept." = "%ld 项仍在进行，将被停止。已保存的文件会保留。";
+"%lu entries will be forgotten. Downloaded files are untouched." = "将清除 %lu 条记录。已下载的文件不受影响。";
 "%lu failed" = "%lu 个失败";
 "%lu of %lu done" = "已完成 %lu / %lu";
+"%lu of %lu items are already saved." = "%lu / %lu 个项目已保存过。";
 "%lu saved, %lu failed" = "已保存 %lu 个，%lu 个失败";
 "12 hours" = "12 小时";
 "1s" = "1秒";
 "24 hours" = "24 小时";
 "48 hours" = "48 小时";
 "Active" = "进行中";
+"Already downloaded" = "已下载过";
+"Ask before downloading media you already saved" = "下载已保存过的内容前先询问";
 "Auto-retry" = "自动重试";
+"Check for duplicates" = "检查重复";
 "Clear completed" = "清除已完成";
 "Clear download history" = "清除下载历史";
 "Clear download history?" = "清除下载历史？";
+"Clear duplicate list" = "清除重复列表";
 "Completed" = "已完成";
 "Don't keep" = "不保留";
+"Download again" = "再次下载";
 "Download history" = "下载历史";
 "Download settings" = "下载设置";
 "Downloading %lu items" = "正在下载 %lu 个项目";
 "Downloading…" = "正在下载…";
+"Duplicate download list" = "重复下载列表";
+"Duplicates" = "重复";
 "Empty the manager's list of past downloads" = "清空管理器中的过往下载列表";
 "Encoding %d%%" = "编码中 %d%%";
 "Encoding…" = "正在编码…";
 "Extra downloads wait in line and start as slots free up." = "多余的下载会排队，并在有空位时开始。";
+"Forget every download recorded so far" = "忘记目前记录的所有下载";
 "How long finished, failed and cancelled downloads stay in the manager after you close the app. The files themselves are never touched — only the list." = "关闭应用后，已完成、失败和已取消的下载在管理器中保留多久。文件本身不会被改动，只清理列表。";
 "How long past downloads stay listed in the manager" = "过往下载在管理器中保留多久";
 "Keep history for" = "历史保留时长";
+"Keeps a list of what you already grabbed and asks first when the same media comes up again. Only IDs are stored, never files, and carousels ask once for the whole post." = "记录你下载过的内容，同一个媒体再次出现时先询问。只保存标识，不保存文件，多图帖子只询问一次。";
 "Media you download shows up here, with its progress and where it was saved." = "你下载的媒体会显示在这里，包括进度和保存位置。";
 "No downloads yet" = "暂无下载";
 "Preview" = "预览";
 "Queued" = "排队中";
 "Redownload" = "重新下载";
+"Remove and download again" = "删除后再次下载";
 "Retry" = "重试";
 "Retrying…" = "正在重试…";
+"Still in your gallery." = "仍在图库里。";
 "Stop" = "停止";
 "The files already saved are kept — this only empties the list." = "已保存的文件会保留，这里只清空列表。";
 "Waiting for a free slot" = "等待空闲位置";
 "Waiting for connection…" = "正在等待连接…";
 "Waiting to retry" = "等待重试";
 "Waiting…" = "正在等待…";
+"You saved this on %@." = "你在 %@ 保存过。";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 STORIES                                  //
@@ -596,6 +654,10 @@
 "Overlay layout" = "叠加布局";
 "Drag to position the buttons" = "拖动以放置按钮";
 "Drag the buttons onto the story. The dimmed strip is the reply bar." = "将按钮拖到快拍上。变暗的区域是回复栏。";
+"Close gaps automatically" = "自动合拢空位";
+"Buttons next to each other close the gap when one is hidden" = "相邻按钮会在其中一个隐藏时合拢";
+"Button spacing" = "按钮间距";
+"%ld pt" = "%ld pt";
 "Send message" = "发送消息";
 
 "Pinned" = "已置顶";
@@ -611,6 +673,8 @@
 "Pin order" = "置顶顺序";
 "Pin this viewer?" = "置顶该观看者？";
 "Filter, sort & pin viewers" = "筛选、排序和置顶观看者";
+"Default list" = "默认列表";
+"Which list opens first. The header button still switches between them" = "先打开哪个列表。顶部按钮仍可在两者间切换";
 "Add by username, remove, reorder" = "按用户名添加、移除、重新排序";
 "Pinned viewers (%lu)" = "已置顶观看者 (%lu)";
 "Viewers list" = "观看者列表";
@@ -673,14 +737,26 @@
 "Show poll vote counts" = "显示投票计数";
 "Show vote tallies on poll options and slider count/average before you vote" = "在投票前显示投票选项的票数以及滑杆的平均／计数";
 "Stop story auto-advance" = "停止故事自动跳转";
+"Playback controls" = "播放控制";
+"Speed, seek and pause controls" = "速度、快进和暂停控制";
+"Enabled controls appear when you hold the ⋯ or speaker button on a story, or from Playback in the story menu." = "启用的控制会在长按故事的 ⋯ 或喇叭按钮时出现，也可从故事菜单中的“播放”打开。";
+"Pause control" = "暂停控制";
 "Stories" = "故事";
 "Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" = "故事计时结束时不会自动跳到下一则。点击手动前进";
 "Story audio toggle" = "故事音讯切换";
 "Story user list" = "故事用户列表";
 "Tapping the eye button to mark a story as seen advances to the next story automatically" = "点击眼睛按钮标记故事为已查看后自动跳到下一则故事";
 "This will send a story view receipt." = "将会送出故事的已查看回条。";
+"This will send %ld story view receipts." = "将会送出 %ld 个故事的已查看回条。";
 "View story mentions" = "查看故事提及";
 "Which stories get seen-receipt blocking" = "哪些故事会封锁已读回条";
+"Text tool" = "文字工具";
+"Adds your own fonts to the font row when you add text to a story. The text is drawn into the story, so everyone sees it in the font you picked." = "在快拍中添加文字时，把你自己的字体加进字体列表。文字会画进快拍里，所以所有人看到的都是你选的字体。";
+"Custom story fonts" = "自定义快拍字体";
+"Show your imported and device fonts next to the built-in ones" = "把导入的字体和设备字体显示在内置字体旁边";
+"Choose fonts" = "选择字体";
+"Choose fonts (%lu)" = "选择字体 (%lu)";
+"Import, browse online, or pick from the fonts already on your device" = "导入、在线浏览，或从设备已有的字体中选择";
 
 //////////////////////////////////////////////////////////////////////////////
 //                       MESSAGES — ACTIVITY NOTIFICATIONS                  //
@@ -769,6 +845,32 @@
 // Settings → Keep deleted messages tab                                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"A small label on the message" = "在消息上显示小标签";
+"Above the bubble" = "气泡上方";
+"Below the bubble" = "气泡下方";
+"Beside the bubble" = "气泡旁边";
+"Bubble" = "气泡";
+"Drawn at %@ %@" = "%@ %@ 大小";
+"Fade" = "淡化";
+"Hide quick actions" = "隐藏快捷操作";
+"Hides the shortcut buttons next to the message" = "隐藏消息旁边的快捷按钮";
+"How kept messages are marked" = "已保留消息的标记方式";
+"Left at %@%@ opacity" = "保持 %@%@ 不透明度";
+"Makes the message see-through" = "让消息半透明";
+"Marks messages someone unsent but you kept" = "标记别人撤回但被你保留的消息";
+"No mark" = "不标记";
+"Paints the bubble one color" = "把气泡涂成一种颜色";
+"Show tag" = "显示标签";
+"Tag" = "标签";
+"Tag text" = "标签文字";
+"The tag, fade and tint all return to their defaults." = "标签、淡化和上色都会恢复默认。";
+"Text size" = "文字大小";
+"The tint stays put even when a chat background or theme repaints the other bubbles." = "即使聊天背景或主题重绘了其他气泡，这个颜色也不会变。";
+"Tint" = "上色";
+"Use any mix of the three, or none of them to keep messages silently." = "三者随意组合，全部关闭则静默保留消息。";
+"Where the tag sits" = "标签的位置";
+"Your own wording stays as typed, in any language. Leave it empty for the default." = "你输入的文字会原样保留，任何语言都一样。留空则用默认。";
+
 "Activity" = "活动";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "在语音讯息的长按选单中新增「下载」选项，以储存为 M4A 音讯档";
 "Allows typing and sending DMs longer than Instagram's limit" = "允许输入和发送超过 Instagram 限制的私信";
@@ -795,6 +897,8 @@
 "Files" = "档案";
 "Full last active date" = "完整最后活跃日期";
 "Hide reels blend button" = "隐藏 Reels 混合按钮";
+"Hide reels in chats" = "在聊天中隐藏 Reels";
+"Shared reels stop showing up in DM threads" = "分享的 Reels 不再出现在私信对话中";
 "Hide send to group chat" = "隐藏发送到群聊";
 "Pin recipients on long-press" = "长按以置顶接收者";
 "Long-press in the share sheet to pin a chat/user to the top" = "在分享面板中长按以将聊天/用户置顶";
@@ -809,7 +913,9 @@
 "Hides typing indicator from others" = "隐藏他人输入指示器";
 "Indicate unsent messages" = "标示未送出讯息";
 "Keep deleted messages" = "保留已删除讯息";
-"Turns view once messages into normal media you can loop and pause" = "将阅后即焚消息变为可循环、可暂停的普通媒体";
+"Kept unsent messages" = "已保留的撤回讯息";
+"Mirrored chat history" = "聊天记录副本";
+"Turns view once messages into normal media you can replay and loop" = "将阅后即焚消息变为可重播、可循环的普通媒体";
 "Note actions" = "备注操作";
 "Preserves messages that others unsend" = "保留他人收回的讯息";
 "Keep my deleted messages" = "保留我删除的讯息";
@@ -818,7 +924,7 @@
 "Quick list button in chats" = "聊天中的快速列表按钮";
 "Removes the audio call button from DM thread header" = "从私讯页首移除语音通话按钮";
 "Removes the video call button from DM thread header" = "从私讯页首移除视讯通话按钮";
-"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled" = "重播视觉讯息且不会过期。可在眼睛按钮选单切换，或当眼睛按钮被禁用时作为独立按钮";
+"The sender is not told you opened it, and the media stays replayable" = "不会告知发送者你已打开，媒体仍可重播";
 "Search, sort, swipe to remove or toggle keep-deleted" = "搜寻、排序、滑动移除或切换保留已删除";
 "Send audio as file" = "以档案形式传送音讯";
 "Send files (experimental)" = "传送档案（实验性功能）";
@@ -826,8 +932,10 @@
 "Show full date instead of \"Active 2h ago\"" = "显示完整日期，取代 \"Active 2h ago\"";
 "Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "在私讯页显示按钮以新增/移除聊天至列表。长按可查看更多选项";
 "Shows a notification pill when a message is unsent" = "讯息撤回时显示通知标签";
-"Shows an \"Unsent\" label on preserved messages" = "在保留讯息上显示 \"Unsent\" 标签";
-"Unlimited replay of visual messages" = "视觉讯息无限重播";
+"Block view receipts" = "屏蔽查看回执";
+"Instagram reports a view when the media finishes playing. Block it and the media stays unopened until you send the receipt yourself." = "Instagram 会在媒体播放结束时立即上报查看。屏蔽后，媒体会保持未打开，直到你自己发送回执。";
+"Available while view receipts are blocked." = "在屏蔽查看回执时可用。";
+"View-once photos and videos, and their buttons" = "阅后即焚的照片和视频及其按钮";
 "Unsent message notification" = "讯息撤回通知";
 "Voice messages" = "语音讯息";
 "Warn before clearing on refresh" = "刷新时清除前先警告";
@@ -861,6 +969,11 @@
 "Deleted messages" = "已删除的消息";
 "Deleted messages log" = "已删除消息日志";
 "Deleted: %@\n" = "删除时间：%@\n";
+"Show in chat" = "在聊天中查看";
+"Jumped to around that time" = "已跳转到该时间附近";
+"Couldn't find that message in the chat" = "在聊天中找不到该讯息";
+"%@ · sent %@" = "%@ · 发送于 %@";
+"Sent: %@\n" = "发送: %@\n";
 "Edit %lu" = "编辑 %lu";
 "Edit history" = "编辑历史";
 "Edited" = "已编辑";
@@ -895,6 +1008,8 @@
 "Reaction removed" = "已移除回应";
 "Log removed reactions" = "记录已移除的回应";
 "Also records when someone removes a reaction, and which message it was on" = "同时记录有人移除回应的时间，以及它属于哪条消息。";
+"Log opened view-once media" = "记录已打开的阅后即焚媒体";
+"Saves it before it disappears. Off logs only unsends" = "消失前保存。关闭则只记录撤回内容";
 "Removed a reaction" = "移除了一个回应";
 "on @%@: %@" = "于 @%@：%@";
 "on: %@" = "于：%@";
@@ -1019,24 +1134,32 @@
 "Hide search tab" = "隐藏搜索分页";
 "Remove the search/explore button from the tab bar" = "从分页列移除搜索/探索按钮";
 "Hide tab bar" = "隐藏分页列";
-"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "隐藏除私讯收件匣与个人档案外的所有分页，并强制启动至收件匣。设定捷径改为长按收件匣分页。";
+"Tab shortcuts" = "标签页快捷方式";
+"Hold a tab to open a RyukGram screen" = "长按标签页以打开 RyukGram 界面";
+"Not on the tab bar" = "不在标签栏上";
+"When the feed tab is off the bar, its shortcut moves to the first tab that is on it." = "动态消息标签页不在标签栏上时，它的快捷方式会移到栏上的第一个标签页。";
 "Icon order" = "图示排序";
 "Launch tab" = "启动分页";
 "Swipe sideways to move between the tab bar tabs" = "左右滑动即可在标签栏各标签间切换";
 "Messages only" = "仅限讯息";
 "Messages-only mode" = "仅限讯息模式";
+"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "隐藏除私信收件箱和主页以外的所有标签，并直接从收件箱启动。设置入口改为长按收件箱标签。";
 "Automatic schedule" = "自动排程";
 "DM-only client, hide tabs, auto schedule" = "仅限私讯客户端、隐藏分页、自动排程";
 "Start time" = "开始时间";
 "End time" = "结束时间";
 "Switch into Messages-only on its own during a time window" = "在某个时间段内自动切换到仅限讯息模式";
-"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above. You'll be asked to restart when the window starts and when it ends." = "使用上方开关，在每天的某个时间段（例如晚上 10:00 – 早上 6:00）自动开启仅限讯息模式。时间段开始和结束时会提示你重新启动。";
+"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "用上面的开关，在每天设定的时段（例如 22:00 – 6:00）自动进入仅消息模式。";
 "Active now · ends %@" = "当前启用 · %@ 结束";
 "Next window starts %@" = "下个时间段 %@ 开始";
 "Messages-only starting" = "仅限讯息模式开始";
 "Messages-only ending" = "仅限讯息模式结束";
 "Your Messages-only window has started. Restart Instagram to switch to DM-only." = "你的仅限讯息时间段已开始。重新启动 Instagram 以切换到仅限私讯。";
 "Your Messages-only window has ended. Restart Instagram to bring back the other tabs." = "你的仅限讯息时间段已结束。重新启动 Instagram 以恢复其他分页。";
+"When the window changes" = "时段切换时";
+"Apply instantly" = "立即应用";
+"Your Messages-only window has started. Switch to DM-only now?" = "仅消息时段已开始，现在切换到仅消息吗？";
+"Your Messages-only window has ended. Bring back the other tabs now?" = "仅消息时段已结束，现在恢复其他标签页吗？";
 "Navigation" = "导览";
 "Swipe between tabs" = "在分页间滑动";
 "Tab the app opens to. Ignored when Messages-only is on" = "应用程式开启时的分页。启用仅限讯息时忽略此设定";
@@ -1061,12 +1184,15 @@
 "Confirm follow" = "确认追踪";
 "Confirm follow requests" = "确认追踪请求";
 "Confirm Instants capture" = "确认即时拍照";
+"Shows an alert before sending a reaction in a chat" = "在聊天中发送回应前显示提示";
+"Confirm DM reaction" = "确认私信回应";
 "Confirm Instants emoji reaction" = "确认即时表情反应";
 "Confirm like: Posts" = "确认按赞：贴文";
 "Confirm like: Reels" = "确认按赞：Reels";
 "Confirm note emoji reaction" = "确认笔记表情反应";
 "Confirm note like" = "确认笔记按赞";
 "Confirm posting comment" = "确认发布留言";
+"Confirm reaction" = "确认回应";
 "Confirm repost" = "确认转贴";
 "Confirm send to group chat" = "确认发送到群聊";
 "Confirm sticker interaction (highlights)" = "确认贴图互动（精选）";
@@ -1080,6 +1206,7 @@
 "Confirm video call" = "确认视讯通话";
 "Confirm voice call" = "确认语音通话";
 "Confirm voice messages" = "确认语音讯息";
+"Double tap only" = "仅双击";
 "Follows" = "关注";
 "Likes" = "点赞";
 "Messaging" = "消息";
@@ -1252,8 +1379,8 @@
 "Wrong passcode • %ld attempts" = "密码错误 • 已尝试 %ld 次";
 
 //////////////////////////////////////////////////////////////////////////////
-//                             BACKUP & RESTORE                             //
-// Settings → Backup & Restore tab                                          //
+//                            BACKUP & PROFILES                             //
+// Settings → Backup & Profiles tab                                         //
 //////////////////////////////////////////////////////////////////////////////
 "Protection" = "保护";
 "Password-protect" = "密码保护";
@@ -1285,7 +1412,6 @@
 "Applying backup…" = "正在应用备份…";
 "archive error" = "归档错误";
 "Archived snapshots" = "已归档的快照";
-"Backup & Restore" = "备份与还原";
 "Backup exported" = "备份已导出";
 "Backup failed" = "备份失败";
 "Backup has no importable sections." = "备份中没有可导入的部分。";
@@ -1339,6 +1465,55 @@
 "Truncated entry length." = "条目长度被截断。";
 "Truncated entry path." = "条目路径被截断。";
 "Unsafe entry path." = "条目路径不安全。";
+"%@ is now in use" = "正在使用 %@";
+"%lu changed" = "已更改 %lu 项";
+"%lu on · %lu changed" = "%lu 项开启 · %lu 项已改";
+"A new profile" = "新建配置";
+"Accounts you haven't linked use %@." = "未关联的账号使用 %@。";
+"Adds a shortcut to the settings home page." = "在设置主页添加一个快捷入口。";
+"All other accounts" = "其他所有账号";
+"Applied to the settings you're using now." = "直接应用到你正在使用的设置。";
+"Backup & Profiles" = "备份与配置";
+"Backup has no settings to save." = "此备份没有可保存的设置。";
+"Color" = "颜色";
+"Current settings are saved to %@ first." = "当前设置会先保存到「%@」。";
+"Current settings aren't in a profile and will be replaced." = "当前设置不属于任何配置，将被替换。";
+"Current settings" = "当前设置";
+"Duplicate" = "复制";
+"Every setting goes back to how it shipped." = "所有设置回到最初状态。";
+"Every switch goes off, so the app behaves like stock." = "所有开关关闭，应用回到原生表现。";
+"Follows every change you make." = "跟随你做的每一处更改。";
+"In %@" = "在 %@";
+"Name it, switch to it whenever" = "起个名字，随时切换";
+"Name this profile" = "为此配置命名";
+"Named setups you can switch between." = "可以随时切换的具名设置组合。";
+"New profile" = "新建配置";
+"No accounts seen yet." = "尚未发现任何账号。";
+"No profile covers your other accounts." = "没有配置负责你的其他账号。";
+"Not linked" = "未关联";
+"Nothing ticked, so this profile covers every account you haven't linked elsewhere." = "没有勾选任何账号，所以这个配置负责你没有关联到别处的所有账号。";
+"Overwrite %@?" = "覆盖「%@」？";
+"Overwrite what you're using now" = "覆盖你正在使用的设置";
+"Overwrite" = "覆盖";
+"Profiles" = "配置";
+"Replaces it with your current settings." = "用你当前的设置替换它。";
+"Reset %@ to defaults?" = "将 %@ 重置为默认？";
+"Saved as %@" = "已保存为「%@」";
+"Saved as a profile. Your current settings stay as they are." = "保存为一份配置。你当前的设置保持不变。";
+"Saves your current settings and switches to it." = "保存你当前的设置并切换过去。";
+"Settings go to" = "设置保存到";
+"Show on settings home" = "显示在设置主页";
+"Switch to %@?" = "切换到「%@」？";
+"Switch to a linked account and this profile comes with it." = "切换到已关联的账号时，这份配置会一并生效。";
+"Switch" = "切换";
+"Switching to a ticked account switches to this profile." = "切换到勾选的账号即切换到此配置。";
+"Tap to switch. Changes stay in the profile in use. Swipe or hold for more." = "轻点切换。更改会留在正在使用的配置里。滑动或长按查看更多。";
+"Turn everything off in %@?" = "关闭 %@ 中的全部？";
+"Turn off" = "关闭";
+"Use for other accounts" = "用于其他账号";
+"Your settings aren't saved to a profile." = "你的设置尚未保存到任何配置。";
+"Your settings stay untouched." = "你的设置不会被改动。";
+"Your settings stay — they just won't belong to a profile." = "你的设置会保留，只是不再属于任何配置。";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
@@ -1348,6 +1523,7 @@
 "Advanced" = "进阶";
 "All tweak options are disabled" = "所有调整选项已禁用";
 "Auto-clear cache" = "自动清除快取";
+"Every launch" = "每次启动";
 "Automatically opens settings when the app launches" = "启动应用程式时自动开启设定";
 "Cache" = "快取";
 "Cache cleared" = "快取已清除";
@@ -1360,14 +1536,12 @@
 "Daily" = "每日";
 "Disable all tweak options" = "禁用所有调整选项";
 "Disable safe mode" = "停用安全模式";
-"Enable tweak settings quick-access" = "启用调整设定快速存取";
 "Instagram runs stock while this is on. Turn it back off to restore your settings." = "开启时 Instagram 以原始状态运行。关闭即可恢复你的设置。";
 "Tap to re-enable everything" = "点按以重新启用全部";
 "Turn every feature off — your settings are kept" = "关闭所有功能 — 保留你的设置";
 "Fix duplicate notifications" = "修复重复通知";
 "Free %@ of Instagram cache." = "释放 %@ 的 Instagram 快取。";
 "Freed %@" = "已释放 %@";
-"Hold on the home tab to open RyukGram settings" = "长按主页标签以开启 RyukGram 设定";
 "Monthly" = "每月";
 "Nothing to clear" = "无可清除内容";
 "Off skips the size scan when Advanced opens." = "关闭时，开启进阶页不会扫描大小。";
@@ -1422,6 +1596,12 @@
 "Surfaces" = "介面";
 "These toggles flip hidden Instagram experiments on. Some features may not work on every account or IG version. If IG keeps crashing on launch, the flags auto-reset after 3 failed starts." = "这些开关会启用 Instagram 的隐藏实验。部分功能可能无法在所有帐号或 IG 版本上运作。若 IG 连续 3 次启动闪退，旗标会自动重置。";
 "Toggle hidden Instagram experiments. Some may not work on every account or IG version." = "启用 Instagram 的隐藏实验。部分可能无法在所有帐号或 IG 版本上运作。";
+"Export overrides" = "导出更改";
+"Import overrides" = "导入更改";
+"Nothing to export" = "没有可导出的内容";
+"%lu applied · %lu skipped" = "已应用 %lu 项 · 跳过 %lu 项";
+"This file holds %lu entry(s). Merge keeps what you already changed, replace clears your current overrides first." = "此文件包含 %lu 项。合并会保留你现有的更改，替换会先清除它们。";
+"MobileConfig overrides" = "MobileConfig 更改";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  DEBUG                                   //
@@ -1557,6 +1737,7 @@
 "%@ unsent a message" = "%@ 撤回了一条消息";
 "%@ unsent a message from %@" = "%1$@ 撤回了 %2$@ 的消息";
 "A message was unsent" = "讯息已撤回";
+"A message in %@ was unsent" = "%@ 中有一条讯息被撤回";
 "Add" = "新增";
 "Add to block list" = "加入封锁名单";
 "Added to block list" = "已加入封锁名单";
@@ -1598,6 +1779,8 @@
 "Marking as viewed advances to the next stacked media instead of closing" = "标记为已查看会前进到下一个堆叠的媒体，而不是关闭";
 "Mark messages as seen" = "标记讯息为已读";
 "Mark seen" = "标记已读";
+"Mark all (%ld)" = "全部标记 (%ld)";
+"Mark up to here (%ld)" = "标记到此处 (%ld)";
 "Marked as viewed" = "标记为已阅览";
 "Marked messages as seen" = "标记讯息为已查看";
 "Mentions" = "提及";
@@ -1644,15 +1827,15 @@
 "Un-exclude story seen" = "取消排除故事已读";
 "Un-excluded" = "已取消排除";
 "Unblocked" = "已解除封锁";
-"Unlimited replay enabled" = "已启用无限重播";
+"Views blocked" = "已屏蔽查看";
 "Unmute story audio" = "取消静音故事音讯";
 "Unsent" = "未发送";
 "Upload Audio" = "上传音讯";
 "VC not found" = "找不到 VC";
 "Video from Library" = "从资料库选择影片";
-"Visual messages will expire" = "视觉讯息将会过期";
-"Visual messages: expiring" = "视觉讯息：即将过期";
-"Visual messages: unlimited replay" = "视觉讯息：无限重播";
+"Views will be reported" = "将上报查看";
+"Disappearing media: views reported" = "消失讯息媒体：已上报查看";
+"Disappearing media: views blocked" = "消失讯息媒体：已屏蔽查看";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
@@ -1773,6 +1956,33 @@
 "Select color" = "选择颜色";
 "Set location" = "设定位置";
 "The theme RyukGram applies to Instagram." = "RyukGram 应用于 Instagram 的主题。";
+"Fonts" = "字体";
+"Font" = "字体";
+"Custom fonts" = "自定义字体";
+"Everywhere" = "全部";
+"Per surface" = "分别设置";
+"Per surface gives Instagram and RyukGram their own font." = "选择“分别设置”可为 Instagram 和 RyukGram 各设一种字体。";
+"Replace the app font" = "替换应用字体";
+"My fonts" = "我的字体";
+"Device fonts" = "设备字体";
+"Import a .ttf or .otf file, or browse thousands of fonts online." = "导入 .ttf 或 .otf 文件，或在线浏览数千种字体。";
+"Swipe a font to delete it." = "左滑字体即可删除。";
+"Delete %lu fonts?" = "删除 %lu 个字体？";
+"Added" = "已添加";
+"Swipe to remove." = "左滑即可移除。";
+"The quick brown fox jumps over the lazy dog" = "天地玄黄 宇宙洪荒 日月盈昃 辰宿列张";
+"%lu styles · %@" = "%lu 种样式 · %@";
+"%@ · %lu weights" = "%@ · %lu 种字重";
+"Browse online" = "在线浏览";
+"Font installed" = "字体已安装";
+"Restart Instagram to apply everywhere" = "重启 Instagram 以全面生效";
+"No usable font found. Pick a .ttf or .otf file." = "未找到可用字体。请选择 .ttf 或 .otf 文件。";
+"This font has no downloadable styles." = "该字体没有可下载的样式。";
+"Could not load the font catalog." = "无法加载字体目录。";
+"Sans" = "无衬线";
+"Serif" = "衬线";
+"Display" = "展示";
+"Hand" = "手写";
 "Theme" = "主题";
 "Turn Location Services on in Settings → Privacy to use your current location." = "请在设定 → 隐私中开启定位服务以使用目前位置。";
 "Type an emoji to use as the note bubble icon." = "输入用作便笺气泡图标的表情符号。";
@@ -1921,7 +2131,7 @@
 "Username Z → A" = "使用者名称 Z → A";
 "Username, name or picture changes" = "使用者名称、名称或大头贴变更";
 "Username: @%@ → @%@" = "使用者名称：@%@ → @%@";
-"Using %@ across %lu snapshots." = "在 %lu 个快照中使用 %@。";
+"Using %@ across %lu snapshots." = "在 %2$lu 个快照中使用 %1$@。";
 "Verified only" = "仅限已认证";
 "Visited" = "已浏览";
 "Visited profiles" = "浏览过的个人资料";
@@ -2015,6 +2225,8 @@
 //                            PROFILE (FEATURES)                            //
 // Strings from Profile.                                                    //
 //////////////////////////////////////////////////////////////////////////////
+"Follow indicator in lists" = "列表中的关注标识";
+"Shows whether each user in a follower or following list follows you" = "在粉丝或关注列表中显示每个用户是否关注了你";
 
 "%lu accounts" = "%lu 个账号";
 "%lu loaded" = "已加载 %lu 个";
@@ -2101,6 +2313,17 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"Updates" = "更新";
+"Update available" = "有可用更新";
+"Check for updates" = "检查更新";
+"You're up to date" = "已是最新版本";
+"Get it on Telegram" = "前往 Telegram 获取";
+"Update check failed" = "检查更新失败";
+"%@ is available" = "%@ 可用";
+"What's new in this build" = "此版本的新功能";
+"Tells you on launch when a newer RyukGram is out" = "有更新的 RyukGram 发布时在启动时告知你";
+"Shows the release notes once after RyukGram updates" = "RyukGram 更新后显示一次发行说明";
+"Reads the public RyukGram release list on GitHub. Nothing about you is sent." = "读取 GitHub 上公开的 RyukGram 发行列表。不会发送任何关于你的信息。";
 "Enjoying RyukGram?" = "喜欢 RyukGram 吗？";
 "It's free, and nothing leaves your device. If you enjoy using it, a coffee keeps it going." = "它是免费的，也没有任何数据离开你的设备。如果你用得开心，一杯咖啡就能让它继续下去。";
 "Donate" = "捐赠";
@@ -2166,6 +2389,11 @@
 "Audio track %ld" = "音轨 %ld";
 "Download video at the highest available quality" = "下载最高可用品质的影片";
 "Downloads HD video via DASH streams and encodes to H.264. Requires FFmpegKit." = "透过 DASH 串流下载 HD 影片并编码为 H.264。需要 FFmpegKit。";
+"Full resolution asks Instagram for the original upload, often far larger than the size the app is given." = "完整分辨率会向 Instagram 索取原始上传文件，通常远大于应用拿到的尺寸。";
+"Full resolution" = "完整分辨率";
+"Photo Size" = "照片尺寸";
+"%@ · Original" = "%@ · 原图";
+"Copy photo URL" = "复制照片链接";
 "Encoding in software" = "正在使用软件编码";
 "Encoding speed" = "编码速度";
 "Enhanced downloads" = "增强下载";
@@ -2342,6 +2570,14 @@
 "Added %lu" = "已添加 %lu";
 "All files deleted" = "已删除所有文件";
 "Browsing" = "浏览";
+"Group posts and stories" = "合并帖子和快拍";
+"One swipeable item per post or story" = "每条帖子或快拍显示为一个可滑动项目";
+"Group into album" = "合并为相册";
+"Split album" = "拆分相册";
+"Delete album" = "删除相册";
+"Delete album?" = "删除相册？";
+"Share all" = "全部分享";
+"Select at least two files" = "请至少选择两个文件";
 "Found %lu items saved by a previous version. Restore them into your gallery now?" = "找到 %lu 个由旧版本保存的项目。现在恢复到你的图库吗？";
 "Gallery data from a previous version was found. Restore it now?" = "找到了旧版本的图库数据。现在恢复吗？";
 "Gallery restored" = "图库已恢复";
@@ -2411,7 +2647,6 @@
 "Any time" = "任何时间";
 "This year" = "今年";
 "%ld columns" = "%ld 列";
-"Hold DM tab to open gallery" = "长按 DM 标签打开图库";
 "Images" = "图片";
 "Images deleted" = "图片已删除";
 "Images first" = "图片优先";
@@ -2419,7 +2654,6 @@
 "items" = "项";
 "Largest first" = "最大优先";
 "List view" = "列表视图";
-"Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "长按底部标签栏中的收件箱按钮打开 RyukGram 图库";
 "Manage" = "管理";
 "More" = "更多";
 "Move selected" = "移动所选";
@@ -2511,6 +2745,8 @@
 "Choose the icon shown on the home top bar. Auto uses the selected action icon when only one action is enabled." = "选择显示在主页顶栏上的图标。“自动”会在仅启用一个操作时使用该操作的图标。";
 "Configure button" = "配置按钮";
 "Global Action Icons" = "全局操作图标";
+"Old Instagram logo" = "旧版 Instagram 标志";
+"Brings back the previous feed header wordmark." = "将信息流顶栏的标志换回旧版。";
 "Interface" = "界面";
 "Override the icon for a specific button. Buttons left on Default follow the shared icon above." = "为特定按钮覆盖图标。保持为“默认”的按钮将沿用上方的共享图标。";
 "Per button" = "按按钮";
@@ -2550,6 +2786,10 @@
 "Preview pill" = "预览药丸";
 "Preview download pill" = "预览下载药丸";
 "Preview loading pill" = "预览加载药丸";
+"Preview long text" = "预览长文本";
+"Check wrapping and truncation" = "查看换行与截断";
+"A notification title long enough to wrap onto more than one line" = "一个长到会换行显示多行的通知标题";
+"And a body that keeps going so you can see the pill grow, wrap, and finally cut itself off with an ellipsis instead of taking over the whole screen." = "正文也很长，方便你看到药丸变大、换行，最后用省略号截断，而不是占满整个屏幕。";
 "Master switch. When off, no RyukGram pills or IG-native toasts are emitted." = "主开关。关闭后将不显示任何通知。";
 "Universal in-app notifications. All RyukGram feedback (downloads, copies, errors, success messages) routes through here." = "应用内统一通知。所有 RyukGram 反馈都从这里发出。";
 "Minimal: flat blur. Colorful: tinted by tone. Glow: colored halo. Island: dynamic-island capsule." = "Minimal：简单模糊。Colorful：按色调着色。Glow：彩色光环。Island：动态岛胶囊。";
@@ -2632,6 +2872,7 @@
 "FFmpeg log copied" = "已复制 FFmpeg 日志";
 "GIF inserted" = "已插入 GIF";
 "Story marked as seen" = "故事已标记为已查看";
+"Marked %ld stories as seen" = "已将 %ld 个故事标记为已查看";
 "Saved" = "已保存";
 "Tap to retry" = "点击重试";
 "Looks great" = "看起来不错";
@@ -2715,6 +2956,22 @@
 //                               DEVICE ID                                  //
 // Settings -> Advanced -> Device ID, and the login-screen Device ID button //
 //////////////////////////////////////////////////////////////////////////////
+"Machine ID" = "机器 ID";
+"Copy machine ID" = "复制机器 ID";
+"Enter machine ID manually…" = "手动输入机器 ID…";
+"Restore a saved one, or clear it to re-register" = "恢复已保存的，或清除后重新注册";
+"Manual machine ID" = "手动机器 ID";
+"Only paste one Instagram issued. The server checks its format, so a made-up value is rejected." = "只能粘贴 Instagram 签发的 ID。服务器会校验格式，随意编造的值会被拒绝。";
+"Machine ID set" = "已设置机器 ID";
+"Clear and re-register" = "清除并重新注册";
+"Machine ID cleared" = "已清除机器 ID";
+"No machine ID yet" = "尚无机器 ID";
+"Issued by Instagram and format-checked by the server, so it can only be kept, never made up. RyukGram pins the one you were issued so Instagram can't swap it." = "由 Instagram 签发、服务器校验格式，因此只能保留，无法伪造。RyukGram 会固定你获得的那一个，避免 Instagram 替换它。";
+"Mask everything & relaunch" = "全部伪装并重启";
+"Mask everything & relaunch?" = "要全部伪装并重启吗？";
+"Mask everything" = "全部伪装";
+"Rolls every identifier, blocks Apple attestation, and clears your saved logins and cookies. You sign in again afterwards." = "重新生成所有标识符，阻止 Apple 认证，并清除已保存的登录和 Cookie。之后需要重新登录。";
+"Fresh IDs, blocked attestation, cleared logins" = "全新 ID、阻止认证、清除登录";
 "Roll a new fingerprint" = "生成新指纹";
 "New device fingerprint" = "新设备指纹";
 "Roll new ID" = "生成新 ID";
@@ -2759,6 +3016,7 @@
 //                         FOLLOW REQUESTS TRACKER                        //
 // Settings → Follow Requests Tracker                                     //
 //////////////////////////////////////////////////////////////////////////
+"View all from this user" = "查看该用户的全部";
 "Follow Requests" = "关注请求";
 "Show follow requests" = "显示关注请求";
 "Check now" = "立即检查";
@@ -2830,7 +3088,7 @@
 "Turn everything off" = "全部关闭";
 "Every Instagram Plus feature turns off and Instagram restarts." = "所有 Instagram Plus 功能将关闭，Instagram 会重新启动。";
 "Story peek" = "快拍预览";
-"Hold a story in the tray to preview it without opening it." = "在快拍栏中长按即可预览，无需打开。";
+"Hold a story in the tray or an inbox avatar to preview it without opening it." = "长按快拍栏中的快拍或收件箱中的头像即可预览，无需打开。";
 "Story fonts" = "快拍字体";
 "Adds the subscriber fonts when you add text to a story." = "在快拍中添加文字时提供订阅专属字体。";
 "Search story viewers" = "搜索快拍浏览者";
@@ -2900,6 +3158,8 @@
 "Drag your camera window to any corner or edge." = "将你的摄像头窗口拖到任意角落或边缘。";
 "Enable call recording" = "启用通话录制";
 "Export all" = "全部导出";
+"Share as audio only" = "仅分享音频";
+"Delete %lu recordings?" = "要删除 %lu 条录音吗？";
 "Full screen" = "全屏";
 "Group call" = "群组通话";
 "Ignore auto-record for this chat" = "忽略此聊天的自动录制";
@@ -2907,6 +3167,7 @@
 "Include my camera" = "包含我的摄像头";
 "Keep forever" = "永久保留";
 "Large" = "大";
+"Manual" = "手动";
 "Mute without the other side seeing you muted — your mic is still silenced" = "静音时对方不会看到你已静音 — 你的麦克风仍会被静音";
 "Muted silently" = "静默静音";
 "My camera size" = "我的摄像头大小";
@@ -2963,6 +3224,7 @@
 // Settings → Stories archive + the archive grid, media viewer, viewers  //
 //////////////////////////////////////////////////////////////////////////
 
+
 "Reacted" = "已回应";
 "Reacted first" = "回应优先";
 "Mutual" = "互相关注";
@@ -3011,3 +3273,83 @@
 "%lu pinned viewers just saw, liked or reacted" = "%lu 位置顶查看者刚刚查看、点赞或回应";
 "A pinned viewer" = "一位置顶查看者";
 "On each launch" = "每次启动时";
+
+"MobileConfig" = "MobileConfig";
+"Enable MobileConfig browser" = "启用 MobileConfig 浏览器";
+"Open MobileConfig browser" = "打开 MobileConfig 浏览器";
+"Lets the browser read values and apply your changes" = "允许浏览器读取数值并应用你的更改";
+"Search, toggle and edit config values" = "搜索、切换和编辑配置值";
+"Turn on the browser first, then restart Instagram" = "请先启用浏览器，然后重启 Instagram";
+"Use at your own risk" = "使用风险自负";
+"I understand" = "我明白";
+"MobileConfig overrides were reset after repeated crashes on launch" = "由于启动时多次崩溃，MobileConfig 覆盖已被重置";
+"Overridden" = "已覆盖";
+"overridden" = "已覆盖";
+"Search name or config number" = "按名称或配置编号搜索";
+"Reset all overrides" = "重置所有覆盖";
+"Reset all overrides?" = "重置所有覆盖？";
+"%lu override(s) will be removed." = "将移除 %lu 项覆盖。";
+"param" = "参数";
+"params" = "参数";
+"Config" = "配置";
+"Number" = "编号";
+"Override" = "覆盖";
+"Value" = "值";
+"Type: %@   ·   live: %@" = "类型：%@   ·   当前：%@";
+"Clear override" = "清除覆盖";
+"Note" = "备注";
+"Parameter:" = "参数：";
+"Reset %lu override(s)" = "重置 %lu 项覆盖";
+"Read and change Instagram's own internal settings. Known names are built in; configs shown only as a number have obfuscated names we can't recover yet. If Instagram crashes on launch three times in a row, your changes are cleared for you." = "读取并更改 Instagram 自己的内部设置。已知名称已内置；仅以编号显示的配置其名称已被混淆，目前无法恢复。若 Instagram 启动时连续崩溃三次，你的更改会被自动清除。";
+"This changes Instagram's own internal settings. Some can break features or cause crashes until you switch them back.\n\nChanges stay on this device. Most take effect right away, and some only after you restart Instagram. If it crashes on launch three times in a row, they're cleared for you.\n\nInstagram can tell when a setting doesn't match what its server sent. It's very unlikely to affect your account, but not impossible. Use at your own risk." = "这会更改 Instagram 自己的内部设置。有些设置在你改回之前可能会破坏功能或导致崩溃。\n\n更改保存在本设备上。大多数会立即生效，少数只有在你重启 Instagram 后才生效。若启动时连续崩溃三次，更改会被自动清除。\n\n当某项设置与其服务器下发的值不一致时，Instagram 能够察觉。这影响你账号的可能性极低，但并非没有。使用风险自负。";
+"Tap a field to copy. Tap a value below to edit." = "点按字段可复制。点按下方数值可编辑。";
+"%lu configs  ·  %lu named" = "%lu 项配置  ·  %lu 项有名称";
+
+"Clear cache now" = "立即清除缓存";
+"Delete staged captures that haven't been unsent yet" = "删除尚未撤回的待处理捕获";
+"Clear view-once cache" = "清除阅后即焚缓存";
+"Delete all staged captures that haven't been unsent? Anything already saved to the log is kept." = "删除所有尚未撤回的待处理捕获？已保存到记录中的内容会保留。";
+"Capture while closed" = "应用关闭时捕获";
+"Save media that arrives while Instagram is closed" = "保存 Instagram 关闭时收到的媒体";
+"⚠️ Only works on the full Instagram build with plugins, signed with a paid, ad-hoc certificate under the default Instagram bundle id. The no-plugins build has no notification extension. Requires the deleted messages log to stay on.\n\nCatches view-once media (and normal media if enabled) that arrives while Instagram is fully closed, using the notification extension. Affects only this log and its media, nothing else in the app. It rides push notifications, so muted chats, Do Not Disturb or disabled notifications miss messages; \"Keep running in background\" is the fallback." = "⚠️ 仅在使用默认 Instagram 套装 ID、由付费（临时）证书签名的含插件完整版 Instagram 上有效。纯净版（无插件）没有通知扩展。需要保持“已删除消息记录”开启。\n\n通过通知扩展，捕获 Instagram 完全关闭时收到的阅后即焚（如启用则包括普通）媒体。仅影响此记录及其媒体，不影响应用其他部分。依赖推送通知，因此静音聊天、勿扰模式或关闭通知会漏收消息；“保持后台运行”是备用方案。";
+"Uses the notification extension to save media that arrives with the app closed" = "使用通知扩展保存应用关闭时收到的媒体";
+"Also capture normal media" = "同时捕获普通媒体";
+"Not just view-once. Uses a lot more storage" = "不仅是阅后即焚。占用多得多的存储空间";
+"Auto-clean" = "自动清理";
+"Limit how much captured media is kept" = "限制保留的已捕获媒体数量";
+"Size limit" = "大小上限";
+"Keep at most this per account" = "每个账号最多保留此数量";
+"MB" = "MB";
+"Age limit" = "时长上限";
+"Keep no longer than this" = "保留不超过此时长";
+"days" = "天";
+"Drop every capture each time you open the app" = "每次打开应用时删除所有捕获";
+"Trim each account by size and age" = "按大小和时长限制每个账号";
+"Kept per account. A capture is dropped once it passes either limit." = "按账号保留。捕获超过任一上限即被删除。";
+"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "两者都关闭时，捕获会一直保留直到被撤回。开启其中一个会关闭另一个。真正被撤回的内容会先保存到记录中，且不会在此清理。";
+"Clear when I open Instagram" = "打开 Instagram 时清除";
+"Keep within size / age limits" = "保留在大小 / 时长上限内";
+"View-once cache" = "阅后即焚缓存";
+"Message log" = "消息记录";
+
+"Story stats" = "快拍统计";
+"Views per story" = "每条快拍的观看数";
+"%@ · peak %@ views" = "%@ · 峰值 %@ 次观看";
+"Avg / story" = "平均每条";
+"Unique viewers" = "独立观看者";
+"Engagement" = "互动率";
+"Loyal fans" = "忠实观众";
+"Peak hour" = "高峰时段";
+"Recently viewed" = "最近观看";
+"No archived stories in this range yet." = "此时间范围内还没有已存档的快拍。";
+
+"Names & photos updated" = "名称和头像已更新";
+"Names & photos are up to date" = "名称和头像已是最新";
+
+"Early birds" = "早鸟";
+"Opens first" = "最先观看";
+"top %ld%%" = "前 %ld%%";
+"1 reaction" = "1 次互动";
+"%ld reactions" = "%ld 次互动";
+"Watched %ld stories" = "看过 %ld 条快拍";
+"Unpin" = "取消置顶";

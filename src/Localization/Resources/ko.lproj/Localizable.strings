@@ -88,9 +88,14 @@
 "Adds download, copy and expand options to GIF and image comments" = "GIF 및 이미지 댓글에 다운로드, 복사, 확대 옵션을 추가합니다";
 "Allow video in photo sticker" = "사진 스티커에서 동영상 허용";
 "Alternate icons are not supported" = "대체 아이콘이 지원되지 않습니다";
+"Couldn't change app icon" = "앱 아이콘을 변경하지 못했습니다";
+"Always mute" = "항상 음소거";
+"Starts muted everywhere until you tap a speaker" = "스피커를 누를 때까지 모든 곳이 음소거로 시작됩니다";
 "Anonymous live viewing" = "익명 라이브 시청";
 "App Icon" = "앱 아이콘";
-"Audio page" = "오디오 페이지";
+"Download from music picker" = "음악 선택기에서 다운로드";
+"Music" = "음악";
+"Adds a download option to the song long-press menu in music pickers" = "음악 선택기에서 노래를 길게 누른 메뉴에 다운로드 옵션을 추가합니다";
 "Auto-reveals sensitive media" = "민감한 콘텐츠를 자동으로 표시합니다";
 "Block surveys" = "설문조사 차단";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "시청자 수 하트비트를 차단하여 진행자가 회원님을 볼 수 없게 합니다 — 회원님 역시 시청자 수를 볼 수 없습니다";
@@ -103,6 +108,10 @@
 "Copy comment text" = "댓글 텍스트 복사";
 "Copy description" = "설명 복사";
 "Long press a caption to copy its text" = "캡션을 길게 눌러 텍스트 복사";
+"Edit before copying" = "복사 전에 편집";
+"Pick or trim what gets copied" = "복사할 부분을 고르거나 다듬기";
+"Copy selection" = "선택 항목 복사";
+"%lu characters" = "%lu자";
 "Custom sticker colors" = "스티커 사용자 지정 색상";
 "Custom colors aren't supported for this sticker" = "이 스티커는 사용자 지정 색상을 지원하지 않습니다";
 "Date format" = "날짜 형식";
@@ -122,7 +131,6 @@
 "End" = "끝";
 "Experimental features" = "실험실 기능";
 "Explore & search" = "탐색 및 검색";
-"Failed to change icon" = "아이콘 변경 실패";
 "Fixed" = "고정";
 "Fixed prevents shrinking. Hide makes it disappear when scrolling down" = "고정은 축소를 방지합니다. 숨기기는 아래로 스크롤할 때 사라지게 합니다";
 "Focus/distractions" = "집중/방해 요소";
@@ -134,14 +142,12 @@
 "Hide explore posts grid" = "탐색 탭 게시물 그리드 숨기기";
 "Hide friends map" = "친구 지도 숨기기";
 "Hide Meta AI" = "Meta AI 숨기기";
-"Hide metrics" = "수치 숨기기";
 "Hide notes tray" = "메모 트레이 숨기기";
 "Hide on scroll" = "스크롤 시 숨기기";
 "Hide TestFlight popup" = "TestFlight 팝업 숨기기";
 "Hide trending searches" = "인기 검색어 숨기기";
 "Hide UI on capture" = "캡처 시 UI 숨기기";
 "Removes suggested accounts to follow outside the feed" = "피드 밖의 추천 팔로우 계정을 제거";
-"Hides like/comment/share counts on posts and reels" = "게시물 및 릴스의 좋아요/댓글/공유 횟수를 숨기기";
 "Removes the friends map icon from the notes tray" = "메모 트레이에서 친구 지도 아이콘을 제거";
 "Removes the suggested posts grid on the explore tab" = "탐색 탭의 추천 게시물 그리드를 제거";
 "Strips the Meta AI buttons and entry points from the app" = "앱에서 Meta AI 버튼과 진입점을 제거";
@@ -158,7 +164,6 @@
 "Hold the eyedropper in stories to pick an exact text color" = "스토리에서 스포이드를 길게 눌러 정확한 텍스트 색상을 선택";
 "Long-press the color wheel in sticker editors to pick any solid or gradient color" = "스티커 편집기에서 색상 휠을 길게 눌러 원하는 단색 또는 그라데이션 색상을 선택하세요";
 "Long-press the heart button in a live to hide or show the comments" = "라이브 중 하트 버튼을 길게 눌러 댓글을 숨기거나 표시";
-"Long-press the search tab to open a copied Instagram link" = "검색 탭을 길게 눌러 복사한 Instagram 링크 열기";
 "Master switch. When off, all per-surface toggles below are ignored." = "마스터 스위치. 끄면 아래의 화면별 토글이 모두 무시됩니다.";
 "No suggested chats" = "추천 채팅 없음";
 "No suggested users" = "추천 사용자 없음";
@@ -192,6 +197,7 @@
 "Suppresses the \"It's time to update Instagram Beta\" nag" = "\"It's time to update Instagram Beta\" 알림을 차단";
 "Tap to apply" = "탭하여 적용";
 "The selected icon will be saved and shown here the next time you open this page." = "선택한 아이콘은 저장되며 다음에 이 페이지를 열 때 여기에 표시됩니다.";
+"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "사이드로드 앱이 Instagram의 아이콘 목록을 덮어썼습니다. 해당 앱의 아이콘을 기본값으로 되돌린 뒤 Instagram을 새로 고치면 아이콘이 복구됩니다.";
 "Toggle live comments" = "라이브 댓글 전환";
 "Use detailed color picker" = "상세 색상 선택기 사용";
 "Used across feed, stories, reels, and DMs." = "피드, 스토리, 릴스, DM 전체에서 사용됩니다.";
@@ -316,9 +322,10 @@
 "Disable home button refresh" = "홈 버튼 새로고침 비활성화";
 "Disable home button scroll" = "홈 버튼 스크롤 비활성화";
 "Disable video autoplay" = "동영상 자동 재생 비활성화";
+"Disable swipe to camera" = "스와이프로 카메라 열기 끄기";
+"Swiping right on the feed no longer opens the camera" = "피드에서 오른쪽으로 스와이프해도 카메라가 열리지 않습니다";
 "Hide" = "숨기기";
 "Hide entire feed" = "전체 피드 숨기기";
-"Hide repost button" = "리포스트 버튼 숨기기";
 "Hide stories tray" = "스토리 트레이 숨기기";
 "Hide suggested stories" = "추천 스토리 숨기기";
 "Hide story highlights" = "스토리 하이라이트 숨기기";
@@ -326,7 +333,6 @@
 "Hides suggested accounts" = "추천 계정 숨기기";
 "Hides suggested reels" = "추천 릴스 숨기기";
 "Hides suggested threads posts" = "추천 스레드 게시물 숨기기";
-"Hides the repost button on feed posts" = "피드 게시물에서 리포스트 버튼을 숨깁니다";
 "Hides the story tray at the top" = "상단의 스토리 트레이를 숨깁니다";
 "Inserts a button row below like/comment/share on each post" = "각 게시물의 좋아요/댓글/공유 아래에 버튼 행을 삽입합니다";
 "Long press on media to expand in full-screen viewer" = "미디어를 길게 눌러 전체 화면 뷰어로 확대합니다";
@@ -343,11 +349,16 @@
 "No suggested threads" = "추천 스레드 없음";
 "Prevents feed from reloading when returning from background" = "백그라운드에서 돌아올 때 피드가 다시 로드되는 것을 방지합니다";
 "Prevents videos from playing automatically" = "동영상이 자동으로 재생되는 것을 방지합니다";
+"Play in place" = "제자리에서 재생";
+"Play, then open" = "재생 후 열기";
 "Refresh" = "새로고침";
 "Removes all content from your home feed" = "홈 피드에서 모든 콘텐츠를 제거합니다";
 "Removes suggested accounts from the stories tray" = "스토리 트레이에서 추천 계정을 제거합니다";
 "Removes suggested posts" = "추천 게시물을 제거합니다";
 "Scroll to top without refreshing when tapping Home" = "홈을 탭할 때 새로고침하지 않고 맨 위로 스크롤합니다";
+"Scroll only" = "스크롤만";
+"Status bar tap" = "상태 표시줄 탭";
+"Tapping the top of the screen scrolls up and refreshes" = "화면 상단을 탭하면 위로 스크롤하고 새로 고칩니다";
 "Show action button" = "작업 버튼 표시";
 "Show date" = "날짜 표시";
 "Stories tray" = "스토리 트레이";
@@ -373,6 +384,15 @@
 "Paste a giphy.com URL or media ID" = "giphy.com URL 또는 미디어 ID 붙여넣기";
 "Send" = "보내기";
 
+"Post buttons" = "게시물 버튼";
+"Reorder, hide buttons and counts" = "순서 변경, 버튼과 숫자 숨기기";
+"Customized" = "사용자 지정됨";
+"Buttons" = "버튼";
+"Numbers" = "숫자";
+"Right side" = "오른쪽";
+"Drag to reorder, left to right. Instagram pins the last one to the right." = "왼쪽에서 오른쪽으로 끌어 순서를 바꿉니다. Instagram은 마지막 버튼을 오른쪽에 고정합니다.";
+"The right-side button never shows a count." = "오른쪽 버튼에는 숫자가 표시되지 않습니다.";
+"Restores Instagram's order and shows every button and count." = "Instagram의 순서로 되돌리고 모든 버튼과 숫자를 표시합니다.";
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
 // Settings → Reels tab                                                     //
@@ -380,8 +400,16 @@
 
 "Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "릴스 사이드바 위에 커버 보기/다운로드/공유/복사/확장/리포스트 항목이 있는 RyukGram 작업 버튼을 추가합니다. 탭하면 기본적으로 메뉴가 열립니다. 아래에서 탭 동작을 변경하세요.";
 "Always show progress scrubber" = "항상 재생 진행 바 표시";
+"Expanded view" = "전체 보기";
+"Shows the whole reel instead of cropping the sides" = "좌우를 자르지 않고 릴스 전체를 표시";
 "Auto-scroll reels" = "릴스 자동 스크롤";
-"Speed, seek and auto-scroll controls" = "속도, 탐색 및 자동 스크롤 컨트롤";
+"Hold Controls" = "길게 누르기 제어";
+"Ignored while MobileConfig overrides it" = "MobileConfig가 덮어쓰는 동안 무시됨";
+"Menu" = "메뉴";
+"Menu + PiP" = "메뉴 + PiP";
+"Pause" = "일시정지";
+"Set what holding a reel does" = "릴스를 길게 눌렀을 때의 동작을 설정";
+"Speed, seek, pause and auto-scroll controls" = "속도, 탐색, 일시정지 및 자동 스크롤 컨트롤";
 "Enabled controls appear when you hold the ⋯ or audio button on a reel." = "활성화된 컨트롤은 릴스에서 ⋯ 또는 오디오 버튼을 길게 누르면 나타납니다.";
 "Seek controls" = "탐색 컨트롤";
 "Auto-scroll control" = "자동 스크롤 컨트롤";
@@ -395,7 +423,8 @@
 "Disable scrolling reels" = "릴스 스크롤 비활성화";
 "Disable tab button refresh" = "탭 버튼 새로고침 비활성화";
 "Doom scrolling limit" = "둠스크롤링 제한";
-"e.g. 1.75" = "예: 1.75";
+"Limit audio and effect pages" = "오디오 및 효과 페이지 제한";
+"Grids on audio, effect, template and remix pages stop at the same count" = "오디오, 효과, 템플릿, 리믹스 페이지의 그리드가 같은 개수에서 멈춥니다";
 "Enter a value between 0.5 and 2.0" = "0.5에서 2.0 사이의 값을 입력하세요";
 "Keeps the progress bar visible on every reel" = "모든 릴스에서 진행 표시줄을 계속 표시";
 "Hide \"Made with Edits\" badge" = "\"Made with Edits\" 배지 숨기기";
@@ -405,7 +434,6 @@
 "Hides the avatar bubbles next to the Friends tab in reels" = "릴스의 친구 탭 옆에 표시되는 아바타 버블을 숨깁니다";
 "Hides the Edits app promo pill on reels" = "릴스에서 Edits 앱 홍보 배지를 숨깁니다";
 "Hides the floating overlay showing who reposted or commented on reels" = "릴스에서 누가 리포스트하거나 댓글을 달았는지 표시하는 플로팅 오버레이를 숨깁니다";
-"Hides the repost button on the reels sidebar" = "릴스 사이드바에서 리포스트 버튼을 숨깁니다";
 "Drops the top bar while you watch reels" = "릴스를 보는 동안 상단 바를 숨김";
 "Hiding" = "숨김";
 "IG default" = "IG 기본값";
@@ -445,6 +473,10 @@
 "Unlock password-locked reels" = "비밀번호로 잠긴 릴스 잠금 해제";
 "When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "일시정지 모드가 켜져 있을 때 사진 릴스를 탭하면 기본 일시정지 대신 오디오가 전환됩니다";
 
+"Reel buttons" = "릴스 버튼";
+"Drag to reorder, top to bottom." = "위에서 아래로 끌어 순서를 바꿉니다.";
+"More options" = "더 보기";
+"Audio cover" = "오디오 커버";
 //////////////////////////////////////////////////////////////////////////////
 //                                 PROFILE                                  //
 // Settings → Profile tab                                                   //
@@ -456,10 +488,14 @@
 "Card details" = "카드 정보";
 "Comment count" = "댓글 수";
 "Copy note on long press" = "길게 눌러 메모 복사";
+"Display name" = "표시 이름";
 "Extra stats shown on each post and reel card in profile grids — pick which, reorder them, then apply." = "프로필 그리드의 각 게시물 및 릴 카드에 표시되는 추가 통계 — 원하는 항목을 선택하고 순서를 바꾼 뒤 적용하세요.";
 "Fake follower count" = "가짜 팔로워 수";
 "Fake following count" = "가짜 팔로잉 수";
+"Fake display name" = "가짜 표시 이름";
 "Fake post count" = "가짜 게시물 수";
+"Fake profile" = "가짜 프로필";
+"Fake username" = "가짜 사용자 이름";
 "Fake profile stats" = "가짜 프로필 통계";
 "Fake verified badge" = "가짜 인증 배지";
 "Fetch missing counts" = "누락된 수치 가져오기";
@@ -475,6 +511,7 @@
 "Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "프로필 요소의 길게 누르기 제스처 — 기능별 작업 버튼과 별도로 유지됩니다.";
 "Master switch for all card stats. Fetch missing counts uses Instagram's API and may hit rate limits." = "모든 카드 통계의 기본 스위치입니다. 누락된 수치 가져오기는 Instagram API를 사용하며 요청 제한에 걸릴 수 있습니다.";
 "Only affects your own profile header. Other users see the real numbers." = "본인 프로필 헤더에만 적용됩니다. 다른 사용자에게는 실제 숫자가 표시됩니다.";
+"Only shown on your device. Other people see your real profile." = "내 기기에서만 표시됩니다. 다른 사람에게는 실제 프로필이 보입니다.";
 "Post count" = "게시물 수";
 "Profile card details" = "프로필 카드 정보";
 "Profile stats" = "프로필 통계";
@@ -490,6 +527,9 @@
 "Show full follower count" = "전체 팔로워 수 표시";
 "Show full post count" = "전체 게시물 수 표시";
 "Show the custom number set below" = "아래에 설정한 사용자 지정 숫자 표시";
+"Username, name, counts, and verified badge" = "사용자 이름, 이름, 숫자, 인증 배지";
+"Show the custom handle set below" = "아래에 설정한 사용자 지정 아이디 표시";
+"Show the custom name set below" = "아래에 설정한 사용자 지정 이름 표시";
 "Show the exact number instead of a shortened one" = "축약된 숫자 대신 정확한 숫자 표시";
 "Shows whether the profile user follows you" = "프로필 사용자가 회원님을 팔로우하는지 표시합니다";
 "Tap to set" = "탭하여 설정";
@@ -500,12 +540,15 @@
 "Views, likes, comments, shares, reposts, date" = "조회수, 좋아요, 댓글, 공유, 리포스트, 날짜";
 "Zoom profile photo" = "프로필 사진 확대";
 
+"Hide Threads button" = "Threads 버튼 숨기기";
+"Hides it from the profile header" = "프로필 헤더에서 숨깁니다";
 //////////////////////////////////////////////////////////////////////////////
 //                            SAVING & DOWNLOADS                            //
 // Settings → Saving tab                                                    //
 //////////////////////////////////////////////////////////////////////////////
 
 "Active, queued, and finished downloads" = "진행 중·대기 중·완료된 다운로드";
+"Add prefix to file names" = "파일 이름에 접두사 추가";
 "Auto-retry attempts" = "자동 재시도 횟수";
 "Auto-retry failed downloads" = "실패한 다운로드 자동 재시도";
 "Confirm before download" = "다운로드 전 확인";
@@ -530,6 +573,7 @@
 "Save action" = "저장 동작";
 "Save to dedicated album" = "전용 앨범에 저장";
 "Show a confirmation dialog before starting a download" = "다운로드를 시작하기 전에 확인 대화 상자를 표시합니다";
+"Start every saved file name with ryuk_ so downloads are easy to spot" = "모든 저장 파일 이름을 ryuk_ 로 시작해 다운로드를 쉽게 찾습니다";
 "Try %@ more %@ before giving up" = "포기하기 전에 %@번 더 %@ 시도";
 "What happens after the gesture downloads" = "제스처 다운로드 후 동작";
 "When \"Save to dedicated album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a named album in your Photos library. Tap \"Album name\" to change it." = "\"전용 앨범에 저장\"이 켜져 있으면 다운로드와 공유 시트의 \"사진에 저장\" 선택이 사진 보관함의 지정된 앨범으로 저장됩니다. \"앨범 이름\"을 눌러 변경하세요.";
@@ -548,44 +592,58 @@
 "%ds" = "%d초";
 "%ld downloading" = "%ld개 다운로드 중";
 "%ld still running — they'll be stopped. The files already saved are kept." = "%ld개가 아직 진행 중이며 중지됩니다. 이미 저장된 파일은 그대로 남습니다.";
+"%lu entries will be forgotten. Downloaded files are untouched." = "%lu개 항목을 지웁니다. 저장된 파일은 그대로 유지됩니다.";
 "%lu failed" = "%lu개 실패";
 "%lu of %lu done" = "%lu/%lu 완료";
+"%lu of %lu items are already saved." = "%lu / %lu개 항목이 이미 저장되어 있습니다.";
 "%lu saved, %lu failed" = "%lu개 저장, %lu개 실패";
 "12 hours" = "12시간";
 "1s" = "1초";
 "24 hours" = "24시간";
 "48 hours" = "48시간";
 "Active" = "활성";
+"Already downloaded" = "이미 다운로드함";
+"Ask before downloading media you already saved" = "이미 저장한 미디어를 받기 전에 확인";
 "Auto-retry" = "자동 재시도";
+"Check for duplicates" = "중복 확인";
 "Clear completed" = "완료된 항목 지우기";
 "Clear download history" = "다운로드 기록 지우기";
 "Clear download history?" = "다운로드 기록을 지울까요?";
+"Clear duplicate list" = "중복 목록 지우기";
 "Completed" = "완료";
 "Don't keep" = "보관 안 함";
+"Download again" = "다시 다운로드";
 "Download history" = "다운로드 기록";
 "Download settings" = "다운로드 설정";
 "Downloading %lu items" = "항목 %lu개 다운로드 중";
 "Downloading…" = "다운로드 중…";
+"Duplicate download list" = "중복 다운로드 목록";
+"Duplicates" = "중복";
 "Empty the manager's list of past downloads" = "관리자의 지난 다운로드 목록을 비웁니다";
 "Encoding %d%%" = "인코딩 %d%%";
 "Encoding…" = "인코딩 중…";
 "Extra downloads wait in line and start as slots free up." = "추가 다운로드는 대기열에서 기다리다 슬롯이 비면 시작됩니다.";
+"Forget every download recorded so far" = "지금까지 기록된 다운로드를 모두 잊기";
 "How long finished, failed and cancelled downloads stay in the manager after you close the app. The files themselves are never touched — only the list." = "앱을 닫은 뒤 완료·실패·취소된 다운로드가 관리자에 남아 있는 기간입니다. 파일 자체는 건드리지 않고 목록만 정리합니다.";
 "How long past downloads stay listed in the manager" = "지난 다운로드가 관리자에 남아 있는 기간";
 "Keep history for" = "기록 보관 기간";
+"Keeps a list of what you already grabbed and asks first when the same media comes up again. Only IDs are stored, never files, and carousels ask once for the whole post." = "이미 받은 항목을 기록해 두고 같은 미디어가 다시 나오면 먼저 물어봅니다. 파일이 아니라 ID만 저장하며, 캐러셀은 게시물당 한 번만 묻습니다.";
 "Media you download shows up here, with its progress and where it was saved." = "다운로드한 미디어가 진행률과 저장 위치와 함께 여기에 표시됩니다.";
 "No downloads yet" = "아직 다운로드가 없습니다";
 "Preview" = "미리보기";
 "Queued" = "대기 중";
 "Redownload" = "다시 다운로드";
+"Remove and download again" = "지우고 다시 다운로드";
 "Retry" = "재시도";
 "Retrying…" = "재시도 중…";
+"Still in your gallery." = "갤러리에 남아 있습니다.";
 "Stop" = "중지";
 "The files already saved are kept — this only empties the list." = "이미 저장된 파일은 그대로 두고 목록만 비웁니다.";
 "Waiting for a free slot" = "빈 자리를 기다리는 중";
 "Waiting for connection…" = "연결 대기 중…";
 "Waiting to retry" = "재시도 대기 중";
 "Waiting…" = "대기 중…";
+"You saved this on %@." = "%@에 저장했습니다.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 STORIES                                  //
@@ -596,6 +654,10 @@
 "Overlay layout" = "오버레이 레이아웃";
 "Drag to position the buttons" = "드래그하여 버튼 위치 지정";
 "Drag the buttons onto the story. The dimmed strip is the reply bar." = "버튼을 스토리 위로 드래그하세요. 어두운 영역은 답장 표시줄입니다.";
+"Close gaps automatically" = "빈자리 자동으로 채우기";
+"Buttons next to each other close the gap when one is hidden" = "붙어 있는 버튼은 하나가 숨겨지면 빈자리를 채웁니다";
+"Button spacing" = "버튼 간격";
+"%ld pt" = "%ld pt";
 "Send message" = "메시지 보내기";
 
 "Pinned" = "고정됨";
@@ -611,6 +673,8 @@
 "Pin order" = "고정 순서";
 "Pin this viewer?" = "이 조회자를 고정할까요?";
 "Filter, sort & pin viewers" = "조회자 필터·정렬·고정";
+"Default list" = "기본 목록";
+"Which list opens first. The header button still switches between them" = "먼저 열리는 목록입니다. 헤더 버튼으로 계속 전환할 수 있습니다";
 "Add by username, remove, reorder" = "사용자 이름으로 추가, 삭제, 순서 변경";
 "Pinned viewers (%lu)" = "고정된 조회자 (%lu)";
 "Viewers list" = "조회자 목록";
@@ -673,14 +737,26 @@
 "Show poll vote counts" = "투표 수 표시";
 "Show vote tallies on poll options and slider count/average before you vote" = "투표 전에 투표 옵션의 득표 수와 슬라이더의 평균/개수를 표시";
 "Stop story auto-advance" = "스토리 자동 넘어가기 중지";
+"Playback controls" = "재생 컨트롤";
+"Speed, seek and pause controls" = "속도, 탐색, 일시정지 컨트롤";
+"Enabled controls appear when you hold the ⋯ or speaker button on a story, or from Playback in the story menu." = "활성화된 컨트롤은 스토리의 ⋯ 또는 스피커 버튼을 길게 누르거나 스토리 메뉴의 재생에서 열 수 있습니다.";
+"Pause control" = "일시정지 컨트롤";
 "Stories" = "스토리";
 "Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" = "타이머가 끝나도 스토리가 자동으로 다음 스토리로 건너뛰지 않습니다. 수동으로 넘어가려면 탭하세요.";
 "Story audio toggle" = "스토리 오디오 토글";
 "Story user list" = "스토리 사용자 목록";
 "Tapping the eye button to mark a story as seen advances to the next story automatically" = "눈 버튼을 탭하여 스토리를 읽음으로 표시하면 자동으로 다음 스토리로 넘어갑니다";
 "This will send a story view receipt." = "스토리 조회 표시가 전송됩니다.";
+"This will send %ld story view receipts." = "스토리 조회 표시 %ld개가 전송됩니다.";
 "View story mentions" = "스토리 멘션 보기";
 "Which stories get seen-receipt blocking" = "읽음 표시 차단을 적용할 스토리";
+"Text tool" = "텍스트 도구";
+"Adds your own fonts to the font row when you add text to a story. The text is drawn into the story, so everyone sees it in the font you picked." = "스토리에 텍스트를 추가할 때 글꼴 목록에 내 글꼴을 넣습니다. 텍스트는 스토리에 그려지므로 선택한 글꼴 그대로 모두에게 보입니다.";
+"Custom story fonts" = "스토리 사용자 글꼴";
+"Show your imported and device fonts next to the built-in ones" = "가져온 글꼴과 기기 글꼴을 기본 글꼴 옆에 표시합니다";
+"Choose fonts" = "글꼴 선택";
+"Choose fonts (%lu)" = "글꼴 선택 (%lu)";
+"Import, browse online, or pick from the fonts already on your device" = "가져오거나 온라인에서 찾거나 기기에 있는 글꼴에서 고르세요";
 
 //////////////////////////////////////////////////////////////////////////////
 //                       MESSAGES — ACTIVITY NOTIFICATIONS                  //
@@ -769,6 +845,32 @@
 // Settings → Keep deleted messages tab                                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"A small label on the message" = "메시지에 작은 라벨 표시";
+"Above the bubble" = "말풍선 위";
+"Below the bubble" = "말풍선 아래";
+"Beside the bubble" = "말풍선 옆";
+"Bubble" = "말풍선";
+"Drawn at %@ %@" = "%@ %@ 크기";
+"Fade" = "흐리게";
+"Hide quick actions" = "빠른 작업 숨기기";
+"Hides the shortcut buttons next to the message" = "메시지 옆의 단축 버튼을 숨깁니다";
+"How kept messages are marked" = "보관한 메시지 표시 방법";
+"Left at %@%@ opacity" = "불투명도 %@%@ 유지";
+"Makes the message see-through" = "메시지를 반투명하게 만듭니다";
+"Marks messages someone unsent but you kept" = "상대가 삭제했지만 보관한 메시지를 표시합니다";
+"No mark" = "표시 없음";
+"Paints the bubble one color" = "말풍선을 한 가지 색으로 칠합니다";
+"Show tag" = "라벨 표시";
+"Tag" = "라벨";
+"Tag text" = "라벨 문구";
+"The tag, fade and tint all return to their defaults." = "라벨과 흐리기, 색칠이 모두 기본값으로 돌아갑니다.";
+"Text size" = "글자 크기";
+"The tint stays put even when a chat background or theme repaints the other bubbles." = "채팅 배경이나 테마가 다른 말풍선을 바꿔도 이 색은 그대로 남습니다.";
+"Tint" = "색칠";
+"Use any mix of the three, or none of them to keep messages silently." = "셋 중 원하는 대로 조합하거나, 모두 꺼서 표시 없이 보관하세요.";
+"Where the tag sits" = "라벨 위치";
+"Your own wording stays as typed, in any language. Leave it empty for the default." = "직접 입력한 문구는 어떤 언어든 그대로 쓰입니다. 비우면 기본값으로 돌아갑니다.";
+
 "Activity" = "활동";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "음성 메시지를 길게 누를 때의 메뉴에 '다운로드' 옵션을 추가하여 M4A 오디오로 저장합니다";
 "Allows typing and sending DMs longer than Instagram's limit" = "Instagram 제한보다 긴 DM을 입력하고 보낼 수 있도록 허용";
@@ -795,6 +897,8 @@
 "Files" = "파일";
 "Full last active date" = "전체 마지막 활동 날짜";
 "Hide reels blend button" = "릴스 블렌드 버튼 숨기기";
+"Hide reels in chats" = "채팅에서 릴스 숨기기";
+"Shared reels stop showing up in DM threads" = "공유된 릴스가 DM 대화에 표시되지 않습니다";
 "Hide send to group chat" = "그룹 채팅으로 보내기 숨기기";
 "Pin recipients on long-press" = "길게 눌러 수신자 고정";
 "Long-press in the share sheet to pin a chat/user to the top" = "공유 시트에서 길게 눌러 채팅/사용자를 상단에 고정";
@@ -809,7 +913,9 @@
 "Hides typing indicator from others" = "다른 사람에게 회원님의 입력 중 상태를 숨깁니다";
 "Indicate unsent messages" = "전송 취소된 메시지 표시";
 "Keep deleted messages" = "삭제된 메시지 보관";
-"Turns view once messages into normal media you can loop and pause" = "한 번 보기 메시지를 반복 재생 및 일시정지가 가능한 일반 미디어로 변환";
+"Kept unsent messages" = "보관된 전송 취소 메시지";
+"Mirrored chat history" = "채팅 기록 사본";
+"Turns view once messages into normal media you can replay and loop" = "한 번 보기 메시지를 다시 재생하고 반복할 수 있는 일반 미디어로 변환";
 "Note actions" = "메모 작업";
 "Preserves messages that others unsend" = "다른 사람이 전송 취소한 메시지를 보존합니다";
 "Keep my deleted messages" = "내 삭제된 메시지 보존";
@@ -818,7 +924,7 @@
 "Quick list button in chats" = "채팅의 빠른 목록 버튼";
 "Removes the audio call button from DM thread header" = "DM 스레드 헤더에서 음성 통화 버튼을 제거합니다";
 "Removes the video call button from DM thread header" = "DM 스레드 헤더에서 영상 통화 버튼을 제거합니다";
-"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled" = "만료 없이 시각적 메시지를 다시 재생합니다. 눈 버튼 메뉴에서 토글하거나 눈 버튼이 비활성화된 경우 독립형 버튼으로 표시됩니다.";
+"The sender is not told you opened it, and the media stays replayable" = "보낸 사람에게 열어봤다고 알리지 않으며 미디어는 계속 다시 볼 수 있습니다";
 "Search, sort, swipe to remove or toggle keep-deleted" = "검색, 정렬, 스와이프하여 제거 또는 삭제된 메시지 보관 토글";
 "Send audio as file" = "오디오를 파일로 보내기";
 "Send files (experimental)" = "파일 보내기 (실험실 기능)";
@@ -826,8 +932,10 @@
 "Show full date instead of \"Active 2h ago\"" = "\"2시간 전 활동\" 대신 전체 날짜 표시";
 "Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "DM 스레드에 목록에서 채팅을 추가/제거하는 버튼을 표시합니다. 더 많은 옵션을 보려면 길게 누르세요.";
 "Shows a notification pill when a message is unsent" = "메시지가 전송 취소될 때 알림 필(pill)을 표시합니다";
-"Shows an \"Unsent\" label on preserved messages" = "보존된 메시지에 \"전송 취소됨\" 라벨을 표시합니다";
-"Unlimited replay of visual messages" = "시각적 메시지 무제한 다시 보기";
+"Block view receipts" = "조회 확인 차단";
+"Instagram reports a view when the media finishes playing. Block it and the media stays unopened until you send the receipt yourself." = "Instagram은 재생이 끝나는 즉시 조회를 알립니다. 이를 차단하면 직접 보낼 때까지 열지 않은 상태로 유지됩니다.";
+"Available while view receipts are blocked." = "조회 확인이 차단된 동안 사용할 수 있습니다.";
+"View-once photos and videos, and their buttons" = "한 번 보기 사진과 동영상, 그리고 버튼";
 "Unsent message notification" = "전송 취소된 메시지 알림";
 "Voice messages" = "음성 메시지";
 "Warn before clearing on refresh" = "새로고침 시 지우기 전에 경고";
@@ -861,6 +969,11 @@
 "Deleted messages" = "삭제된 메시지";
 "Deleted messages log" = "삭제된 메시지 기록";
 "Deleted: %@\n" = "삭제됨: %@\n";
+"Show in chat" = "채팅에서 보기";
+"Jumped to around that time" = "해당 시점 근처로 이동했습니다";
+"Couldn't find that message in the chat" = "채팅에서 해당 메시지를 찾을 수 없습니다";
+"%@ · sent %@" = "%@ · 보냄 %@";
+"Sent: %@\n" = "보냄: %@\n";
 "Edit %lu" = "수정 %lu";
 "Edit history" = "수정 기록";
 "Edited" = "수정됨";
@@ -895,6 +1008,8 @@
 "Reaction removed" = "반응 제거됨";
 "Log removed reactions" = "제거된 반응 기록";
 "Also records when someone removes a reaction, and which message it was on" = "누군가 반응을 제거할 때와 어떤 메시지였는지도 기록합니다";
+"Log opened view-once media" = "열어 본 한 번만 보기 미디어 기록";
+"Saves it before it disappears. Off logs only unsends" = "사라지기 전에 저장. 끄면 삭제된 것만 기록";
 "Removed a reaction" = "반응을 제거함";
 "on @%@: %@" = "@%@님의 메시지: %@";
 "on: %@" = "메시지: %@";
@@ -1019,24 +1134,32 @@
 "Hide search tab" = "검색 탭 숨기기";
 "Remove the search/explore button from the tab bar" = "탭 바에서 검색/탐색 버튼 제거";
 "Hide tab bar" = "탭 바 숨기기";
-"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "DM 받은 메시지함 + 프로필을 제외한 모든 탭을 숨기고 강제로 받은 메시지함에서 시작하게 합니다. 설정 바로가기는 받은 메시지함 탭을 길게 누르는 것으로 이동됩니다.";
+"Tab shortcuts" = "탭 바로가기";
+"Hold a tab to open a RyukGram screen" = "탭을 길게 눌러 RyukGram 화면 열기";
+"Not on the tab bar" = "탭 바에 없음";
+"When the feed tab is off the bar, its shortcut moves to the first tab that is on it." = "피드 탭이 바에 없으면 해당 바로가기는 바에 있는 첫 번째 탭으로 옮겨집니다.";
 "Icon order" = "아이콘 순서";
 "Launch tab" = "시작 탭";
 "Swipe sideways to move between the tab bar tabs" = "옆으로 스와이프하여 탭 바의 탭 간 이동";
 "Messages only" = "메시지 전용";
 "Messages-only mode" = "메시지 전용 모드";
+"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "DM 받은 메시지함 + 프로필을 제외한 모든 탭을 숨기고 강제로 받은 메시지함에서 시작하게 합니다. 설정 바로가기는 받은 메시지함 탭을 길게 누르는 것으로 이동됩니다.";
 "Automatic schedule" = "자동 예약";
 "DM-only client, hide tabs, auto schedule" = "DM 전용 클라이언트, 탭 숨기기, 자동 예약";
 "Start time" = "시작 시간";
 "End time" = "종료 시간";
 "Switch into Messages-only on its own during a time window" = "지정한 시간대 동안 자동으로 메시지 전용 모드로 전환";
-"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above. You'll be asked to restart when the window starts and when it ends." = "위 토글을 사용해 매일 지정한 시간대(예: 오후 10:00 – 오전 6:00) 동안 메시지 전용 모드를 자동으로 켭니다. 시간대가 시작되고 끝날 때 재시작하라는 안내가 표시됩니다.";
+"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "위 스위치로 매일 정한 시간대 (예: 오후 10:00 – 오전 6:00)에 메시지 전용 모드를 자동으로 켭니다.";
 "Active now · ends %@" = "현재 활성 · %@에 종료";
 "Next window starts %@" = "다음 시간대 %@ 시작";
 "Messages-only starting" = "메시지 전용 모드 시작";
 "Messages-only ending" = "메시지 전용 모드 종료";
 "Your Messages-only window has started. Restart Instagram to switch to DM-only." = "메시지 전용 모드 시간대가 시작되었습니다. Instagram을 재시작하여 DM 전용으로 전환하세요.";
 "Your Messages-only window has ended. Restart Instagram to bring back the other tabs." = "메시지 전용 모드 시간대가 종료되었습니다. Instagram을 재시작하여 다른 탭을 복원하세요.";
+"When the window changes" = "시간대가 바뀔 때";
+"Apply instantly" = "바로 적용";
+"Your Messages-only window has started. Switch to DM-only now?" = "메시지 전용 시간대가 시작됐습니다. 지금 전환할까요?";
+"Your Messages-only window has ended. Bring back the other tabs now?" = "메시지 전용 시간대가 끝났습니다. 지금 다른 탭을 되돌릴까요?";
 "Navigation" = "내비게이션";
 "Swipe between tabs" = "탭 간 스와이프 전환";
 "Tab the app opens to. Ignored when Messages-only is on" = "앱이 열리는 탭입니다. 메시지 전용 모드가 켜져 있으면 무시됩니다.";
@@ -1061,12 +1184,15 @@
 "Confirm follow" = "팔로우 확인";
 "Confirm follow requests" = "팔로우 요청 확인";
 "Confirm Instants capture" = "인스턴트 촬영 확인";
+"Shows an alert before sending a reaction in a chat" = "채팅에서 리액션을 보내기 전에 알림을 표시합니다";
+"Confirm DM reaction" = "DM 리액션 확인";
 "Confirm Instants emoji reaction" = "인스턴트 이모티콘 반응 확인";
 "Confirm like: Posts" = "게시물 좋아요 확인";
 "Confirm like: Reels" = "릴스 좋아요 확인";
 "Confirm note emoji reaction" = "메모 이모티콘 반응 확인";
 "Confirm note like" = "메모 좋아요 확인";
 "Confirm posting comment" = "댓글 게시 확인";
+"Confirm reaction" = "리액션 확인";
 "Confirm repost" = "리포스트 확인";
 "Confirm send to group chat" = "그룹 채팅으로 보내기 확인";
 "Confirm sticker interaction (highlights)" = "스티커 상호작용 확인 (하이라이트)";
@@ -1080,6 +1206,7 @@
 "Confirm video call" = "영상 통화 확인";
 "Confirm voice call" = "음성 통화 확인";
 "Confirm voice messages" = "음성 메시지 확인";
+"Double tap only" = "두 번 탭만";
 "Follows" = "팔로잉";
 "Likes" = "좋아요";
 "Messaging" = "메시지";
@@ -1252,8 +1379,8 @@
 "Wrong passcode • %ld attempts" = "잘못된 암호 • %ld회 시도";
 
 //////////////////////////////////////////////////////////////////////////////
-//                             BACKUP & RESTORE                             //
-// Settings → Backup & Restore tab                                          //
+//                            BACKUP & PROFILES                             //
+// Settings → Backup & Profiles tab                                         //
 //////////////////////////////////////////////////////////////////////////////
 "Protection" = "보호";
 "Password-protect" = "비밀번호로 보호";
@@ -1285,7 +1412,6 @@
 "Applying backup…" = "백업 적용 중…";
 "archive error" = "아카이브 오류";
 "Archived snapshots" = "보관된 스냅샷";
-"Backup & Restore" = "백업 및 복원";
 "Backup exported" = "백업 내보냄";
 "Backup failed" = "백업 실패";
 "Backup has no importable sections." = "백업에 가져올 수 있는 항목이 없습니다.";
@@ -1339,6 +1465,55 @@
 "Truncated entry length." = "잘린 항목 길이.";
 "Truncated entry path." = "잘린 항목 경로.";
 "Unsafe entry path." = "안전하지 않은 항목 경로.";
+"%@ is now in use" = "%@ 사용 중";
+"%lu changed" = "%lu개 변경됨";
+"%lu on · %lu changed" = "%lu개 켜짐 · %lu개 변경됨";
+"A new profile" = "새 프로필";
+"Accounts you haven't linked use %@." = "연결하지 않은 계정은 %@을(를) 사용합니다.";
+"Adds a shortcut to the settings home page." = "설정 홈 화면에 바로가기를 추가합니다.";
+"All other accounts" = "다른 모든 계정";
+"Applied to the settings you're using now." = "지금 사용 중인 설정에 바로 적용됩니다.";
+"Backup & Profiles" = "백업 및 프로필";
+"Backup has no settings to save." = "이 백업에는 저장할 설정이 없습니다.";
+"Color" = "색상";
+"Current settings are saved to %@ first." = "현재 설정은 먼저 %@에 저장됩니다.";
+"Current settings aren't in a profile and will be replaced." = "현재 설정은 프로필에 속해 있지 않아 대체됩니다.";
+"Current settings" = "현재 설정";
+"Duplicate" = "복제";
+"Every setting goes back to how it shipped." = "모든 설정이 처음 상태로 돌아갑니다.";
+"Every switch goes off, so the app behaves like stock." = "모든 스위치가 꺼져 기본 앱처럼 동작합니다.";
+"Follows every change you make." = "변경한 내용을 그대로 따라갑니다.";
+"In %@" = "%@에 있음";
+"Name it, switch to it whenever" = "이름을 정하고 언제든 전환하세요";
+"Name this profile" = "프로필 이름 정하기";
+"Named setups you can switch between." = "이름을 붙여 전환할 수 있는 설정 모음입니다.";
+"New profile" = "새 프로필";
+"No accounts seen yet." = "아직 확인된 계정이 없습니다.";
+"No profile covers your other accounts." = "다른 계정을 맡은 프로필이 없습니다.";
+"Not linked" = "연결 안 됨";
+"Nothing ticked, so this profile covers every account you haven't linked elsewhere." = "선택된 항목이 없어 다른 프로필에 연결하지 않은 모든 계정을 이 프로필이 맡습니다.";
+"Overwrite %@?" = "%@을(를) 덮어쓸까요?";
+"Overwrite what you're using now" = "지금 사용 중인 설정 덮어쓰기";
+"Overwrite" = "덮어쓰기";
+"Profiles" = "프로필";
+"Replaces it with your current settings." = "현재 설정으로 대체합니다.";
+"Reset %@ to defaults?" = "%@을(를) 기본값으로 재설정할까요?";
+"Saved as %@" = "%@(으)로 저장됨";
+"Saved as a profile. Your current settings stay as they are." = "프로필로 저장됩니다. 현재 설정은 그대로 유지됩니다.";
+"Saves your current settings and switches to it." = "현재 설정을 저장하고 전환합니다.";
+"Settings go to" = "설정 저장 위치";
+"Show on settings home" = "설정 홈에 표시";
+"Switch to %@?" = "%@(으)로 전환할까요?";
+"Switch to a linked account and this profile comes with it." = "연결된 계정으로 바꾸면 이 프로필도 함께 적용됩니다.";
+"Switch" = "전환";
+"Switching to a ticked account switches to this profile." = "선택한 계정으로 전환하면 이 프로필로 바뀝니다.";
+"Tap to switch. Changes stay in the profile in use. Swipe or hold for more." = "탭하여 전환하세요. 변경 사항은 사용 중인 프로필에 남습니다. 쓸어넘기거나 길게 눌러 더 보기.";
+"Turn everything off in %@?" = "%@의 모든 항목을 끔까요?";
+"Turn off" = "끄기";
+"Use for other accounts" = "다른 계정에 사용";
+"Your settings aren't saved to a profile." = "설정이 프로필에 저장되어 있지 않습니다.";
+"Your settings stay untouched." = "설정은 그대로 유지됩니다.";
+"Your settings stay — they just won't belong to a profile." = "설정은 그대로 남지만 더 이상 프로필에 속하지 않습니다.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
@@ -1348,6 +1523,7 @@
 "Advanced" = "고급";
 "All tweak options are disabled" = "모든 트윅 옵션이 비활성화됨";
 "Auto-clear cache" = "캐시 자동 지우기";
+"Every launch" = "실행할 때마다";
 "Automatically opens settings when the app launches" = "앱을 실행할 때 자동으로 설정을 엽니다";
 "Cache" = "캐시";
 "Cache cleared" = "캐시 지워짐";
@@ -1360,14 +1536,12 @@
 "Daily" = "매일";
 "Disable all tweak options" = "모든 트윅 옵션 비활성화";
 "Disable safe mode" = "안전 모드 비활성화";
-"Enable tweak settings quick-access" = "트윅 설정 빠른 접근 활성화";
 "Instagram runs stock while this is on. Turn it back off to restore your settings." = "켜져 있는 동안 Instagram이 기본 상태로 작동합니다. 끄면 설정이 복원됩니다.";
 "Tap to re-enable everything" = "탭하여 모두 다시 활성화";
 "Turn every feature off — your settings are kept" = "모든 기능 끄기 — 설정은 유지됩니다";
 "Fix duplicate notifications" = "중복 알림 수정";
 "Free %@ of Instagram cache." = "Instagram 캐시에서 %@을(를) 확보합니다.";
 "Freed %@" = "%@ 확보됨";
-"Hold on the home tab to open RyukGram settings" = "홈 탭을 길게 눌러 RyukGram 설정을 엽니다";
 "Monthly" = "매월";
 "Nothing to clear" = "지울 것이 없습니다";
 "Off skips the size scan when Advanced opens." = "꺼짐은 고급 설정을 열 때 크기 스캔을 건너뜁니다.";
@@ -1422,6 +1596,12 @@
 "Surfaces" = "화면";
 "These toggles flip hidden Instagram experiments on. Some features may not work on every account or IG version. If IG keeps crashing on launch, the flags auto-reset after 3 failed starts." = "이 토글은 숨겨진 Instagram 실험을 켭니다. 일부 기능은 모든 계정이나 IG 버전에서 작동하지 않을 수 있습니다. 실행 시 IG가 계속 충돌하면 3번 실패 후 자동으로 재설정됩니다.";
 "Toggle hidden Instagram experiments. Some may not work on every account or IG version." = "숨겨진 Instagram 실험을 켜세요. 일부는 모든 계정이나 IG 버전에서 작동하지 않을 수 있습니다.";
+"Export overrides" = "변경 내보내기";
+"Import overrides" = "변경 가져오기";
+"Nothing to export" = "내보낼 항목 없음";
+"%lu applied · %lu skipped" = "%lu개 적용 · %lu개 건너뜀";
+"This file holds %lu entry(s). Merge keeps what you already changed, replace clears your current overrides first." = "이 파일에는 항목이 %lu개 있습니다. 병합은 현재 변경을 유지하고, 교체는 먼저 지웁니다.";
+"MobileConfig overrides" = "MobileConfig 변경";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  DEBUG                                   //
@@ -1557,6 +1737,7 @@
 "%@ unsent a message" = "%@님이 메시지 전송을 취소했습니다";
 "%@ unsent a message from %@" = "%1$@님이 %2$@님의 메시지 전송을 취소했습니다";
 "A message was unsent" = "메시지 전송이 취소되었습니다";
+"A message in %@ was unsent" = "%@ 에서 메시지가 전송 취소되었습니다";
 "Add" = "추가";
 "Add to block list" = "차단 목록에 추가";
 "Added to block list" = "차단 목록에 추가됨";
@@ -1598,6 +1779,8 @@
 "Marking as viewed advances to the next stacked media instead of closing" = "확인함으로 표시하면 닫는 대신 다음 누적 미디어로 넘어갑니다";
 "Mark messages as seen" = "메시지를 읽음으로 표시";
 "Mark seen" = "읽음 표시";
+"Mark all (%ld)" = "모두 읽음 (%ld)";
+"Mark up to here (%ld)" = "여기까지 읽음 (%ld)";
 "Marked as viewed" = "조회한 것으로 표시됨";
 "Marked messages as seen" = "메시지를 읽음으로 표시함";
 "Mentions" = "멘션";
@@ -1644,15 +1827,15 @@
 "Un-exclude story seen" = "스토리 읽음 제외 취소";
 "Un-excluded" = "제외 취소됨";
 "Unblocked" = "차단 해제됨";
-"Unlimited replay enabled" = "무제한 다시 보기 활성화됨";
+"Views blocked" = "조회 차단됨";
 "Unmute story audio" = "스토리 오디오 음소거 해제";
 "Unsent" = "전송 취소됨";
 "Upload Audio" = "오디오 업로드";
 "VC not found" = "VC를 찾을 수 없습니다";
 "Video from Library" = "라이브러리에서 비디오 선택";
-"Visual messages will expire" = "비주얼 메시지가 만료됩니다";
-"Visual messages: expiring" = "비주얼 메시지: 만료 예정";
-"Visual messages: unlimited replay" = "비주얼 메시지: 무제한 다시 보기";
+"Views will be reported" = "조회가 전송됩니다";
+"Disappearing media: views reported" = "사라지는 미디어: 조회 전송";
+"Disappearing media: views blocked" = "사라지는 미디어: 조회 차단";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
@@ -1773,6 +1956,33 @@
 "Select color" = "색상 선택";
 "Set location" = "위치 설정";
 "The theme RyukGram applies to Instagram." = "RyukGram이 Instagram에 적용하는 테마입니다.";
+"Fonts" = "글꼴";
+"Font" = "글꼴";
+"Custom fonts" = "사용자 글꼴";
+"Everywhere" = "전체";
+"Per surface" = "화면별";
+"Per surface gives Instagram and RyukGram their own font." = "화면별을 선택하면 Instagram과 RyukGram에 각각 다른 글꼴을 지정합니다.";
+"Replace the app font" = "앱 글꼴 바꾸기";
+"My fonts" = "내 글꼴";
+"Device fonts" = "기기 글꼴";
+"Import a .ttf or .otf file, or browse thousands of fonts online." = ".ttf 또는 .otf 파일을 가져오거나 온라인에서 수천 개의 글꼴을 찾아보세요.";
+"Swipe a font to delete it." = "글꼴을 밀어서 삭제합니다.";
+"Delete %lu fonts?" = "글꼴 %lu개를 삭제할까요?";
+"Added" = "추가됨";
+"Swipe to remove." = "밀어서 제거합니다.";
+"The quick brown fox jumps over the lazy dog" = "다람쥐 헌 쳇바퀴에 타고파";
+"%lu styles · %@" = "%lu개 스타일 · %@";
+"%@ · %lu weights" = "%@ · 두께 %lu개";
+"Browse online" = "온라인에서 찾기";
+"Font installed" = "글꼴 설치됨";
+"Restart Instagram to apply everywhere" = "전체에 적용하려면 Instagram을 다시 시작하세요";
+"No usable font found. Pick a .ttf or .otf file." = "사용할 수 있는 글꼴이 없습니다. .ttf 또는 .otf 파일을 선택하세요.";
+"This font has no downloadable styles." = "이 글꼴에는 내려받을 수 있는 스타일이 없습니다.";
+"Could not load the font catalog." = "글꼴 목록을 불러오지 못했습니다.";
+"Sans" = "산세리프";
+"Serif" = "세리프";
+"Display" = "디스플레이";
+"Hand" = "손글씨";
 "Theme" = "테마";
 "Turn Location Services on in Settings → Privacy to use your current location." = "현재 위치를 사용하려면 설정 → 개인정보에서 위치 서비스를 켜세요.";
 "Type an emoji to use as the note bubble icon." = "메모 말풍선 아이콘으로 사용할 이모지를 입력하세요.";
@@ -2015,6 +2225,8 @@
 //                            PROFILE (FEATURES)                            //
 // Strings from Profile.                                                    //
 //////////////////////////////////////////////////////////////////////////////
+"Follow indicator in lists" = "목록의 팔로우 표시";
+"Shows whether each user in a follower or following list follows you" = "팔로워 또는 팔로잉 목록에서 각 사용자가 나를 팔로우하는지 표시합니다";
 
 "%lu accounts" = "계정 %lu개";
 "%lu loaded" = "%lu개 불러옴";
@@ -2101,6 +2313,17 @@
 // Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"Updates" = "업데이트";
+"Update available" = "업데이트 사용 가능";
+"Check for updates" = "업데이트 확인";
+"You're up to date" = "최신 버전입니다";
+"Get it on Telegram" = "Telegram에서 받기";
+"Update check failed" = "업데이트 확인 실패";
+"%@ is available" = "%@ 사용 가능";
+"What's new in this build" = "이 빌드의 새로운 기능";
+"Tells you on launch when a newer RyukGram is out" = "새로운 RyukGram이 나오면 실행할 때 알려줍니다";
+"Shows the release notes once after RyukGram updates" = "RyukGram 업데이트 후 릴리스 노트를 한 번 보여줍니다";
+"Reads the public RyukGram release list on GitHub. Nothing about you is sent." = "GitHub의 공개 RyukGram 릴리스 목록을 읽습니다. 사용자에 대한 정보는 전송되지 않습니다.";
 "Enjoying RyukGram?" = "RyukGram이 마음에 드시나요?";
 "It's free, and nothing leaves your device. If you enjoy using it, a coffee keeps it going." = "무료이며 기기 밖으로 나가는 정보는 없습니다. 잘 쓰고 계신다면 커피 한 잔이 큰 힘이 됩니다.";
 "Donate" = "후원하기";
@@ -2166,6 +2389,11 @@
 "Audio track %ld" = "오디오 트랙 %ld";
 "Download video at the highest available quality" = "가능한 가장 높은 품질로 동영상 다운로드";
 "Downloads HD video via DASH streams and encodes to H.264. Requires FFmpegKit." = "DASH 스트림을 통해 HD 동영상을 다운로드하고 H.264로 인코딩합니다. FFmpegKit가 필요합니다.";
+"Full resolution asks Instagram for the original upload, often far larger than the size the app is given." = "전체 해상도는 Instagram에 원본 업로드 파일을 요청합니다. 앱이 받는 크기보다 훨씬 큰 경우가 많습니다.";
+"Full resolution" = "전체 해상도";
+"Photo Size" = "사진 크기";
+"%@ · Original" = "%@ · 원본";
+"Copy photo URL" = "사진 URL 복사";
 "Encoding in software" = "소프트웨어로 인코딩 중";
 "Encoding speed" = "인코딩 속도";
 "Enhanced downloads" = "향상된 다운로드";
@@ -2342,6 +2570,14 @@
 "Added %lu" = "%lu개 추가됨";
 "All files deleted" = "모든 파일 삭제됨";
 "Browsing" = "탐색";
+"Group posts and stories" = "게시물과 스토리 묶기";
+"One swipeable item per post or story" = "게시물이나 스토리마다 넘겨보는 항목 하나";
+"Group into album" = "앨범으로 묶기";
+"Split album" = "앨범 나누기";
+"Delete album" = "앨범 삭제";
+"Delete album?" = "앨범을 삭제할까요?";
+"Share all" = "모두 공유";
+"Select at least two files" = "파일을 두 개 이상 선택하세요";
 "Found %lu items saved by a previous version. Restore them into your gallery now?" = "이전 버전에서 저장한 항목 %lu개를 찾았습니다. 지금 갤러리로 복원할까요?";
 "Gallery data from a previous version was found. Restore it now?" = "이전 버전의 갤러리 데이터를 찾았습니다. 지금 복원할까요?";
 "Gallery restored" = "갤러리 복원됨";
@@ -2411,7 +2647,6 @@
 "Any time" = "전체 기간";
 "This year" = "올해";
 "%ld columns" = "%ld열";
-"Hold DM tab to open gallery" = "DM 탭을 길게 눌러 갤러리 열기";
 "Images" = "이미지";
 "Images deleted" = "이미지 삭제됨";
 "Images first" = "이미지 먼저";
@@ -2419,7 +2654,6 @@
 "items" = "항목";
 "Largest first" = "큰 파일부터";
 "List view" = "목록 보기";
-"Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "하단 탭바의 받은 메시지함 버튼을 길게 눌러 RyukGram 갤러리를 엽니다";
 "Manage" = "관리";
 "More" = "더보기";
 "Move selected" = "선택 항목 이동";
@@ -2511,6 +2745,8 @@
 "Choose the icon shown on the home top bar. Auto uses the selected action icon when only one action is enabled." = "홈 상단 바에 표시되는 아이콘을 선택합니다. 자동은 작업이 하나만 활성화된 경우 선택된 작업 아이콘을 사용합니다.";
 "Configure button" = "버튼 구성";
 "Global Action Icons" = "전역 작업 아이콘";
+"Old Instagram logo" = "이전 Instagram 로고";
+"Brings back the previous feed header wordmark." = "피드 헤더의 로고를 이전 로고로 되돌립니다.";
 "Interface" = "인터페이스";
 "Override the icon for a specific button. Buttons left on Default follow the shared icon above." = "특정 버튼의 아이콘을 재정의합니다. 기본값으로 둔 버튼은 위의 공유 아이콘을 따릅니다.";
 "Per button" = "버튼별";
@@ -2550,6 +2786,10 @@
 "Preview pill" = "알약 미리보기";
 "Preview download pill" = "다운로드 알약 미리보기";
 "Preview loading pill" = "로딩 알약 미리보기";
+"Preview long text" = "긴 텍스트 미리보기";
+"Check wrapping and truncation" = "줄바꿈과 말줄임 확인";
+"A notification title long enough to wrap onto more than one line" = "두 줄 이상으로 줄바꿈될 만큼 긴 알림 제목";
+"And a body that keeps going so you can see the pill grow, wrap, and finally cut itself off with an ellipsis instead of taking over the whole screen." = "본문도 길게 이어져서 알약이 커지고 줄바꿈된 뒤 화면 전체를 덮는 대신 말줄임표로 잘리는 것을 볼 수 있습니다.";
 "Master switch. When off, no RyukGram pills or IG-native toasts are emitted." = "마스터 스위치. 끄면 어떤 알림도 표시되지 않습니다.";
 "Universal in-app notifications. All RyukGram feedback (downloads, copies, errors, success messages) routes through here." = "앱 내 통합 알림. 모든 RyukGram 피드백이 여기를 거칩니다.";
 "Minimal: flat blur. Colorful: tinted by tone. Glow: colored halo. Island: dynamic-island capsule." = "Minimal: 단순 블러. Colorful: 톤별 색조. Glow: 컬러 후광. Island: 다이내믹 아일랜드 캡슐.";
@@ -2632,6 +2872,7 @@
 "FFmpeg log copied" = "FFmpeg 로그 복사됨";
 "GIF inserted" = "GIF 삽입됨";
 "Story marked as seen" = "스토리가 읽음으로 표시됨";
+"Marked %ld stories as seen" = "스토리 %ld개가 읽음으로 표시됨";
 "Saved" = "저장됨";
 "Tap to retry" = "재시도하려면 탭";
 "Looks great" = "멋져 보입니다";
@@ -2715,6 +2956,22 @@
 //                               DEVICE ID                                  //
 // Settings -> Advanced -> Device ID, and the login-screen Device ID button //
 //////////////////////////////////////////////////////////////////////////////
+"Machine ID" = "머신 ID";
+"Copy machine ID" = "머신 ID 복사";
+"Enter machine ID manually…" = "머신 ID 직접 입력…";
+"Restore a saved one, or clear it to re-register" = "저장한 값을 복원하거나 지워서 다시 등록합니다";
+"Manual machine ID" = "머신 ID 직접 설정";
+"Only paste one Instagram issued. The server checks its format, so a made-up value is rejected." = "Instagram이 발급한 값만 붙여넣으세요. 서버가 형식을 검사하므로 임의로 만든 값은 거부됩니다.";
+"Machine ID set" = "머신 ID 설정됨";
+"Clear and re-register" = "지우고 다시 등록";
+"Machine ID cleared" = "머신 ID 지워짐";
+"No machine ID yet" = "아직 머신 ID 없음";
+"Issued by Instagram and format-checked by the server, so it can only be kept, never made up. RyukGram pins the one you were issued so Instagram can't swap it." = "Instagram이 발급하고 서버가 형식을 검사하므로 유지만 할 수 있고 임의로 만들 수 없습니다. RyukGram은 발급받은 값을 고정해 Instagram이 바꾸지 못하게 합니다.";
+"Mask everything & relaunch" = "모두 위장하고 다시 시작";
+"Mask everything & relaunch?" = "모두 위장하고 다시 시작할까요?";
+"Mask everything" = "모두 위장";
+"Rolls every identifier, blocks Apple attestation, and clears your saved logins and cookies. You sign in again afterwards." = "모든 식별자를 새로 만들고, Apple 인증을 차단하고, 저장된 로그인과 쿠키를 지웁니다. 이후 다시 로그인해야 합니다.";
+"Fresh IDs, blocked attestation, cleared logins" = "새 ID, 인증 차단, 로그인 삭제";
 "Roll a new fingerprint" = "새 지문 생성";
 "New device fingerprint" = "새 기기 지문";
 "Roll new ID" = "새 ID 생성";
@@ -2759,6 +3016,7 @@
 //                         FOLLOW REQUESTS TRACKER                        //
 // Settings → Follow Requests Tracker                                     //
 //////////////////////////////////////////////////////////////////////////
+"View all from this user" = "이 사용자의 전체 보기";
 "Follow Requests" = "팔로우 요청";
 "Show follow requests" = "팔로우 요청 보기";
 "Check now" = "지금 확인";
@@ -2830,7 +3088,7 @@
 "Turn everything off" = "모두 끄기";
 "Every Instagram Plus feature turns off and Instagram restarts." = "모든 Instagram Plus 기능이 꺼지고 Instagram이 다시 시작됩니다.";
 "Story peek" = "스토리 미리보기";
-"Hold a story in the tray to preview it without opening it." = "트레이에서 스토리를 길게 눌러 열지 않고 미리 봅니다.";
+"Hold a story in the tray or an inbox avatar to preview it without opening it." = "트레이의 스토리나 받은 메시지함의 프로필 사진을 길게 눌러 열지 않고 미리 봅니다.";
 "Story fonts" = "스토리 글꼴";
 "Adds the subscriber fonts when you add text to a story." = "스토리에 텍스트를 추가할 때 구독자 전용 글꼴을 추가합니다.";
 "Search story viewers" = "스토리 조회자 검색";
@@ -2900,6 +3158,8 @@
 "Drag your camera window to any corner or edge." = "카메라 창을 원하는 모서리나 가장자리로 드래그하세요.";
 "Enable call recording" = "통화 녹화 활성화";
 "Export all" = "모두 내보내기";
+"Share as audio only" = "오디오만 공유";
+"Delete %lu recordings?" = "녹음 %lu개를 삭제할까요?";
 "Full screen" = "전체 화면";
 "Group call" = "그룹 통화";
 "Ignore auto-record for this chat" = "이 채팅에서 자동 녹화 무시";
@@ -2907,6 +3167,7 @@
 "Include my camera" = "내 카메라 포함";
 "Keep forever" = "영구 보관";
 "Large" = "크게";
+"Manual" = "수동";
 "Mute without the other side seeing you muted — your mic is still silenced" = "상대방에게 음소거 상태를 알리지 않고 음소거합니다 — 마이크는 그대로 차단됩니다";
 "Muted silently" = "몰래 음소거됨";
 "My camera size" = "내 카메라 크기";
@@ -2963,6 +3224,7 @@
 // Settings → Stories archive + the archive grid, media viewer, viewers  //
 //////////////////////////////////////////////////////////////////////////
 
+
 "Reacted" = "반응함";
 "Reacted first" = "반응한 사람 우선";
 "Mutual" = "맞팔";
@@ -3011,3 +3273,83 @@
 "%lu pinned viewers just saw, liked or reacted" = "고정한 조회자 %lu명이 방금 보거나 좋아요 또는 반응했습니다";
 "A pinned viewer" = "고정한 조회자";
 "On each launch" = "실행할 때마다";
+
+"MobileConfig" = "MobileConfig";
+"Enable MobileConfig browser" = "MobileConfig 브라우저 사용";
+"Open MobileConfig browser" = "MobileConfig 브라우저 열기";
+"Lets the browser read values and apply your changes" = "브라우저가 값을 읽고 변경 사항을 적용할 수 있게 합니다";
+"Search, toggle and edit config values" = "구성 값 검색, 전환 및 편집";
+"Turn on the browser first, then restart Instagram" = "먼저 브라우저를 켠 다음 Instagram을 다시 시작하세요";
+"Use at your own risk" = "본인 책임하에 사용하세요";
+"I understand" = "이해했습니다";
+"MobileConfig overrides were reset after repeated crashes on launch" = "실행 시 반복된 충돌로 MobileConfig 재정의가 초기화되었습니다";
+"Overridden" = "재정의됨";
+"overridden" = "재정의됨";
+"Search name or config number" = "이름 또는 구성 번호로 검색";
+"Reset all overrides" = "모든 재정의 초기화";
+"Reset all overrides?" = "모든 재정의를 초기화할까요?";
+"%lu override(s) will be removed." = "%lu개의 재정의가 삭제됩니다.";
+"param" = "매개변수";
+"params" = "매개변수";
+"Config" = "구성";
+"Number" = "번호";
+"Override" = "재정의";
+"Value" = "값";
+"Type: %@   ·   live: %@" = "유형: %@   ·   현재: %@";
+"Clear override" = "재정의 지우기";
+"Note" = "메모";
+"Parameter:" = "매개변수:";
+"Reset %lu override(s)" = "재정의 %lu개 초기화";
+"Read and change Instagram's own internal settings. Known names are built in; configs shown only as a number have obfuscated names we can't recover yet. If Instagram crashes on launch three times in a row, your changes are cleared for you." = "Instagram 자체 내부 설정을 읽고 변경합니다. 알려진 이름은 기본 포함되며, 번호로만 표시되는 구성은 이름이 난독화되어 현재로서는 복구할 수 없습니다. 실행 시 Instagram이 세 번 연속 충돌하면 변경 사항이 자동으로 지워집니다.";
+"This changes Instagram's own internal settings. Some can break features or cause crashes until you switch them back.\n\nChanges stay on this device. Most take effect right away, and some only after you restart Instagram. If it crashes on launch three times in a row, they're cleared for you.\n\nInstagram can tell when a setting doesn't match what its server sent. It's very unlikely to affect your account, but not impossible. Use at your own risk." = "이 기능은 Instagram 자체 내부 설정을 변경합니다. 일부는 되돌릴 때까지 기능을 손상시키거나 충돌을 일으킬 수 있습니다.\n\n변경 사항은 이 기기에 저장됩니다. 대부분 즉시 적용되며 일부는 Instagram을 다시 시작한 후에만 적용됩니다. 실행 시 세 번 연속 충돌하면 자동으로 지워집니다.\n\nInstagram은 설정이 서버가 보낸 값과 일치하지 않을 때 이를 감지할 수 있습니다. 계정에 영향을 줄 가능성은 매우 낮지만 불가능한 것은 아닙니다. 본인 책임하에 사용하세요.";
+"Tap a field to copy. Tap a value below to edit." = "필드를 탭하면 복사됩니다. 아래 값을 탭하면 편집됩니다.";
+"%lu configs  ·  %lu named" = "구성 %lu개  ·  이름 있음 %lu개";
+
+"Clear cache now" = "지금 캐시 지우기";
+"Delete staged captures that haven't been unsent yet" = "아직 취소되지 않은 대기 중 캡처를 삭제합니다";
+"Clear view-once cache" = "한 번 보기 캐시 지우기";
+"Delete all staged captures that haven't been unsent? Anything already saved to the log is kept." = "아직 취소되지 않은 대기 중 캡처를 모두 삭제할까요? 기록에 이미 저장된 항목은 유지됩니다.";
+"Capture while closed" = "앱 종료 상태에서 캡처";
+"Save media that arrives while Instagram is closed" = "Instagram이 닫혀 있을 때 도착한 미디어를 저장합니다";
+"⚠️ Only works on the full Instagram build with plugins, signed with a paid, ad-hoc certificate under the default Instagram bundle id. The no-plugins build has no notification extension. Requires the deleted messages log to stay on.\n\nCatches view-once media (and normal media if enabled) that arrives while Instagram is fully closed, using the notification extension. Affects only this log and its media, nothing else in the app. It rides push notifications, so muted chats, Do Not Disturb or disabled notifications miss messages; \"Keep running in background\" is the fallback." = "⚠️ 기본 Instagram 번들 ID로 유료(애드혹) 인증서로 서명된 플러그인 포함 전체 Instagram 빌드에서만 작동합니다. 플러그인 없는 빌드에는 알림 확장이 없습니다. 삭제된 메시지 기록이 켜져 있어야 합니다.\n\n알림 확장 기능으로 Instagram이 완전히 닫혀 있을 때 도착한 한 번 보기(설정 시 일반) 미디어를 캡처합니다. 이 기록과 해당 미디어에만 영향을 주며, 앱의 다른 부분에는 영향을 주지 않습니다. 푸시 알림에 의존하므로 음소거된 채팅, 방해 금지 모드 또는 알림이 꺼진 경우 메시지를 놓칩니다. \"백그라운드 유지\"가 대안입니다.";
+"Uses the notification extension to save media that arrives with the app closed" = "앱이 닫혀 있을 때 도착한 미디어를 알림 확장 기능으로 저장합니다";
+"Also capture normal media" = "일반 미디어도 캡처";
+"Not just view-once. Uses a lot more storage" = "한 번 보기만이 아닙니다. 저장 공간을 훨씬 많이 사용합니다";
+"Auto-clean" = "자동 정리";
+"Limit how much captured media is kept" = "보관하는 캡처 미디어 양을 제한합니다";
+"Size limit" = "크기 제한";
+"Keep at most this per account" = "계정당 최대 이만큼 보관";
+"MB" = "MB";
+"Age limit" = "기간 제한";
+"Keep no longer than this" = "이보다 오래 보관하지 않음";
+"days" = "일";
+"Drop every capture each time you open the app" = "앱을 열 때마다 모든 캡처를 삭제합니다";
+"Trim each account by size and age" = "계정별로 크기와 기간에 따라 정리합니다";
+"Kept per account. A capture is dropped once it passes either limit." = "계정별로 보관됩니다. 캡처는 크기 또는 기간 제한 중 하나를 넘으면 삭제됩니다.";
+"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "둘 다 끄면 캡처는 취소될 때까지 보관됩니다. 하나를 켜면 다른 하나가 꺼집니다. 실제로 취소된 항목은 먼저 기록에 저장되며 여기서는 정리되지 않습니다.";
+"Clear when I open Instagram" = "Instagram 열 때 지우기";
+"Keep within size / age limits" = "크기 / 기간 제한 내에서 보관";
+"View-once cache" = "한 번 보기 캐시";
+"Message log" = "메시지 기록";
+
+"Story stats" = "스토리 통계";
+"Views per story" = "스토리별 조회수";
+"%@ · peak %@ views" = "%@ · 최고 %@회";
+"Avg / story" = "스토리당 평균";
+"Unique viewers" = "순 조회자";
+"Engagement" = "참여율";
+"Loyal fans" = "충성 조회자";
+"Peak hour" = "인기 시간대";
+"Recently viewed" = "최근 조회순";
+"No archived stories in this range yet." = "이 기간에 보관된 스토리가 없습니다.";
+
+"Names & photos updated" = "이름과 사진을 업데이트했습니다";
+"Names & photos are up to date" = "이름과 사진이 이미 최신입니다";
+
+"Early birds" = "빠른 조회자";
+"Opens first" = "가장 먼저 봄";
+"top %ld%%" = "상위 %ld%%";
+"1 reaction" = "반응 1회";
+"%ld reactions" = "반응 %ld회";
+"Watched %ld stories" = "스토리 %ld개 시청";
+"Unpin" = "고정 해제";

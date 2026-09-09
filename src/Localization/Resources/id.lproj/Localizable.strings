@@ -88,9 +88,14 @@
 "Adds download, copy and expand options to GIF and image comments" = "Menambahkan opsi unduh, salin, dan perbesar pada komentar GIF dan gambar";
 "Allow video in photo sticker" = "Izinkan video di sticker foto";
 "Alternate icons are not supported" = "Ikon alternatif tidak didukung";
+"Couldn't change app icon" = "Tidak bisa mengubah ikon aplikasi";
+"Always mute" = "Selalu bisukan";
+"Starts muted everywhere until you tap a speaker" = "Mulai dalam mode bisu di mana pun sampai kamu ketuk ikon speaker";
 "Anonymous live viewing" = "Menonton live secara anonim";
 "App Icon" = "Ikon Aplikasi";
-"Audio page" = "Halaman audio";
+"Download from music picker" = "Unduh dari pemilih musik";
+"Music" = "Musik";
+"Adds a download option to the song long-press menu in music pickers" = "Menambahkan opsi unduh ke menu tekan-tahan lagu di pemilih musik";
 "Auto-reveals sensitive media" = "Otomatis membuka media sensitif";
 "Block surveys" = "Blokir survei";
 "Blocks the viewer-count heartbeat so the broadcaster doesn't see you — you also won't see the viewer count" = "Memblokir sinyal jumlah penonton supaya penyiar tidak melihatmu — kamu juga tidak akan melihat jumlah penonton";
@@ -103,6 +108,10 @@
 "Copy comment text" = "Salin teks komentar";
 "Copy description" = "Salin deskripsi";
 "Long press a caption to copy its text" = "Tekan dan tahan caption untuk menyalin teksnya";
+"Edit before copying" = "Edit sebelum menyalin";
+"Pick or trim what gets copied" = "Pilih atau pangkas bagian yang disalin";
+"Copy selection" = "Salin pilihan";
+"%lu characters" = "%lu karakter";
 "Custom sticker colors" = "Warna sticker kustom";
 "Custom colors aren't supported for this sticker" = "Warna kustom tidak didukung untuk sticker ini";
 "Date format" = "Format tanggal";
@@ -122,7 +131,6 @@
 "End" = "Akhir";
 "Experimental features" = "Fitur eksperimental";
 "Explore & search" = "Explore & pencarian";
-"Failed to change icon" = "Gagal mengganti ikon";
 "Fixed" = "Tetap";
 "Fixed prevents shrinking. Hide makes it disappear when scrolling down" = "Tetap mencegahnya mengecil. Sembunyikan membuatnya hilang saat kamu scroll ke bawah";
 "Focus/distractions" = "Fokus/gangguan";
@@ -134,14 +142,12 @@
 "Hide explore posts grid" = "Sembunyikan grid postingan explore";
 "Hide friends map" = "Sembunyikan peta teman";
 "Hide Meta AI" = "Sembunyikan Meta AI";
-"Hide metrics" = "Sembunyikan angka statistik";
 "Hide notes tray" = "Sembunyikan baris notes";
 "Hide on scroll" = "Sembunyikan saat scroll";
 "Hide TestFlight popup" = "Sembunyikan popup TestFlight";
 "Hide trending searches" = "Sembunyikan pencarian tren";
 "Hide UI on capture" = "Sembunyikan UI saat tangkapan layar";
 "Removes suggested accounts to follow outside the feed" = "Menghapus saran akun untuk diikuti di luar feed";
-"Hides like/comment/share counts on posts and reels" = "Menyembunyikan jumlah like/komentar/bagikan pada postingan dan reel";
 "Removes the friends map icon from the notes tray" = "Menghapus ikon peta teman dari baris notes";
 "Removes the suggested posts grid on the explore tab" = "Menghapus grid saran postingan di tab explore";
 "Strips the Meta AI buttons and entry points from the app" = "Membuang tombol dan pintu masuk Meta AI dari aplikasi";
@@ -158,7 +164,6 @@
 "Hold the eyedropper in stories to pick an exact text color" = "Tahan pipet di story untuk memilih warna teks yang persis";
 "Long-press the color wheel in sticker editors to pick any solid or gradient color" = "Tekan dan tahan roda warna di editor sticker untuk memilih warna solid atau gradien apa pun";
 "Long-press the heart button in a live to hide or show the comments" = "Tekan dan tahan tombol hati di live untuk menyembunyikan atau menampilkan komentar";
-"Long-press the search tab to open a copied Instagram link" = "Tekan dan tahan tab pencarian untuk membuka tautan Instagram yang kamu salin";
 "Master switch. When off, all per-surface toggles below are ignored." = "Tombol utama. Saat mati, semua sakelar per bagian di bawah diabaikan.";
 "No suggested chats" = "Tanpa saran chat";
 "No suggested users" = "Tanpa saran pengguna";
@@ -192,6 +197,7 @@
 "Suppresses the \"It's time to update Instagram Beta\" nag" = "Menekan pesan \"It's time to update Instagram Beta\" yang mengganggu";
 "Tap to apply" = "Ketuk untuk menerapkan";
 "The selected icon will be saved and shown here the next time you open this page." = "Ikon yang dipilih akan disimpan dan ditampilkan di sini saat kamu membuka halaman ini lagi.";
+"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "Aplikasi sideload-mu mengganti daftar ikon Instagram. Setel ikon aplikasinya kembali ke Default, lalu segarkan Instagram supaya ikonnya kembali.";
 "Toggle live comments" = "Alihkan komentar live";
 "Use detailed color picker" = "Pakai pemilih warna detail";
 "Used across feed, stories, reels, and DMs." = "Dipakai di feed, story, reel, dan DM.";
@@ -316,9 +322,10 @@
 "Disable home button refresh" = "Matikan refresh tombol Home";
 "Disable home button scroll" = "Matikan scroll tombol Home";
 "Disable video autoplay" = "Matikan putar otomatis video";
+"Disable swipe to camera" = "Nonaktifkan geser ke kamera";
+"Swiping right on the feed no longer opens the camera" = "Menggeser feed ke kanan tidak lagi membuka kamera";
 "Hide" = "Sembunyikan";
 "Hide entire feed" = "Sembunyikan seluruh feed";
-"Hide repost button" = "Sembunyikan tombol repost";
 "Hide stories tray" = "Sembunyikan baris story";
 "Hide suggested stories" = "Sembunyikan story yang disarankan";
 "Hide story highlights" = "Sembunyikan highlight story";
@@ -326,7 +333,6 @@
 "Hides suggested accounts" = "Menyembunyikan akun yang disarankan";
 "Hides suggested reels" = "Menyembunyikan reel yang disarankan";
 "Hides suggested threads posts" = "Menyembunyikan postingan Threads yang disarankan";
-"Hides the repost button on feed posts" = "Menyembunyikan tombol repost pada postingan feed";
 "Hides the story tray at the top" = "Menyembunyikan baris story di bagian atas";
 "Inserts a button row below like/comment/share on each post" = "Menyisipkan baris tombol di bawah suka/komentar/bagikan pada setiap postingan";
 "Long press on media to expand in full-screen viewer" = "Tekan lama pada media untuk membuka di penampil layar penuh";
@@ -343,11 +349,16 @@
 "No suggested threads" = "Tanpa thread yang disarankan";
 "Prevents feed from reloading when returning from background" = "Mencegah feed dimuat ulang saat kembali dari latar";
 "Prevents videos from playing automatically" = "Mencegah video diputar secara otomatis";
+"Play in place" = "Putar di tempat";
+"Play, then open" = "Putar, lalu buka";
 "Refresh" = "Refresh";
 "Removes all content from your home feed" = "Menghapus semua konten dari feed utama kamu";
 "Removes suggested accounts from the stories tray" = "Menghapus akun yang disarankan dari baris story";
 "Removes suggested posts" = "Menghapus postingan yang disarankan";
 "Scroll to top without refreshing when tapping Home" = "Scroll ke atas tanpa refresh saat mengetuk Home";
+"Scroll only" = "Hanya gulir";
+"Status bar tap" = "Ketuk status bar";
+"Tapping the top of the screen scrolls up and refreshes" = "Mengetuk bagian atas layar akan menggulir ke atas dan menyegarkan";
 "Show action button" = "Tampilkan tombol aksi";
 "Show date" = "Tampilkan tanggal";
 "Stories tray" = "Baris story";
@@ -373,6 +384,15 @@
 "Paste a giphy.com URL or media ID" = "Tempel URL giphy.com atau ID media";
 "Send" = "Kirim";
 
+"Post buttons" = "Tombol postingan";
+"Reorder, hide buttons and counts" = "Ubah urutan, sembunyikan tombol dan angka";
+"Customized" = "Dikustomisasi";
+"Buttons" = "Tombol";
+"Numbers" = "Angka";
+"Right side" = "Sisi kanan";
+"Drag to reorder, left to right. Instagram pins the last one to the right." = "Seret untuk mengubah urutan, kiri ke kanan. Instagram menyematkan yang terakhir di kanan.";
+"The right-side button never shows a count." = "Tombol sisi kanan tidak pernah menampilkan angka.";
+"Restores Instagram's order and shows every button and count." = "Mengembalikan urutan bawaan Instagram dan menampilkan semua tombol dan angka.";
 //////////////////////////////////////////////////////////////////////////////
 //                                  REELS                                   //
 // Settings → Reels tab                                                     //
@@ -380,8 +400,16 @@
 
 "Adds a RyukGram action button above the reel sidebar with view-cover/download/share/copy/expand/repost entries. Tap opens the menu by default; change the tap behavior below." = "Menambahkan tombol aksi RyukGram di atas sidebar reel dengan entri lihat-cover/unduh/bagikan/salin/perbesar/repost. Ketuk membuka menu secara bawaan; ubah perilaku ketuk di bawah.";
 "Always show progress scrubber" = "Selalu tampilkan bilah progress";
+"Expanded view" = "Tampilan diperluas";
+"Shows the whole reel instead of cropping the sides" = "Menampilkan reels utuh tanpa memotong sisinya";
 "Auto-scroll reels" = "Scroll otomatis reel";
-"Speed, seek and auto-scroll controls" = "Kontrol kecepatan, cari, dan scroll otomatis";
+"Hold Controls" = "Kontrol tekan-tahan";
+"Ignored while MobileConfig overrides it" = "Diabaikan selama MobileConfig menimpanya";
+"Menu" = "Menu";
+"Menu + PiP" = "Menu + PiP";
+"Pause" = "Jeda";
+"Set what holding a reel does" = "Atur apa yang terjadi saat reels ditahan";
+"Speed, seek, pause and auto-scroll controls" = "Kontrol kecepatan, pencarian, jeda, dan gulir otomatis";
 "Enabled controls appear when you hold the ⋯ or audio button on a reel." = "Kontrol yang diaktifkan muncul saat kamu tahan tombol ⋯ atau audio pada reel.";
 "Seek controls" = "Kontrol cari";
 "Auto-scroll control" = "Kontrol scroll otomatis";
@@ -395,7 +423,8 @@
 "Disable scrolling reels" = "Matikan scroll reel";
 "Disable tab button refresh" = "Matikan refresh tombol tab";
 "Doom scrolling limit" = "Batas scroll tanpa henti";
-"e.g. 1.75" = "mis. 1.75";
+"Limit audio and effect pages" = "Batasi halaman audio dan efek";
+"Grids on audio, effect, template and remix pages stop at the same count" = "Grid di halaman audio, efek, template, dan remix berhenti di jumlah yang sama";
 "Enter a value between 0.5 and 2.0" = "Masukkan nilai antara 0.5 dan 2.0";
 "Keeps the progress bar visible on every reel" = "Menjaga bilah progress tetap terlihat di setiap reel";
 "Hide \"Made with Edits\" badge" = "Sembunyikan lencana \"Made with Edits\"";
@@ -405,7 +434,6 @@
 "Hides the avatar bubbles next to the Friends tab in reels" = "Menyembunyikan gelembung avatar di samping tab Teman di reel";
 "Hides the Edits app promo pill on reels" = "Menyembunyikan pil promo aplikasi Edits pada reel";
 "Hides the floating overlay showing who reposted or commented on reels" = "Menyembunyikan overlay mengambang yang menampilkan siapa yang merepost atau berkomentar di reel";
-"Hides the repost button on the reels sidebar" = "Menyembunyikan tombol repost di sidebar reel";
 "Drops the top bar while you watch reels" = "Menghilangkan bar atas saat menonton reel";
 "Hiding" = "Menyembunyikan";
 "IG default" = "Bawaan IG";
@@ -445,6 +473,10 @@
 "Unlock password-locked reels" = "Buka kunci reel yang dikunci kata sandi";
 "When pause mode is on, tap on photo reels toggles audio instead of the native pause gesture" = "Saat mode jeda aktif, ketuk pada reel foto mengalihkan audio, bukan gerakan jeda bawaan";
 
+"Reel buttons" = "Tombol reels";
+"Drag to reorder, top to bottom." = "Seret untuk mengubah urutan, atas ke bawah.";
+"More options" = "Opsi lainnya";
+"Audio cover" = "Sampul audio";
 //////////////////////////////////////////////////////////////////////////////
 //                                 PROFILE                                  //
 // Settings → Profile tab                                                   //
@@ -456,10 +488,14 @@
 "Card details" = "Detail kartu";
 "Comment count" = "Jumlah komentar";
 "Copy note on long press" = "Salin note saat tekan-tahan";
+"Display name" = "Nama tampilan";
 "Extra stats shown on each post and reel card in profile grids — pick which, reorder them, then apply." = "Statistik tambahan yang ditampilkan pada setiap kartu postingan dan reel di grid profil — pilih mana, atur ulang urutannya, lalu terapkan.";
 "Fake follower count" = "Palsukan jumlah pengikut";
 "Fake following count" = "Palsukan jumlah mengikuti";
+"Fake display name" = "Nama tampilan palsu";
 "Fake post count" = "Palsukan jumlah postingan";
+"Fake profile" = "Profil palsu";
+"Fake username" = "Username palsu";
 "Fake profile stats" = "Palsukan statistik profil";
 "Fake verified badge" = "Palsukan lencana terverifikasi";
 "Fetch missing counts" = "Ambil jumlah yang hilang";
@@ -469,22 +505,50 @@
 "Follower count" = "Jumlah pengikut";
 "Following count" = "Jumlah mengikuti";
 "Like count" = "Jumlah suka";
-"Long press a profile picture to open it in full-screen with zoom, share, and download options" = "Tekan lama foto profil untuk membukanya di layar penuh dengan opsi zoom, bagikan, dan unduh";
+"Long press a profile picture to open it in full-screen with zoom, share, and save" = "Tekan lama foto profil untuk membukanya di layar penuh dengan zoom, bagikan, dan simpan";
+"Long press the note bubble on a profile to copy the text" = "Tekan lama gelembung note pada profil untuk menyalin teksnya";
+"Long press to download directly (ignored when zoom is on)" = "Tekan lama untuk mengunduh langsung (diabaikan saat zoom aktif)";
+"Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "Gerakan tekan-tahan pada elemen profil — dipisahkan dari tombol aksi per fitur.";
+"Master switch for all card stats. Fetch missing counts uses Instagram's API and may hit rate limits." = "Sakelar utama untuk semua statistik kartu. Ambil hitungan yang hilang menggunakan API Instagram dan mungkin mencapai batas kecepatan.";
+"Only affects your own profile header. Other users see the real numbers." = "Hanya memengaruhi header profilmu sendiri. Pengguna lain melihat angka asli.";
+"Only shown on your device. Other people see your real profile." = "Hanya tampil di perangkatmu. Orang lain tetap melihat profil aslimu.";
 "Post count" = "Jumlah postingan";
-"Profile picture zoom" = "Zoom foto profil";
-"Profile stat pills" = "Pil statistik profil";
-"Reveals the exact follower count Instagram hides from you on large accounts" = "Mengungkapkan jumlah pengikut yang tepat yang disembunyikan Instagram pada akun besar";
-"Show exact follower count" = "Tampilkan jumlah pengikut yang tepat";
-"Show follow-back status" = "Tampilkan status mengikuti balik";
-"Shows a label next to each name in follower/following lists indicating if they follow you back" = "Menampilkan label di samping setiap nama di daftar pengikut/mengikuti yang menunjukkan apakah mereka mengikuti balik";
+"Profile card details" = "Detail kartu profil";
+"Profile stats" = "Statistik profil";
+"Repost count" = "Jumlah repost";
+"Restores the default stats, order, and options for profile card details." = "Mengembalikan statistik, urutan, dan opsi bawaan untuk detail kartu profil.";
+"Restores the default stats, order, and options for search & explore card details." = "Mengembalikan statistik, urutan, dan opsi bawaan untuk detail kartu pencarian & explore.";
+"Save profile picture" = "Simpan foto profil";
+"Search & Explore" = "Pencarian & Explore";
+"Share count" = "Jumlah bagikan";
+"Short numbers" = "Angka singkat";
+"Show a checkmark next to your name on your own profile" = "Tampilkan tanda centang di samping namamu pada profilmu sendiri";
+"Show card details" = "Tampilkan detail kartu";
+"Show full follower count" = "Tampilkan jumlah pengikut lengkap";
+"Show full post count" = "Tampilkan jumlah postingan lengkap";
+"Show the custom number set below" = "Tampilkan angka kustom yang diatur di bawah";
+"Username, name, counts, and verified badge" = "Username, nama, jumlah, dan lencana terverifikasi";
+"Show the custom handle set below" = "Tampilkan username kustom yang diatur di bawah";
+"Show the custom name set below" = "Tampilkan nama kustom yang diatur di bawah";
+"Show the exact number instead of a shortened one" = "Tampilkan angka yang tepat, bukan yang disingkat";
+"Shows whether the profile user follows you" = "Menampilkan apakah pengguna profil mengikutimu";
+"Tap to set" = "Ketuk untuk mengatur";
+"Toggle each stat on or off. Drag the ≡ handle to reorder how they stack on the card." = "Aktifkan atau matikan setiap statistik. Seret gagang ≡ untuk mengatur ulang urutan tumpukannya di kartu.";
+"Upload date" = "Tanggal unggah";
+"View count" = "Jumlah tampilan";
 "View highlight cover" = "Lihat cover highlight";
+"Views, likes, comments, shares, reposts, date" = "Tampilan, suka, komentar, bagikan, repost, tanggal";
+"Zoom profile photo" = "Zoom foto profil";
 
+"Hide Threads button" = "Sembunyikan tombol Threads";
+"Hides it from the profile header" = "Menyembunyikannya dari header profil";
 //////////////////////////////////////////////////////////////////////////////
 //                            SAVING & DOWNLOADS                            //
 // Settings → Saving tab                                                    //
 //////////////////////////////////////////////////////////////////////////////
 
 "Active, queued, and finished downloads" = "Unduhan aktif, antri, dan selesai";
+"Add prefix to file names" = "Tambahkan awalan ke nama file";
 "Auto-retry attempts" = "Percobaan ulang otomatis";
 "Auto-retry failed downloads" = "Coba ulang unduhan yang gagal secara otomatis";
 "Confirm before download" = "Konfirmasi sebelum mengunduh";
@@ -509,12 +573,15 @@
 "Save action" = "Aksi simpan";
 "Save to dedicated album" = "Simpan ke album khusus";
 "Show a confirmation dialog before starting a download" = "Tampilkan dialog konfirmasi sebelum memulai unduhan";
-"Try %@ more %@ before giving up" = "Coba %@ kali lagi sebelum menyerah";
+"Start every saved file name with ryuk_ so downloads are easy to spot" = "Awali setiap nama file yang disimpan dengan ryuk_ supaya unduhan mudah dikenali";
+"Try %@ more %@ before giving up" = "Coba %@ %@ lagi sebelum menyerah";
 "What happens after the gesture downloads" = "Yang terjadi setelah gestur mengunduh";
 "When \"Save to dedicated album\" is on, downloads and share-sheet \"Save to Photos\" picks are routed into a named album in your Photos library. Tap \"Album name\" to change it." = "Saat \"Simpan ke album khusus\" aktif, unduhan dan pilihan \"Simpan ke Foto\" dari menu bagikan diarahkan ke album bernama di pustaka Fotomu. Ketuk \"Nama album\" untuk mengubahnya.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                         DOWNLOAD QUEUE & MANAGER                         //
+// Download queue settings + the in-app download manager:                   //
+// active/queued/finished lists, concurrency, auto-retry, background.       //
 //////////////////////////////////////////////////////////////////////////////
 
 "%@ left" = "tersisa %@";
@@ -525,44 +592,58 @@
 "%ds" = "%ddt";
 "%ld downloading" = "%ld sedang diunduh";
 "%ld still running — they'll be stopped. The files already saved are kept." = "%ld masih berjalan — akan dihentikan. File yang sudah tersimpan tetap ada.";
+"%lu entries will be forgotten. Downloaded files are untouched." = "%lu entri akan dilupakan. File yang sudah diunduh tidak tersentuh.";
 "%lu failed" = "%lu gagal";
 "%lu of %lu done" = "%lu dari %lu selesai";
+"%lu of %lu items are already saved." = "%lu dari %lu item sudah tersimpan.";
 "%lu saved, %lu failed" = "%lu tersimpan, %lu gagal";
 "12 hours" = "12 jam";
 "1s" = "1dt";
 "24 hours" = "24 jam";
 "48 hours" = "48 jam";
 "Active" = "Aktif";
+"Already downloaded" = "Sudah diunduh";
+"Ask before downloading media you already saved" = "Tanya dulu sebelum mengunduh media yang sudah kamu simpan";
 "Auto-retry" = "Coba ulang otomatis";
+"Check for duplicates" = "Periksa duplikat";
 "Clear completed" = "Hapus yang selesai";
 "Clear download history" = "Hapus riwayat unduhan";
 "Clear download history?" = "Hapus riwayat unduhan?";
+"Clear duplicate list" = "Hapus daftar duplikat";
 "Completed" = "Selesai";
 "Don't keep" = "Jangan simpan";
+"Download again" = "Unduh lagi";
 "Download history" = "Riwayat unduhan";
 "Download settings" = "Pengaturan unduhan";
 "Downloading %lu items" = "Mengunduh %lu item";
 "Downloading…" = "Mengunduh…";
+"Duplicate download list" = "Daftar unduhan duplikat";
+"Duplicates" = "Duplikat";
 "Empty the manager's list of past downloads" = "Kosongkan daftar unduhan sebelumnya di manajer";
 "Encoding %d%%" = "Encoding %d%%";
 "Encoding…" = "Encoding…";
 "Extra downloads wait in line and start as slots free up." = "Unduhan ekstra menunggu antrean dan mulai saat slot tersedia.";
+"Forget every download recorded so far" = "Lupakan semua unduhan yang tercatat sejauh ini";
 "How long finished, failed and cancelled downloads stay in the manager after you close the app. The files themselves are never touched — only the list." = "Berapa lama unduhan selesai, gagal, dan dibatalkan tetap ada di manajer setelah kamu menutup aplikasi. File itu sendiri tidak tersentuh — hanya daftarnya.";
 "How long past downloads stay listed in the manager" = "Berapa lama unduhan lama tetap terdaftar di manajer";
 "Keep history for" = "Simpan riwayat selama";
+"Keeps a list of what you already grabbed and asks first when the same media comes up again. Only IDs are stored, never files, and carousels ask once for the whole post." = "Menyimpan daftar media yang sudah kamu ambil dan bertanya lebih dulu kalau media yang sama muncul lagi. Hanya ID yang disimpan, bukan file, dan carousel hanya ditanya sekali untuk seluruh postingan.";
 "Media you download shows up here, with its progress and where it was saved." = "Media yang kamu unduh muncul di sini, dengan progresnya dan tempat penyimpanannya.";
 "No downloads yet" = "Belum ada unduhan";
 "Preview" = "Pratinjau";
 "Queued" = "Dalam antrean";
 "Redownload" = "Unduh ulang";
+"Remove and download again" = "Hapus dan unduh lagi";
 "Retry" = "Coba ulang";
 "Retrying…" = "Mencoba ulang…";
+"Still in your gallery." = "Masih ada di galerimu.";
 "Stop" = "Hentikan";
 "The files already saved are kept — this only empties the list." = "File yang sudah tersimpan tetap ada — ini hanya mengosongkan daftarnya.";
 "Waiting for a free slot" = "Menunggu slot tersedia";
 "Waiting for connection…" = "Menunggu koneksi…";
 "Waiting to retry" = "Menunggu untuk dicoba ulang";
 "Waiting…" = "Menunggu…";
+"You saved this on %@." = "Kamu menyimpan ini pada %@.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 STORIES                                  //
@@ -573,7 +654,12 @@
 "Overlay layout" = "Tata letak overlay";
 "Drag to position the buttons" = "Seret untuk memposisikan tombol";
 "Drag the buttons onto the story. The dimmed strip is the reply bar." = "Seret tombol ke atas story. Area yang gelap adalah bilah balas.";
+"Close gaps automatically" = "Tutup celah otomatis";
+"Buttons next to each other close the gap when one is hidden" = "Tombol yang bersebelahan menutup celah saat salah satunya disembunyikan";
+"Button spacing" = "Jarak antar tombol";
+"%ld pt" = "%ld pt";
 "Send message" = "Kirim pesan";
+
 "Pinned" = "Disematkan";
 "Search viewers" = "Cari penonton";
 "No matching viewers" = "Tidak ada penonton yang cocok";
@@ -598,6 +684,7 @@
 "Pin" = "Sematkan";
 "Replaces the 'who viewed my story' list with a searchable, filterable, sortable list. Long-press a viewer to pin them to the top. Switch back to the native list any time." = "Menggantikan daftar 'siapa yang melihat story-ku' dengan daftar yang bisa dicari, difilter, dan diurutkan. Tekan lama penonton untuk menyematkannya ke atas. Kembali ke daftar bawaan kapan saja.";
 "Username or raw user PK. Pinned viewers always stay at the top of your story viewers list." = "Username atau user PK mentah. Penonton yang disematkan selalu berada di atas daftar penonton story-mu.";
+
 "Adds a RyukGram action button next to the eye button on stories with download/share/copy/expand/repost/view-mentions entries. Tap opens the menu by default; change the tap behavior below." = "Menambahkan tombol aksi RyukGram di samping tombol mata pada story dengan entri unduh/bagikan/salin/perbesar/repost/lihat-sebutan. Ketuk membuka menu secara bawaan; ubah perilaku ketuk di bawah.";
 "Adds a speaker button to the story overlay to unmute/mute audio. Also available in the 3-dot menu" = "Menambahkan tombol speaker ke overlay story untuk membisukan/membunyikan audio. Tersedia juga di menu 3 titik";
 "Adds the eye button to story overlays. Off keeps seen blocking on without the button" = "Menambahkan tombol mata ke overlay story. Mati tetap mengaktifkan pemblokiran dilihat tanpa tombol";
@@ -650,17 +737,30 @@
 "Show poll vote counts" = "Tampilkan jumlah suara polling";
 "Show vote tallies on poll options and slider count/average before you vote" = "Tampilkan hitungan suara pada opsi polling dan jumlah/rata-rata slider sebelum kamu memilih";
 "Stop story auto-advance" = "Hentikan lanjut otomatis story";
+"Playback controls" = "Kontrol pemutaran";
+"Speed, seek and pause controls" = "Kontrol kecepatan, pencarian, dan jeda";
+"Enabled controls appear when you hold the ⋯ or speaker button on a story, or from Playback in the story menu." = "Kontrol yang aktif muncul saat kamu menahan tombol ⋯ atau speaker di sebuah story, atau dari Pemutaran di menu story.";
+"Pause control" = "Kontrol jeda";
 "Stories" = "Story";
 "Stories won't auto-skip to the next one when the timer ends. Tap to advance manually" = "Story tidak akan otomatis lanjut ke berikutnya saat timer habis. Ketuk untuk lanjut secara manual";
 "Story audio toggle" = "Alihkan audio story";
 "Story user list" = "Daftar pengguna story";
 "Tapping the eye button to mark a story as seen advances to the next story automatically" = "Mengetuk tombol mata untuk menandai story sudah dilihat akan otomatis melanjutkan ke story berikutnya";
 "This will send a story view receipt." = "Ini akan mengirim tanda tonton story.";
+"This will send %ld story view receipts." = "Ini akan mengirim %ld tanda telah melihat story.";
 "View story mentions" = "Lihat sebutan story";
 "Which stories get seen-receipt blocking" = "Story mana yang mendapat pemblokiran tanda baca";
+"Text tool" = "Alat teks";
+"Adds your own fonts to the font row when you add text to a story. The text is drawn into the story, so everyone sees it in the font you picked." = "Menambahkan fontmu sendiri ke baris font saat kamu menambahkan teks ke story. Teksnya digambar ke dalam story, jadi semua orang melihatnya dengan font yang kamu pilih.";
+"Custom story fonts" = "Font story kustom";
+"Show your imported and device fonts next to the built-in ones" = "Tampilkan font impor dan font perangkatmu di samping font bawaan";
+"Choose fonts" = "Pilih font";
+"Choose fonts (%lu)" = "Pilih font (%lu)";
+"Import, browse online, or pick from the fonts already on your device" = "Impor, jelajahi online, atau pilih dari font yang sudah ada di perangkatmu";
 
 //////////////////////////////////////////////////////////////////////////////
 //                       MESSAGES — ACTIVITY NOTIFICATIONS                  //
+// Settings → Activity notifications + the in-app activity log              //
 //////////////////////////////////////////////////////////////////////////////
 
 "Accurate active status" = "Status aktif yang akurat";
@@ -696,6 +796,10 @@
 "Track who reads your messages, comes online, goes offline or types" = "Lacak siapa yang membaca pesanmu, online, offline, atau mengetik";
 "For everyone" = "Untuk semua orang";
 "For this person" = "Untuk orang ini";
+"Log only" = "Catat saja";
+"Notify only" = "Notifikasi saja";
+"Notify + log" = "Notifikasi + catat";
+"Log only records silently. Notify only pings you without keeping it. Notify + log does both." = "Catat saja mencatat diam-diam. Notifikasi saja memberi tahu tanpa menyimpan. Notifikasi + catat melakukan keduanya.";
 "Presence" = "Kehadiran";
 "Read your message" = "Membaca pesanmu";
 "Refresh presence every 20s and drop Instagram's grace period, so the native green dot turns off the moment someone goes offline." = "Refresh kehadiran setiap 20 detik dan hapus masa tenggang Instagram, agar titik hijau bawaan mati saat seseorang offline.";
@@ -716,6 +820,7 @@
 "Filters" = "Filter";
 "Delete the selected records? This can't be undone." = "Hapus catatan yang dipilih? Ini tidak bisa dibatalkan.";
 "Delete all records for the selected chats? This can't be undone." = "Hapus semua catatan untuk chat yang dipilih? Ini tidak bisa dibatalkan.";
+
 "Adds the eye button to DM threads. Off keeps receipt blocking on without the button" = "Menambahkan tombol mata ke thread DM. Mati tetap mengaktifkan pemblokiran tanda terima tanpa tombol";
 "Auto mark seen on interact" = "Tandai dilihat otomatis saat berinteraksi";
 "Auto mark seen on typing" = "Tandai dilihat otomatis saat mengetik";
@@ -737,7 +842,34 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                         MESSAGES — KEEP DELETED                          //
+// Settings → Keep deleted messages tab                                     //
 //////////////////////////////////////////////////////////////////////////////
+
+"A small label on the message" = "Label kecil pada pesan";
+"Above the bubble" = "Di atas balon";
+"Below the bubble" = "Di bawah balon";
+"Beside the bubble" = "Di samping balon";
+"Bubble" = "Balon";
+"Drawn at %@ %@" = "Digambar di %@ %@";
+"Fade" = "Redupkan";
+"Hide quick actions" = "Sembunyikan aksi cepat";
+"Hides the shortcut buttons next to the message" = "Menyembunyikan tombol pintasan di samping pesan";
+"How kept messages are marked" = "Cara pesan yang disimpan ditandai";
+"Left at %@%@ opacity" = "Dibiarkan pada opasitas %@%@";
+"Makes the message see-through" = "Membuat pesan jadi tembus pandang";
+"Marks messages someone unsent but you kept" = "Menandai pesan yang dibatalkan orang lain tapi kamu simpan";
+"No mark" = "Tanpa tanda";
+"Paints the bubble one color" = "Mewarnai balon dengan satu warna";
+"Show tag" = "Tampilkan tag";
+"Tag" = "Tag";
+"Tag text" = "Teks tag";
+"The tag, fade and tint all return to their defaults." = "Tag, redup, dan warna semuanya kembali ke bawaan.";
+"Text size" = "Ukuran teks";
+"The tint stays put even when a chat background or theme repaints the other bubbles." = "Warnanya tetap bertahan meski latar chat atau tema mewarnai ulang balon lain.";
+"Tint" = "Warna";
+"Use any mix of the three, or none of them to keep messages silently." = "Pakai kombinasi apa pun dari ketiganya, atau tidak sama sekali untuk menyimpan pesan diam-diam.";
+"Where the tag sits" = "Letak tag";
+"Your own wording stays as typed, in any language. Leave it empty for the default." = "Kata-katamu sendiri tetap seperti yang kamu ketik, dalam bahasa apa pun. Kosongkan untuk memakai bawaan.";
 
 "Activity" = "Aktivitas";
 "Adds a 'Download' option to the long-press menu on voice messages to save them as M4A audio" = "Menambahkan opsi 'Unduh' ke menu tekan-tahan pada pesan suara untuk menyimpannya sebagai audio M4A";
@@ -765,6 +897,8 @@
 "Files" = "File";
 "Full last active date" = "Tanggal terakhir aktif lengkap";
 "Hide reels blend button" = "Sembunyikan tombol blend reel";
+"Hide reels in chats" = "Sembunyikan reels di chat";
+"Shared reels stop showing up in DM threads" = "Reels yang dibagikan tidak lagi muncul di thread DM";
 "Hide send to group chat" = "Sembunyikan kirim ke grup chat";
 "Pin recipients on long-press" = "Sematkan penerima saat tekan-tahan";
 "Long-press in the share sheet to pin a chat/user to the top" = "Tekan lama di menu bagikan untuk menyematkan chat/pengguna ke atas";
@@ -779,7 +913,9 @@
 "Hides typing indicator from others" = "Menyembunyikan indikator mengetik dari orang lain";
 "Indicate unsent messages" = "Tandai pesan yang dibatalkan";
 "Keep deleted messages" = "Simpan pesan terhapus";
-"Turns view once messages into normal media you can loop and pause" = "Mengubah pesan sekali lihat menjadi media normal yang bisa diputar ulang dan dijeda";
+"Kept unsent messages" = "Pesan batal kirim yang disimpan";
+"Mirrored chat history" = "Riwayat chat yang dicerminkan";
+"Turns view once messages into normal media you can replay and loop" = "Mengubah pesan sekali lihat jadi media biasa yang bisa kamu putar ulang dan loop";
 "Note actions" = "Aksi note";
 "Preserves messages that others unsend" = "Menyimpan pesan yang dibatalkan orang lain";
 "Keep my deleted messages" = "Simpan pesan yang aku hapus";
@@ -788,7 +924,7 @@
 "Quick list button in chats" = "Tombol daftar cepat di chat";
 "Removes the audio call button from DM thread header" = "Menghapus tombol panggilan audio dari header thread DM";
 "Removes the video call button from DM thread header" = "Menghapus tombol panggilan video dari header thread DM";
-"Replay visual messages without expiring. Toggle in the eye button menu, or as a standalone button when the eye button is disabled" = "Putar ulang pesan visual tanpa kedaluwarsa. Alihkan di menu tombol mata, atau sebagai tombol mandiri saat tombol mata dinonaktifkan";
+"The sender is not told you opened it, and the media stays replayable" = "Pengirim tidak diberi tahu kalau kamu membukanya, dan medianya tetap bisa diputar ulang";
 "Search, sort, swipe to remove or toggle keep-deleted" = "Cari, urutkan, geser untuk menghapus atau alihkan simpan-terhapus";
 "Send audio as file" = "Kirim audio sebagai file";
 "Send files (experimental)" = "Kirim file (eksperimental)";
@@ -796,8 +932,10 @@
 "Show full date instead of \"Active 2h ago\"" = "Tampilkan tanggal lengkap, bukan \"Aktif 2 jam lalu\"";
 "Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "Menampilkan tombol di thread DM untuk menambah/menghapus chat dari daftar. Tekan lama untuk opsi lebih lanjut";
 "Shows a notification pill when a message is unsent" = "Menampilkan pil notifikasi saat pesan dibatalkan";
-"Shows an \"Unsent\" label on preserved messages" = "Menampilkan label \"Dibatalkan\" pada pesan yang disimpan";
-"Unlimited replay of visual messages" = "Putar ulang pesan visual tanpa batas";
+"Block view receipts" = "Blokir tanda telah dilihat";
+"Instagram reports a view when the media finishes playing. Block it and the media stays unopened until you send the receipt yourself." = "Instagram melaporkan tampilan begitu media selesai diputar. Blokir itu dan medianya tetap belum terbuka sampai kamu mengirim tandanya sendiri.";
+"Available while view receipts are blocked." = "Tersedia selama tanda telah dilihat diblokir.";
+"View-once photos and videos, and their buttons" = "Foto dan video sekali lihat, beserta tombolnya";
 "Unsent message notification" = "Notifikasi pesan dibatalkan";
 "Voice messages" = "Pesan suara";
 "Warn before clearing on refresh" = "Peringatkan sebelum menghapus saat refresh";
@@ -806,6 +944,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                       MESSAGES — DELETED MESSAGES LOG                    //
+// Settings → Messages → Deleted messages log + the in-app log UI           //
 //////////////////////////////////////////////////////////////////////////////
 
 "%@%lu deleted" = "%@%lu dihapus";
@@ -830,6 +969,11 @@
 "Deleted messages" = "Pesan terhapus";
 "Deleted messages log" = "Log pesan terhapus";
 "Deleted: %@\n" = "Dihapus: %@\n";
+"Show in chat" = "Tampilkan di chat";
+"Jumped to around that time" = "Melompat ke sekitar waktu itu";
+"Couldn't find that message in the chat" = "Tidak menemukan pesan itu di chat";
+"%@ · sent %@" = "%@ · dikirim %@";
+"Sent: %@\n" = "Dikirim: %@\n";
 "Edit %lu" = "Edit %lu";
 "Edit history" = "Riwayat edit";
 "Edited" = "Diedit";
@@ -864,6 +1008,8 @@
 "Reaction removed" = "Reaksi dihapus";
 "Log removed reactions" = "Catat reaksi yang dihapus";
 "Also records when someone removes a reaction, and which message it was on" = "Juga mencatat saat seseorang menghapus reaksi, dan pada pesan mana";
+"Log opened view-once media" = "Catat media sekali lihat yang dibuka";
+"Saves it before it disappears. Off logs only unsends" = "Menyimpannya sebelum hilang. Kalau mati, hanya batal kirim yang dicatat";
 "Removed a reaction" = "Menghapus reaksi";
 "on @%@: %@" = "pada @%@: %@";
 "on: %@" = "pada: %@";
@@ -907,11 +1053,14 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 MESSAGES                                 //
+// Settings → Messages tab                                                  //
 //////////////////////////////////////////////////////////////////////////////
 
 "In the Draw tool, send an image as your doodle, from the gallery, Photos, stickers or paste, with a built-in crop and background removal editor" = "Di alat Gambar, kirim gambar sebagai coretan kamu, dari galeri, Foto, stiker, atau tempel, dengan editor crop dan penghapus latar bawaan";
 "Draw a line or shape, then tap Send and pick where to get the image from: gallery, Photos, stickers or paste.\n\nThe image takes the place of what you drew and matches its position and size, so draw bigger for a bigger image.\n\nRestart Instagram for it to take effect." = "Gambar garis atau bentuk, lalu ketuk Kirim dan pilih dari mana gambar diambil: galeri, Foto, stiker, atau tempel.\n\nGambar menggantikan apa yang kamu gambar dan menyesuaikan posisi serta ukurannya, jadi gambar lebih besar untuk gambar yang lebih besar.\n\nMulai ulang Instagram agar perubahan berlaku.";
+
 "Send image as drawing" = "Kirim gambar sebagai coretan";
+
 "Bypass \"You can't send messages\"" = "Lewati \"Kamu tidak bisa mengirim pesan\"";
 "Custom chat background" = "Latar chat kustom";
 "DM Save button" = "Tombol Simpan DM";
@@ -933,6 +1082,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                                INSTANTS                                  //
+// Settings → Instants                                                        //
 //////////////////////////////////////////////////////////////////////////////
 
 "%@ (%lu)" = "%@ (%lu)";
@@ -975,6 +1125,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                                NAVIGATION                                //
+// Settings → Navigation tab                                                //
 //////////////////////////////////////////////////////////////////////////////
 
 "Also hide the bottom tab bar — only the inbox is visible" = "Sembunyikan juga tab bar bawah — hanya kotak masuk yang terlihat";
@@ -983,24 +1134,32 @@
 "Hide search tab" = "Sembunyikan tab pencarian";
 "Remove the search/explore button from the tab bar" = "Hapus tombol cari/explore dari tab bar";
 "Hide tab bar" = "Sembunyikan tab bar";
-"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "Menyembunyikan setiap tab kecuali kotak masuk DM + profil dan memaksa peluncuran ke kotak masuk. Pintasan pengaturan pindah ke tekan-tahan pada tab kotak masuk.";
+"Tab shortcuts" = "Pintasan tab";
+"Hold a tab to open a RyukGram screen" = "Tahan sebuah tab untuk membuka layar RyukGram";
+"Not on the tab bar" = "Tidak ada di tab bar";
+"When the feed tab is off the bar, its shortcut moves to the first tab that is on it." = "Kalau tab feed tidak ada di bar, pintasannya pindah ke tab pertama yang ada.";
 "Icon order" = "Urutan ikon";
 "Launch tab" = "Tab peluncuran";
 "Swipe sideways to move between the tab bar tabs" = "Geser ke samping untuk berpindah antar tab di tab bar";
 "Messages only" = "Hanya pesan";
 "Messages-only mode" = "Mode hanya pesan";
+"Hides every tab except DM inbox + profile and forces launch into the inbox. Settings shortcut moves to long-press on the inbox tab." = "Menyembunyikan setiap tab kecuali kotak masuk DM + profil dan memaksa peluncuran ke kotak masuk. Pintasan pengaturan pindah ke tekan-tahan pada tab kotak masuk.";
 "Automatic schedule" = "Jadwal otomatis";
 "DM-only client, hide tabs, auto schedule" = "Klien hanya DM, sembunyikan tab, jadwal otomatis";
 "Start time" = "Waktu mulai";
 "End time" = "Waktu selesai";
 "Switch into Messages-only on its own during a time window" = "Beralih ke mode hanya pesan secara otomatis selama jangka waktu tertentu";
-"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above. You'll be asked to restart when the window starts and when it ends." = "Aktifkan mode hanya pesan secara otomatis selama jangka waktu harian (mis. 22:00 – 06:00) menggunakan sakelar di atas. Kamu akan diminta untuk mulai ulang saat jangka waktu dimulai dan berakhir.";
+"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "Nyalakan Hanya pesan secara otomatis pada jendela waktu harian (misalnya 22.00 – 06.00) lewat sakelar di atas.";
 "Active now · ends %@" = "Aktif sekarang · berakhir %@";
 "Next window starts %@" = "Jangka waktu berikutnya dimulai %@";
 "Messages-only starting" = "Mode hanya pesan dimulai";
 "Messages-only ending" = "Mode hanya pesan berakhir";
 "Your Messages-only window has started. Restart Instagram to switch to DM-only." = "Jangka waktu hanya pesan telah dimulai. Mulai ulang Instagram untuk beralih ke mode hanya DM.";
 "Your Messages-only window has ended. Restart Instagram to bring back the other tabs." = "Jangka waktu hanya pesan telah berakhir. Mulai ulang Instagram untuk menampilkan kembali tab lainnya.";
+"When the window changes" = "Saat jendela waktu berubah";
+"Apply instantly" = "Terapkan langsung";
+"Your Messages-only window has started. Switch to DM-only now?" = "Jendela Hanya pesan sudah dimulai. Beralih ke DM saja sekarang?";
+"Your Messages-only window has ended. Bring back the other tabs now?" = "Jendela Hanya pesan sudah berakhir. Kembalikan tab lainnya sekarang?";
 "Navigation" = "Navigasi";
 "Swipe between tabs" = "Geser antar tab";
 "Tab the app opens to. Ignored when Messages-only is on" = "Tab yang dibuka saat aplikasi diluncurkan. Diabaikan saat mode hanya pesan aktif";
@@ -1012,6 +1171,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CONFIRM ACTIONS                              //
+// Settings → Confirm actions tab                                           //
 //////////////////////////////////////////////////////////////////////////////
 
 "All" = "Semua";
@@ -1024,12 +1184,15 @@
 "Confirm follow" = "Konfirmasi ikuti";
 "Confirm follow requests" = "Konfirmasi permintaan ikuti";
 "Confirm Instants capture" = "Konfirmasi pengambilan Instants";
+"Shows an alert before sending a reaction in a chat" = "Menampilkan peringatan sebelum mengirim reaksi di chat";
+"Confirm DM reaction" = "Konfirmasi reaksi DM";
 "Confirm Instants emoji reaction" = "Konfirmasi reaksi emoji Instants";
 "Confirm like: Posts" = "Konfirmasi suka: Postingan";
 "Confirm like: Reels" = "Konfirmasi suka: Reel";
 "Confirm note emoji reaction" = "Konfirmasi reaksi emoji note";
 "Confirm note like" = "Konfirmasi suka note";
 "Confirm posting comment" = "Konfirmasi posting komentar";
+"Confirm reaction" = "Konfirmasi reaksi";
 "Confirm repost" = "Konfirmasi repost";
 "Confirm send to group chat" = "Konfirmasi kirim ke grup chat";
 "Confirm sticker interaction (highlights)" = "Konfirmasi interaksi stiker (highlight)";
@@ -1043,6 +1206,7 @@
 "Confirm video call" = "Konfirmasi panggilan video";
 "Confirm voice call" = "Konfirmasi panggilan suara";
 "Confirm voice messages" = "Konfirmasi pesan suara";
+"Double tap only" = "Hanya ketuk dua kali";
 "Follows" = "Ikuti";
 "Likes" = "Suka";
 "Messaging" = "Pesan";
@@ -1078,6 +1242,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                           SECURITY & PRIVACY                             //
+// Settings → Security & Privacy                                            //
 //////////////////////////////////////////////////////////////////////////////
 
 "%ld h" = "%ld j";
@@ -1214,9 +1379,9 @@
 "Wrong passcode • %ld attempts" = "Kode sandi salah • %ld percobaan";
 
 //////////////////////////////////////////////////////////////////////////////
-//                             BACKUP & RESTORE                             //
+//                            BACKUP & PROFILES                             //
+// Settings → Backup & Profiles tab                                         //
 //////////////////////////////////////////////////////////////////////////////
-
 "Protection" = "Proteksi";
 "Password-protect" = "Proteksi kata sandi";
 "On — tap to change" = "Aktif — ketuk untuk mengubah";
@@ -1237,6 +1402,7 @@
 "Encrypting backup…" = "Mengenkripsi cadangan…";
 "%ld of %ld selected · %@" = "%ld dari %ld dipilih · %@";
 "Tick each store to include. Tap a row to inspect what's stored." = "Centang setiap penyimpanan untuk disertakan. Ketuk baris untuk memeriksa apa yang tersimpan.";
+
 "%lu account(s)" = "%lu akun";
 "%lu account(s) · %lu image(s) · %@" = "%lu akun · %lu gambar · %@";
 "%lu file(s) · %@" = "%lu file · %@";
@@ -1246,7 +1412,6 @@
 "Applying backup…" = "Menerapkan cadangan…";
 "archive error" = "error arsip";
 "Archived snapshots" = "Snapshot yang diarsipkan";
-"Backup & Restore" = "Cadangan & Pemulihan";
 "Backup exported" = "Cadangan diekspor";
 "Backup failed" = "Cadangan gagal";
 "Backup has no importable sections." = "Cadangan tidak memiliki bagian yang bisa diimpor.";
@@ -1300,15 +1465,66 @@
 "Truncated entry length." = "Panjang entri terpotong.";
 "Truncated entry path." = "Jalur entri terpotong.";
 "Unsafe entry path." = "Jalur entri tidak aman.";
+"%@ is now in use" = "%@ sekarang dipakai";
+"%lu changed" = "%lu diubah";
+"%lu on · %lu changed" = "%lu aktif · %lu diubah";
+"A new profile" = "Profil baru";
+"Accounts you haven't linked use %@." = "Akun yang belum kamu tautkan memakai %@.";
+"Adds a shortcut to the settings home page." = "Menambahkan pintasan ke halaman utama pengaturan.";
+"All other accounts" = "Semua akun lain";
+"Applied to the settings you're using now." = "Diterapkan ke pengaturan yang kamu pakai sekarang.";
+"Backup & Profiles" = "Cadangan & Profil";
+"Backup has no settings to save." = "Tidak ada pengaturan yang bisa dicadangkan.";
+"Color" = "Warna";
+"Current settings are saved to %@ first." = "Pengaturan saat ini disimpan ke %@ dulu.";
+"Current settings aren't in a profile and will be replaced." = "Pengaturan saat ini tidak ada di profil mana pun dan akan diganti.";
+"Current settings" = "Pengaturan saat ini";
+"Duplicate" = "Gandakan";
+"Every setting goes back to how it shipped." = "Semua pengaturan kembali seperti bawaan.";
+"Every switch goes off, so the app behaves like stock." = "Semua sakelar dimatikan, jadi aplikasi berperilaku seperti aslinya.";
+"Follows every change you make." = "Mengikuti setiap perubahan yang kamu buat.";
+"In %@" = "Di %@";
+"Name it, switch to it whenever" = "Beri nama, lalu beralih kapan saja";
+"Name this profile" = "Beri nama profil ini";
+"Named setups you can switch between." = "Kumpulan pengaturan bernama yang bisa kamu ganti-ganti.";
+"New profile" = "Profil baru";
+"No accounts seen yet." = "Belum ada akun yang terdeteksi.";
+"No profile covers your other accounts." = "Tidak ada profil yang mencakup akunmu yang lain.";
+"Not linked" = "Tidak ditautkan";
+"Nothing ticked, so this profile covers every account you haven't linked elsewhere." = "Tidak ada yang dicentang, jadi profil ini mencakup semua akun yang belum kamu tautkan ke profil lain.";
+"Overwrite %@?" = "Timpa %@?";
+"Overwrite what you're using now" = "Timpa yang kamu pakai sekarang";
+"Overwrite" = "Timpa";
+"Profiles" = "Profil";
+"Replaces it with your current settings." = "Menggantinya dengan pengaturanmu saat ini.";
+"Reset %@ to defaults?" = "Setel ulang %@ ke bawaan?";
+"Saved as %@" = "Disimpan sebagai %@";
+"Saved as a profile. Your current settings stay as they are." = "Disimpan sebagai profil. Pengaturanmu saat ini tetap seperti sekarang.";
+"Saves your current settings and switches to it." = "Menyimpan pengaturanmu saat ini lalu beralih ke sana.";
+"Settings go to" = "Pengaturan masuk ke";
+"Show on settings home" = "Tampilkan di halaman utama pengaturan";
+"Switch to %@?" = "Beralih ke %@?";
+"Switch to a linked account and this profile comes with it." = "Beralih ke akun yang ditautkan dan profil ini ikut serta.";
+"Switch" = "Beralih";
+"Switching to a ticked account switches to this profile." = "Beralih ke akun yang dicentang akan beralih ke profil ini.";
+"Tap to switch. Changes stay in the profile in use. Swipe or hold for more." = "Ketuk untuk beralih. Perubahan tersimpan di profil yang sedang dipakai. Geser atau tahan untuk opsi lain.";
+"Turn everything off in %@?" = "Matikan semuanya di %@?";
+"Turn off" = "Matikan";
+"Use for other accounts" = "Pakai untuk akun lain";
+"Your settings aren't saved to a profile." = "Pengaturanmu belum disimpan ke profil mana pun.";
+"Your settings stay untouched." = "Pengaturanmu tidak tersentuh.";
+"Your settings stay — they just won't belong to a profile." = "Pengaturanmu tetap ada — hanya saja tidak lagi milik sebuah profil.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 ADVANCED                                 //
+// Settings → Advanced tab                                                  //
 //////////////////////////////////////////////////////////////////////////////
 
 "Advanced" = "Lanjutan";
 "All tweak options are disabled" = "Semua opsi tweak dinonaktifkan";
 "Auto-clear cache" = "Hapus cache otomatis";
 "Automatically opens settings when the app launches" = "Otomatis membuka pengaturan saat aplikasi diluncurkan";
+"Every launch" = "Setiap kali dibuka";
 "Cache" = "Cache";
 "Cache cleared" = "Cache dihapus";
 "Calculating cache size…" = "Menghitung ukuran cache…";
@@ -1320,14 +1536,12 @@
 "Daily" = "Harian";
 "Disable all tweak options" = "Nonaktifkan semua opsi tweak";
 "Disable safe mode" = "Nonaktifkan mode aman";
-"Enable tweak settings quick-access" = "Aktifkan akses cepat pengaturan tweak";
 "Instagram runs stock while this is on. Turn it back off to restore your settings." = "Instagram berjalan standar selama ini aktif. Matikan kembali untuk memulihkan pengaturanmu.";
 "Tap to re-enable everything" = "Ketuk untuk mengaktifkan semua kembali";
 "Turn every feature off — your settings are kept" = "Matikan semua fitur — pengaturanmu disimpan";
 "Fix duplicate notifications" = "Perbaiki notifikasi duplikat";
 "Free %@ of Instagram cache." = "Bebaskan %@ cache Instagram.";
 "Freed %@" = "Dibebaskan %@";
-"Hold on the home tab to open RyukGram settings" = "Tahan tab home untuk membuka pengaturan RyukGram";
 "Monthly" = "Bulanan";
 "Nothing to clear" = "Tidak ada yang perlu dihapus";
 "Off skips the size scan when Advanced opens." = "Mati melewati pemindaian ukuran saat Lanjutan dibuka.";
@@ -1349,6 +1563,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                         ADVANCED EXPERIMENTAL                            //
+// Settings → Advanced → Advanced experimental features                     //
 //////////////////////////////////////////////////////////////////////////////
 
 "Actions" = "Aksi";
@@ -1374,6 +1589,36 @@
 "Hidden Instagram experiments" = "Eksperimen Instagram tersembunyi";
 "Hidden Instagram experiments (in Advanced)" = "Eksperimen Instagram tersembunyi (di Lanjutan)";
 "Homecoming" = "Homecoming";
+"MobileConfig" = "MobileConfig";
+"Read and change Instagram's own internal settings. Known names are built in; configs shown only as a number have obfuscated names we can't recover yet. If Instagram crashes on launch three times in a row, your changes are cleared for you." = "Baca dan ubah pengaturan internal Instagram sendiri. Nama yang dikenal sudah disertakan; config yang hanya tampil sebagai angka punya nama teracak yang belum bisa dipulihkan. Kalau Instagram crash saat dibuka tiga kali berturut-turut, perubahanmu dihapus otomatis.";
+"Enable MobileConfig browser" = "Aktifkan browser MobileConfig";
+"Lets the browser read values and apply your changes" = "Membuat browser bisa membaca nilai dan menerapkan perubahanmu";
+"Open MobileConfig browser" = "Buka browser MobileConfig";
+"Search, toggle and edit config values" = "Cari, alihkan, dan edit nilai config";
+"Turn on the browser first, then restart Instagram" = "Aktifkan browsernya dulu, lalu mulai ulang Instagram";
+"Use at your own risk" = "Gunakan dengan risiko sendiri";
+"This changes Instagram's own internal settings. Some can break features or cause crashes until you switch them back.\n\nChanges stay on this device. Most take effect right away, and some only after you restart Instagram. If it crashes on launch three times in a row, they're cleared for you.\n\nInstagram can tell when a setting doesn't match what its server sent. It's very unlikely to affect your account, but not impossible. Use at your own risk." = "Ini mengubah pengaturan internal Instagram sendiri. Sebagian bisa merusak fitur atau menyebabkan crash sampai kamu mengembalikannya.\n\nPerubahan hanya tersimpan di perangkat ini. Sebagian besar langsung berlaku, sebagian lagi baru setelah kamu mulai ulang Instagram. Kalau crash saat dibuka tiga kali berturut-turut, perubahannya dihapus otomatis.\n\nInstagram bisa mendeteksi kalau sebuah pengaturan tidak cocok dengan yang dikirim servernya. Kemungkinan besar tidak berdampak ke akunmu, tapi bukan tidak mungkin. Gunakan dengan risiko sendiri.";
+"I understand" = "Aku mengerti";
+"MobileConfig overrides were reset after repeated crashes on launch" = "Penimpaan MobileConfig disetel ulang setelah crash berulang saat dibuka";
+"Overridden" = "Ditimpa";
+"Search name or config number" = "Cari nama atau nomor config";
+"Reset all overrides" = "Setel ulang semua penimpaan";
+"Parameter:" = "Parameter:";
+"Reset %lu override(s)" = "Setel ulang %lu penimpaan";
+"Reset all overrides?" = "Setel ulang semua penimpaan?";
+"%lu override(s) will be removed." = "%lu penimpaan akan dihapus.";
+"param" = "param";
+"params" = "param";
+"overridden" = "ditimpa";
+"%lu configs  ·  %lu named" = "%lu config  ·  %lu bernama";
+"Config" = "Config";
+"Tap a field to copy. Tap a value below to edit." = "Ketuk kolom untuk menyalin. Ketuk nilai di bawah untuk mengedit.";
+"Number" = "Nomor";
+"Override" = "Timpa";
+"Value" = "Nilai";
+"Type: %@   ·   live: %@" = "Tipe: %@   ·   live: %@";
+"Clear override" = "Hapus penimpaan";
+"Note" = "Catatan";
 "Notes & QuickSnap" = "Notes & QuickSnap";
 "Prism design system" = "Sistem desain Prism";
 "QuickSnap (Instants)" = "QuickSnap (Instants)";
@@ -1381,9 +1626,16 @@
 "Surfaces" = "Permukaan";
 "These toggles flip hidden Instagram experiments on. Some features may not work on every account or IG version. If IG keeps crashing on launch, the flags auto-reset after 3 failed starts." = "Sakelar ini mengaktifkan eksperimen Instagram tersembunyi. Beberapa fitur mungkin tidak berfungsi di setiap akun atau versi IG. Jika IG terus crash saat peluncuran, flag direset otomatis setelah 3 kali gagal mulai.";
 "Toggle hidden Instagram experiments. Some may not work on every account or IG version." = "Alihkan eksperimen Instagram tersembunyi. Beberapa mungkin tidak berfungsi di setiap akun atau versi IG.";
+"Export overrides" = "Ekspor penimpaan";
+"Import overrides" = "Impor penimpaan";
+"Nothing to export" = "Tidak ada yang bisa diekspor";
+"%lu applied · %lu skipped" = "%lu diterapkan · %lu dilewati";
+"This file holds %lu entry(s). Merge keeps what you already changed, replace clears your current overrides first." = "File ini berisi %lu entri. Gabungkan akan mempertahankan yang sudah kamu ubah, ganti akan menghapus penimpaanmu saat ini lebih dulu.";
+"MobileConfig overrides" = "Penimpaan MobileConfig";
 
 //////////////////////////////////////////////////////////////////////////////
 //                                  DEBUG                                   //
+// Settings → Debug tab                                                     //
 //////////////////////////////////////////////////////////////////////////////
 
 "Button Cell" = "Sel tombol";
@@ -1429,6 +1681,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                        DOWNLOADS & MEDIA ACTIONS                         //
+// Action button menus, download/share/copy toasts, quality picker pills.   //
 //////////////////////////////////////////////////////////////////////////////
 
 "%@ settings" = "Pengaturan %@";
@@ -1465,11 +1718,6 @@
 "No caption on this post" = "Tidak ada caption pada postingan ini";
 "No carousel children" = "Tidak ada item korsel";
 "No cover image" = "Tidak ada gambar cover";
-
-//////////////////////////////////////////////////////////////////////////////
-//                        DOWNLOADS & MEDIA ACTIONS (lanjutan)              //
-//////////////////////////////////////////////////////////////////////////////
-
 "No media" = "Tidak ada media";
 "No media to expand" = "Tidak ada media untuk diperbesar";
 "No media to show" = "Tidak ada media untuk ditampilkan";
@@ -1499,6 +1747,8 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                      STORIES & MESSAGES (FEATURES)                       //
+// Buttons, menu entries, toasts and alerts shown while watching stories or //
+// inside DM threads.                                                       //
 //////////////////////////////////////////////////////////////////////////////
 
 "Free" = "Gratis";
@@ -1511,11 +1761,13 @@
 "Send my drawing" = "Kirim gambaranku";
 "Paste image / sticker" = "Tempel gambar / stiker";
 "Tap any sticker on your keyboard\nto add it to your drawing" = "Ketuk stiker mana saja di keyboardmu\nuntuk menambahkannya ke gambaranmu";
+
 "  %lu votes · avg %.0f%%  " = "  %lu suara · rata-rata %.0f%%  ";
 "%@ can't be converted" = "%@ tidak dapat dikonversi";
 "%@ unsent a message" = "%@ membatalkan pesan";
 "%@ unsent a message from %@" = "%@ membatalkan pesan dari %@";
 "A message was unsent" = "Sebuah pesan dibatalkan";
+"A message in %@ was unsent" = "Sebuah pesan di %@ dibatalkan";
 "Add" = "Tambah";
 "Add to block list" = "Tambahkan ke daftar blokir";
 "Added to block list" = "Ditambahkan ke daftar blokir";
@@ -1557,6 +1809,8 @@
 "Marking as viewed advances to the next stacked media instead of closing" = "Menandai sudah ditonton melanjutkan ke media tumpukan berikutnya, bukan menutup";
 "Mark messages as seen" = "Tandai pesan sudah dilihat";
 "Mark seen" = "Tandai dilihat";
+"Mark all (%ld)" = "Tandai semua (%ld)";
+"Mark up to here (%ld)" = "Tandai sampai sini (%ld)";
 "Marked as viewed" = "Ditandai sudah ditonton";
 "Marked messages as seen" = "Pesan ditandai sudah dilihat";
 "Mentions" = "Sebutan";
@@ -1603,18 +1857,20 @@
 "Un-exclude story seen" = "Batalkan pengecualian story dilihat";
 "Un-excluded" = "Dikembalikan ke daftar";
 "Unblocked" = "Blokir dibatalkan";
-"Unlimited replay enabled" = "Putar ulang tak terbatas diaktifkan";
+"Views blocked" = "Tampilan diblokir";
 "Unmute story audio" = "Bunyikan audio story";
 "Unsent" = "Dibatalkan";
 "Upload Audio" = "Unggah Audio";
 "VC not found" = "VC tidak ditemukan";
 "Video from Library" = "Video dari Pustaka";
-"Visual messages will expire" = "Pesan visual akan kedaluwarsa";
-"Visual messages: expiring" = "Pesan visual: kedaluwarsa";
-"Visual messages: unlimited replay" = "Pesan visual: putar ulang tak terbatas";
+"Views will be reported" = "Tampilan akan dilaporkan";
+"Disappearing media: views reported" = "Media sementara: tampilan dilaporkan";
+"Disappearing media: views blocked" = "Media sementara: tampilan diblokir";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
+// Custom per-chat image backgrounds: importer, library, per-image          //
+// settings, chat picker, defaults.                                         //
 //////////////////////////////////////////////////////////////////////////////
 
 "Add Background" = "Tambahkan Latar";
@@ -1679,6 +1935,8 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                             GENERAL FEATURES                             //
+// Strings inside per-feature overlays: fake location, color picker, notes  //
+// customization, profile copy, etc.                                        //
 //////////////////////////////////////////////////////////////////////////////
 
 "Add location" = "Tambahkan lokasi";
@@ -1728,6 +1986,33 @@
 "Select color" = "Pilih warna";
 "Set location" = "Tetapkan lokasi";
 "The theme RyukGram applies to Instagram." = "Tema yang diterapkan RyukGram ke Instagram.";
+"Fonts" = "Font";
+"Font" = "Font";
+"Custom fonts" = "Font kustom";
+"Everywhere" = "Di mana saja";
+"Per surface" = "Per bagian";
+"Per surface gives Instagram and RyukGram their own font." = "Per bagian memberi Instagram dan RyukGram font masing-masing.";
+"Replace the app font" = "Ganti font aplikasi";
+"My fonts" = "Fontku";
+"Device fonts" = "Font perangkat";
+"Import a .ttf or .otf file, or browse thousands of fonts online." = "Impor file .ttf atau .otf, atau jelajahi ribuan font online.";
+"Swipe a font to delete it." = "Geser sebuah font untuk menghapusnya.";
+"Delete %lu fonts?" = "Hapus %lu font?";
+"Added" = "Ditambahkan";
+"Swipe to remove." = "Geser untuk menghapus.";
+"The quick brown fox jumps over the lazy dog" = "Muharjo seorang xenofobia universal mengaku bahwa dia percaya ada tujuh kilogram zat";
+"%lu styles · %@" = "%lu gaya · %@";
+"%@ · %lu weights" = "%@ · %lu ketebalan";
+"Browse online" = "Jelajahi online";
+"Font installed" = "Font terpasang";
+"Restart Instagram to apply everywhere" = "Mulai ulang Instagram untuk menerapkannya di mana saja";
+"No usable font found. Pick a .ttf or .otf file." = "Tidak ada font yang bisa dipakai. Pilih file .ttf atau .otf.";
+"This font has no downloadable styles." = "Font ini tidak punya gaya yang bisa diunduh.";
+"Could not load the font catalog." = "Tidak bisa memuat katalog font.";
+"Sans" = "Sans";
+"Serif" = "Serif";
+"Display" = "Display";
+"Hand" = "Tulisan tangan";
 "Theme" = "Tema";
 "Turn Location Services on in Settings → Privacy to use your current location." = "Aktifkan Layanan Lokasi di Pengaturan → Privasi untuk menggunakan lokasi saat ini.";
 "Type an emoji to use as the note bubble icon." = "Ketik emoji untuk digunakan sebagai ikon gelembung note.";
@@ -1735,6 +2020,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE ANALYZER                              //
+// Settings → Profile Analyzer                                              //
 //////////////////////////////////////////////////////////////////////////////
 
 "%@ %lu accounts? The first %ld will be processed to avoid rate limits." = "%@ %lu akun? %ld pertama akan diproses untuk menghindari batas kecepatan.";
@@ -1779,39 +2065,45 @@
 "Delete this snapshot? This can't be undone." = "Hapus snapshot ini? Ini tidak bisa dibatalkan.";
 "Each scan saves a full copy of your followers and following so you can compare against it later. Everything stays on this device." = "Setiap pemindaian menyimpan salinan lengkap pengikut dan yang kamu ikuti agar bisa dibandingkan nanti. Semua tetap di perangkat ini.";
 "Export" = "Ekspor";
-"Fetch following" = "Ambil mengikuti";
-"Fetch followers" = "Ambil pengikut";
+"Fetching followers (%lu/%ld)…" = "Mengambil pengikut (%lu/%ld)…";
+"Fetching following (%lu/%ld)…" = "Mengambil yang diikuti (%lu/%ld)…";
+"Fetching profile info…" = "Mengambil info profil…";
+"File is not a valid RyukGram backup." = "File bukan cadangan RyukGram yang valid.";
 "Filter" = "Filter";
-"Followers you gained since last scan" = "Pengikut yang kamu dapatkan sejak pemindaian terakhir";
-"Followers you lost since last scan" = "Pengikut yang kamu kehilangan sejak pemindaian terakhir";
-"Following you don't follow back" = "Mengikuti yang tidak kamu ikuti balik";
-"Follow" = "Ikuti";
-"Follow %lu" = "Ikuti %lu";
-"Follow @%@?" = "Ikuti @%@?";
+"Filter · %lu" = "Filter · %lu";
+"First scan: %@" = "Pemindaian pertama: %@";
+"First scan: we collect your followers and following lists and save them locally." = "Pemindaian pertama: kami mengumpulkan daftar pengikut dan yang kamu ikuti serta menyimpannya secara lokal.";
 "Follow back" = "Ikuti balik";
-"Followed you since last scan" = "Mengikutimu sejak pemindaian terakhir";
-"Following you removed since last scan" = "Mengikutimu yang kamu hapus sejak pemindaian terakhir";
-"Gained" = "Bertambah";
-"History" = "Riwayat";
-"Last checked %@" = "Terakhir diperiksa %@";
-"Last scanned %@" = "Terakhir dipindai %@";
-"Log visits" = "Catat kunjungan";
-"Lost" = "Berkurang";
+"Follower count exceeds %ld — analysis disabled to avoid rate limits." = "Jumlah pengikut melebihi %ld — analisis dinonaktifkan untuk menghindari batas kecepatan.";
+"Followers" = "Pengikut";
+"Following… %lu / %lu" = "Mengikuti… %lu / %lu";
+"Gained since last scan" = "Bertambah sejak pemindaian terakhir";
+"Heads up: this feature hits Instagram's private API. Running it back-to-back or right after heavy follow/unfollow activity can trigger a short rate-limit. Use it sparingly and at your own risk." = "Perhatian: fitur ini menggunakan API privat Instagram. Menjalankannya berturut-turut atau tepat setelah aktivitas ikuti/berhenti ikuti yang berat dapat memicu batas kecepatan singkat. Gunakan dengan hemat dan atas risikomu sendiri.";
+"Import complete" = "Impor selesai";
+"Include" = "Sertakan";
+"Keep newest" = "Pertahankan yang terbaru";
+"Keep newest snapshots" = "Pertahankan snapshot terbaru";
+"Large accounts are blocked: analysis is disabled above 13,000 followers to avoid Instagram rate-limiting the whole app." = "Akun besar diblokir: analisis dinonaktifkan di atas 13.000 pengikut untuk menghindari batas kecepatan Instagram pada seluruh aplikasi.";
+"Last scan: %@" = "Pemindaian terakhir: %@";
+"Logs every profile you open. Stays on-device." = "Mencatat setiap profil yang kamu buka. Tetap di perangkat.";
+"Lost followers" = "Pengikut yang berkurang";
+"Most visited" = "Paling sering dikunjungi";
 "Mutual followers" = "Pengikut bersama";
-"Mutuals" = "Saling mengikuti";
+"Name: %@ → %@" = "Nama: %@ → %@";
 "New followers" = "Pengikut baru";
-"No accounts found" = "Tidak ada akun yang ditemukan";
-"No data from previous scan" = "Tidak ada data dari pemindaian sebelumnya";
-"No followers yet" = "Belum ada pengikut";
-"No profile changes recorded" = "Tidak ada perubahan profil yang tercatat";
+"NEW" = "BARU";
+"New first" = "Terbaru dulu";
+"New only" = "Baru saja";
+"No active Instagram session found" = "Tidak ada sesi Instagram aktif yang ditemukan";
 "No results" = "Tidak ada hasil";
-"No scan data yet. Run an analysis first." = "Belum ada data pemindaian. Jalankan analisis dulu.";
-"No snapshots" = "Tidak ada snapshot";
-"No visited profiles" = "Tidak ada profil yang dikunjungi";
-"Non-followers" = "Bukan pengikut";
-"Not following back" = "Tidak mengikuti balik";
-"Open in Instagram" = "Buka di Instagram";
-"People you follow who don't follow you back" = "Orang yang kamu ikuti tapi tidak mengikutimu balik";
+"No scan yet" = "Belum ada pemindaian";
+"Not following you back" = "Tidak mengikutimu balik";
+"Not verified only" = "Tidak terverifikasi saja";
+"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "Tidak ada yang diunggah — semuanya tetap di perangkat ini dan bisa dihapus dari ikon tempat sampah.";
+"Nothing was applied." = "Tidak ada yang diterapkan.";
+"OK" = "OK";
+"Older snapshots beyond the limit are removed automatically" = "Snapshot lama yang melebihi batas dihapus secara otomatis";
+"Older snapshots beyond this limit are deleted on the next scan." = "Snapshot lama yang melebihi batas ini dihapus pada pemindaian berikutnya.";
 "Pick what to remove. Snapshots clears the scan diffs and every recorded snapshot; visited profiles wipes the visit history." = "Pilih apa yang akan dihapus. Snapshot menghapus perbedaan pemindaian dan setiap snapshot yang tercatat; profil yang dikunjungi menghapus riwayat kunjungan.";
 "Pick which categories each scan computes. A disabled check is greyed out and skipped — it won't be calculated or shown." = "Pilih kategori mana yang dihitung setiap pemindaian. Pemeriksaan yang dinonaktifkan digreyed out dan dilewati — tidak akan dihitung atau ditampilkan.";
 "Posts" = "Postingan";
@@ -1881,11 +2173,12 @@
 "Your current scan was archived" = "Pemindaian saat ini diarsipkan";
 "You unfollowed" = "Kamu berhenti mengikuti";
 "your previous scan" = "pemindaian sebelumnya";
-""Previous scan" always measures against your last run. Pick a saved snapshot to compare against a fixed point in time instead." = "\"Pemindaian sebelumnya\" selalu diukur terhadap hasil terakhirmu. Pilih snapshot yang disimpan untuk membandingkan dengan titik waktu tetap.";
+"“Previous scan” always measures against your last run. Pick a saved snapshot to compare against a fixed point in time instead." = "“Pemindaian sebelumnya” selalu diukur terhadap hasil terakhirmu. Pilih snapshot yang disimpan untuk membandingkan dengan titik waktu tetap.";
 "⚠️ This is getting large — lower the limit or delete older snapshots to free space." = "⚠️ Ini semakin besar — turunkan batasnya atau hapus snapshot lama untuk membebaskan ruang.";
 
 //////////////////////////////////////////////////////////////////////////////
 //                         SETTINGS VIEWS & DIALOGS                         //
+// Excluded-lists managers, backup/restore flows, in-picker labels.         //
 //////////////////////////////////////////////////////////////////////////////
 
 "Absolute format" = "Format absolut";
@@ -1951,6 +2244,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                             REELS (FEATURES)                             //
+// Strings from Reels.                                                      //
 //////////////////////////////////////////////////////////////////////////////
 
 "No password found" = "Tidak ada kata sandi yang ditemukan";
@@ -1959,7 +2253,10 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                            PROFILE (FEATURES)                            //
+// Strings from Profile.                                                    //
 //////////////////////////////////////////////////////////////////////////////
+"Follow indicator in lists" = "Indikator follow di daftar";
+"Shows whether each user in a follower or following list follows you" = "Menampilkan apakah tiap pengguna di daftar follower atau following mengikutimu";
 
 "%lu accounts" = "%lu akun";
 "%lu loaded" = "%lu dimuat";
@@ -1977,6 +2274,7 @@
 "List fully loaded" = "Daftar dimuat sepenuhnya";
 "Load more" = "Muat lebih banyak";
 "Loaded more" = "Lebih banyak dimuat";
+"Mutuals" = "Saling mengikuti";
 "Mutuals first" = "Saling mengikuti dulu";
 "Note copied" = "Note disalin";
 "People I follow" = "Orang yang aku ikuti";
@@ -1988,6 +2286,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                                   MISC                                   //
+// Anything that didn't fit a named section. Usually short labels.          //
 //////////////////////////////////////////////////////////////////////////////
 
 "(unset)" = "(belum diatur)";
@@ -2041,8 +2340,20 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                               ABOUT / CREDITS                            //
+// Strings from the About / Credits footer of Settings.                     //
 //////////////////////////////////////////////////////////////////////////////
 
+"Updates" = "Pembaruan";
+"%@ is available" = "%@ tersedia";
+"What's new in this build" = "Yang baru di build ini";
+"Reads the public RyukGram release list on GitHub. Nothing about you is sent." = "Membaca daftar rilis publik RyukGram di GitHub. Tidak ada datamu yang dikirim.";
+"Check for updates" = "Periksa pembaruan";
+"Tells you on launch when a newer RyukGram is out" = "Memberi tahu saat dibuka kalau ada RyukGram versi baru";
+"Shows the release notes once after RyukGram updates" = "Menampilkan catatan rilis sekali setelah RyukGram diperbarui";
+"Update available" = "Pembaruan tersedia";
+"Get it on Telegram" = "Ambil di Telegram";
+"You're up to date" = "Kamu sudah pakai versi terbaru";
+"Update check failed" = "Gagal memeriksa pembaruan";
 "Enjoying RyukGram?" = "Suka dengan RyukGram?";
 "It's free, and nothing leaves your device. If you enjoy using it, a coffee keeps it going." = "Ini gratis, dan tidak ada data yang keluar dari perangkatmu. Jika kamu menikmatinya, secangkir kopi membuatnya tetap berjalan.";
 "Donate" = "Donasi";
@@ -2099,6 +2410,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                             HD DOWNLOADS                                 //
+// Enhanced / HD downloads settings (DASH + FFmpegKit encoding).            //
 //////////////////////////////////////////////////////////////////////////////
 
 "720p • progressive • silent" = "720p • progresif • senyap";
@@ -2107,6 +2419,11 @@
 "Audio track %ld" = "Trek audio %ld";
 "Download video at the highest available quality" = "Unduh video dengan kualitas tertinggi yang tersedia";
 "Downloads HD video via DASH streams and encodes to H.264. Requires FFmpegKit." = "Mengunduh video HD melalui stream DASH dan mengkode ke H.264. Memerlukan FFmpegKit.";
+"Full resolution asks Instagram for the original upload, often far larger than the size the app is given." = "Resolusi penuh meminta unggahan asli ke Instagram, sering kali jauh lebih besar dari ukuran yang diberikan ke aplikasi.";
+"Full resolution" = "Resolusi penuh";
+"Photo Size" = "Ukuran Foto";
+"%@ · Original" = "%@ · Asli";
+"Copy photo URL" = "Salin URL foto";
 "Encoding in software" = "Encoding di software";
 "Encoding speed" = "Kecepatan encoding";
 "Enhanced downloads" = "Unduhan yang ditingkatkan";
@@ -2129,6 +2446,8 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                            ADVANCED ENCODING                             //
+// Advanced encoding page — codecs, profiles, CRF/bitrate, audio,           //
+// container. Manual ffmpeg controls behind “Advanced encoding” toggle.     //
 //////////////////////////////////////////////////////////////////////////////
 
 "'%@' is not in this FFmpegKit build — using hardware h264 instead." = "'%@' tidak ada dalam build FFmpegKit ini — menggunakan hardware h264 sebagai gantinya.";
@@ -2214,6 +2533,8 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                          ACTION MENU CONFIG                              //
+// Profile action button: per-section toggles, reorder handles, default-tap //
+// behavior, reset confirmations, action catalog labels.                    //
 //////////////////////////////////////////////////////////////////////////////
 
 "Long-press gestures" = "Gerakan tekan-tahan";
@@ -2269,6 +2590,8 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 GALLERY                                  //
+// On-device media library: enable + save mode, browsing, filters, sort,    //
+// delete tools, picker entries, and the Photos/Gallery download submenu.   //
 //////////////////////////////////////////////////////////////////////////////
 
 "%.0f kbps" = "%.0f kbps";
@@ -2277,6 +2600,14 @@
 "Added %lu" = "%lu ditambahkan";
 "All files deleted" = "Semua file dihapus";
 "Browsing" = "Menelusuri";
+"Group posts and stories" = "Kelompokkan postingan dan story";
+"One swipeable item per post or story" = "Satu item yang bisa digeser per postingan atau story";
+"Group into album" = "Kelompokkan jadi album";
+"Split album" = "Pisahkan album";
+"Delete album" = "Hapus album";
+"Delete album?" = "Hapus album?";
+"Share all" = "Bagikan semua";
+"Select at least two files" = "Pilih setidaknya dua file";
 "Found %lu items saved by a previous version. Restore them into your gallery now?" = "Ditemukan %lu item yang disimpan oleh versi sebelumnya. Pulihkan ke galerimu sekarang?";
 "Gallery data from a previous version was found. Restore it now?" = "Data galeri dari versi sebelumnya ditemukan. Pulihkan sekarang?";
 "Gallery restored" = "Galeri dipulihkan";
@@ -2346,7 +2677,6 @@
 "Any time" = "Kapan saja";
 "This year" = "Tahun ini";
 "%ld columns" = "%ld kolom";
-"Hold DM tab to open gallery" = "Tahan tab DM untuk membuka galeri";
 "Images" = "Gambar";
 "Images deleted" = "Gambar dihapus";
 "Images first" = "Gambar dulu";
@@ -2354,7 +2684,6 @@
 "items" = "item";
 "Largest first" = "Terbesar dulu";
 "List view" = "Tampilan daftar";
-"Long-press the inbox button in the bottom tab bar to open RyukGram gallery" = "Tekan lama tombol kotak masuk di tab bar bawah untuk membuka galeri RyukGram";
 "Manage" = "Kelola";
 "More" = "Lainnya";
 "Move selected" = "Pindahkan yang dipilih";
@@ -2396,18 +2725,6 @@
 "Storage" = "Penyimpanan";
 "Stories deleted" = "Story dihapus";
 "Story" = "Story";
-"The original content may no longer be available." = "Konten asli mungkin sudah tidak tersedia.";
-"Thumbnails deleted" = "Thumbnail dihapus";
-"Type" = "Jenis";
-"Unfavorite" = "Hapus favorit";
-"Unfavorite selected" = "Hapus favorit yang dipilih";
-"Videos" = "Video";
-"Videos first" = "Video dulu";
-
-//////////////////////////////////////////////////////////////////////////////
-//                         GALLERY (lanjutan)                               //
-//////////////////////////////////////////////////////////////////////////////
-
 "The original content may no longer exist." = "Konten asli mungkin sudah tidak ada.";
 "This folder contains %ld file(s). They will be moved to the parent folder." = "Folder ini berisi %ld file. Semuanya akan dipindahkan ke folder induk.";
 "This folder is empty." = "Folder ini kosong.";
@@ -2415,20 +2732,27 @@
 "This will permanently remove %ld file(s)." = "Ini akan menghapus permanen %ld file secara permanen.";
 "This will permanently remove this file from the gallery." = "Ini akan menghapus permanen file ini dari galeri.";
 "Thumb" = "Thumbnail";
+"Thumbnails deleted" = "Thumbnail dihapus";
 "to Gallery" = "ke Galeri";
 "Total files" = "Total file";
 "Total size" = "Total ukuran";
+"Type" = "Jenis";
 "Unable to open original post" = "Tidak dapat membuka postingan asli";
 "Unable to open profile" = "Tidak dapat membuka profil";
+"Unfavorite" = "Hapus favorit";
 "Unknown user" = "Pengguna tidak diketahui";
 "User files deleted" = "File pengguna dihapus";
+"Videos" = "Video";
 "Videos deleted" = "Video dihapus";
+"Videos first" = "Video dulu";
 "When enabled, favorites are pinned above other files inside the current sort and folder context." = "Saat diaktifkan, favorit disematkan di atas file lain dalam konteks pengurutan dan folder saat ini.";
 "Where 'Download to Photos' actually writes when gallery is on" = "Ke mana 'Unduh ke Foto' sebenarnya menyimpan saat galeri aktif";
 "Yesterday" = "Kemarin";
 
 //////////////////////////////////////////////////////////////////////////////
 //                              HOME SHORTCUT                               //
+// Extra button on the home top bar (right of the create-post +) — picks    //
+// between Gallery, Changelog, etc. Configure-screen and the row reorderer. //
 //////////////////////////////////////////////////////////////////////////////
 
 "Home shortcut button" = "Tombol pintasan home";
@@ -2440,6 +2764,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                              INTERFACE PAGE                              //
+// Settings → Interface (renamed Navigation tab)                            //
 //////////////////////////////////////////////////////////////////////////////
 
 "Adds an extra shortcut button beside the create-post + button on the home top bar." = "Menambahkan tombol pintasan ekstra di samping tombol + buat postingan di bar atas home.";
@@ -2450,6 +2775,8 @@
 "Choose the icon shown on the home top bar. Auto uses the selected action icon when only one action is enabled." = "Pilih ikon yang ditampilkan di bar atas home. Otomatis menggunakan ikon aksi yang dipilih saat hanya satu aksi yang diaktifkan.";
 "Configure button" = "Konfigurasi tombol";
 "Global Action Icons" = "Ikon Aksi Global";
+"Old Instagram logo" = "Logo Instagram lama";
+"Brings back the previous feed header wordmark." = "Mengembalikan wordmark header feed yang sebelumnya.";
 "Interface" = "Antarmuka";
 "Override the icon for a specific button. Buttons left on Default follow the shared icon above." = "Timpa ikon untuk tombol tertentu. Tombol yang dibiarkan di Bawaan mengikuti ikon bersama di atas.";
 "Per button" = "Per tombol";
@@ -2460,10 +2787,12 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                              NOTIFICATIONS                               //
+// Settings → Interface → Notifications + the universal pill / toast system //
 //////////////////////////////////////////////////////////////////////////////
 
 "Drag the pill to position it" = "Seret pil untuk memposisikannya";
 "Drag the pill where you want it. Higher than center slides down, lower slides up." = "Seret pil ke posisi yang kamu inginkan. Lebih tinggi dari tengah meluncur ke bawah, lebih rendah meluncur ke atas.";
+
 "Notifications" = "Notifikasi";
 "Appearance" = "Tampilan";
 "Routing" = "Perutean";
@@ -2487,6 +2816,10 @@
 "Preview pill" = "Pratinjau pil";
 "Preview download pill" = "Pratinjau pil unduhan";
 "Preview loading pill" = "Pratinjau pil memuat";
+"Preview long text" = "Pratinjau teks panjang";
+"Check wrapping and truncation" = "Periksa pembungkusan dan pemotongan teks";
+"A notification title long enough to wrap onto more than one line" = "Judul notifikasi yang cukup panjang sampai turun ke lebih dari satu baris";
+"And a body that keeps going so you can see the pill grow, wrap, and finally cut itself off with an ellipsis instead of taking over the whole screen." = "Dan isi yang terus berlanjut supaya kamu bisa melihat pil-nya membesar, membungkus teks, dan akhirnya terpotong dengan elipsis alih-alih memenuhi seluruh layar.";
 "Master switch. When off, no RyukGram pills or IG-native toasts are emitted." = "Sakelar utama. Saat mati, tidak ada pil RyukGram atau toast bawaan IG yang dipancarkan.";
 "Universal in-app notifications. All RyukGram feedback (downloads, copies, errors, success messages) routes through here." = "Notifikasi universal dalam aplikasi. Semua umpan balik RyukGram (unduhan, salinan, error, pesan sukses) diarahkan melalui sini.";
 "Minimal: flat blur. Colorful: tinted by tone. Glow: colored halo. Island: dynamic-island capsule." = "Minimal: blur datar. Berwarna: diwarnai berdasarkan nada. Cahaya: halo berwarna. Island: kapsul dynamic-island.";
@@ -2569,6 +2902,7 @@
 "FFmpeg log copied" = "Log FFmpeg disalin";
 "GIF inserted" = "GIF disisipkan";
 "Story marked as seen" = "Story ditandai sudah dilihat";
+"Marked %ld stories as seen" = "Menandai %ld story sudah dilihat";
 "Saved" = "Tersimpan";
 "Tap to retry" = "Ketuk untuk mencoba lagi";
 "Looks great" = "Terlihat bagus";
@@ -2586,17 +2920,17 @@
 "Tap a preset to make it active. Swipe left to delete." = "Ketuk preset untuk mengaktifkannya. Geser ke kiri untuk menghapus.";
 "Override Instagram location reads." = "Timpa pembacaan lokasi Instagram.";
 "Show the quick button in Friends Map." = "Tampilkan tombol cepat di Peta Teman.";
-"Pick how absolute dates are written. \"Default\" leaves IG's own format untouched. Swipe a custom format to edit or delete it." = "Pilih bagaimana tanggal absolut ditulis. \"Bawaan\" membiarkan format IG sendiri tidak berubah. Geser format kustom untuk mengedit atau menghapusnya.";
-"Dates younger than the threshold show as relative time. Older dates fall back to the absolute format. \"Combine with date\" shows both — \"Jan 5, 2026 (2h)\" or \"2h – Jan 5, 2026\"." = "Tanggal yang lebih baru dari ambang batas ditampilkan sebagai waktu relatif. Tanggal yang lebih lama menggunakan format absolut. \"Gabungkan dengan tanggal\" menampilkan keduanya — \"Jan 5, 2026 (2j)\" atau \"2j – Jan 5, 2026\".";
+"Pick how absolute dates are written. “Default” leaves IG's own format untouched. Swipe a custom format to edit or delete it." = "Pilih bagaimana tanggal absolut ditulis. u{201C}Bawaanu{201D} membiarkan format IG sendiri tidak berubah. Geser format kustom untuk mengedit atau menghapusnya.";
+"Dates younger than the threshold show as relative time. Older dates fall back to the absolute format. “Combine with date” shows both — “Jan 5, 2026 (2h)” or “2h – Jan 5, 2026”." = "Tanggal yang lebih baru dari ambang batas ditampilkan sebagai waktu relatif. Tanggal lebih lama menggunakan format absolut. “Gabungkan dengan tanggal” menampilkan keduanya — “Jan 5, 2026 (2j)” atau “2j – Jan 5, 2026”.";
 "Compact style" = "Gaya kompak";
-"Example: \"1h\" instead of \"1 hour ago\"" = "Contoh: \"1j\" bukan \"1 jam yang lalu\"";
-"Example: \"Jan 5, 2026 (2h)\"" = "Contoh: \"Jan 5, 2026 (2j)\"";
+"Example: “1h” instead of “1 hour ago”" = "Contoh: “1j” bukan “1 jam yang lalu”";
+"Example: “Jan 5, 2026 (2h)”" = "Contoh: “Jan 5, 2026 (2j)”";
 "iOS audio APIs couldn't process this file%@%@\n\nYou can try sending it to Instagram as-is, or open a support issue." = "API audio iOS tidak dapat memproses file ini%@%@\n\nKamu bisa mencoba mengirimkannya ke Instagram apa adanya, atau buka laporan dukungan.";
 "Combine with date" = "Gabungkan dengan tanggal";
 "Absolute then relative" = "Absolut lalu relatif";
 "Relative – absolute" = "Relatif – absolut";
 "Relative when young, absolute when older." = "Relatif saat baru, absolut saat lebih lama.";
-"Example: \"2h – Jan 5, 2026\"" = "Contoh: \"2j – Jan 5, 2026\"";
+"Example: “2h – Jan 5, 2026”" = "Contoh: “2j – Jan 5, 2026”";
 "Catch view-once media unsent while you're away. ⚠️ May drain battery" = "Tangkap media sekali-lihat yang dibatalkan saat kamu pergi. ⚠️ Bisa menguras baterai";
 "Disappearing (view-once) media" = "Media menghilang (sekali-lihat)";
 "Disappearing media expired before it could be saved" = "Media menghilang kedaluwarsa sebelum bisa disimpan";
@@ -2604,14 +2938,14 @@
 "Disappearing only" = "Hanya yang menghilang";
 "Forces Instagram to keep running in the background so it can capture disappearing media that someone unsends while you're not in the app.\n\nMainly useful for view-once media — normal photos/videos are usually still recoverable without it. ⚠️ May significantly drain your battery, and can't capture anything if you force-quit Instagram from the app switcher.\n\nEnable it?" = "Memaksa Instagram tetap berjalan di latar agar bisa menangkap media menghilang yang dibatalkan seseorang saat kamu tidak ada di aplikasi.\n\nTerutama berguna untuk media sekali-lihat — foto/video normal biasanya masih bisa dipulihkan tanpanya. ⚠️ Bisa menguras baterai secara signifikan, dan tidak bisa menangkap apa pun jika kamu menutup paksa Instagram dari app switcher.\n\nAktifkan?";
 "Keep Instagram active in background" = "Jaga Instagram tetap aktif di latar";
-"Media couldn't be downloaded — the link expired" = "Media tidak bisa diunduh — tautannya kedaluwarsa";
-"Media wasn't available to save" = "Media tidak tersedia untuk disimpan";
+"Media couldn’t be downloaded — the link expired" = "Media tidak bisa diunduh u{2014} tautannya kedaluwarsa";
+"Media wasn’t available to save" = "Media tidak tersedia untuk disimpan";
 "Retrying download…" = "Mencoba ulang unduhan…";
 "Try to download again" = "Coba unduh lagi";
 
-//////////////////////////////////////////////////////////////////////////////
-//                            READ RECEIPTS                                 //
-//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//                            READ RECEIPTS                              //
+//////////////////////////////////////////////////////////////////////////
 
 "Read receipts log" = "Log tanda baca";
 "Date" = "Tanggal";
@@ -2650,8 +2984,24 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                               DEVICE ID                                  //
+// Settings -> Advanced -> Device ID, and the login-screen Device ID button //
 //////////////////////////////////////////////////////////////////////////////
-
+"Machine ID" = "Machine ID";
+"Copy machine ID" = "Salin machine ID";
+"Enter machine ID manually…" = "Masukkan machine ID secara manual…";
+"Restore a saved one, or clear it to re-register" = "Pulihkan yang tersimpan, atau hapus untuk mendaftar ulang";
+"Manual machine ID" = "Machine ID manual";
+"Only paste one Instagram issued. The server checks its format, so a made-up value is rejected." = "Hanya tempel yang diterbitkan Instagram. Server memeriksa formatnya, jadi nilai karangan akan ditolak.";
+"Machine ID set" = "Machine ID disetel";
+"Clear and re-register" = "Hapus dan daftar ulang";
+"Machine ID cleared" = "Machine ID dihapus";
+"No machine ID yet" = "Belum ada machine ID";
+"Issued by Instagram and format-checked by the server, so it can only be kept, never made up. RyukGram pins the one you were issued so Instagram can't swap it." = "Diterbitkan Instagram dan formatnya diperiksa server, jadi hanya bisa disimpan, tidak bisa dikarang. RyukGram mengunci yang diterbitkan untukmu supaya Instagram tidak bisa menggantinya.";
+"Mask everything & relaunch" = "Samarkan semua & buka ulang";
+"Mask everything & relaunch?" = "Samarkan semua & buka ulang?";
+"Mask everything" = "Samarkan semua";
+"Rolls every identifier, blocks Apple attestation, and clears your saved logins and cookies. You sign in again afterwards." = "Mengacak semua identifier, memblokir attestation Apple, dan menghapus login serta cookie tersimpan. Kamu perlu masuk lagi setelahnya.";
+"Fresh IDs, blocked attestation, cleared logins" = "ID baru, attestation diblokir, login dihapus";
 "Roll a new fingerprint" = "Buat sidik jari baru";
 "New device fingerprint" = "Sidik jari perangkat baru";
 "Roll new ID" = "Buat ID baru";
@@ -2692,10 +3042,11 @@
 "Attestation allowed" = "Atestasi diizinkan";
 "Roll + clear, then sign in fresh" = "Buat + hapus, lalu masuk ulang";
 
-//////////////////////////////////////////////////////////////////////////////
-//                         FOLLOW REQUESTS TRACKER                          //
-//////////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////////////
+//                         FOLLOW REQUESTS TRACKER                        //
+// Settings → Follow Requests Tracker                                     //
+//////////////////////////////////////////////////////////////////////////
+"View all from this user" = "Lihat semua dari pengguna ini";
 "Follow Requests" = "Permintaan Ikuti";
 "Show follow requests" = "Tampilkan permintaan ikuti";
 "Check now" = "Periksa sekarang";
@@ -2756,6 +3107,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //                              INSTAGRAM PLUS                               //
+// Settings → General → Instagram Plus                                        //
 //////////////////////////////////////////////////////////////////////////////
 
 "Instagram Plus" = "Instagram Plus";
@@ -2766,7 +3118,7 @@
 "Turn everything off" = "Matikan semua";
 "Every Instagram Plus feature turns off and Instagram restarts." = "Setiap fitur Instagram Plus dimatikan dan Instagram dimulai ulang.";
 "Story peek" = "Intip story";
-"Hold a story in the tray to preview it without opening it." = "Tahan story di baris untuk mempratinjaunya tanpa membukanya.";
+"Hold a story in the tray or an inbox avatar to preview it without opening it." = "Tahan sebuah story di barisnya atau avatar di inbox untuk melihat pratinjaunya tanpa membukanya.";
 "Story fonts" = "Font story";
 "Adds the subscriber fonts when you add text to a story." = "Menambahkan font pelanggan saat kamu menambahkan teks ke story.";
 "Search story viewers" = "Cari penonton story";
@@ -2800,10 +3152,10 @@
 "More pinned posts" = "Lebih banyak postingan yang disematkan";
 "Pin more posts to the top of your profile." = "Sematkan lebih banyak postingan ke atas profilmu.";
 
-//////////////////////////////////////////////////////////////////////////////
-//                                 CALLS                                    //
-//////////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////////////
+//                                 CALLS                                 //
+// Messages -> Calls (recording, ignore list, block mute, recordings UI) //
+//////////////////////////////////////////////////////////////////////////
 "%lu recordings" = "%lu rekaman";
 "1 recording" = "1 rekaman";
 "30 days" = "30 hari";
@@ -2837,6 +3189,8 @@
 "Drag your camera window to any corner or edge." = "Seret jendela kameramu ke sudut atau tepi mana pun.";
 "Enable call recording" = "Aktifkan rekaman panggilan";
 "Export all" = "Ekspor semua";
+"Share as audio only" = "Bagikan sebagai audio saja";
+"Delete %lu recordings?" = "Hapus %lu rekaman?";
 "Full screen" = "Layar penuh";
 "Group call" = "Panggilan grup";
 "Ignore auto-record for this chat" = "Abaikan rekam otomatis untuk chat ini";
@@ -2844,6 +3198,7 @@
 "Include my camera" = "Sertakan kameraku";
 "Keep forever" = "Simpan selamanya";
 "Large" = "Besar";
+"Manual" = "Manual";
 "Mute without the other side seeing you muted — your mic is still silenced" = "Bisukan tanpa sisi lain melihat kamu dibisukan — mikrofon tetap dibisukan";
 "Muted silently" = "Dibisukan diam-diam";
 "My camera size" = "Ukuran kameraku";
@@ -2858,6 +3213,13 @@
 "Overlay your camera on the recording" = "Overlay kameramu pada rekaman";
 "Record audio from" = "Rekam audio dari";
 "Record video on video calls" = "Rekam video pada panggilan video";
+"Record voice and video calls, browse them later" = "Rekam panggilan suara dan video, telusuri nanti";
+"Recorded calls are saved on this device only. A red status-bar indicator shows while recording." = "Panggilan yang direkam disimpan di perangkat ini saja. Indikator bilah status merah muncul saat merekam.";
+"Recorded calls will appear here." = "Panggilan yang direkam akan muncul di sini.";
+"Recording call" = "Merekam panggilan";
+"Recording count" = "Jumlah rekaman";
+"Recording failed" = "Rekaman gagal";
+"Recording name" = "Nama rekaman";
 "Records the other party (call audio) and your microphone. A red status-bar indicator shows while recording. Recordings are saved on this device only." = "Merekam pihak lain (audio panggilan) dan mikrofon kamu. Indikator bilah status merah muncul saat merekam. Rekaman disimpan di perangkat ini saja.";
 "Remove from ignore list" = "Hapus dari daftar abaikan";
 "Remove recordings older than the chosen age" = "Hapus rekaman yang lebih lama dari usia yang dipilih";
@@ -2885,9 +3247,11 @@
 "Delete %lu chats?" = "Hapus %lu chat?";
 "This permanently removes their recordings." = "Ini menghapus permanen rekaman mereka.";
 
-//////////////////////////////////////////////////////////////////////////////
-//                             STORIES ARCHIVE                              //
-//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//                             STORIES ARCHIVE                           //
+// Settings → Stories archive + the archive grid, media viewer, viewers  //
+//////////////////////////////////////////////////////////////////////////
+
 
 "Reacted" = "Bereaksi";
 "Reacted first" = "Bereaksi dulu";
@@ -2938,92 +3302,51 @@
 "A pinned viewer" = "Penonton yang disematkan";
 "On each launch" = "Setiap peluncuran";
 
-//////////////////////////////////////////////////////////////////////////////
-//                         MISSING KEYS — TAMBAHAN                          //
-//////////////////////////////////////////////////////////////////////////////
+"Clear cache now" = "Hapus cache sekarang";
+"Delete staged captures that haven't been unsent yet" = "Hapus tangkapan tersimpan yang belum dibatalkan";
+"Clear view-once cache" = "Hapus cache sekali lihat";
+"Delete all staged captures that haven't been unsent? Anything already saved to the log is kept." = "Hapus semua tangkapan tersimpan yang belum dibatalkan? Yang sudah masuk log tetap disimpan.";
+"Capture while closed" = "Tangkap saat aplikasi tertutup";
+"Save media that arrives while Instagram is closed" = "Simpan media yang datang saat Instagram tertutup";
+"⚠️ Only works on the full Instagram build with plugins, signed with a paid, ad-hoc certificate under the default Instagram bundle id. The no-plugins build has no notification extension. Requires the deleted messages log to stay on.\n\nCatches view-once media (and normal media if enabled) that arrives while Instagram is fully closed, using the notification extension. Affects only this log and its media, nothing else in the app. It rides push notifications, so muted chats, Do Not Disturb or disabled notifications miss messages; \"Keep running in background\" is the fallback." = "⚠️ Hanya bekerja pada build Instagram lengkap dengan plugin, ditandatangani dengan sertifikat ad-hoc berbayar di bawah bundle id Instagram bawaan. Build tanpa plugin tidak punya notification extension. Butuh log pesan terhapus tetap aktif.\n\nMenangkap media sekali lihat (dan media biasa kalau diaktifkan) yang datang saat Instagram benar-benar tertutup, lewat notification extension. Hanya memengaruhi log ini dan medianya, tidak ada yang lain di aplikasi. Ini menumpang notifikasi push, jadi chat yang dibisukan, Jangan Ganggu, atau notifikasi yang dimatikan akan melewatkan pesan; \"Tetap berjalan di latar belakang\" adalah cadangannya.";
+"Uses the notification extension to save media that arrives with the app closed" = "Memakai notification extension untuk menyimpan media yang datang saat aplikasi tertutup";
+"Also capture normal media" = "Tangkap juga media biasa";
+"Not just view-once. Uses a lot more storage" = "Bukan hanya sekali lihat. Memakai jauh lebih banyak penyimpanan";
+"Auto-clean" = "Bersihkan otomatis";
+"Limit how much captured media is kept" = "Batasi berapa banyak media tangkapan yang disimpan";
+"Size limit" = "Batas ukuran";
+"Keep at most this per account" = "Simpan paling banyak sebesar ini per akun";
+"MB" = "MB";
+"Age limit" = "Batas usia";
+"Keep no longer than this" = "Simpan tidak lebih lama dari ini";
+"days" = "hari";
+"Drop every capture each time you open the app" = "Buang semua tangkapan setiap kali kamu membuka aplikasi";
+"Trim each account by size and age" = "Pangkas tiap akun berdasarkan ukuran dan usia";
+"Kept per account. A capture is dropped once it passes either limit." = "Disimpan per akun. Sebuah tangkapan dibuang begitu melewati salah satu batas.";
+"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "Kalau keduanya mati, tangkapan disimpan sampai dibatalkan. Menyalakan salah satu akan mematikan yang lain. Apa pun yang benar-benar dibatalkan disimpan ke log lebih dulu dan tidak pernah dibersihkan di sini.";
+"Clear when I open Instagram" = "Hapus saat aku membuka Instagram";
+"Keep within size / age limits" = "Jaga dalam batas ukuran / usia";
+"View-once cache" = "Cache sekali lihat";
+"Message log" = "Log pesan";
 
-"Dates younger than the threshold show as relative time. Older dates fall back to the absolute format. “Combine with date” shows both — “Jan 5, 2026 (2h)” or “2h – Jan 5, 2026”." = "Tanggal yang lebih baru dari ambang batas ditampilkan sebagai waktu relatif. Tanggal lebih lama menggunakan format absolut. “Gabungkan dengan tanggal” menampilkan keduanya — “Jan 5, 2026 (2j)” atau “2j – Jan 5, 2026”.";
-"Example: “1h” instead of “1 hour ago”" = "Contoh: “1j” bukan “1 jam yang lalu”";
-"Example: “2h – Jan 5, 2026”" = "Contoh: “2j – Jan 5, 2026”";
-"Example: “Jan 5, 2026 (2h)”" = "Contoh: “Jan 5, 2026 (2j)”";
-"Fetching followers (%lu/%ld)…" = "Mengambil pengikut (%lu/%ld)…";
-"Fetching following (%lu/%ld)…" = "Mengambil yang diikuti (%lu/%ld)…";
-"Fetching profile info…" = "Mengambil info profil…";
-"File is not a valid RyukGram backup." = "File bukan cadangan RyukGram yang valid.";
-"Filter · %lu" = "Filter · %lu";
-"First scan: %@" = "Pemindaian pertama: %@";
-"First scan: we collect your followers and following lists and save them locally." = "Pemindaian pertama: kami mengumpulkan daftar pengikut dan yang kamu ikuti serta menyimpannya secara lokal.";
-"Follower count exceeds %ld — analysis disabled to avoid rate limits." = "Jumlah pengikut melebihi %ld — analisis dinonaktifkan untuk menghindari batas kecepatan.";
-"Followers" = "Pengikut";
-"Following… %lu / %lu" = "Mengikuti… %lu / %lu";
-"Gained since last scan" = "Bertambah sejak pemindaian terakhir";
-"Heads up: this feature hits Instagram's private API. Running it back-to-back or right after heavy follow/unfollow activity can trigger a short rate-limit. Use it sparingly and at your own risk." = "Perhatian: fitur ini menggunakan API privat Instagram. Menjalankannya berturut-turut atau tepat setelah aktivitas ikuti/berhenti ikuti yang berat dapat memicu batas kecepatan singkat. Gunakan dengan hemat dan atas risikomu sendiri.";
-"Import complete" = "Impor selesai";
-"Include" = "Sertakan";
-"Keep newest snapshots" = "Pertahankan snapshot terbaru";
-"Keep newest" = "Pertahankan yang terbaru";
-"Large accounts are blocked: analysis is disabled above 13,000 followers to avoid Instagram rate-limiting the whole app." = "Akun besar diblokir: analisis dinonaktifkan di atas 13.000 pengikut untuk menghindari batas kecepatan Instagram pada seluruh aplikasi.";
-"Last scan: %@" = "Pemindaian terakhir: %@";
-"Log only records silently. Notify only pings you without keeping it. Notify + log does both." = "Catat saja mencatat diam-diam. Notifikasi saja memberi tahu tanpa menyimpan. Notifikasi + catat melakukan keduanya.";
-"Log only" = "Catat saja";
-"Logs every profile you open. Stays on-device." = "Mencatat setiap profil yang kamu buka. Tetap di perangkat.";
-"Long press a profile picture to open it in full-screen with zoom, share, and save" = "Tekan lama foto profil untuk membukanya di layar penuh dengan zoom, bagikan, dan simpan";
-"Long press the note bubble on a profile to copy the text" = "Tekan lama gelembung note pada profil untuk menyalin teksnya";
-"Long press to download directly (ignored when zoom is on)" = "Tekan lama untuk mengunduh langsung (diabaikan saat zoom aktif)";
-"Long-press gestures on profile elements — kept separate from the per-feature action buttons." = "Gerakan tekan-tahan pada elemen profil — dipisahkan dari tombol aksi per fitur.";
-"Lost followers" = "Pengikut yang berkurang";
-"Master switch for all card stats. Fetch missing counts uses Instagram's API and may hit rate limits." = "Sakelar utama untuk semua statistik kartu. Ambil hitungan yang hilang menggunakan API Instagram dan mungkin mencapai batas kecepatan.";
-"Media couldn't be downloaded — the link expired" = "Media tidak bisa diunduh — tautannya kedaluwarsa";
-"Media wasn't available to save" = "Media tidak tersedia untuk disimpan";
-"Most visited" = "Paling sering dikunjungi";
-"NEW" = "BARU";
-"Name: %@ → %@" = "Nama: %@ → %@";
-"New first" = "Terbaru dulu";
-"New only" = "Baru saja";
-"No active Instagram session found" = "Tidak ada sesi Instagram aktif yang ditemukan";
-"No scan yet" = "Belum ada pemindaian";
-"Not following you back" = "Tidak mengikutimu balik";
-"Not verified only" = "Tidak terverifikasi saja";
-"Nothing is uploaded — everything stays on this device and can be wiped from the trash icon." = "Tidak ada yang diunggah — semuanya tetap di perangkat ini dan bisa dihapus dari ikon tempat sampah.";
-"Nothing was applied." = "Tidak ada yang diterapkan.";
-"Notify + log" = "Notifikasi + catat";
-"Notify only" = "Notifikasi saja";
-"OK" = "OK";
-"Older snapshots beyond the limit are removed automatically" = "Snapshot lama yang melebihi batas dihapus secara otomatis";
-"Older snapshots beyond this limit are deleted on the next scan." = "Snapshot lama yang melebihi batas ini dihapus pada pemindaian berikutnya.";
-"Only affects your own profile header. Other users see the real numbers." = "Hanya memengaruhi header profilmu sendiri. Pengguna lain melihat angka asli.";
-"Pick how absolute dates are written. “Default” leaves IG’s own format untouched. Swipe a custom format to edit or delete it." = "Pilih bagaimana tanggal absolut ditulis. “Bawaan” membiarkan format IG sendiri tidak berubah. Geser format kustom untuk mengedit atau menghapusnya.";
-"Profile card details" = "Detail kartu profil";
-"Profile stats" = "Statistik profil";
-"Record voice and video calls, browse them later" = "Rekam panggilan suara dan video, telusuri nanti";
-"Recorded calls are saved on this device only. A red status-bar indicator shows while recording." = "Panggilan yang direkam disimpan di perangkat ini saja. Indikator bilah status merah muncul saat merekam.";
-"Recorded calls will appear here." = "Panggilan yang direkam akan muncul di sini.";
-"Recording call" = "Merekam panggilan";
-"Recording count" = "Jumlah rekaman";
-"Recording failed" = "Rekaman gagal";
-"Recording name" = "Nama rekaman";
-"Repost count" = "Jumlah repost";
-"Restores the default stats, order, and options for profile card details." = "Mengembalikan statistik, urutan, dan opsi bawaan untuk detail kartu profil.";
-"Restores the default stats, order, and options for search & explore card details." = "Mengembalikan statistik, urutan, dan opsi bawaan untuk detail kartu pencarian & explore.";
-"Save profile picture" = "Simpan foto profil";
-"Search & Explore" = "Pencarian & Explore";
-"Share count" = "Jumlah bagikan";
-"Short numbers" = "Angka singkat";
-"Show a checkmark next to your name on your own profile" = "Tampilkan tanda centang di samping namamu pada profilmu sendiri";
-"Show card details" = "Tampilkan detail kartu";
-"Show full follower count" = "Tampilkan jumlah pengikut lengkap";
-"Show full post count" = "Tampilkan jumlah postingan lengkap";
-"Show the custom number set below" = "Tampilkan angka kustom yang diatur di bawah";
-"Show the exact number instead of a shortened one" = "Tampilkan angka yang tepat, bukan yang disingkat";
-"Shows whether the profile user follows you" = "Menampilkan apakah pengguna profil mengikutimu";
-"Tap to set" = "Ketuk untuk mengatur";
-"Toggle each stat on or off. Drag the ≡ handle to reorder how they stack on the card." = "Aktifkan atau matikan setiap statistik. Seret gagang ≡ untuk mengatur ulang urutan tumpukannya di kartu.";
-"Upload date" = "Tanggal unggah";
-"View count" = "Jumlah tampilan";
-"Views, likes, comments, shares, reposts, date" = "Tampilan, suka, komentar, bagikan, repost, tanggal";
-"Zoom profile photo" = "Zoom foto profil";
-"“Previous scan” always measures against your last run. Pick a saved snapshot to compare against a fixed point in time instead." = "“Pemindaian sebelumnya” selalu diukur terhadap hasil terakhirmu. Pilih snapshot yang disimpan untuk membandingkan dengan titik waktu tetap.";
+"Story stats" = "Statistik story";
+"Views per story" = "Tampilan per story";
+"%@ · peak %@ views" = "%@ · puncak %@ tampilan";
+"Avg / story" = "Rata-rata / story";
+"Unique viewers" = "Penonton unik";
+"Engagement" = "Engagement";
+"Loyal fans" = "Penonton setia";
+"Peak hour" = "Jam puncak";
+"Recently viewed" = "Baru dilihat";
+"No archived stories in this range yet." = "Belum ada story terarsip di rentang ini.";
 
-"Media couldn’t be downloaded — the link expired" = "Media tidak bisa diunduh u{2014} tautannya kedaluwarsa";
-"Media wasn’t available to save" = "Media tidak tersedia untuk disimpan";
-"Pick how absolute dates are written. “Default” leaves IG's own format untouched. Swipe a custom format to edit or delete it." = "Pilih bagaimana tanggal absolut ditulis. u{201C}Bawaanu{201D} membiarkan format IG sendiri tidak berubah. Geser format kustom untuk mengedit atau menghapusnya.";
+"Names & photos updated" = "Nama & foto diperbarui";
+"Names & photos are up to date" = "Nama & foto sudah terbaru";
+
+"Early birds" = "Penonton pertama";
+"Opens first" = "Membuka paling awal";
+"top %ld%%" = "%ld%% teratas";
+"1 reaction" = "1 reaksi";
+"%ld reactions" = "%ld reaksi";
+"Watched %ld stories" = "Menonton %ld story";
+"Unpin" = "Lepas sematan";

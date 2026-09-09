@@ -187,24 +187,22 @@ jobs:
                 set -euo pipefail
                 wget "$Instagram_URL" --no-verbose -O packages/com.burbn.instagram.ipa
 
-                # Extract the real IG version from the decrypted IPA's Info.plist
-                # so the output filename reflects the actual IPA version, not just
-                # what the release tag or deb filename says.
-                STAGE="$(mktemp -d)"
-                unzip -q packages/com.burbn.instagram.ipa -d "$STAGE"
-                APP_DIR="$(find "$STAGE/Payload" -maxdepth 1 -type d -name '*.app' | head -1)"
-                if [ -n "$APP_DIR" ] && [ -f "$APP_DIR/Info.plist" ]; then
-                  IPA_VER="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_DIR/Info.plist" 2>/dev/null || true)"
-                  if [ -n "$IPA_VER" ]; then
-                    echo "Extracted IG version from IPA: ${IPA_VER}"
-                    echo "IG_VER=${IPA_VER}" >> "$GITHUB_ENV"
-                  else
-                    echo "::warning::Could not read CFBundleShortVersionString from IPA; keeping deb IG_VER=${IG_VER}"
-                  fi
-                else
-                  echo "::warning::Could not find Info.plist in IPA; keeping deb IG_VER=${IG_VER}"
+                # The IPA is user-supplied, so its version can differ from the one the
+                # deb was named after. Name the output after what actually got built.
+                PLIST="$(unzip -Z1 packages/com.burbn.instagram.ipa 'Payload/*.app/Info.plist' 2>/dev/null | awk -F/ 'NF==3' | head -1 || true)"
+                IPA_VER=""
+                if [ -n "$PLIST" ]; then
+                  STAGE="$(mktemp -d)"
+                  unzip -qo -j packages/com.burbn.instagram.ipa "$PLIST" -d "$STAGE"
+                  IPA_VER="$(plutil -extract CFBundleShortVersionString raw -o - "$STAGE/Info.plist" 2>/dev/null || true)"
+                  rm -rf "$STAGE"
                 fi
-                rm -rf "$STAGE"
+                if [ -n "$IPA_VER" ]; then
+                  echo "IG_VER=${IPA_VER}" >> "$GITHUB_ENV"
+                  echo "IG version from IPA: ${IPA_VER} (deb said ${IG_VER})"
+                else
+                  echo "::warning::Could not read the version from the IPA; keeping IG_VER=${IG_VER}"
+                fi
 
                 ls -la packages
 
