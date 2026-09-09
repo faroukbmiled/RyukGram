@@ -4,7 +4,7 @@
 
 **The Instagram tweak for iOS power users.**
 
-`v1.3.4` · Instagram 446.0.0 | Instagram 410.1.0
+`v1.4.0` · Instagram 446.0.0 | Instagram 410.1.0
 
 <sub>The Instagram 410 build is for older iOS versions and trails the main build on newer features.</sub>
 
@@ -105,7 +105,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Stat pills on search and explore, with a page to pick and reorder them
 - Anonymous live viewing and toggleable live comments
 - Redact RyukGram's own buttons in screenshots and recordings
-- Update checker that shows what changed and links to Telegram, with release notes for every past version
+- Update checker with what changed, notes for every past release, and a link to Telegram
 
 ### Feed
 - Grid feed turns your home feed into thumbnails, each with its stats and author
@@ -123,7 +123,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Status bar tap can scroll up only, or do nothing
 - Stop the right swipe on the feed from opening the camera
 - Confirm before a pull to refresh, or refresh only the stories tray
-- Post buttons page to reorder Instagram's own like, comment, share, repost and save buttons, hide any of them, or drop their counts
+- Post buttons page to reorder, hide, or drop the counts on Instagram's own like, comment, share, repost and save buttons
 
 ### Reels
 - Custom tap controls and an auto scroll mode
@@ -132,7 +132,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Always visible scrubber, no auto unmute, and refresh confirmation
 - Expanded view that shows the whole reel instead of cropping the sides
 - Unlock password locked reels
-- Reel buttons page to reorder or hide the sidebar buttons and their counts
+- Reel buttons page to reorder, hide, or drop the counts on the sidebar buttons
 - Hide the header, friend avatars, and promo pills
 - Swipe left to open the author's profile
 - Show the repost date
@@ -148,7 +148,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Save a photo story as just the image
 - Repost through Instagram's own flow
 - Full screen viewer with zoom and swipe
-- Drag to arrange your overlay buttons on a live preview, with a slider for the spacing between them
+- Drag your overlay buttons into place on a live preview, with a spacing slider
 
 ### Profile
 - Zoom or save the profile picture
@@ -158,7 +158,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Copy notes, reveal full counts, and fake your username, name, stats and badge
 - Hide the Threads button in the header
 - Sort and search follower and following lists by mutuals, verified, and more
-- Follow request tracker that logs every request, even ones cancelled before you answer
+- Follow request tracker that logs every request, even ones canceled before you answer
 
 ### Profile analyzer
 - Follower and following scans, with mutuals and non followbacks
@@ -166,34 +166,34 @@ Once it is running, open the settings by holding the button at the top of your p
 - Change history for name, username, bio, and picture
 - Inline and batch follow, unfollow, and remove
 - A log of every profile you open, with filters
-- Per check toggles, with a badge for gains and losses since your last look
+- Per-check toggles, with a badge for gains and losses since your last look
 
 ### Saving
 - HD downloads up to 1080p, with a quality picker and preview
-- Full resolution photos pulled at their original upload size, or picked per size
+- Full-resolution photos at their original upload size, or picked per size
 - Audio only and raw photo options
 - Download manager with live speed, filters, swipe actions, and bulk select
 - Download history that survives a restart, with redownload and a keep window
-- Duplicate check that warns before you save the same media twice, and can drop the old gallery copy first
+- Duplicate check before you save the same media twice, dropping the old gallery copy if you want
 - Auto retry for downloads that drop offline
 - Save into a dedicated RyukGram album
-- Advanced encoding panel for codec, bitrate, resolution, and more
+- Advanced encoding panel for codec, bitrate, and resolution
 - One clean filename everywhere, stamped with the date the post went up
-- Optional ryuk_ prefix on saved filenames
+- Optional `ryuk_` prefix on saved filenames
 - Optional download confirmation
 
 ### Gallery
-- A private in app library that every download can mirror into
+- A private in-app library that every download can mirror into
 - Images, video, audio, and animated GIFs
 - Filter by type, source, uploader, date, and favorites, with folders
 - Sort by date, name, or size, with images, videos, or favorites first
 - Group by user into sections or folders, from 2 to 5 columns
-- A downloaded post or story stays one item you swipe through, and you can group or split albums yourself
+- A downloaded post or story stays one swipeable item, and you can group or split albums yourself
 - Long press a user section to select all their media
-- In app preview carousel
+- In-app preview carousel
 - Pull audio and GIFs straight from the gallery
 - Import your own photos, videos and files into the gallery
-- Grid tiles show a date chip, long press an item for its date, source and size
+- Grid tiles show a date chip, and a long press gives date, source and size
 
 ### Stories and messages
 - Keep deleted messages, including your own unsends
@@ -203,10 +203,10 @@ Once it is running, open the settings by holding the button at the top of your p
 - Catch view-once media that arrives while Instagram is closed
 - Log view-once media the moment you open it, off by default
 - Activity notifications for reads, online, offline, and typing, set per person
-- An activity log that keeps it all as a timeline, filterable and swipe to delete
+- An activity log as a timeline, filterable and swipe to delete
 - Accurate active status so the green dot turns off the moment someone leaves
 - Playback menu for story speed, seek, and pause, held from the story buttons or its menu
-- Your own fonts in the story text tool, next to the built in ones
+- Your own fonts in the story text tool, next to the built-in ones
 - Manual and automatic mark as seen
 - Hold the eye button to mark a whole story reel seen, or only up to where you are
 - Mark chats seen on your device only, the eye button stays orange until you really send it
@@ -217,7 +217,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Turn off typing status, the vanish swipe, and view once limits
 - Hide shared reels in chats so they never show or open in a thread
 - Toggle your activity status from a dot in the DMs inbox
-- Custom chat backgrounds from an image, video, or GIF, with a built in editor
+- Custom chat backgrounds from an image, video, or GIF, with a built-in editor
 - Filter, sort, search, and pin story viewers, and see who reacted with what
 - Archive your own stories before they expire, viewer list included, per account
 - Story stats over your archive
@@ -233,15 +233,15 @@ Once it is running, open the settings by holding the button at the top of your p
 
 ### Interface
 - A universal notification pill you can place anywhere on screen
-- Mirror toasts to the iOS notification centre, in the background or while the app is open
+- Mirror toasts to the iOS notification center, in the background or while the app is open
 - Reorder and hide tab bar icons on a live tab bar preview
 - Hold any tab bar tab to open a RyukGram screen, picked per tab
-- Messages only mode, with a daily schedule that switches in place and inbox header shortcuts
+- Messages-only mode, with a daily schedule that switches in place and inbox header shortcuts
 - Force Instagram into any supported language
 - Home shortcut button with new item badges
 - Bring back the old Instagram logo in the feed header
 - Experimental flags
-- MobileConfig browser to read and change Instagram's own internal settings
+- MobileConfig browser to read, change, export and import Instagram's own internal settings
 
 ### Confirm actions
 - Optional confirmations for likes, follows, reposts, calls, comments, and more

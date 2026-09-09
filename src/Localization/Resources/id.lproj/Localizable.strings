@@ -197,7 +197,7 @@
 "Suppresses the \"It's time to update Instagram Beta\" nag" = "Menekan pesan \"It's time to update Instagram Beta\" yang mengganggu";
 "Tap to apply" = "Ketuk untuk menerapkan";
 "The selected icon will be saved and shown here the next time you open this page." = "Ikon yang dipilih akan disimpan dan ditampilkan di sini saat kamu membuka halaman ini lagi.";
-"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "Aplikasi sideload-mu mengganti daftar ikon Instagram. Setel ikon aplikasinya kembali ke Default, lalu segarkan Instagram supaya ikonnya kembali.";
+"Your sideloading app replaced Instagram's icon list. Set its app icon back to Default, then refresh Instagram to get the icons back." = "Aplikasi sideload-mu mengganti daftar ikon Instagram. Setel ikon aplikasinya kembali ke Default, lalu refresh Instagram supaya ikonnya kembali.";
 "Toggle live comments" = "Alihkan komentar live";
 "Use detailed color picker" = "Pakai pemilih warna detail";
 "Used across feed, stories, reels, and DMs." = "Dipakai di feed, story, reel, dan DM.";
@@ -747,7 +747,7 @@
 "Story user list" = "Daftar pengguna story";
 "Tapping the eye button to mark a story as seen advances to the next story automatically" = "Mengetuk tombol mata untuk menandai story sudah dilihat akan otomatis melanjutkan ke story berikutnya";
 "This will send a story view receipt." = "Ini akan mengirim tanda tonton story.";
-"This will send %ld story view receipts." = "Ini akan mengirim %ld tanda telah melihat story.";
+"This will send %ld story view receipts." = "Ini akan mengirim %ld tanda tonton story.";
 "View story mentions" = "Lihat sebutan story";
 "Which stories get seen-receipt blocking" = "Story mana yang mendapat pemblokiran tanda baca";
 "Text tool" = "Alat teks";
@@ -932,9 +932,9 @@
 "Show full date instead of \"Active 2h ago\"" = "Tampilkan tanggal lengkap, bukan \"Aktif 2 jam lalu\"";
 "Shows a button in DM threads to add/remove chats from the list. Long-press for more options" = "Menampilkan tombol di thread DM untuk menambah/menghapus chat dari daftar. Tekan lama untuk opsi lebih lanjut";
 "Shows a notification pill when a message is unsent" = "Menampilkan pil notifikasi saat pesan dibatalkan";
-"Block view receipts" = "Blokir tanda telah dilihat";
+"Block view receipts" = "Blokir tanda tonton";
 "Instagram reports a view when the media finishes playing. Block it and the media stays unopened until you send the receipt yourself." = "Instagram melaporkan tampilan begitu media selesai diputar. Blokir itu dan medianya tetap belum terbuka sampai kamu mengirim tandanya sendiri.";
-"Available while view receipts are blocked." = "Tersedia selama tanda telah dilihat diblokir.";
+"Available while view receipts are blocked." = "Tersedia selama tanda tonton diblokir.";
 "View-once photos and videos, and their buttons" = "Foto dan video sekali lihat, beserta tombolnya";
 "Unsent message notification" = "Notifikasi pesan dibatalkan";
 "Voice messages" = "Pesan suara";
@@ -1149,7 +1149,7 @@
 "Start time" = "Waktu mulai";
 "End time" = "Waktu selesai";
 "Switch into Messages-only on its own during a time window" = "Beralih ke mode hanya pesan secara otomatis selama jangka waktu tertentu";
-"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "Nyalakan Hanya pesan secara otomatis pada jendela waktu harian (misalnya 22.00 – 06.00) lewat sakelar di atas.";
+"Turn Messages-only on by itself during a daily window (e.g. 10:00 PM – 6:00 AM) using the toggles above." = "Aktifkan Hanya pesan secara otomatis pada jendela waktu harian (misalnya 22.00 – 06.00) lewat sakelar di atas.";
 "Active now · ends %@" = "Aktif sekarang · berakhir %@";
 "Next window starts %@" = "Jangka waktu berikutnya dimulai %@";
 "Messages-only starting" = "Mode hanya pesan dimulai";
@@ -1497,7 +1497,7 @@
 "Overwrite" = "Timpa";
 "Profiles" = "Profil";
 "Replaces it with your current settings." = "Menggantinya dengan pengaturanmu saat ini.";
-"Reset %@ to defaults?" = "Setel ulang %@ ke bawaan?";
+"Reset %@ to defaults?" = "Reset %@ ke bawaan?";
 "Saved as %@" = "Disimpan sebagai %@";
 "Saved as a profile. Your current settings stay as they are." = "Disimpan sebagai profil. Pengaturanmu saat ini tetap seperti sekarang.";
 "Saves your current settings and switches to it." = "Menyimpan pengaturanmu saat ini lalu beralih ke sana.";
@@ -1508,7 +1508,7 @@
 "Switch" = "Beralih";
 "Switching to a ticked account switches to this profile." = "Beralih ke akun yang dicentang akan beralih ke profil ini.";
 "Tap to switch. Changes stay in the profile in use. Swipe or hold for more." = "Ketuk untuk beralih. Perubahan tersimpan di profil yang sedang dipakai. Geser atau tahan untuk opsi lain.";
-"Turn everything off in %@?" = "Matikan semuanya di %@?";
+"Turn everything off in %@?" = "Matikan semua di %@?";
 "Turn off" = "Matikan";
 "Use for other accounts" = "Pakai untuk akun lain";
 "Your settings aren't saved to a profile." = "Pengaturanmu belum disimpan ke profil mana pun.";
@@ -1602,10 +1602,10 @@
 "MobileConfig overrides were reset after repeated crashes on launch" = "Penimpaan MobileConfig disetel ulang setelah crash berulang saat dibuka";
 "Overridden" = "Ditimpa";
 "Search name or config number" = "Cari nama atau nomor config";
-"Reset all overrides" = "Setel ulang semua penimpaan";
+"Reset all overrides" = "Reset semua penimpaan";
 "Parameter:" = "Parameter:";
-"Reset %lu override(s)" = "Setel ulang %lu penimpaan";
-"Reset all overrides?" = "Setel ulang semua penimpaan?";
+"Reset %lu override(s)" = "Reset %lu penimpaan";
+"Reset all overrides?" = "Reset semua penimpaan?";
 "%lu override(s) will be removed." = "%lu penimpaan akan dihapus.";
 "param" = "param";
 "params" = "param";
@@ -1864,8 +1864,8 @@
 "VC not found" = "VC tidak ditemukan";
 "Video from Library" = "Video dari Pustaka";
 "Views will be reported" = "Tampilan akan dilaporkan";
-"Disappearing media: views reported" = "Media sementara: tampilan dilaporkan";
-"Disappearing media: views blocked" = "Media sementara: tampilan diblokir";
+"Disappearing media: views reported" = "Media menghilang: tampilan dilaporkan";
+"Disappearing media: views blocked" = "Media menghilang: tampilan diblokir";
 
 //////////////////////////////////////////////////////////////////////////////
 //                             CHAT BACKGROUNDS                             //
@@ -2375,6 +2375,7 @@
 "Vietnamese translation" = "Terjemahan bahasa Vietnam";
 "French translation" = "Terjemahan bahasa Prancis";
 "Japanese translation" = "Terjemahan bahasa Jepang";
+"Indonesian translation" = "Terjemahan bahasa Indonesia";
 "Code contributions" = "Kontribusi kode";
 "Following feed mode (from InstaSane)" = "Mode feed mengikuti (dari InstaSane)";
 "latest" = "terbaru";
@@ -3323,7 +3324,7 @@
 "Drop every capture each time you open the app" = "Buang semua tangkapan setiap kali kamu membuka aplikasi";
 "Trim each account by size and age" = "Pangkas tiap akun berdasarkan ukuran dan usia";
 "Kept per account. A capture is dropped once it passes either limit." = "Disimpan per akun. Sebuah tangkapan dibuang begitu melewati salah satu batas.";
-"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "Kalau keduanya mati, tangkapan disimpan sampai dibatalkan. Menyalakan salah satu akan mematikan yang lain. Apa pun yang benar-benar dibatalkan disimpan ke log lebih dulu dan tidak pernah dibersihkan di sini.";
+"With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "Kalau keduanya mati, tangkapan disimpan sampai dibatalkan. Mengaktifkan salah satu akan mematikan yang lain. Apa pun yang benar-benar dibatalkan disimpan ke log lebih dulu dan tidak pernah dibersihkan di sini.";
 "Clear when I open Instagram" = "Hapus saat aku membuka Instagram";
 "Keep within size / age limits" = "Jaga dalam batas ukuran / usia";
 "View-once cache" = "Cache sekali lihat";
