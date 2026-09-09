@@ -186,6 +186,26 @@ jobs:
               run: |
                 set -euo pipefail
                 wget "$Instagram_URL" --no-verbose -O packages/com.burbn.instagram.ipa
+
+                # Extract the real IG version from the decrypted IPA's Info.plist
+                # so the output filename reflects the actual IPA version, not just
+                # what the release tag or deb filename says.
+                STAGE="$(mktemp -d)"
+                unzip -q packages/com.burbn.instagram.ipa -d "$STAGE"
+                APP_DIR="$(find "$STAGE/Payload" -maxdepth 1 -type d -name '*.app' | head -1)"
+                if [ -n "$APP_DIR" ] && [ -f "$APP_DIR/Info.plist" ]; then
+                  IPA_VER="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_DIR/Info.plist" 2>/dev/null || true)"
+                  if [ -n "$IPA_VER" ]; then
+                    echo "Extracted IG version from IPA: ${IPA_VER}"
+                    echo "IG_VER=${IPA_VER}" >> "$GITHUB_ENV"
+                  else
+                    echo "::warning::Could not read CFBundleShortVersionString from IPA; keeping deb IG_VER=${IG_VER}"
+                  fi
+                else
+                  echo "::warning::Could not find Info.plist in IPA; keeping deb IG_VER=${IG_VER}"
+                fi
+                rm -rf "$STAGE"
+
                 ls -la packages
 
             - name: Build sideloaded IPA (cyan + ipapatch with zxPluginsInject)
