@@ -1629,7 +1629,7 @@
 "Off means these always fetch fresh. They need live data, so they start off." = "Pri vypnutí sa tieto údaje vždy načítajú nanovo. Potrebujú aktuálne dáta, preto sú predvolene vypnuté.";
 "1000 a day" = "1000 denne";
 "2000 a day" = "2000 denne";
-"Caching, transport and daily limits" = "Ukladanie do vyrovnávacej pamäte, prenos a denné limity";
+"Caching, transport and daily limits" = "Ukladanie do cache, prenos a denné limity";
 "Reuses a recent reply instead of asking Instagram again." = "Použije nedávnu odpoveď namiesto opätovného dopytovania Instagramu.";
 "Keep replies for" = "Uchovávať odpovede počas";
 "Story viewers" = "Diváci príbehov";
@@ -1643,7 +1643,7 @@
 "How the tweak talks to Instagram: reusing replies, pacing requests and daily limits." = "Ako doplnok komunikuje s Instagramom: opätovné používanie odpovedí, rozkladanie požiadaviek v čase a denné limity.";
 "200 a day" = "200 denne";
 "500 a day" = "500 denne";
-"Response cache" = "Vyrovnávacia pamäť odpovedí";
+"Response cache" = "Cache odpovedí";
 "5 minutes" = "5 minút";
 "15 minutes" = "15 minút";
 "30 minutes" = "30 minút";
@@ -1653,16 +1653,16 @@
 
 "Advanced" = "Rozšírené";
 "All tweak options are disabled" = "Všetky možnosti doplnku sú vypnuté";
-"Auto-clear cache" = "Automaticky vymazávať vyrovnávaciu pamäť";
+"Auto-clear cache" = "Automaticky vymazávať cache";
 "Automatically opens settings when the app launches" = "Pri spustení aplikácie automaticky otvorí nastavenia";
 "Every launch" = "Pri každom spustení";
-"Cache" = "Vyrovnávacia pamäť";
-"Cache cleared" = "Vyrovnávacia pamäť bola vymazaná";
-"Calculating cache size…" = "Počítanie veľkosti vyrovnávacej pamäte…";
+"Cache" = "Cache";
+"Cache cleared" = "Cache bola vymazaná";
+"Calculating cache size…" = "Počítanie veľkosti cache…";
 "Clear" = "Vymazať";
-"Clear cache" = "Vymazať vyrovnávaciu pamäť";
-"Clear cache (%@)" = "Vymazať vyrovnávaciu pamäť (%@)";
-"Clearing cache…" = "Vymazávanie vyrovnávacej pamäte…";
+"Clear cache" = "Vymazať cache";
+"Clear cache (%@)" = "Vymazať cache (%@)";
+"Clearing cache…" = "Vymazávanie cache…";
 "Clearing still scans on demand." = "Aj po vymazaní sa kontrola spustí na požiadanie.";
 "Daily" = "Denne";
 "Disable all tweak options" = "Vypnúť všetky možnosti doplnku";
@@ -1671,7 +1671,7 @@
 "Tap to re-enable everything" = "Ťuknutím znova zapneš všetko";
 "Turn every feature off — your settings are kept" = "Vypne všetky funkcie — tvoje nastavenia zostanú zachované";
 "Fix duplicate notifications" = "Opraviť duplicitné upozornenia";
-"Free %@ of Instagram cache." = "Uvoľni %@ miesta vo vyrovnávacej pamäti Instagramu.";
+"Free %@ of Instagram cache." = "Uvoľni %@ miesta v cache Instagramu.";
 "Freed %@" = "Uvoľnené miesto: %@";
 "Monthly" = "Mesačne";
 "Nothing to clear" = "Nie je čo vymazať";
@@ -1683,10 +1683,10 @@
 "Pauses any playing video/audio when settings opens" = "Pri otvorení nastavení pozastaví prehrávané video alebo zvuk";
 "Prevents Instagram from resetting settings after crashes (at your own risk)" = "Zabraňuje Instagramu obnoviť predvolené nastavenia po páde aplikácie (používaš na vlastné riziko)";
 "Prevents two banners for the same message when IG is in the foreground" = "Zabraňuje zobrazovaniu dvoch bannerov pre tú istú správu, keď je Instagram otvorený na popredí";
-"Remove Instagram's cached images, videos, and temporary files." = "Odstráni obrázky, videá a dočasné súbory uložené vo vyrovnávacej pamäti Instagramu.";
+"Remove Instagram's cached images, videos, and temporary files." = "Odstráni obrázky, videá a dočasné súbory uložené v cache Instagramu.";
 "Reset onboarding state" = "Obnoviť stav úvodného nastavenia";
-"Run a silent cache clear on launch when the interval has elapsed." = "Po uplynutí nastaveného intervalu potichu vymaže vyrovnávaciu pamäť pri spustení aplikácie.";
-"Show cache size" = "Zobraziť veľkosť vyrovnávacej pamäte";
+"Run a silent cache clear on launch when the interval has elapsed." = "Po uplynutí nastaveného intervalu potichu vymaže cache pri spustení aplikácie.";
+"Show cache size" = "Zobraziť veľkosť cache";
 "Skip the messages database when clearing — keeps DMs, drafts, and saved messages." = "Pri vymazávaní preskočiť databázu správ — zachovajú sa súkromné správy, koncepty a uložené správy.";
 "Show tweak settings on app launch" = "Zobraziť nastavenia doplnku pri spustení aplikácie";
 "Suppresses the second notification IG enqueues in-app while the notification extension is also delivering it." = "Potláča druhé upozornenie, ktoré Instagram zaradí do frontu v aplikácii, keď ho zároveň doručuje rozšírenie upozornení.";
@@ -2746,7 +2746,7 @@
 "Fast, fixed-bitrate, GPU-accelerated." = "Rýchle, s pevným bitovým tokom, akcelerované GPU.";
 "Fastest, worst compression." = "Najrýchlejšie, najslabšia kompresia.";
 "Faststart" = "Faststart";
-"Faststart moves the MP4 index to the start so playback begins before the file fully buffers. Strip metadata removes source tags (creation date, handler, encoder) from the file." = "Faststart presunie index MP4 na začiatok, takže prehrávanie sa začne ešte pred úplným načítaním súboru do vyrovnávacej pamäte. Odstránenie metadát vymaže zo súboru zdrojové značky (dátum vytvorenia, obslužný program, kodér).";
+"Faststart moves the MP4 index to the start so playback begins before the file fully buffers. Strip metadata removes source tags (creation date, handler, encoder) from the file." = "Faststart presunie index MP4 na začiatok, takže prehrávanie sa začne ešte pred úplným načítaním súboru do cache. Odstránenie metadát vymaže zo súboru zdrojové značky (dátum vytvorenia, obslužný program, kodér).";
 "FFmpeg documentation" = "Dokumentácia FFmpeg";
 "FFmpeg mux failed" = "Zmiešanie streamov pomocou FFmpeg zlyhalo";
 "Frame rate" = "Snímková frekvencia";
@@ -3186,7 +3186,7 @@
 "Invalid clipboard link" = "Neplatný odkaz v schránke";
 "Experimental flag warning" = "Upozornenie na experimentálnu funkciu";
 "Settings action confirmed" = "Akcia v nastaveniach potvrdená";
-"Cache clearing progress" = "Priebeh vymazávania vyrovnávacej pamäte";
+"Cache clearing progress" = "Priebeh vymazávania cache";
 "Backup export / import" = "Export / import zálohy";
 "Other / uncategorized" = "Ostatné / nezaradené";
 "Comment copied" = "Komentár skopírovaný";
@@ -3242,7 +3242,7 @@
 "My sounds" = "Moje zvuky";
 "Direct messages" = "Súkromné správy";
 "Other notifications" = "Ostatné upozornenia";
-"Instagram default" = "Predvolený zvuk Instagramu";
+"Instagram default" = "Predvolené Instagramu";
 "Instagram tone 2" = "Zvuk Instagramu 2";
 "Add sound" = "Pridať zvuk";
 "Add sound…" = "Pridať zvuk…";
@@ -3617,9 +3617,9 @@
 "A pinned viewer" = "Pripnutý divák";
 "On each launch" = "Pri každom spustení";
 
-"Clear cache now" = "Vymazať vyrovnávaciu pamäť";
+"Clear cache now" = "Vymazať vyr. pamäť";
 "Delete staged captures that haven't been unsent yet" = "Odstrániť pripravené záznamy, ktoré ešte neboli odvolané";
-"Clear view-once cache" = "Vymazať vyrovnávaciu pamäť médií na jedno zobrazenie";
+"Clear view-once cache" = "Vymazať cache médií na jedno zobrazenie";
 "Delete all staged captures that haven't been unsent? Anything already saved to the log is kept." = "Odstrániť všetky pripravené záznamy, ktoré ešte neboli odvolané? Všetko, čo už bolo uložené do záznamu, zostane zachované.";
 "Capture while closed" = "Zachytávať aj pri zatvorenej aplikácii";
 "Save media that arrives while Instagram is closed" = "Ukladať médiá, ktoré dorazia, keď je Instagram zatvorený";
@@ -3641,7 +3641,7 @@
 "With both off, captures are kept until they're unsent. Turning one on turns the other off. Anything actually unsent is saved to the log first and is never cleaned here." = "Ak sú obe možnosti vypnuté, zachytené médiá sa uchovávajú, kým sa správa neodvolá. Zapnutím jednej možnosti sa druhá vypne. Každé skutočne odvolané médium sa najprv uloží do záznamu a tu sa nikdy neodstraňuje.";
 "Clear when I open Instagram" = "Vymazať pri otvorení Instagramu";
 "Keep within size / age limits" = "Dodržiavať limity veľkosti a veku";
-"View-once cache" = "Vyrovnávacia pamäť médií na jedno zobrazenie";
+"View-once cache" = "Cache médií na jedno zobrazenie";
 "Message log" = "Záznam správ";
 
 "Story stats" = "Štatistiky príbehov";
