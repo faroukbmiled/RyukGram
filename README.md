@@ -335,7 +335,6 @@ Once it is running, open the settings by holding the button at the top of your p
 - Hidden chats with per account lists, optionally kept out of the share sheet
 - Keep hidden chats out of the unread badge and DM search, mark revealed ones, and pick when they hide again
 - Screenshot Instants and view once DM media
-- Hide your followers and following lists, or hide yourself from everyone else's
 - App switcher shroud and hidden previews for locked chats
 - Lock icon on locked chats in the inbox
 - Everything RyukGram saves is encrypted on the device under unreadable names
