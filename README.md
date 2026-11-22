@@ -4,7 +4,7 @@
 
 **The Instagram tweak for iOS power users.**
 
-`v1.5.1` · Instagram 453.0.0 | Instagram 410.1.0
+`v1.6.0` · Instagram 455.0.0 | Instagram 410.1.0
 
 <sub>The Instagram 410 build is for older iOS versions and trails the main build on newer features.</sub>
 
@@ -87,7 +87,11 @@ Once it is running, open the settings by holding the button at the top of your p
 
 ### General
 - Hide ads and Meta AI
+- Hide posts, reels and stories Instagram labels as AI
+- Hide posts, reels, comments and stories by word or account, and pick where each one applies
 - Hide the TestFlight popup and turn off app haptics
+- Hide the emoji bar above the comment box
+- Add more accounts than Instagram allows
 - Always mute keeps everything silent until you tap a speaker or press volume
 - Copy captions, comments, and profile info, or select just part of the text
 - Download, copy, or expand image and GIF comments
@@ -118,7 +122,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Hide the stories tray, suggested stories, highlights, and live streams
 - View a profile picture from a story tray long press
 - Hide the whole feed, or just suggested posts, accounts, reels, threads, and Facebook cards
-- Cap posts in a row and filter by minimum likes, comments, views, or reposts
+- Cap posts in a row and filter by minimum or maximum likes, comments, views, or reposts
 - Turn off video autoplay
 - Hide the full screen button on feed videos
 - Play feed reels in place
@@ -131,22 +135,25 @@ Once it is running, open the settings by holding the button at the top of your p
 - Reorder, hide, or drop the counts on post buttons
 
 ### Reels
-- Custom tap controls and auto scroll that skips sponsored and photo reels
-- Hold controls for pause, the options menu, or picture in picture
+- Custom tap controls and auto scroll that skips sponsored and photo reels, or stops at the end
+- Hold controls for pause, the options menu, picture in picture, or the playback menu
 - Playback menu for speed, seek, next and previous, sound, and picture in picture
 - Action button, playback menu and menu button hold in the long video player
+- Download every episode of a series from its row in the profile Series tab
 - Always visible scrubber, no auto unmute, and refresh confirmation
 - Expanded view without cropped sides
 - Unlock password locked reels
 - Reorder, hide, or drop the counts on sidebar buttons
 - Hide the header, friend avatars, promo pills, the comment bar, and live streams
 - Swipe left to open the author's profile
-- Show the repost date
-- Disable reel scrolling
+- Show the post and repost date
+- Disable reel scrolling everywhere or only outside the Reels tab
 - Reels limit per session or per day, with time or reel caps, chosen weekdays, reels-free days, a week chart, break nudges, and strict mode
+- Always allowed places that skip limits, and your own time for when a new day starts
+- Strict mode can make you wait before settings open
 - Limited extra time with a daily cap and optional wait
 - Hide feed videos once a limit hits
-- Filter reels by minimum likes, comments, views, or reposts
+- Filter reels by minimum or maximum likes, comments, views, or reposts
 - Enhanced pause and play mode
 
 ### Action buttons
@@ -156,7 +163,12 @@ Once it is running, open the settings by holding the button at the top of your p
 - Save a photo post with its music as a video
 - Save a photo story as just the image
 - Repost through Instagram's own flow
-- Full screen viewer with zoom and swipe
+- Save the audio of posts, reels, stories and disappearing DMs
+- Action button on normal chat photos and videos too
+- Copy the photo or video itself
+- Full screen viewer with zoom, swipe, speed, hold for 2x, save frame, AirPlay and picture in picture
+- Live Text on photos and paused videos in the viewer
+- Open, copy or share every link in a story, cleaned of tracking
 - Drag overlay buttons into place on a live preview, with size and spacing controls
 
 ### Profile
@@ -170,6 +182,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Spoof multipliers that grow with the real count, with an optional base and random daily growth
 - Hide the Threads button
 - Sort and search follower and following lists
+- Swap the Message button in your own follower lists for Following or Remove
 - Follow request tracker, even for requests canceled before you answer
 - Confirm or decline follow requests in bulk, with a warning before asking someone who declined you
 
@@ -181,7 +194,9 @@ Once it is running, open the settings by holding the button at the top of your p
 - Private log of profiles you open, with notes, filters and export
 - Watchlist that checks accounts on a schedule
 - Tracked changes for username, name, bio, links, picture, privacy, follow back and counts, with alerts per type
-- Watchlist saves new stories, posts, reels and profile pictures to the gallery
+- Watchlist saves new stories, posts, reels, highlights and profile pictures to the gallery
+- Watchlist keeps a history of their notes, with the song and the part they picked
+- Growth page with followers, following and posts over time
 - Per check toggles and a badge for gains and losses
 
 ### Saving
@@ -189,7 +204,7 @@ Once it is running, open the settings by holding the button at the top of your p
 - Full resolution photos, or pick the size
 - Audio only and raw photo options
 - Save, share, or copy any sticker, animated ones included
-- Save all media from any profile by count or date range, queued with a daily limit
+- Save all media from any profile, tagged posts included, by count or date range, queued with a daily limit, into the Gallery or Photos
 - Download manager with live speed, filters, and bulk select
 - Download history with redownload
 - Duplicate check before saving the same media twice
@@ -213,21 +228,32 @@ Once it is running, open the settings by holding the button at the top of your p
 - Info page with source details, camera and codec info, and location removal
 - Upgrade saved media to HD
 - Save a folder or the whole view to Photos
+- Lock single folders with your passcode, hidden everywhere until unlocked
 - Deleted filter for saved posts and stories removed from Instagram
+- Expired stories open from the highlight they're in
+- Show Save all, Watchlist and auto saved DMs in their own folder, with other media, or hidden
 
 ### Stories and messages
 - Keep deleted messages, including your own unsends, marked how you like
+- Unsend several of your messages at once
+- Keep disappearing messages after they're seen or time out, tagged once they're gone
 - Searchable log of every unsent message, with a jump to where it sat
+- Log disappearing messages and their media too
 - Catch view-once media that arrives while Instagram is closed
 - Log view-once media when you open it
 - Activity notifications for reads, online, offline, and typing, per person
 - Activity log as a filterable timeline
 - Accurate active status
+- Pick how often active status refreshes, with offline times from when someone really left
 - Story playback menu for speed, seek, next and previous, sound, and picture in picture
-- Your own fonts in the story text tool
+- Hold next or previous in the story playback menu to jump to another person
+- Your own fonts in the story, post and reel text tools
 - Manual and automatic mark as seen
 - Hold the eye button to mark a whole story reel seen, or up to where you are
-- Mark chats seen on your device only
+- Mark chats seen on your device only, and leave the chat once you mark it seen
+- Move the chat seen, chat list and views buttons into the + menu
+- Move the story buttons into the story menu
+- Menu buttons work like the real ones: tap for the action, hold for more, or fold them into one row
 - Seen stories hide or tint the eye button for 48 hours
 - Send audio as a file or voice note, with a trim editor
 - Send an image as your doodle in Draw
@@ -235,46 +261,58 @@ Once it is running, open the settings by holding the button at the top of your p
 - Force the missing sound toggle in the DM camera
 - Turn off typing status, the vanish swipe, and view once limits
 - Pick the score you send in the DM emoji game
-- Hide shared reels in chats
-- Toggle your activity status from the DMs inbox
+- Hide shared reels in chats and story rings in the inbox
+- Hide story comments and the cards Instagram adds between stories
+- Toggle your activity status from the DMs inbox, or turn it off for an hour, 8 hours or until tomorrow
 - Custom chat backgrounds from an image, video, or GIF
 - Filter, sort, search, and pin story viewers, with their reactions
-- Archive your own stories with their viewers, plus story stats
+- Archive your own stories with their viewers, their poll, quiz and slider answers, plus story stats
 - View story mentions and reveal poll and quiz results
+- Hold someone in story mentions to open their profile or copy their details
 - Bypass Reveal stickers and pick custom sticker colors
 - Cutout stickers from the gallery
 - Story backgrounds in any color or gradient
 - Long videos post to stories as back to back parts, not trimmed
+- Meta glasses mode to edit story photos and videos with the glasses tools
 - Download disappearing DM media in full quality
+- Auto save photos and videos from people you pick, view once included, into a folder per person or Photos
 - Hide the views toggle and keep views blocked
 - Send Instants from your album, with crop and trim
 - Auto close the Instants viewer
 - Toggle the Instants switch confirmation from the viewer
-- Keep Instants unseen until you mark them seen
+- Keep Instants unseen until you mark them seen, and move on once you do, with per person exceptions
+- Confirm Instants with a frozen preview of the exact photo, or watch a video Instant before you send or discard it
 - Record voice and video calls, browsed per person
 - Save, share, or delete recordings in bulk, or share them as audio only
 
 ### Interface
 - Custom notification sounds for DMs and other alerts
+- Per-chat notifications: deliver a chat quietly, hide its text or name, or give it its own sound
 - Hide Instagram's in-app banners
 - Notification pill you can place anywhere
 - Mirror notifications to the iOS notification center
 - Reorder and hide tab bar icons on a live preview
+- Pick your own icon for any tab
 - Native iOS liquid glass tab bar on iOS 26 with 5 tabs or fewer
 - Add RyukGram screens, Saved and Activity as tabs, and pick the launch tab
 - Hold any tab to open a RyukGram screen
 - Messages-only mode on a schedule, for a set time, or from Shortcuts links
-- Shortcuts links to switch Messages-only and Reels limit from iOS automations, or from a file without opening Instagram
+- Shortcuts links to switch Messages-only, Reels limit or any setting from iOS automations, or from a file without opening Instagram
 - Force Instagram into any supported language
 - Home shortcut button with new item badges, also shown on added tabs
 - Notification history with filters and search
+- Notification check that shows if your install gets full, partial or no notifications and how to fix it
 - Bring back the old Instagram logo
 - Instagram feature flags browser to read, change, export and import Instagram's internal MobileConfig settings
 - Every MobileConfig config named, with notes, search, and new ones marked per update
 - Record which configs Instagram reads during any action
+- Tested MobileConfig presets, one switch each
+- Sort a profile's reels by most viewed
+- Browse, read and manage Instagram's own files
 
 ### Confirm actions
 - Optional confirmations for likes, follows, reposts, calls, comments, and more
+- Confirm before a double tap likes a repost bubble
 - Confirm DM reactions
 
 ### Fake location
@@ -283,6 +321,9 @@ Once it is running, open the settings by holding the button at the top of your p
 ### Theme
 - Off, light, dark, or OLED, applied to Instagram only
 - OLED chat theme and matching keyboard
+- Custom colors for the whole app or each tab
+- Profile backgrounds in any color or gradient for you, anyone you pick, or everyone else, kept per account if you want
+- Tab bar color and opacity, and a custom keyboard color
 - Custom fonts for Instagram, RyukGram, or both
 - Import your own fonts, or download from thousands online
 - Custom emoji fonts
@@ -290,9 +331,14 @@ Once it is running, open the settings by holding the button at the top of your p
 
 ### Security and privacy
 - Mask the device identifiers Instagram reads
-- Passcode and biometric lock for settings, chats, logs, recordings, and the app
+- Passcode and biometric lock for settings, chats, logs, recordings, archives, and the app, tabs included
 - Hidden chats with per account lists, optionally kept out of the share sheet
+- Keep hidden chats out of the unread badge and DM search, mark revealed ones, and pick when they hide again
+- Screenshot Instants and view once DM media
+- Hide your followers and following lists, or hide yourself from everyone else's
 - App switcher shroud and hidden previews for locked chats
+- Lock icon on locked chats in the inbox
+- Everything RyukGram saves is encrypted on the device under unreadable names
 
 ### Backup and profiles
 - Export settings and feature data as JSON or an encrypted bundle
@@ -309,6 +355,7 @@ Once it is running, open the settings by holding the button at the top of your p
 
 ### Optimization
 - Clear the Instagram cache on demand or on a timer
+- Browse Instagram's own folders with sizes, read plists and logs, import, rename, duplicate, zip, share or delete
 - Instagram API controls to reuse replies, pace requests, and cap daily actions and scans
 
 ## Translating
