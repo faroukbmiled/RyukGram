@@ -4,7 +4,7 @@
 
 **The Instagram tweak for iOS power users.**
 
-`v1.6.0` · Instagram 455.0.0 | Instagram 410.1.0
+`v1.6.0` · Instagram 456.0.0 | Instagram 410.1.0
 
 <sub>The Instagram 410 build is for older iOS versions and trails the main build on newer features.</sub>
 
